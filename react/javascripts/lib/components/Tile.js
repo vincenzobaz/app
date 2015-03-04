@@ -5,7 +5,7 @@
 
 var React = require('react'),
     Tooltip = require('./bootstrap/Tooltip'),
-    ModalTrigger = require('react-bootstrap/ModalTrigger'),
+    ModalTrigger = require('react-bootstrap').ModalTrigger,
     Routes = require('../Routes'),
     scoreShape = require('./shapes').score,
     cortexShape = require('./shapes').cortex,

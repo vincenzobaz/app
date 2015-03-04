@@ -10,15 +10,10 @@ var React = require('react'),
     JoinRequestStore = require('../stores/JoinRequestStore'),
     GameStore = require('../stores/GameStore'),
     UserStore = require('../stores/UserStore'),
+    Router = require('react-router'),
+    RouteHandler = Router.RouteHandler,
     debug = require('debug')('Main');
 
-/**
- * Components making use of that mixin MUST implement a
- *
- *     void renderMainContent(void) method
- *
- * that MUST return a component to be rendered.
- */
 var Main = React.createClass({
 
   getInitialState() {
@@ -46,7 +41,6 @@ var Main = React.createClass({
   },
 
   render() {
-    var ActiveRouteHandler = this.props.activeRouteHandler;
     return (
       <div>
         <Players game={this.state.currentGame.val()} user={this.state.user.val()} />
@@ -57,7 +51,7 @@ var Main = React.createClass({
             </div>
           </div>
           <div className='grid-50 prefix-5'>
-            <ActiveRouteHandler user={this.state.user.val()}
+            <RouteHandler user={this.state.user.val()}
                                 joinRequests={this.state.joinRequests.val()}
                                 games={this.state.games.val()}
                                 currentGame={this.state.currentGame.val()} />

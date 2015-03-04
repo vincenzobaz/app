@@ -9,7 +9,7 @@ require('./rock-hammer');
 var React = window.React = require('react'),
     Router = require('react-router'),
     Route = Router.Route,
-    Routes = Router.Routes,
+    DefaultRoute = Router.DefaultRoute,
     Main = require('./lib/handlers/Main'),
     Home = require('./lib/handlers/Home'),
     PlayGame = require('./lib/handlers/PlayGame'),
@@ -23,29 +23,25 @@ var Facebook = require('./lib/helpers/Facebook');
 ErrorStore.register();
 // Facebook.init();
 
-var App = React.createClass({
-
-  render() {
-    return (
-      <Routes location="history">
-        <Route name="main"  handler={Main}>
-          <Route name="home" path="/" handler={Home} />
-          <Route name="play" path="/play/:gameId/" handler={PlayGame} />
-        </Route>
-      </Routes>
-    );
-  }
-});
-
 var $$ = document.getElementById.bind(document);
 
-if (Meteor.isClient) {
-  Meteor.startup(() => {
-    React.renderComponent(<App />, $$('app'));
-    React.renderComponent(<Footer />, $$('js-footer'));
-    // React.renderComponent(<ErrorHandler store={ErrorStore} />, $$('error'));
-    debug('app')('launched');
-  })
-}
+var App = {
+  routes: (
+    <Route path="/" handler={Main}>
+      <DefaultRoute name="home" handler={Home} />
+      <Route name="play" path="/play/:gameId/" handler={PlayGame} />
+    </Route>
+  ),
 
+  run() {
+    Router.run(this.routes, Router.HistoryLocation, Handler => {
+      React.render(<Handler />, $$('app'));
+      React.render(<Footer />, $$('js-footer'));
+      // React.render(<ErrorHandler store={ErrorStore} />, $$('error'));
+      debug('app')('launched');
+    })
+  }
+};
+
+Meteor.startup(App.run.bind(App));
 

@@ -19,9 +19,9 @@
     "clean-css": "^2.2.11",
     "envify": "^1.2.0",
     "jshint-stylish": "^0.4.0",
-    "jsxhint": "^0.4.14",
+    "jsxhint": "^0.12.1",
     "node-sass": "^0.9.1",
-    "reactify": "^0.14.0",
+    "reactify": "^1.0.0",
     "uglify-js": "^2.4.15",
     "uglifyify": "^3.0.1",
     "watchify": "^1.0.1"
@@ -41,12 +41,11 @@
     "pascal-case": "^1.0.0",
     "pluralize": "0.0.10",
     "querystring": "^0.2.0",
-    "react": "^0.11.0",
-    "react-async": "^1.0.1",
+    "react": "^0.12.2",
     "react-autocomplete": "0.0.2",
-    "react-bootstrap": "^0.11.1",
-    "react-localstorage": "0.0.1",
-    "react-router": "^0.5.2",
+    "react-bootstrap": "^0.16.1",
+    "react-localstorage": "0.2.2",
+    "react-router": "^0.12.4",
     "react-sortable-bis": "git://github.com/romac/react-sortable-bis.git#v0.2.4",
     "timer-machine": "^1.0.1"
   }

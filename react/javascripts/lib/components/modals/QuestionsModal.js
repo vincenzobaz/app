@@ -4,8 +4,8 @@
 'use strict';
 
 var React = require('react'),
-    Modal = require('react-bootstrap/Modal'),
-    Button = require('react-bootstrap/Button'),
+    Modal = require('react-bootstrap').Modal,
+    Button = require('react-bootstrap').Button,
     QuestionTimer = require('timer-machine'),
     Questions = require('../questions'),
     TimeLeft = require('../TimeLeft'),

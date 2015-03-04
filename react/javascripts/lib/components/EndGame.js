@@ -4,7 +4,7 @@
 'use strict';
 
 var React = require('react'),
-    Modal = require('react-bootstrap/Modal'),
+    Modal = require('react-bootstrap').Modal,
     LocalStorageMixin = require('react-localstorage');
 
 var EndGame = React.createClass({
