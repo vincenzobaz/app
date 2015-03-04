@@ -5,10 +5,14 @@ var State = require('../AppState');
 var getJSON = require('../helpers/getJSON');
 var Routes = require('../Routes');
 var User = require('../models/User');
+var Promise = require('bluebird');
+var debug = require('debug')('UserStore');
 
 function _fetchCurrent() {
-  var url = Routes.API.Users.current().url;
-  return getJSON(url);
+  debug('TODO: Re-implement UserStore.fetchCurrent');
+  // var url = Routes.API.Users.current().url;
+  var url = Routes.Assets.at('json/userInfo.json');
+  return getJSON(url)
 }
 
 function _setUser(user) {
@@ -16,7 +20,9 @@ function _setUser(user) {
 }
 
 function _fetchById(id) {
-  var url = Routes.Users.details(id).url;
+  debug('TODO: Re-implement UserStore.fetchById');
+  // var url = Routes.Users.details(id).url;
+  var url = Routes.Assets.at(`json/users/${id}.json`);
   return getJSON(url);
 }
 

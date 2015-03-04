@@ -16,11 +16,11 @@ class JoinRequest {
   }
 
   getFrom() {
-    return this.getOpponent();
+    return lazy(this, 'from', u => new User(u));
   }
 
   getOpponent() {
-    return lazy(this, 'opponent', op => new User(op));
+    return this.getFrom();
   }
 
 }
