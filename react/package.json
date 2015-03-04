@@ -1,0 +1,53 @@
+{
+  "name": "reminisce.me",
+  "version": "0.0.1",
+  "description": "Remember all the fun you had with memory games? We are building your new favorite one, for Facebook. Get ready to challenge your friends!",
+  "scripts": {
+    "watch": "make watch",
+    "build": "make"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reminisceme/frontend"
+  },
+  "private": true,
+  "keywords": [],
+  "author": "Romain Ruetschi (romain.ruetschi@gmail.com)",
+  "license": "MIT",
+  "devDependencies": {
+    "browserify": "^5.9.1",
+    "clean-css": "^2.2.11",
+    "envify": "^1.2.0",
+    "jshint-stylish": "^0.4.0",
+    "jsxhint": "^0.4.14",
+    "node-sass": "^0.9.1",
+    "reactify": "^0.14.0",
+    "uglify-js": "^2.4.15",
+    "uglifyify": "^3.0.1",
+    "watchify": "^1.0.1"
+  },
+  "dependencies": {
+    "array-shuffle": "^1.0.0",
+    "bluebird": "^2.2.2",
+    "camel-case": "^1.0.1",
+    "cortexjs": "^0.6.0",
+    "debug": "^2.0.0",
+    "es6ify": "^1.2.0",
+    "fuzzy": "^0.1.0",
+    "lodash.merge": "^2.4.1",
+    "lodash.sortby": "^2.4.1",
+    "lodash.throttle": "^2.4.1",
+    "moment": "^2.9.0",
+    "pascal-case": "^1.0.0",
+    "pluralize": "0.0.10",
+    "querystring": "^0.2.0",
+    "react": "^0.11.0",
+    "react-async": "^1.0.1",
+    "react-autocomplete": "0.0.2",
+    "react-bootstrap": "^0.11.1",
+    "react-localstorage": "0.0.1",
+    "react-router": "^0.5.2",
+    "react-sortable-bis": "git://github.com/romac/react-sortable-bis.git#v0.2.4",
+    "timer-machine": "^1.0.1"
+  }
+}
