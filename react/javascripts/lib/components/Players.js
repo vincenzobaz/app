@@ -27,7 +27,7 @@ var Players = React.createClass({
     }
 
     if (!this.props.game) {
-      return Players.None();
+      return <Players.None />;
     }
 
     var game = this.props.game;

@@ -26,7 +26,7 @@ var CurrentGames = React.createClass({
 
   renderGames() {
     if (this.props.games.length <= 0) {
-      return CurrentGame.None();
+      return <CurrentGame.None />;
     }
 
     var games = this.sortGamesByIdDesc(this.props.games);

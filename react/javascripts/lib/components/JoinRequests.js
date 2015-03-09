@@ -34,7 +34,7 @@ var JoinRequests = React.createClass({
       );
     }
 
-    return JoinRequest.None();
+    return <JoinRequest.None />;
   }
 
 });

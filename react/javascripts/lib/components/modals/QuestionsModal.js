@@ -57,7 +57,7 @@ var QuestionsModal = React.createClass({
       }
 
       q.onDone = this.onAnswer;
-      return Questions[q.type](q);
+      return React.createElement(Questions[q.type], q);
     });
 
     return steps.filter(q => q != null);
