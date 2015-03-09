@@ -13,7 +13,7 @@ ENVIFY := $(BIN_DIR)/envify
 SASS := $(BIN_DIR)/node-sass
 CLEAN_CSS := $(BIN_DIR)/cleancss
 
-NOTIFY := $(shell { type terminal-notifier || type echo; } 2>/dev/null)
+NOTIFY := $(shell { type terminal-notifier || echo >/dev/null 2>&1; } 2>/dev/null)
 
 BROWSERIFY_TRANSFORMS = -t reactify -t es6ify
 
@@ -23,12 +23,10 @@ css_dir := stylesheets
 build_dir := build
 
 app_js := $(js_dir)/app.js
-js_files := $(wildcard $(js_dir)/lib/**/*.js) $(wildcard $(js_dir)/lib/*/**/*.js)
+js_files := $(wildcard $(js_dir)/lib/**/*.js)
 js_vendors := $(js_vendor_dir)/jquery-2.1.0.min.js \
-			 $(js_vendor_dir)/bootstrap-2.2.2.min.js \
-			 $(js_dir)/rock-hammer/plugins.js
-
-js_files := $(shell browserify -t $(BROWSERIFY_TRANSFORMS) --list $(app_js) | grep $(js_dir))
+							$(js_vendor_dir)/bootstrap-2.2.2.min.js \
+							$(js_dir)/rock-hammer/plugins.js
 
 sass_files := $(css_dir)/all.scss $(css_dir)/lte-ie8.scss
 every_sass_files := $(wildcard $(css_dir)/**/*.scss)
