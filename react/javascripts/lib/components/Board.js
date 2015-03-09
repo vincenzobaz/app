@@ -11,7 +11,7 @@ var React = require('react'),
 var Board = React.createClass({
 
   propTypes: {
-    gameId: React.PropTypes.number.isRequired,
+    gameId: React.PropTypes.any.isRequired,
     game: shapes.game
   },
 
