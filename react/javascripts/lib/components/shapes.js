@@ -8,12 +8,6 @@ var Tile = require('../models/Tile');
 var Question = require('../models/Question');
 var JoinRequest = require('../models/JoinRequest');
 
-function cortex(shape) {
-  return React.PropTypes.shape({
-    __value: shape
-  });
-}
-
 var score = React.PropTypes.shape({
   me: React.PropTypes.number.isRequired,
   them: React.PropTypes.number.isRequired
@@ -106,7 +100,6 @@ var answer = React.PropTypes.shape({
 });
 
 module.exports = {
-  cortex: cortex,
   tile: tile,
   game: game,
   fullGame: fullGame,

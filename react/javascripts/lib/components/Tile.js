@@ -8,7 +8,6 @@ var React = require('react'),
     ModalTrigger = require('react-bootstrap').ModalTrigger,
     Routes = require('../Routes'),
     scoreShape = require('./shapes').score,
-    cortexShape = require('./shapes').cortex,
     hasToken = require('../helpers/hasToken'),
     AppState = require('../AppState'),
     progressImage = require('../helpers/progressImage');
@@ -24,7 +23,7 @@ var Tile = React.createClass({
     type: React.PropTypes.string.isRequired,
     icon: React.PropTypes.string.isRequired,
     opponentId: React.PropTypes.string,
-    score: cortexShape(scoreShape).isRequired,
+    score: scoreShape.isRequired,
     wonBy: React.PropTypes.oneOf(['me', 'opponent']),
     disabled: React.PropTypes.bool.isRequired
   },
