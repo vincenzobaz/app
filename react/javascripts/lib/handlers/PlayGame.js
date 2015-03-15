@@ -87,19 +87,13 @@ var PlayGame = React.createClass({
 
   loadGame(gameId) {
     GameStore
-      .load(gameId)
+      .byId(gameId)
       .then(this.onGameLoaded);
   },
 
   onGameLoaded(game) {
-    if (!this.isMounted()) {
-      this.state.currentGame.set(game);
-    }
-  },
-
-  onGameUpdate(game) {
-    if (!this.isMounted()) {
-      this.state.currentGame.set(game);
+    if (this.isMounted()) {
+      Session.set('currentGame', game);
     }
   },
 
