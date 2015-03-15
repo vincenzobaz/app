@@ -8,8 +8,6 @@ var React = require('react'),
     ModalTrigger = require('react-bootstrap').ModalTrigger,
     Routes = require('../Routes'),
     scoreShape = require('./shapes').score,
-    hasToken = require('../helpers/hasToken'),
-    AppState = require('../AppState'),
     progressImage = require('../helpers/progressImage');
 
 var Tile = React.createClass({
@@ -62,7 +60,7 @@ var Tile = React.createClass({
   },
 
   isDisabled() {
-    return this.props.answered || this.props.disabled || this.props.wonBy || !hasToken(AppState())();
+    return this.props.answered || this.props.disabled || this.props.wonBy;
   },
 
   getCellClassNames() {

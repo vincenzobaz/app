@@ -50,10 +50,10 @@ var CurrentGame = React.createClass({
     if (game.hasEnded()) {
       desc = <small>Ended</small>;
     }
-    else if (!game.hasToken()) {
+    else if (!game.canPlay()) {
       desc = <small><b>Their turn</b></small>;
     }
-    else if (game.hasToken()) {
+    else if (game.canPlay()) {
       desc = <small><b className='player'>Your turn</b></small>;
     }
 

@@ -36,16 +36,13 @@ class Game {
     return lazy(this, 'currentPlayer', player => new User(player));
   }
 
-  getToken() {
-    return this.token;
-  }
-
-  hasToken() {
-    return this.token != null && this.token !== '';
-  }
-
   hasEnded() {
     return this.getStatus() === 'ended';
+  }
+
+  canPlay() {
+    debug('canPlay() is not implemented');
+    return true;
   }
 
   isPlaying() {

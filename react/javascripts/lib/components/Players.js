@@ -34,8 +34,8 @@ var Players = React.createClass({
 
     return (
       <div>
-        <Player player={this.props.user} isTurn={game.hasToken()} score={game.getScore().me} />
-        <Player player={game.getOpponent()} isTurn={!game.hasToken()} isOpponent={true} score={game.getScore().them} />
+        <Player player={this.props.user} isTurn={game.canPlay()} score={game.getScore().me} />
+        <Player player={game.getOpponent()} isTurn={!game.canPlay()} isOpponent={true} score={game.getScore().them} />
       </div>
     );
   }
