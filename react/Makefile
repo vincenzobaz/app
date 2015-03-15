@@ -67,7 +67,7 @@ $(build_js_dev): $(app_js) $(js_files)
 
 $(css_dir)/%.css: $(css_dir)/%.scss $(every_sass_files)
 	@echo "Building $@... "
-	@$(SASS) --source-comments map --omit-source-map-url $< $@
+	@$(SASS) --source-map /dev/null --source-map-embed $< $@
 	@echo -n "Compressing $@... "
 	@$(CLEAN_CSS) -o $(@:.css=.min.css) $@
 	@echo "Done."
