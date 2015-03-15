@@ -1,16 +1,16 @@
 
 'use strict';
 
-var Cortex = require('cortexjs');
-var User = require('./models/User');
+var UserStore = require('./stores/UserStore');
+var JoinRequestStore = require('./stores/JoinRequestStore');
+var GameStore = require('./stores/GameStore');
 
-module.exports = new Cortex({
-  user: new User({
-    firstName: '',
-    lastName: '',
-    firstTime: false,
-  }),
-  currentGame: null,
-  games: [],
-  joinRequests: []
-});
+module.exports = function getAppState() {
+  return {
+    user: UserStore.current(),
+    currentGame: null,
+    games: GameStore.list(),
+    joinRequests: JoinRequestStore.list()
+  };
+};
+

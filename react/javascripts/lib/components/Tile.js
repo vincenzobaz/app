@@ -63,7 +63,7 @@ var Tile = React.createClass({
   },
 
   isDisabled() {
-    return this.props.answered || this.props.disabled || this.props.wonBy || !hasToken(AppState)();
+    return this.props.answered || this.props.disabled || this.props.wonBy || !hasToken(AppState())();
   },
 
   getCellClassNames() {

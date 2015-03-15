@@ -2,9 +2,8 @@
 'use strict';
 
 var EventEmitter = require('events').EventEmitter;
-var merge = require('react/lib/merge');
-// var Bluebird = require('bluebird');
-
+var merge = require('lodash.merge');
+// var Bluebird = require('bluebird'); 
 var ErrorStore = merge(EventEmitter.prototype, {
 
   register() {

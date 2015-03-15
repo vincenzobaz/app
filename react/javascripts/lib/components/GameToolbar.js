@@ -15,6 +15,14 @@ var React = require('react'),
 
 var GameToolbar = React.createClass({
 
+  mixins: [ReactMeteor.Mixin],
+
+  getMeteorState() {
+    return {
+      game: AppState().currentGame
+    };
+  },
+
   onFriendSelect(selection) {
     GameStore.start(selection).then(game => {
       Router.transitionTo('play', {gameId: game.gameId});
@@ -23,35 +31,11 @@ var GameToolbar = React.createClass({
 
   onQuit() {
     debug('quit game');
-    GameStore.quit(AppState.currentGame.val());
+    GameStore.quit(this.state.game);
   },
 
   onResume() {
     debug('resume game');
-  },
-
-  getInitialState() {
-    return {
-      game: AppState.currentGame.val()
-    };
-  },
-
-  componentWillMount() {
-    AppState.on('update', this.onGameUpdate);
-  },
-
-  componentWillUnmount() {
-    AppState.off('update', this.onGameUpdate);
-  },
-
-  onGameUpdate(game) {
-    if (this.state.game === AppState.currentGame.val()) {
-      return;
-    }
-
-    this.setState({
-      game: game
-    });
   },
 
   render() {

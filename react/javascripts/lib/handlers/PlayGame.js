@@ -17,16 +17,18 @@ var PlayGame = React.createClass({
   mixins: [Router.State],
 
   getInitialState() {
-    return AppState;
+    return {
+      currentGame: this.props.currentGame
+    };
   },
 
   render() {
-    debug('currentGame',  this.state.currentGame.val());
-    debug('gameId',       this.getParams().gameId);
-    debug('isPlaying',  this.isPlayingGame());
-    debug('currentGameId', this.isPlayingGame() && this.state.currentGame.val().id);
-    debug('inCreation',   this.isGameInCreation());
-    debug('willPlay',     this.isPlayingGame() && this.isOnCurrentGame());
+    debug('currentGame',   this.state.currentGame);
+    debug('gameId',        this.getParams().gameId);
+    debug('isPlaying',     this.isPlayingGame());
+    debug('currentGameId', this.isPlayingGame() && this.state.currentGame.id);
+    debug('inCreation',    this.isGameInCreation());
+    debug('willPlay',      this.isPlayingGame() && this.isOnCurrentGame());
 
     var gameId = this.getParams().gameId;
     var header = <div></div>;
@@ -34,11 +36,11 @@ var PlayGame = React.createClass({
     if (this.isOnCurrentGame() && this.hasGameEnded()) {
       return (
         <div>
-          <EndGame game={this.state.currentGame.val()}
+          <EndGame game={this.state.currentGame}
                    localStorageKey={`game-${gameId}-EndGame`} />
 
           <Board gameId={gameId}
-                 game={this.state.currentGame.val()}
+                 game={this.state.currentGame}
                  tiles={this.state.currentGame.tiles} />
         </div>
       )
@@ -49,7 +51,7 @@ var PlayGame = React.createClass({
         <div>
           {header}
           <Board gameId={gameId}
-                 game={this.state.currentGame.val()} />
+                 game={this.state.currentGame} />
         </div>
       );
     }
@@ -129,7 +131,7 @@ var PlayGame = React.createClass({
   },
 
   withGame(fn, defValue) {
-    var game = this.state.currentGame.val();
+    var game = this.state.currentGame;
 
     if (game == null) {
       return defValue;
