@@ -13,7 +13,7 @@ class Tile {
   }
 
   getId() {
-    return this.id;
+    return this._id;
   }
 
   getCategory() {

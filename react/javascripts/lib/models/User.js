@@ -11,7 +11,7 @@ class User {
   }
 
   getId() {
-    return this.id;
+    return this._id;
   }
 
   getFirstName() {

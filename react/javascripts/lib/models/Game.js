@@ -13,7 +13,7 @@ class Game {
   }
 
   getId() {
-    return this.id || this.gameId;
+    return this._id;
   }
 
   getStatus() {

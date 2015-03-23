@@ -12,7 +12,7 @@ class JoinRequest {
   }
 
   getId() {
-    return this.id;
+    return this._id;
   }
 
   getFrom() {

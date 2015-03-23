@@ -11,7 +11,7 @@ class Question {
   }
 
   getId() {
-    return this.id;
+    return this._id;
   }
 
   getTile() {
