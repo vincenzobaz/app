@@ -4,7 +4,7 @@
 
 var React = require('react'),
     Link = require('react-router').Link,
-    shapes = require('./shapes');
+    shapes = require('../components/shapes');
 
 var Welcome = React.createClass({
 

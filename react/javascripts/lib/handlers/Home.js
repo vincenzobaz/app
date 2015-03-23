@@ -1,18 +1,11 @@
 /** @jsx React.DOM */
 
-'use strict';
-
-var React = require('react'),
-    Welcome = require('../components/Welcome');
+var React = require('react');
 
 var Home = React.createClass({
 
   render() {
-    return (
-      <Welcome user={this.props.user}
-               joinRequests={this.props.joinRequests}
-               games={this.props.games} />
-    );
+    return <span>TODO</span>;
   }
 
 });

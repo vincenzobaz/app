@@ -11,7 +11,7 @@ var React = window.React = require('react'),
     Route = Router.Route,
     DefaultRoute = Router.DefaultRoute,
     Main = require('./lib/handlers/Main'),
-    Home = require('./lib/handlers/Home'),
+    Welcome = require('./lib/handlers/Welcome'),
     PlayGame = require('./lib/handlers/PlayGame'),
     Footer = require('./lib/components/Footer'),
     ErrorStore = require('./lib/stores/ErrorStore'),
@@ -28,7 +28,7 @@ var $$ = document.getElementById.bind(document);
 var App = {
   routes: (
     <Route path="/" handler={Main}>
-      <DefaultRoute name="home" handler={Home} />
+      <DefaultRoute name="welcome" handler={Welcome} />
       <Route name="play" path="/play/:gameId/" handler={PlayGame} />
     </Route>
   ),
