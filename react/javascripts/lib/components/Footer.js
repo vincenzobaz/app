@@ -6,7 +6,6 @@
 var React = require('react'),
     GameToolbar = require('./GameToolbar'),
     Routes = require('../Routes');
-    // Link = require('react-router').Link;
 
 var Footer = React.createClass({
 

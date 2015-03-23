@@ -4,7 +4,6 @@
 'use strict';
 
 var React = require('react'),
-    Link = require('react-router').Link,
     gameShape = require('./shapes').game;
 
 // TODO: Infer turn from the game's current player
@@ -23,14 +22,14 @@ var CurrentGame = React.createClass({
     return (
       <li className={classNames.waiting}>
         <div className='media'>
-          <Link className='pull-left' title='Switch to this game' to={this._getPlayUrl()}>
+          <a className='pull-left' title='Switch to this game' href={this.switchToGame(game)}>
             <img className='media-object img-circle' width='40' src={game.getOpponent().getAvatarUrl()} alt='' />
-          </Link>
+          </a>
           <div className='media-body'>
             <h5 className='media-heading'>
-              <Link title='Switch to this game' to={this._getPlayUrl()}>
+              <a title='Switch to this game' onClick={this.switchToGame(game)}>
                 {game.getOpponent().getFullName()}
-              </Link>
+              </a>
             </h5>
             <p>{this._renderDescription()}</p>
           </div>
@@ -70,8 +69,10 @@ var CurrentGame = React.createClass({
     );
   },
 
-  _getPlayUrl() {
-    return `/play/${this.props.game.getId()}/`;
+  switchToGame(game) {
+    return () => {
+      Session.set('currentGameId', game.getId());
+    };
   },
 
   _getClassNames() {

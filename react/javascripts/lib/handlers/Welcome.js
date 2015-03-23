@@ -3,8 +3,8 @@
 'use strict';
 
 var React = require('react'),
-    Link = require('react-router').Link,
-    shapes = require('../components/shapes');
+    shapes = require('../components/shapes'),
+    debug = require('debug')('Welcome');
 
 var Welcome = React.createClass({
 
@@ -12,6 +12,10 @@ var Welcome = React.createClass({
     user: shapes.user.isRequired,
     joinRequests: React.PropTypes.arrayOf(shapes.joinRequest),
     games: React.PropTypes.arrayOf(shapes.game)
+  },
+
+  switchToTraining() {
+    debug('TODO: Switch to training');
   },
 
   render() {
@@ -42,7 +46,7 @@ var Welcome = React.createClass({
         <p>
           Looks like you have not completed the training yet.
           &nbsp;
-          <Link to='/training'>{'Let\'s take it!'}</Link>
+          <a href={this.switchToTraining()}>{'Let\'s take it!'}</a>
         </p>
       );
     }

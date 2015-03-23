@@ -74,7 +74,6 @@ var Home = React.createClass({
       </section>
     </div>;
   }
-
 });
 
 module.exports = Home;

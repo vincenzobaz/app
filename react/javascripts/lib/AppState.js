@@ -9,6 +9,7 @@ module.exports = function getAppState() {
   return {
     isLoggedIn: UserStore.isLoggedIn(),
     user: UserStore.current(),
+    currentGameId: Session.get('currentGameId'),
     currentGame: Session.get('currentGame'),
     games: GameStore.list(),
     joinRequests: JoinRequestStore.list()

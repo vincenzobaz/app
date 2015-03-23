@@ -3,7 +3,6 @@
 'use strict';
 
 var React = require('react'),
-    Router = require('react-router'),
     Board = require('../components/Board'),
     AppState = require('../AppState'),
     GameStore = require('../stores/GameStore'),
@@ -14,8 +13,6 @@ var React = require('react'),
 
 var PlayGame = React.createClass({
 
-  mixins: [Router.State],
-
   getInitialState() {
     return {
       currentGame: this.props.currentGame
@@ -24,13 +21,13 @@ var PlayGame = React.createClass({
 
   render() {
     debug('currentGame',   this.state.currentGame);
-    debug('gameId',        this.getParams().gameId);
+    debug('gameId',        this.state.currentGameId);
     debug('isPlaying',     this.isPlayingGame());
     debug('currentGameId', this.isPlayingGame() && this.state.currentGame.id);
     debug('inCreation',    this.isGameInCreation());
     debug('willPlay',      this.isPlayingGame() && this.isOnCurrentGame());
 
-    var gameId = this.getParams().gameId;
+    var gameId = this.state.currentGameId;
     var header = <div></div>;
 
     if (this.isOnCurrentGame() && this.hasGameEnded()) {
@@ -100,7 +97,7 @@ var PlayGame = React.createClass({
   isOnCurrentGame() {
     return this.withGame(game => {
       var currentGameId = game.getId();
-      var gameId = this.getParams().gameId;
+      var gameId = this.state.currentGameId;
 
       return currentGameId === gameId;
     }, true);

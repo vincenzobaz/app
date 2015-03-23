@@ -7,12 +7,8 @@ require('./rock-hammer');
 
 // Expose React to enable the React Dev Tools.
 var React = window.React = require('react'),
-    Router = require('react-router'),
-    Route = Router.Route,
-    DefaultRoute = Router.DefaultRoute,
     Main = require('./lib/handlers/Main'),
-    Welcome = require('./lib/handlers/Welcome'),
-    PlayGame = require('./lib/handlers/PlayGame'),
+    Footer = require('./lib/components/Footer'),
     ErrorStore = require('./lib/stores/ErrorStore'),
     ErrorHandler = require('./lib/components/ErrorHandler'),
     debug = window.debug = require('debug');
@@ -25,21 +21,12 @@ ErrorStore.register();
 var $$ = document.getElementById.bind(document);
 
 var App = {
-  routes: (
-    <Route path="/" handler={Main}>
-      <DefaultRoute name="welcome" handler={Welcome} />
-      <Route name="play" path="/play/:gameId/" handler={PlayGame} />
-    </Route>
-  ),
-
   run() {
-    Router.run(this.routes, Router.HistoryLocation, Handler => {
-      React.render(<Handler />, $$('app'));
-      // React.render(<ErrorHandler store={ErrorStore} />, $$('error'));
-      debug('app')('launched');
-    })
+    React.render(<Main />, $$('app'));
+    React.render(<Footer />, $$('js-footer'));
+    // React.render(<ErrorHandler store={ErrorStore} />, $$('error'));
   }
 };
 
-Meteor.startup(App.run.bind(App));
+Meteor.startup(App.run);
 

@@ -5,10 +5,9 @@
 /*jshint -W079 */
 var React = require('react'),
     AppState = require('../AppState'),
-    Router = require('react-router'),
-    RouteHandler = Router.RouteHandler,
     Home = require('./Home'),
     Dashboard = require('./Dashboard'),
+    Welcome = require('./Welcome'),
     debug = require('debug')('Main');
 
 var Main = React.createClass({
@@ -20,14 +19,34 @@ var Main = React.createClass({
   },
 
   render() {
-    if (!this.state.isLoggedIn) {
-      return <Home />;
+    if (this.state.isLoggedIn) {
+      return this.renderDashboard();
+    }
+
+    return this.renderHome()
+  },
+
+  renderHome() {
+    return <Home />;
+  },
+
+  renderDashboard() {
+    return (
+      <Dashboard {...this.state}>
+        {this.renderInner()}
+      </Dashboard>
+    );
+  },
+
+  renderInner() {
+    if (this.state.currentGame != null) {
+      return (
+        <PlayGame {...this.state} />
+      );
     }
 
     return (
-      <Dashboard {...this.state}>
-        <RouteHandler {...this.state} />
-      </Dashboard>
+      <Welcome {...this.state} />
     );
   }
 

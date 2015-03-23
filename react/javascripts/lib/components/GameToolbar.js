@@ -6,7 +6,6 @@
 var React = require('react'),
     FriendsAutocomplete = require('./FriendsAutocomplete'),
     GameStore = require('../stores/GameStore'),
-    Router = require('react-router'),
     Bootstrap = require('react-bootstrap'),
     ModalTrigger = Bootstrap.ModalTrigger,
     QuitGameModal = require('./modals/QuitGameModal'),
@@ -25,7 +24,7 @@ var GameToolbar = React.createClass({
 
   onFriendSelect(selection) {
     GameStore.start(selection).then(game => {
-      Router.transitionTo('play', {gameId: game.gameId});
+      debug('TODO: Switch to new game');
     });
   },
 
