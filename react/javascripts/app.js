@@ -13,7 +13,6 @@ var React = window.React = require('react'),
     Main = require('./lib/handlers/Main'),
     Welcome = require('./lib/handlers/Welcome'),
     PlayGame = require('./lib/handlers/PlayGame'),
-    Footer = require('./lib/components/Footer'),
     ErrorStore = require('./lib/stores/ErrorStore'),
     ErrorHandler = require('./lib/components/ErrorHandler'),
     debug = window.debug = require('debug');
@@ -36,7 +35,6 @@ var App = {
   run() {
     Router.run(this.routes, Router.HistoryLocation, Handler => {
       React.render(<Handler />, $$('app'));
-      React.render(<Footer />, $$('js-footer'));
       // React.render(<ErrorHandler store={ErrorStore} />, $$('error'));
       debug('app')('launched');
     })

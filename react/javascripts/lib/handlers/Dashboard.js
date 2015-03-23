@@ -5,7 +5,8 @@
 var React = require('react'),
     Players = require('../components/Players'),
     CurrentGames = require('../components/CurrentGames'),
-    JoinRequests = require('../components/JoinRequests');
+    JoinRequests = require('../components/JoinRequests'),
+    Footer = require('../components/Footer');
 
 var Dashboard = React.createClass({
 
@@ -28,6 +29,13 @@ var Dashboard = React.createClass({
             </div>
           </div>
         </div>
+        <nav id="navigation-toggle" role="navigation">
+          <div className="grid-container">
+            <div id="js-footer" className="grid-100">
+              <Footer />
+            </div>
+          </div>
+        </nav>
       </div>
     );
   }
