@@ -8,3 +8,5 @@ meteor-platform
 autopublish
 insecure
 reactjs:react
+service-configuration
+accounts-facebook

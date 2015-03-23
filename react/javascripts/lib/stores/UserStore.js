@@ -10,8 +10,15 @@ function hydrate(user) {
 
 var UserStore = {
 
+  isLoggedIn() {
+    return Meteor.userId() != null;
+  },
+
   current() {
-    var user = Users.findOne({firstName: 'Romain'});
+    if (!this.isLoggedIn()) {
+      return null;
+    }
+    var user = Meteor.user();
     return hydrate(user);
   },
 

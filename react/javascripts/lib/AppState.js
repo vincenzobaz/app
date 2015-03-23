@@ -7,6 +7,7 @@ var GameStore = require('./stores/GameStore');
 
 module.exports = function getAppState() {
   return {
+    isLoggedIn: UserStore.isLoggedIn(),
     user: UserStore.current(),
     currentGame: Session.get('currentGame'),
     games: GameStore.list(),
