@@ -13,18 +13,17 @@ var React = window.React = require('react'),
     ErrorHandler = require('./lib/components/ErrorHandler'),
     debug = window.debug = require('debug');
 
-var Facebook = require('./lib/helpers/Facebook');
+// var Facebook = require('./lib/helpers/Facebook');
+// Facebook.init();
 
 ErrorStore.register();
-// Facebook.init();
 
 var $$ = document.getElementById.bind(document);
 
 var App = {
   run() {
     React.render(<Main />, $$('app'));
-    React.render(<Footer />, $$('js-footer'));
-    // React.render(<ErrorHandler store={ErrorStore} />, $$('error'));
+    React.render(<ErrorHandler store={ErrorStore} />, $$('error'));
   }
 };
 
