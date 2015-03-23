@@ -39,15 +39,11 @@ var Main = React.createClass({
   },
 
   renderInner() {
-    if (this.state.currentGame != null) {
-      return (
-        <PlayGame {...this.state} />
-      );
+    if (this.state.currentGameId != null) {
+      return <PlayGame {...this.state} />;
     }
 
-    return (
-      <Welcome {...this.state} />
-    );
+    return <Welcome {...this.state} />;
   }
 
 });
