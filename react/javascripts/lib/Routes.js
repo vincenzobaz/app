@@ -20,14 +20,6 @@ function wrap(path) {
 }
 
 var Routes = {
-  Home: {
-    index: wrap('/home/')
-  },
-
-  About: {
-    index: wrap('/about/')
-  },
-
   Assets: {
     at: function(path) {
       return url('/' + (path + '').trim('/'));
