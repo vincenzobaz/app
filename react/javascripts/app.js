@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 'use strict';
 
 require('es6ify/node_modules/traceur/bin/traceur-runtime');

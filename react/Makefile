@@ -15,7 +15,7 @@ CLEAN_CSS := $(BIN_DIR)/cleancss
 
 NOTIFY := $(shell { type terminal-notifier || echo >/dev/null 2>&1; } 2>/dev/null)
 
-BROWSERIFY_TRANSFORMS = -t reactify -t es6ify
+BROWSERIFY_OPTIONS = -t babelify -t envify --extension=.jsx
 
 js_dir := javascripts
 js_vendor_dir := $(js_dir)/vendor
@@ -32,12 +32,12 @@ sass_files := $(css_dir)/all.scss $(css_dir)/lte-ie8.scss
 every_sass_files := $(wildcard $(css_dir)/**/*.scss)
 css_files := $(sass_files:.scss=.css)
 
-build_dist := $(build_dir)/bundle.min.js
+build_dist := $(build_dir)/app.min.js
 build_js_prod := $(build_dir)/app.prod.js
 build_js_dev := $(build_dir)/app.js
 build_css := $(css_dir)/all.css
 
-.PHONY: all dist js css react lint watch watch_prod clean clean_dist clean_js clean_css livereload
+.PHONY: all dist js css react lint watch watch_prod clean clean_dist clean_js clean_css
 
 all: js css
 
@@ -55,13 +55,13 @@ $(build_dist): $(js_vendors) $(build_js_prod)
 
 $(build_js_prod): $(app_js) $(js_files)
 	@echo -n "Building $@... "
-	@NODE_ENV=production $(BROWSERIFY) $(BROWSERIFY_TRANSFORMS) $(app_js) | $(ENVIFY) > $@
+	@NODE_ENV=production $(BROWSERIFY) $(BROWSERIFY_OPTIONS) $(app_js) | $(ENVIFY) > $@
 	@echo "Done."
 	@$(NOTIFY) -title 'Build done.' -message 'Successful build of $@.'
 
 $(build_js_dev): $(app_js) $(js_files)
 	@echo -n "Building $@... "
-	@NODE_ENV=development $(BROWSERIFY) --debug $(BROWSERIFY_TRANSFORMS) $(app_js) | $(ENVIFY) > $@
+	@NODE_ENV=development $(BROWSERIFY) --debug $(BROWSERIFY_OPTIONS) $(app_js) | $(ENVIFY) > $@
 	@echo "Done."
 	@$(NOTIFY) -title 'Build done.' -message 'Successful build of $@.'
 
@@ -81,15 +81,15 @@ lint: $(app_js) $(js_files)
 	fi
 
 watch:
-	@NODE_ENV=development $(WATCHIFY) -v --debug $(BROWSERIFY_TRANSFORMS) -t envify -o $(build_js_dev) $(app_js)
+	@NODE_ENV=development $(WATCHIFY) -v --debug $(BROWSERIFY_OPTIONS) -o $(build_js_dev) $(app_js)
 
 watch_prod:
-	@NODE_ENV=production $(WATCHIFY) -v $(BROWSERIFY_TRANSFORMS) -t envify -t uglifyify -o $(build_js_dev) $(app_js)
+	@NODE_ENV=production $(WATCHIFY) -v $(BROWSERIFY_OPTIONS) -t uglifyify -o $(build_js_dev) $(app_js)
 
 clean: clean_dist clean_js clean_css
 
 clean_dist:
-	rm -rf $(build_dir)/{app.dist.js,bundle.min.js}
+	rm -rf $(build_dir)/{app.dist.js}
 
 clean_js:
 	rm -rf $(build_dir)/app.js

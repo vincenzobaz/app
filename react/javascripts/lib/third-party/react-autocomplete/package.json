@@ -2,7 +2,7 @@
   "name": "react-autocomplete",
   "version": "0.0.2",
   "description": "react-autocomplete (combobox) =============================",
-  "main": "lib/main.js",
+  "main": "lib/main.jsx",
   "scripts": {
     "test": "echo \"no tests yet, just trust me\" && exit 0"
   },
