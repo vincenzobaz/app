@@ -7,6 +7,7 @@ var React = require('react'),
     GameToolbar = require('./GameToolbar'),
     Routes = require('../Routes');
 
+// TODO: Add PropTypes
 var Footer = React.createClass({
 
   render() {

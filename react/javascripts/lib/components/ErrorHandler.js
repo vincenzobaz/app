@@ -8,6 +8,7 @@ var NetworkErrorModal = require('./modals/NetworkErrorModal');
 var GenericErrorModal = require('./modals/GenericErrorModal');
 var OverlayMixin = require('react-bootstrap').OverlayMixin;
 
+// TODO: Add PropTypes
 var ErrorHandler = React.createClass({
 
   mixins: [OverlayMixin],

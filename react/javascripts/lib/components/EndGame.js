@@ -7,6 +7,7 @@ var React = require('react'),
     Modal = require('react-bootstrap').Modal,
     LocalStorageMixin = require('react-localstorage');
 
+// TODO: Add PropTypes
 var EndGame = React.createClass({
 
   mixins: [LocalStorageMixin],

@@ -3,6 +3,7 @@
 
 var querystring = require('querystring');
 
+// FIXME: Get rid of URL object.
 function url(path) {
   return {
     url: path,

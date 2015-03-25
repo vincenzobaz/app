@@ -3,6 +3,7 @@
 
 'use strict';
 
+// TODO: Make this a component
 var MultiStep = {
 
   steps: [],

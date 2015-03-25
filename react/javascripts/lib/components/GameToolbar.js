@@ -12,6 +12,7 @@ var React = require('react'),
     AppState = require('../AppState'),
     debug = require('debug')('GameToolbar');
 
+// TODO: Add PropTypes
 var GameToolbar = React.createClass({
 
   mixins: [ReactMeteor.Mixin],
