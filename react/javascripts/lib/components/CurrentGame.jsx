@@ -2,7 +2,7 @@
 'use strict';
 
 var React = require('react'),
-    gameShape = require('./shapes').game;
+    shapes = require('./shapes');
 
 // TODO: Infer turn from the game's current player
 //       rather than having the turn be part of it.
@@ -10,7 +10,7 @@ var React = require('react'),
 var CurrentGame = React.createClass({
 
   propTypes: {
-    game: gameShape
+    game: shapes.Game
   },
 
   render() {

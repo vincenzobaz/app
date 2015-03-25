@@ -3,12 +3,16 @@
 
 var React = require('react'),
     Modal = require('react-bootstrap').Modal,
-    LocalStorageMixin = require('react-localstorage');
+    LocalStorageMixin = require('react-localstorage'),
+    shapes = require('../shapes');
 
-// TODO: Add PropTypes
 var EndGame = React.createClass({
 
   mixins: [LocalStorageMixin],
+
+  propTypes: {
+    currentGame: shapes.Game
+  },
 
   getInitialState() {
     return {
@@ -39,7 +43,7 @@ var EndGame = React.createClass({
   },
 
   renderTitle() {
-    if (this.hasWon()) {
+    if (this.haveWon()) {
       return 'You won!';
     }
 
@@ -47,7 +51,7 @@ var EndGame = React.createClass({
   },
 
   renderBody() {
-    if (this.hasWon()) {
+    if (this.haveWon()) {
       return (
         <div>
           <p>Congratulations, you have won the game!</p>
@@ -62,12 +66,9 @@ var EndGame = React.createClass({
     )
   },
 
-  hasWon() {
+  haveWon() {
     var game = this.props.game;
-    var opponent = game.opponent.facebookId;
-    var winner = game.winData.wonBy;
-
-    return opponent !== winner;
+    return game.isWonBy(game.getOpponent());
   },
 
   onRequestHide() {

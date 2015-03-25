@@ -8,9 +8,9 @@ var React = require('react'),
 var Welcome = React.createClass({
 
   propTypes: {
-    user: shapes.user.isRequired,
-    joinRequests: React.PropTypes.arrayOf(shapes.joinRequest),
-    games: React.PropTypes.arrayOf(shapes.game)
+    user: shapes.User.isRequired,
+    joinRequests: React.PropTypes.arrayOf(shapes.JoinRequest),
+    games: React.PropTypes.arrayOf(shapes.Game)
   },
 
   switchToTraining() {

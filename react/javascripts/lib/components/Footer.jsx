@@ -3,10 +3,14 @@
 
 var React = require('react'),
     GameToolbar = require('./GameToolbar'),
-    Routes = require('../Routes');
+    Routes = require('../Routes'),
+    shapes = require('./shapes');
 
-// TODO: Add PropTypes
 var Footer = React.createClass({
+
+  propTypes: {
+    currentGame: shapes.Game
+  },
 
   render() {
     return (

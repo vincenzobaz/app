@@ -11,7 +11,7 @@ var React = require('react'),
 var QuitGameModal = React.createClass({
 
   propTypes: {
-    game: shapes.game.isRequired,
+    game: shapes.Game.isRequired,
     onResume: React.PropTypes.func.isRequired,
     onQuit: React.PropTypes.func.isRequired,
     onRequestHide: React.PropTypes.func.isRequired

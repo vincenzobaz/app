@@ -3,12 +3,12 @@
 
 var React = require('react'),
     JoinRequest = require('./JoinRequest'),
-    joinRequestShape = require('./shapes').joinRequest;
+    shapes = require('./shapes');
 
 var JoinRequests = React.createClass({
 
   propTypes: {
-    requests: React.PropTypes.arrayOf(joinRequestShape)
+    requests: React.PropTypes.arrayOf(shapes.JoinRequest)
   },
 
   render() {

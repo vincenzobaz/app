@@ -7,7 +7,7 @@ var React = require('react'),
 var Player = React.createClass({
 
   propTypes: {
-    player: shapes.user,
+    player: shapes.User.isRequired,
     isOpponent: React.PropTypes.bool,
     isTurn: React.PropTypes.bool.isRequired,
     score: React.PropTypes.number.isRequired

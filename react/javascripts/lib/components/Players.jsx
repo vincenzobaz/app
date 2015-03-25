@@ -8,8 +8,8 @@ var React = require('react'),
 var Players = React.createClass({
 
   propTypes: {
-    game: shapes.game,
-    user: shapes.user.isRequired
+    game: shapes.Game,
+    user: shapes.User.isRequired
   },
 
   render() {

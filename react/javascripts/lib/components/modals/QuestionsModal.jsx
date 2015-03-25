@@ -22,10 +22,10 @@ var QuestionsModal = React.createClass({
   mixins: [MultiStepMixin],
 
   propTypes: {
-    gameId: React.PropTypes.number.isRequired,
+    gameId: React.PropTypes.string.isRequired,
     maxTime: React.PropTypes.number, /* in seconds */
-    tile: shapes.tile,
-    questions: React.PropTypes.arrayOf(shapes.question).isRequired,
+    tile: shapes.Tile,
+    questions: React.PropTypes.arrayOf(shapes.Question).isRequired,
     onRequestHide: React.PropTypes.func
   },
 

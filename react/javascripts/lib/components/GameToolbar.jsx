@@ -7,11 +7,14 @@ var React = require('react'),
     Bootstrap = require('react-bootstrap'),
     ModalTrigger = Bootstrap.ModalTrigger,
     QuitGameModal = require('./modals/QuitGameModal'),
-    debug = require('debug')('GameToolbar');
-
-// TODO: Add PropTypes
+    debug = require('debug')('GameToolbar'),
+    shapes = require('./shapes');
 
 var GameToolbar = React.createClass({
+
+  propTypes: {
+    game: shapes.Game
+  },
 
   onFriendSelect(selection) {
     GameStore.start(selection).then(game => {

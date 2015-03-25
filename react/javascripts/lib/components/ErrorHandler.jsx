@@ -5,11 +5,15 @@ var React = require('react');
 var NetworkErrorModal = require('./modals/NetworkErrorModal');
 var GenericErrorModal = require('./modals/GenericErrorModal');
 var OverlayMixin = require('react-bootstrap').OverlayMixin;
+var shapes = require('./shapes');
 
-// TODO: Add PropTypes
 var ErrorHandler = React.createClass({
 
   mixins: [OverlayMixin],
+
+  propTypes: {
+    store: shapes.EventEmitter
+  },
 
   interval: null,
 

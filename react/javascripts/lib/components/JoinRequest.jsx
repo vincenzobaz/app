@@ -8,7 +8,7 @@ var React = require('react'),
 var JoinRequest = React.createClass({
 
   propTypes: {
-    request: shapes.joinRequest
+    request: shapes.JoinRequest
   },
 
   render() {

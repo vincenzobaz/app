@@ -9,7 +9,6 @@ var React = require('react'),
     Item = Autocomplete.Option,
     fuzzy = require('fuzzy');
 
-// TODO: Add PropTypes
 var FriendsAutocomplete = React.createClass({
 
   propTypes: {

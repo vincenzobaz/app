@@ -3,13 +3,13 @@
 
 var React = require('react'),
     CurrentGame = require('./CurrentGame'),
-    gameShape = require('./shapes').game,
+    shapes = require('./shapes'),
     sortBy = require('lodash.sortby');
 
 var CurrentGames = React.createClass({
 
   propTypes: {
-    games: React.PropTypes.arrayOf(gameShape).isRequired
+    games: React.PropTypes.arrayOf(shapes.Game).isRequired
   },
 
   render() {
