@@ -21,7 +21,7 @@ var Footer = React.createClass({
         <li className=''>
           <a href="#">About</a>
         </li>
-        <GameToolbar />
+        <GameToolbar game={this.props.currentGame} />
       </ul>
     );
   }

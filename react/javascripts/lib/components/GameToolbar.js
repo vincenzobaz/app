@@ -9,19 +9,11 @@ var React = require('react'),
     Bootstrap = require('react-bootstrap'),
     ModalTrigger = Bootstrap.ModalTrigger,
     QuitGameModal = require('./modals/QuitGameModal'),
-    AppState = require('../AppState'),
     debug = require('debug')('GameToolbar');
 
 // TODO: Add PropTypes
+
 var GameToolbar = React.createClass({
-
-  mixins: [ReactMeteor.Mixin],
-
-  getMeteorState() {
-    return {
-      game: AppState().currentGame
-    };
-  },
 
   onFriendSelect(selection) {
     GameStore.start(selection).then(game => {
@@ -31,7 +23,7 @@ var GameToolbar = React.createClass({
 
   onQuit() {
     debug('quit game');
-    GameStore.quit(this.state.game);
+    GameStore.quit(this.props.game);
   },
 
   onResume() {
@@ -55,12 +47,12 @@ var GameToolbar = React.createClass({
   },
 
   renderQuitGameButton() {
-    if (this.state.game == null) {
+    if (this.props.game == null) {
       return '';
     }
 
     return (
-      <ModalTrigger modal={<QuitGameModal game={this.state.game} onQuit={this.onQuit} onResume={this.onResume} />}>
+      <ModalTrigger modal={<QuitGameModal game={this.props.game} onQuit={this.onQuit} onResume={this.onResume} />}>
         <a role='button' data-toggle='modal' href='#modal-confirm'>
           <i className='icon-signout'></i>
           Quit this game
