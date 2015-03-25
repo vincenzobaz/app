@@ -7,10 +7,11 @@ var GameStore = require('./stores/GameStore');
 
 module.exports = function getAppState() {
   return {
-    isLoggedIn: UserStore.isLoggedIn(),
-    user: UserStore.current(),
-    currentGameId: Session.get('currentGameId'),
-    currentGame: Session.get('currentGame'),
+    isLoggedIn: UserStore.isLoggedIn() || false,
+    fbInited: Session.get('fbInited') || false,
+    user: UserStore.current() || null,
+    currentGameId: Session.get('currentGameId') || null,
+    currentGame: Session.get('currentGame') || null,
     games: GameStore.list(),
     joinRequests: JoinRequestStore.list()
   };

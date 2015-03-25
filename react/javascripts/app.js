@@ -11,15 +11,12 @@ var React = window.React = require('react'),
     ErrorHandler = require('./lib/components/ErrorHandler'),
     debug = window.debug = require('debug');
 
-// var Facebook = require('./lib/helpers/Facebook');
-// Facebook.init();
-
-ErrorStore.register();
-
 var $$ = document.getElementById.bind(document);
 
 var App = {
   run() {
+    ErrorStore.register();
+
     React.render(<Main />, $$('app'));
     React.render(<ErrorHandler store={ErrorStore} />, $$('error'));
   }
