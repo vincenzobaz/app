@@ -1,0 +1,27 @@
+[{
+  "id": "B1A6E852-C4DB-11E3-A846-EA4C74EB0A54",
+  "opponent": {
+    "firstName": "Melinda",
+    "lastName": "O'Neil",
+    "fullName": "Melinda O'Neil",
+    "avatarUrl": "/assets/images/avatar-2.jpg"
+  },
+  "waiting": false,
+  "score": {
+    "me": 3,
+    "them": 2
+  }
+}, {
+  "id": "a5c85cd2-9cd8-4960-b359-8f53ad05b8bc",
+  "opponent": {
+    "firstName": "Michele",
+    "lastName": "Catasta",
+    "fullName": "Michele Catasta",
+    "avatarUrl": "/assets/images/avatar-5.jpg"
+  },
+  "waiting": true,
+  "score": {
+    "me": 1,
+    "them": 2
+  }
+}]

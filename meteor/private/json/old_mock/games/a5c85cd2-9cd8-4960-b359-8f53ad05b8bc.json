@@ -1,0 +1,229 @@
+{
+  "id": "a5c85cd2-9cd8-4960-b359-8f53ad05b8bc",
+  "status": "playing",
+  "opponent": {
+    "firstName": "Michele",
+    "lastName": "Catasta",
+    "fullName": "Michele Catasta",
+    "avatarUrl": "/assets/images/avatar-5.jpg"
+  },
+  "waiting": true,
+  "score": {
+    "me": 1,
+    "them": 3
+  },
+  "tiles": [{
+    "category": "Bugout",
+    "type": "bugout",
+    "icon": "list",
+    "score": {
+      "me": 1,
+      "them": 0
+    },
+    "questions": [
+      {
+        "type": "Picture",
+        "data": {
+          "title": "Who commented on this picture?",
+          "picture": {
+            "url": "/assets/images/sample-landscape.jpg",
+            "width": 405,
+            "height": 300
+          },
+          "choices": [
+            {
+              "icon": {
+                "url": "/assets/images/avatar-3.jpg",
+                "width": 64,
+                "height": 64
+              },
+              "text": "John Doe",
+              "value": "John Doe"
+            },
+            {
+              "icon": {
+                "url": "/assets/images/avatar-4.jpg",
+                "width": 64,
+                "height": 64
+              },
+              "text": "Vivienne Westwood",
+              "value": "Vivienne Westwood"
+            },
+            {
+              "icon": {
+                "url": "/assets/images/avatar-5.jpg",
+                "width": 64,
+                "height": 64
+              },
+              "text": "Mark Zuckerberg",
+              "value": "Mark Zuckerberg"
+            },
+            {
+              "icon": {
+                "url": "/assets/images/avatar-6.jpg",
+                "width": 64,
+                "height": 64
+              },
+              "text": "Barak Obama",
+              "value": "Barak Obama"
+            }
+          ]
+        },
+        "answered": false
+      },
+      {
+        "type": "TimeRange",
+        "data": {
+          "title": "When did you write this comment?",
+          "post": {
+            "type": "text",
+            "text": "Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit :)"
+          },
+          "min": 1,
+          "max": 14,
+          "step": 1,
+          "default": 1,
+          "unit": "day"
+        },
+        "answered": false
+      },
+      {
+        "type": "Reorder",
+        "data": {
+          "items": [
+            {
+              "id": 4432,
+              "title": "B"
+            },
+            {
+              "id": 121,
+              "title": "A"
+            },
+            {
+              "id": 134,
+              "title": "D"
+            },
+            {
+              "id": 51,
+              "title": "C"
+            }
+          ]
+        },
+        "answered": false
+      },
+      {
+        "type": "MultipleChoice",
+        "data": {
+          "title": "Who tagged you in this post?",
+          "post": {
+            "type": "text",
+            "text": "Maecenas faucibus mollis interdum. Nullam id dolor id nibh ultricies vehicula ut id elit. — Mar 12, 2013"
+          },
+          "choices": [
+            {
+              "icon": {
+                "url": "/assets/images/avatar-3.jpg",
+                "width": 64,
+                "height": 64
+              },
+              "text": "John Doe",
+              "value": "John Doe"
+            },
+            {
+              "icon": {
+                "url": "/assets/images/avatar-4.jpg",
+                "width": 64,
+                "height": 64
+              },
+              "text": "Vivienne Westwood",
+              "value": "Vivienne Westwood"
+            },
+            {
+              "icon": {
+                "url": "/assets/images/avatar-5.jpg",
+                "width": 64,
+                "height": 64
+              },
+              "text": "Mark Zuckerberg",
+              "value": "Mark Zuckerberg"
+            },
+            {
+              "icon": {
+                "url": "/assets/images/avatar-6.jpg",
+                "width": 64,
+                "height": 64
+              },
+              "text": "Barak Obama",
+              "value": "Barak Obama"
+            }
+          ]
+        },
+        "answered": false
+      }
+    ]
+  }, {
+    "category": "Bugout",
+    "type": "bugout",
+    "icon": "list",
+    "score": {
+      "me": 0,
+      "them": 0
+    }
+  }, {
+    "category": "Picture quest",
+    "type": "picture",
+    "icon": "picture",
+    "score": {
+      "me": 0,
+      "them": 2
+    }
+  }, {
+    "category": "Lost in time",
+    "type": "calendar",
+    "icon": "calendar",
+    "score": {
+      "me": 2,
+      "them": 0
+    }
+  }, {
+    "category": "Questions about Michele",
+    "type": "opponent",
+    "icon": "opponent",
+    "score": {
+      "me": 1,
+      "them": 1
+    }
+  }, {
+    "category": "Geo guess",
+    "type": "geo",
+    "icon": "globe",
+    "score": {
+      "me": 1,
+      "them": 1
+    }
+  }, {
+    "category": "Already taken by Alice",
+    "type": "geo",
+    "icon": "globe",
+    "score": {
+      "me": 3,
+      "them": 0
+    }
+  }, {
+    "category": "Picture quest",
+    "type": "picture",
+    "icon": "picture",
+    "score": {
+      "me": 1,
+      "them": 2
+    }
+  }, {
+    "category": "Reorder",
+    "type": "bugout",
+    "icon": "list",
+    "score": {
+      "me": 0,
+      "them": 1
+    }
+  }]
+}

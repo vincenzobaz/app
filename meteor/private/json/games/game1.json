@@ -1,0 +1,11 @@
+{
+  "_id": "a5c85cd2-9cd8-4960-b359-8f53ad05b8bc",
+  "player1": "C99A157E-C4DB-11E3-BBED-EA4C74EB0A54",
+  "player2": "D0D4A282-C4DB-11E3-AF37-EA4C74EB0A54",
+  "player1Board": "C34A157E-C4DB-11E3-BBED-EA4C74EB0A54",
+  "player2Board": "C34A157E-A0D2-11E3-BBED-EA4C74EB0A54",
+  "status": "playing",
+  "playerTurn": 1,
+  "player1Scores": [0, 2, 0, 3, 0, 1, 0, 0, 1],
+  "player2Scores": [1, 0, 0, 2, 0, 3, 0, 2, 0]
+}
