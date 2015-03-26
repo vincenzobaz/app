@@ -15,8 +15,11 @@ var GameStore = {
   },
 
   start(opponent) {
-    var id = Games.insert({opponent: opponent});
-    return this.byId(id);
+    debug("start() is not implemented");
+    // Meteor.call('Game.start', opponent.getId(), (id) => {
+    //   Session.set('currentGameId', id);
+    //   Session.set('currentGame', this.load(id));
+    // });
   },
 
   load(id) {
@@ -26,6 +29,10 @@ var GameStore = {
 
   quit(game) {
     debug("quit() is not implemented");
+    // Meteor.call('Game.quit', game.getId(), () => {
+    //   Session.set('currentGameId', null);
+    //   Session.set('currentGame', null);
+    // });
   }
 
 };

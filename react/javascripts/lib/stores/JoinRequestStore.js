@@ -14,16 +14,19 @@ var JoinRequestStore = {
     return JoinRequests.find().fetch().map(hydrate);
   },
 
-  accept(id) {
+  accept(joinRequest) {
     debug("accept() is not implemented");
+    // Meteor.call('JoinRequest.accept', joinRequest.getId());
   },
 
-  decline(id) {
+  decline(joinRequest) {
     debug("decline() is not implemented");
+    // Meteor.call('JoinRequest.decline', joinRequest.getId());
   },
 
-  send(userId) {
+  send(user) {
     debug("send() is not implemented");
+    // Meteor.call('JoinRequest.send', user.getId());
   }
 
 };
