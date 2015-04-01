@@ -13,11 +13,15 @@ Meteor.startup(function () {
 
 
     if (Gameboards.find().count() == 0) {
-        console.log("We have no gameboards");
+        var board1 = JSON.parse(Assets.getText("json/gameboards/gameboard1.json"));
+        var board2 = JSON.parse(Assets.getText("json/gameboards/gameboard2.json"));
+        Gameboards.insert(board1);
+        Gameboards.insert(board2);
+
     }
 
     if (Games.find().count() == 0) {
-        var games = JSON.parse(Assets.getText("json/games/game1.json"));
+        var games = JSON.parse(Assets.getText("json/games/games.json"));
         _.map(games, function(g){
             Games.insert(g)
         });
