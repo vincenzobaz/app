@@ -8,7 +8,6 @@ var GameStore = require('./stores/GameStore');
 module.exports = function getAppState() {
   return {
     isLoggedIn: UserStore.isLoggedIn() || false,
-    fbInited: Session.get('fbInited') || false,
     user: UserStore.current() || null,
     currentGameId: Session.get('currentGameId') || null,
     currentGame: Session.get('currentGame') || null,

@@ -2,12 +2,13 @@
 'use strict';
 
 var React = require('react'),
+    ReactMeteor = require('../third-party/react-meteor'),
     AppState = require('../AppState'),
     Home = require('./Home'),
     Dashboard = require('./Dashboard'),
     Welcome = require('./Welcome'),
     debug = require('debug')('Main'),
-    Facebook = require('../helpers/Facebook');
+    FacebookStore = require('../stores/FacebookStore');
 
 var Main = React.createClass({
 
@@ -15,14 +16,6 @@ var Main = React.createClass({
 
   getMeteorState() {
     return AppState();
-  },
-
-  componentDidUpdate() {
-    // FIXME: Find a way not to login 2 times
-    if (this.state.isLoggedIn && !this.state.fbInited) {
-      Facebook.init();
-      Session.set('fbInited', true);
-    }
   },
 
   render() {

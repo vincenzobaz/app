@@ -2,8 +2,8 @@
 'use strict';
 
 var React = require('react'),
-    Facebook = require('../helpers/Facebook'),
     throttle = require('lodash.throttle'),
+    FacebookStore = require('../stores/FacebookStore'),
     Autocomplete = require('../third-party/react-autocomplete'),
     Combobox = Autocomplete.Combobox,
     Item = Autocomplete.Option,
@@ -53,7 +53,7 @@ var FriendsAutocomplete = React.createClass({
     if (this.pendingRequest && this.pendingRequest.abort) {
       this.pendingRequest.abort();
     }
-    this.pendingRequest = Facebook.getFriends();
+    this.pendingRequest = FacebookStore.getFriends();
     this.pendingRequest.done(friends => {
       this.setState({
         loading: false,

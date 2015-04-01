@@ -3,8 +3,8 @@
 
 var React = require('react'),
     Routes = require('../Routes'),
-    Facebook = require('../helpers/Facebook'),
-    renderIcon = require('../helpers/renderIcon');
+    renderIcon = require('../helpers/renderIcon'),
+    FacebookStore = require('../stores/FacebookStore');
 
 var FacebookPicture = React.createClass({
   propTypes: {
@@ -19,11 +19,11 @@ var FacebookPicture = React.createClass({
   },
 
   componentDidMount() {
-    Facebook.getAvatar(this.props.facebookId).then(imageUrl => {
+    FacebookStore.getAvatar(this.props.facebookId).then(imageUrl => {
       this.setState({
         imageUrl: imageUrl
       });
-    })
+    });
   },
 
   shouldComponentUpdate(nextProps, nextState) {
