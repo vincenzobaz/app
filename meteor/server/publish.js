@@ -1,3 +1,3 @@
 Meteor.publish("games", function () {
-    return Gameboards.find();
+    return Games.find({ $or: [{player1 : this.userId}, {player2 : this.userId}]});
 });

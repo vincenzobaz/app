@@ -12,9 +12,16 @@ Meteor.startup(function () {
 
 
 
-    //if (Gameboards.find().count() == 0){
-    //    console.log("We have no gameboards");
-    //}
+    if (Gameboards.find().count() == 0) {
+        console.log("We have no gameboards");
+    }
+
+    if (Games.find().count() == 0) {
+        var games = JSON.parse(Assets.getText("json/games/game1.json"));
+        _.map(games, function(g){
+            Games.insert(g)
+        });
+    }
 });
 
 
