@@ -64,6 +64,10 @@ var FB = Reminisce.Facebook = {
     var url = picture.data.url;
     this.avatars[facebookId] = url;
     return url;
+  },
+
+  getPermissions(user) {
+    return this.api(user, '/me/permissions').data.data;
   }
 
 };
@@ -83,6 +87,11 @@ Meteor.methods({
     this.unblock();
     var user = Meteor.users.findOne(this.userId);
     return FB.getFriends(user);
+  },
+  'Facebook.getPermissions'() {
+    this.unblock();
+    var user = Meteor.users.findOne(this.userId);
+    return FB.getPermissions(user);
   }
 });
 

@@ -1,10 +1,11 @@
 
-var React = require('react');
+var React = require('react'),
+    FacebookStore = require('../stores/FacebookStore');
 
 var Home = React.createClass({
 
   login() {
-    Meteor.loginWithFacebook();
+    FacebookStore.login();
   },
 
   render() {
