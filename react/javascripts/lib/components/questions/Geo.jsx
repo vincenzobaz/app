@@ -5,7 +5,7 @@ var React = require('react'),
     Button = require('react-bootstrap').Button,
     GoogleMap = require('../GoogleMap'),
     shapes = require('../shapes'),
-    config = require('../../config').geo,
+    conf = require('../../helpers/getConfig')('gmaps'),
     Post = require('../Post');
     // debug = require('debug')('Geo');
 
@@ -20,7 +20,7 @@ var Geo = React.createClass({
 
   getInitialState() {
     return {
-      marker: config.marker.initialPosition
+      marker: conf.marker.initialPosition
     }
   },
 
@@ -30,9 +30,9 @@ var Geo = React.createClass({
         <h4>{this.props.title}</h4>
         <Post post={this.props.post} />
         <div className="map">
-          <GoogleMap latitude={this.state.marker.latitude} longitude={this.state.marker.longitude} zoom={config.zoom}
+          <GoogleMap latitude={this.state.marker.latitude} longitude={this.state.marker.longitude} zoom={conf.zoom}
                      width={510} height={250}
-                     apiKey={config.apiKey} sensor={config.sensor}
+                     apiKey={conf.apiKey} sensor={conf.sensor}
                      onMarkerMove={this._onMarkerMove} />
         </div>
         <Button onClick={this._onDone}>Done</Button>
