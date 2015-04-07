@@ -1,15 +1,15 @@
 
 'use strict';
 
-var call = require('../helpers/meteor').call;
+var call = require('../helpers/meteor').call,
+    conf = require('../helpers/getConfig')('facebook');
 
 module.exports = {
 
-  login(cb) {
-    var service = ServiceConfiguration.configurations.findOne({service: 'facebook'});
+  login(cb = () => {}) {
     Meteor.loginWithFacebook({
-      requestPermissions: service.scope
-    }, cb || () => {});
+      requestPermissions: conf.scope
+    }, cb);
   },
 
   getUserInfo(fbUserId) {
