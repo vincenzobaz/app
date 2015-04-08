@@ -23,8 +23,15 @@ var UserStore = {
   },
 
   byId(id) {
-    var user = Users.findOne(id);
-    return hydrate(user);
+    var user = Meteor.users.findOne(id);
+    return user;
+    // return hydrate(user);
+  },
+
+  byFacebookId(id) {
+    var user = Meteor.users.findOne({'services.facebook.id': id});
+    return user;
+    // return hydrate(user);
   }
 
 };

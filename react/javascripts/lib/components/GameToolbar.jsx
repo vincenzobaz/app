@@ -2,24 +2,50 @@
 'use strict';
 
 var React = require('react'),
+    ReactMeteor = require('../third-party/react-meteor'),
     FriendsAutocomplete = require('./FriendsAutocomplete'),
     GameStore = require('../stores/GameStore'),
+    UserStore = require('../stores/UserStore'),
     Bootstrap = require('react-bootstrap'),
     ModalTrigger = Bootstrap.ModalTrigger,
     QuitGameModal = require('./modals/QuitGameModal'),
-    debug = require('debug')('GameToolbar'),
-    shapes = require('./shapes');
+    StartGameModal = require('./modals/StartGameModal'),
+    AppState = require('../AppState'),
+    debug = require('debug')('GameToolbar');
 
+// TODO: Lots of refactoring.
 var GameToolbar = React.createClass({
 
-  propTypes: {
-    game: shapes.Game
+  mixins: [ReactMeteor.Mixin],
+
+  getMeteorState() {
+    return {
+      showStartModal: Session.get('GameToolbar.showStartModal'),
+      friend: Session.get('GameToolbar.friend')
+    };
   },
 
-  onFriendSelect(selection) {
-    GameStore.start(selection).then(game => {
-      debug('TODO: Switch to new game');
-    });
+  onFriendSelect(friendId) {
+    friendId = '1550704362';
+    var friend = UserStore.byFacebookId(friendId);
+    Session.set('GameToolbar.friend', friend);
+    Session.set('GameToolbar.showStartModal', true);
+  },
+
+  startGame(friend) {
+    GameStore.start(friend.id).then(game =>
+      Session.set('currentGame', game)
+    );
+  },
+
+  onStart() {
+    Session.set('GameToolbar.showStartModal', false);
+    this.startGame(this.state.friend);
+  },
+
+  onAbortStart() {
+    Session.set('GameToolbar.showStartModal', false);
+    Session.set('GameToolbar.friend', null);
   },
 
   onQuit() {
@@ -32,6 +58,14 @@ var GameToolbar = React.createClass({
   },
 
   render() {
+    var startModal = '';
+    if (this.state.showStartModal && this.state.friend) {
+      startModal = <StartGameModal opponent={this.state.friend.profile}
+                                   onOk={this.onStart}
+                                   onCancel={this.onAbortStart}
+                                   onRequestHide={this.onAbortStart} />;
+    }
+
     return (
       <li className='manage-game right'>
         <span className='start-game'>
@@ -43,6 +77,7 @@ var GameToolbar = React.createClass({
         </span>
         &nbsp;
         {this.renderQuitGameButton()}
+        {startModal}
       </li>
     );
   },

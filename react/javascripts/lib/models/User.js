@@ -23,7 +23,7 @@ class User {
   }
 
   getFullName() {
-    return `${this.firstName} ${this.lastName}`;
+    return this.name || `${this.firstName} ${this.lastName}`;
   }
 
   getFacebookId() {
