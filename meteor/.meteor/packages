@@ -11,3 +11,5 @@ service-configuration
 accounts-facebook
 grigio:babel
 http
+jparker:crypto-sha256
+jparker:crypto-hmac

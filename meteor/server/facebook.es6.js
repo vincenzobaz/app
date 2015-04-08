@@ -14,6 +14,15 @@ var FB = Reminisce.Facebook = {
 
   API_URL: 'https://graph.facebook.com/v2.3',
 
+  get appSecret() {
+    var conf = ServiceConfiguration.configurations.findOne({service: 'facebook'});
+    return conf.secret;
+  },
+
+  computeProof(accessToken) {
+    return CryptoJS.HmacSHA256(accessToken, this.appSecret).toString();
+  },
+
   api(user, url, options = {}) {
     if (!user) {
       throw new Meteor.Error(500, "You must specify the current user");
@@ -26,7 +35,10 @@ var FB = Reminisce.Facebook = {
       throw new Meteor.Error(401, "User isn't logged in or doesn't have an access token");
     }
 
-    var params = Object.assign(options, { access_token: accessToken });
+    var params = Object.assign(options, {
+      access_token: accessToken,
+      appsecret_proof: this.computeProof(accessToken)
+    });
 
     try {
       var res = HTTP.get(fullUrl, { params });
