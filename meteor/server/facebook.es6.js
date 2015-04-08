@@ -8,7 +8,7 @@
 // TODO: Fix caching.
 var FB = Reminisce.Facebook = {
 
-  users: {},
+  usersInfo: {},
   friends: {},
   avatars: {},
 
@@ -48,37 +48,39 @@ var FB = Reminisce.Facebook = {
     }
 
     var friends = this.api(user, '/me/friends').data;
-    this.friends[user._id] = friends.data;
-    return friends.data;
+    // this.friends[user._id] = friends;
+    return friends;
   },
 
-  getUserInfo(user, userId) {
-    if (this.users.hasOwnProperty(userId)) {
-      return this.users[userId];
+  getUserInfo(user, fbUserId) {
+    var key = `${user._id}/${fbUserId}`;
+    if (this.usersInfo.hasOwnProperty(key)) {
+      return this.usersInfo[key];
     }
 
-    var userInfo = this.api(user, '/' + userId).data;
-    this.users[userId] = userInfo;
+    var userInfo = this.api(user, '/' + fbUserId);
+    this.usersInfo[key] = userInfo;
     return userInfo;
   },
 
-  getAvatar(user, facebookId) {
-    if (this.avatars.hasOwnProperty(facebookId)) {
-      return this.avatars[facebookId];
+  getAvatar(user, fbUserId, type = 'small') {
+    var key = `${user._id}/${fbUserId}`;
+    if (this.avatars.hasOwnProperty(key)) {
+      return this.avatars[key];
     }
 
-    var picture = this.api(user, `/${facebookId}/picture`, {
+    var picture = this.api(user, `/${fbUserId}/picture`, {
       redirect: false,
-      type: 'square'
+      type: type
     }).data;
 
-    var url = picture.data.url;
-    this.avatars[facebookId] = url;
+    var url = picture.url;
+    this.avatars[key] = url;
     return url;
   },
 
   getPermissions(user) {
-    return this.api(user, '/me/permissions').data.data;
+    return this.api(user, '/me/permissions').data;
   }
 
 };
@@ -89,10 +91,10 @@ Meteor.methods({
     var user = Meteor.users.findOne(this.userId);
     return FB.getUserInfo(user, userId);
   },
-  'Facebook.getAvatar'(facebookId) {
+  'Facebook.getAvatar'(facebookId, type) {
     this.unblock();
     var user = Meteor.users.findOne(this.userId);
-    return FB.getAvatar(user, facebookId);
+    return FB.getAvatar(user, facebookId, type);
   },
   'Facebook.getFriends'() {
     this.unblock();
