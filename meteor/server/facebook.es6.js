@@ -28,7 +28,18 @@ var FB = Reminisce.Facebook = {
 
     var params = Object.assign(options, { access_token: accessToken });
 
-    return HTTP.get(fullUrl, { params });
+    try {
+      var res = HTTP.get(fullUrl, { params });
+
+      if (res.statusCode !== 200) {
+        // TODO: Handle errors.
+      }
+
+      return res.data;
+    }
+    catch (e) {
+      return {error: e};
+    }
   },
 
   getFriends(user) {
