@@ -7,6 +7,7 @@ Package.describe({
 
 Package.onUse(function (api) {
 	api.use("coffeescript", ["client", "server"]);
+	api.add_files("tests/jasmine/client/integration/sample/spec/gamesClientSpec.js",["client"]);
 	api.add_files("tests/jasmine/client/integration/sample/spec/joinRequestClientSpec.js",["client"]);
 	api.add_files("tests/jasmine/client/integration/sample/spec/PlayerSpec.js",["client"]);
 	api.add_files("tests/jasmine/client/integration/sample/spec/SpecMatchers.js",["client"]);

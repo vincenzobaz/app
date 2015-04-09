@@ -49,7 +49,7 @@ Meteor.methods({
                 var game = new Game(null, Meteor.userId(), userId, null, null, "waiting", _.random(1,2), null, null);
                 game.save(function(error, gameId){
                    if (!error){
-                       future.return({status: "success", requestId: requestId, gameId: "blblb"});
+                       future.return({status: "success", requestId: requestId, gameId: gameId});
                    } else {
                        future.return({status: "error", error: error});
                    }
