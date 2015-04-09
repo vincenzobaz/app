@@ -44,19 +44,21 @@ Meteor.methods({
 
     'JoinRequest.send': function(userId) {
         var future = new Future();
-        JoinRequests.insert({from: Meteor.userId(), to: userId}, function(error, requestId){
+        var game = new Game(null, Meteor.userId(), userId, null, null, "waiting", _.random(1,2), null, null);
+        game.save(function(error, gameId){
             if (!error){
-                var game = new Game(null, Meteor.userId(), userId, null, null, "waiting", _.random(1,2), null, null);
-                game.save(function(error, gameId){
-                   if (!error){
-                       future.return({status: "success", requestId: requestId, gameId: gameId});
-                   } else {
-                       future.return({status: "error", error: error});
-                   }
-                });
+                var join = new JoinRequest(null, Meteor.userId(), userId, gameId);
+                join.save(function(error, requestId){
+                    if (!error){
+                        future.return({status: "success", requestId: requestId});
+                    } else {
+                        future.return({status: "error", error: error});
+                    }
+                })
             } else {
                 future.return({status: "error", error: error});
             }
+
         });
         return future.wait();
 

@@ -20,17 +20,21 @@ Jasmine.onTest(function () {
 
         });
 
-        it("should insert a join request and return success on successfull insert", function(done) {
+        it("should insert a join request and return success on successful insert", function(done) {
             Meteor.call('JoinRequest.send', otherUserId, function(error, result){
                 expect(result).toBeDefined();
                 expect(result.status).toBe("success");
+                expect(result.requestId).toBeDefined();
                 var request = JoinRequests.findOne({_id: result.requestId});
                 expect(request).toBeDefined();
                 expect(request.from).toBe(userId);
                 expect(request.to).toBe(otherUserId);
+                expect(request.gameId).toBeDefined();
+                var game = Games.findOne(request.gameId);
+                expect(game).toBeDefined();
+                expect(game.player1).toBe(userId);
+                expect(game.player2).toBe(otherUserId);
                 done();
-
-
             });
         });
 
