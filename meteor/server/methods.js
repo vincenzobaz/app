@@ -40,7 +40,14 @@ Meteor.methods({
     },
 
     'JoinRequest.send': function(userId) {
-        return {status: "success"};
+        JoinRequests.insert({from: this.userId, to: userId}, function(error, id){
+            if (!error){
+                return {status: "success"};
+            } else {
+                return {status: "error", error: error};
+            }
+        });
+
     },
 
     'Game.start': function(userId) {
@@ -64,7 +71,7 @@ Meteor.methods({
         return {
             status: "success",
             data: {
-                correct: 2,
+                correct: 3,
                 wrong: 1
             }
         }

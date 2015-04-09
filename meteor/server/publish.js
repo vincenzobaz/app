@@ -15,3 +15,8 @@ Meteor.publish("gameBoards", function(){
      });
     return Gameboards.find({_id: {$in: playerBoards}});
 });
+
+Meteor.publish("joinRequests", function(){
+    //return JoinRequests.find({$or: [{from: this.userId}, {to: this.userId}]})
+    return JoinRequests.find({});
+});
