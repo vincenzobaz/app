@@ -44,10 +44,16 @@ Meteor.methods({
 
     'JoinRequest.send': function(userId) {
         var future = new Future();
-        console.log("received");
-        JoinRequests.insert({from: Meteor.userId(), to: userId}, function(error, id){
+        JoinRequests.insert({from: Meteor.userId(), to: userId}, function(error, requestId){
             if (!error){
-                future.return({status: "success", id: id});
+                var game = new Game(null, Meteor.userId(), userId, null, null, "waiting", _.random(1,2), null, null);
+                game.save(function(error, gameId){
+                   if (!error){
+                       future.return({status: "success", requestId: requestId, gameId: "blblb"});
+                   } else {
+                       future.return({status: "error", error: error});
+                   }
+                });
             } else {
                 future.return({status: "error", error: error});
             }

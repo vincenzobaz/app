@@ -25,12 +25,11 @@ describe("JoinRequest", function() {
                 expect(result.status).toBe("success");
                 expect(JoinRequests.find().count()).toBe(1);
 
-                Meteor.call('JoinRequest.decline', result.id, function(error, result){
+                Meteor.call('JoinRequest.decline', result.requestId, function(error, result){
                     expect(result).toBeDefined();
                     expect(result.status).toBe("success");
                     expect(JoinRequests.find().count()).toBe(0);
                     done();
-
                 });
 
 
@@ -41,6 +40,5 @@ describe("JoinRequest", function() {
     });
 
 
-
-
 });
+
