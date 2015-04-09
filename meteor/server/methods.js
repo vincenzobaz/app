@@ -30,8 +30,11 @@ Meteor.methods({
     },
 
     'JoinRequest.decline': function(id) {
-        console.log("Join request declined" + id);
-        return {status: "success", error: ""};
+        JoinRequests.remove(id);
+        var future = new Future();
+        future.return({status: "success", error: null});
+
+        return future.wait();
     },
 
     'JoinRequest.accept': function(id) {
@@ -41,11 +44,10 @@ Meteor.methods({
 
     'JoinRequest.send': function(userId) {
         var future = new Future();
-
-        JoinRequests.insert({from: Meteor.userId, to: userId}, function(error, id){
+        console.log("received");
+        JoinRequests.insert({from: Meteor.userId(), to: userId}, function(error, id){
             if (!error){
-                console.log("created game for " + userId + " and me " + Meteor.userId());
-                future.return({status: "success"});
+                future.return({status: "success", id: id});
             } else {
                 future.return({status: "error", error: error});
             }
