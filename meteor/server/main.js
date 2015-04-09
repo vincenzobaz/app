@@ -10,6 +10,7 @@ Meteor.startup(function () {
     //    Meteor.users.insert(user1)
     //}
 
+    Future = Npm.require('fibers/future');
 
 
     if (Gameboards.find().count() == 0) {

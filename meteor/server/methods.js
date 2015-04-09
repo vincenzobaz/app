@@ -40,13 +40,17 @@ Meteor.methods({
     },
 
     'JoinRequest.send': function(userId) {
-        JoinRequests.insert({from: this.userId, to: userId}, function(error, id){
+        var future = new Future();
+
+        JoinRequests.insert({from: Meteor.userId, to: userId}, function(error, id){
             if (!error){
-                return {status: "success"};
+                console.log("created game for " + userId + " and me " + Meteor.userId());
+                future.return({status: "success"});
             } else {
-                return {status: "error", error: error};
+                future.return({status: "error", error: error});
             }
         });
+        return future.wait();
 
     },
 
