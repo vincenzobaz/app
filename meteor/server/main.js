@@ -12,12 +12,22 @@ Meteor.startup(function () {
 
     Future = Npm.require('fibers/future');
 
+    var board = JSON.parse(Assets.getText("json/gameboards/gameboard1.json"));
 
-    if (Gameboards.find().count() == 0) {
+    var realBoard = new GameBoard.FromRaw("something", board);
+
+    //console.log(realBoard);
+    //console.log(realBoard.tiles);
+    prettyLog(realBoard);
+
+
+
+
+    if (GameBoards.find().count() == 0) {
         var board1 = JSON.parse(Assets.getText("json/gameboards/gameboard1.json"));
         var board2 = JSON.parse(Assets.getText("json/gameboards/gameboard2.json"));
-        Gameboards.insert(board1);
-        Gameboards.insert(board2);
+        GameBoards.insert(board1);
+        GameBoards.insert(board2);
 
     }
 

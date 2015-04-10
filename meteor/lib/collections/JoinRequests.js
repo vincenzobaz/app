@@ -41,12 +41,13 @@ JoinRequest.prototype = {
         var doc = _.pick(this, 'from', 'to',
             'gameId');
 
-        if (this.id) {
-            JoinRequest.update(this.id, {$set: doc}, callback);
-        } else {
-            // remember the context, since in callback it's changed
-            var that = this;
-            if (Meteor.isServer) {
+        if (Meteor.isServer) {
+
+            if (this.id) {
+                JoinRequest.update(this.id, {$set: doc}, callback);
+            } else {
+                // remember the context, since in callback it's changed
+                var that = this;
                 JoinRequests.insert(doc, function (error, result) {
                     that._id = result;
 
@@ -54,10 +55,10 @@ JoinRequest.prototype = {
                         callback.call(that, error, result);
                     }
                 });
-            } else {
-                throw new Meteor.Error(403, "Access Denied");
             }
 
+        } else {
+            throw new Meteor.Error(403, "Access Denied");
         }
     }
 };

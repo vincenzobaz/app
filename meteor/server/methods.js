@@ -1,18 +1,18 @@
 Meteor.methods({
     'sayHello': function(text){
-        console.log("hello " + text);
+        console.log("hello " + text);a
     },
-    "fetchGameBoard": function(){
-        var userId = "10153179507419968";
+    "fetchGameBoard": function(userId){
+        var future = new Future();
         var gameCreator = process.env.GAMECREATOR_URL;
         var url = gameCreator+ "/gameboard?user_id=" + userId;
         console.log(url);
 
         Meteor.http.get(url, function(err, res){
             if (err){
-                console.log("Fetching Gameboard for user " + userId + " went wrong " + err)
+                future.return({status: "error", error: err});
             } else {
-                Gameboards.insert(res.data);
+                future.return({status: "success", gameBoard: res.data});
             }
 
         });
@@ -29,7 +29,7 @@ Meteor.methods({
         });
     },
 
-    'JoinRequest.decline': function(id) {
+    'JoinRequest.decline': function(requestId) {
         JoinRequests.remove(id);
         var future = new Future();
         future.return({status: "success", error: null});
@@ -37,8 +37,24 @@ Meteor.methods({
         return future.wait();
     },
 
-    'JoinRequest.accept': function(id) {
-        console.log("Join request accepted" + id);
+    'JoinRequest.accept': function(requestId) {
+        var future = new Future();
+        var request = JoinRequests.findOne(requestId);
+        var currentUser = Meteor.userId();
+
+        if (!request || currentUser !== request.to){
+            future.return({status: "error", error: "Request for this user does not exist"})
+        }
+        Meteor.call('fetchGameBoard', currentUser, function(error, result){
+            if (error || !result.gameBoard){
+                future.return({status: "error", error: error})
+            } else {
+                var gameBoard = result.gameBoard;
+                Meteor.call('fetchGameBoard', request.from, function(error, result){
+
+                })
+            }
+        });
         return {status: "success"};
     },
 

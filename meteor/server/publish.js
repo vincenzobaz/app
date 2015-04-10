@@ -13,7 +13,7 @@ Meteor.publish("gameBoards", function(){
                  playerBoards.push(g.player2Board)
              }
      });
-    return Gameboards.find({_id: {$in: playerBoards}});
+    return GameBoards.find({_id: {$in: playerBoards}});
 });
 
 Meteor.publish("joinRequests", function(){
