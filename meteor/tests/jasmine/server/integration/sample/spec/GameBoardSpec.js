@@ -7,7 +7,7 @@ Jasmine.onTest(function () {
         it("should return a game board when fetchGameBoards is called", function(done){
             spyOn(Meteor, 'userId').and.returnValue(otherUserId);
             spyOn(Meteor.http, "get").and.callFake(function(url, callback){
-                callback(null, {data: gameBoard1Mock});
+                callback(null, {data: gameBoard1MockRaw});
             });
 
             Meteor.call('fetchGameBoard', userId, function(error, result) {

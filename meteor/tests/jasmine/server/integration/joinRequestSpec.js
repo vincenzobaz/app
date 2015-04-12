@@ -87,7 +87,7 @@ Jasmine.onTest(function () {
             spyOn(Meteor, 'userId').and.returnValue(otherUserId);
 
             spyOn(Meteor.http, "get").and.callFake(function(url, callback){
-                callback(null, {data: gameBoard1Mock});
+                callback(null, {data: gameBoard1MockRaw});
             });
             var request = JoinRequests.findOne(requestId);
             expect(request).toBeDefined();

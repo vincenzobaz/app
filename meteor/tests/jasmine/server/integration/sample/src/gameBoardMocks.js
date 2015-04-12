@@ -1,4 +1,5 @@
-gameBoard1Mock = {
+
+gameBoard1MockRaw =  {
     "_id": "sTiTYFdAara5uyj3D",
     "user_id": "10153179507419968",
     "tiles": [
@@ -794,7 +795,7 @@ gameBoard1Mock = {
         }
     ]
 };
-gameBoard2Mock = {
+gameBoard2MockRaw = {
     "_id": "507f1f77bcf86cd799439011",
     "user_id": "10153179507419968",
     "tiles": [
@@ -1590,3 +1591,5 @@ gameBoard2Mock = {
         }
     ]
 };
+gameBoard1Mock = GameBoard.FromRaw("HruQZ4SC7uj7ScKX4", gameBoard1MockRaw);
+gameBoard2Mock = GameBoard.FromRaw("D0D4A282-C4DB-11E3-AF37-EA4C74EB0A54", gameBoard2MockRaw);
