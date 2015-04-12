@@ -198,11 +198,11 @@ GameBoard.prototype = {
             if (Meteor.isServer) {
 
                 if (this.id) {
-                    Games.update(this.id, {$set: doc}, callback);
+                    GameBoards.update(this.id, {$set: doc}, callback);
                 } else {
                     // remember the context, since in callback it's changed
                     var that = this;
-                    Games.insert(doc, function (error, result) {
+                    GameBoards.insert(doc, function (error, result) {
                         that._id = result;
 
                         if (callback != null) {
@@ -216,9 +216,5 @@ GameBoard.prototype = {
             }
 
         }
-    },
-
-
-
-
+    }
 };

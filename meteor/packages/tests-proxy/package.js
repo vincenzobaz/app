@@ -14,8 +14,10 @@ Package.onUse(function (api) {
 	api.add_files("tests/jasmine/client/integration/sample/src/Player.js",["client"]);
 	api.add_files("tests/jasmine/client/integration/sample/src/Song.js",["client"]);
 	api.add_files("tests/jasmine/server/integration/joinRequestSpec.js",["server"]);
+	api.add_files("tests/jasmine/server/integration/sample/spec/GameBoardSpec.js",["server"]);
 	api.add_files("tests/jasmine/server/integration/sample/spec/PlayerSpec.js",["server"]);
 	api.add_files("tests/jasmine/server/integration/sample/spec/SpecMatchers.js",["server"]);
+	api.add_files("tests/jasmine/server/integration/sample/src/gameBoardMocks.js",["server"]);
 	api.add_files("tests/jasmine/server/integration/sample/src/Player.js",["server"]);
 	api.add_files("tests/jasmine/server/integration/sample/src/Song.js",["server"]);
 	api.add_files("tests/mocha/client/sampleClientTest.js",["client"]);

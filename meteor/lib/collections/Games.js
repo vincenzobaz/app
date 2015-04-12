@@ -47,8 +47,14 @@ Game.prototype = {
     get player1Board() {
         return this._player1Board;
     },
+    set player1Board(value) {
+        this._player1Board = value;
+    },
     get player2Board() {
         return this._player2Board;
+    },
+    set player2Board(value) {
+        this._player2Board = value;
     },
     get status(){
         return this._status;
@@ -74,11 +80,12 @@ Game.prototype = {
 
     save: function(callback) {
         var doc = _.pick(this, 'player1', 'player2',
-            'player1Baord', 'player2Board', 'status',
+            'player1Board', 'player2Board', 'status',
             'playerTurn', 'player1Scores', 'player2Scores');
 
         if (Meteor.isServer) {
-
+            console.log("saving game");
+            console.log("saving board " + this._player2Board);
             if (this.id) {
                 Games.update(this.id, {$set: doc}, callback);
             } else {

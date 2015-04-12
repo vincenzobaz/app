@@ -1,5 +1,5 @@
 Jasmine.onTest(function () {
-  describe("Player", function() {
+  xdescribe("Player", function() {
     var player;
     var song;
 
@@ -16,7 +16,7 @@ Jasmine.onTest(function () {
       expect(player).toBePlaying(song);
     });
 
-    describe("when song has been paused", function() {
+    xdescribe("when song has been paused", function() {
       beforeEach(function() {
         player.play(song);
         player.pause();

@@ -2,20 +2,14 @@ Meteor.methods({
     'sayHello': function(text){
         console.log("hello " + text);a
     },
-    "fetchGameBoard": function(userId){
-        var future = new Future();
+    'fetchGameBoard': function(userId){
         var gameCreator = process.env.GAMECREATOR_URL;
         var url = gameCreator+ "/gameboard?user_id=" + userId;
-        console.log(url);
+        var get = Meteor.wrapAsync(Meteor.http.get);
+        var result = get(url);
+        console.log("Gameboards" + result.data);
+        return {status: "success", gameBoard: result.data}
 
-        Meteor.http.get(url, function(err, res){
-            if (err){
-                future.return({status: "error", error: err});
-            } else {
-                future.return({status: "success", gameBoard: res.data});
-            }
-
-        });
     },
     'fetchData': function(){
         var accesstoken = "CAACEdEose0cBAM810upRgDgZAkh5fUm9iNknOhbWfGfJrsYAFowKR6oPTomH87s7kYn7pnVcNOu2iVudoaVXhO3wVDfjEGetjeA1TKVsQkxOGhLtWY6oi9QwnAo11DddNkABttO4NeDFLknlTxKZC7HaXDPeRHg1ZBGeAeiRWLcJ80WbLRkY0Y2RRRq82ISR3rqEl8r7MEEsG7VmEMBgwJoou6YV94ZD";
@@ -38,29 +32,31 @@ Meteor.methods({
     },
 
     'JoinRequest.accept': function(requestId) {
-        var future = new Future();
         var request = JoinRequests.findOne(requestId);
+        var game = Games.findOne(request.gameId);
         var currentUser = Meteor.userId();
-
-        if (!request || currentUser !== request.to){
-            future.return({status: "error", error: "Request for this user does not exist"})
+        if (currentUser !== request.to){
+            throw Meteor.Error("404", "Request does not exist");
         }
-        Meteor.call('fetchGameBoard', currentUser, function(error, result){
-            if (error || !result.gameBoard){
-                future.return({status: "error", error: error})
-            } else {
-                var gameBoard = result.gameBoard;
-                Meteor.call('fetchGameBoard', request.from, function(error, result){
+        var board1 = Server.fetchGameBoard(request.from);
+        var board2 = Server.fetchGameBoard(request.to);
+        var saveBoard1 = Meteor.wrapAsync(board1.save);
+        var saveBoard2 = Meteor.wrapAsync(board2.save);
+        var board1Id = saveBoard1();
+        var board2Id = saveBoard2();
 
-                })
-            }
-        });
-        return {status: "success"};
+        game.player1Board = board1Id;
+        game.player2Board = board2Id;
+        var gameSave = Meteor.wrapAsync(game.save, game);
+        gameSave();
+
+        return({gameBoards: [board1Id, board2Id]});
+
     },
 
     'JoinRequest.send': function(userId) {
         var future = new Future();
-        var game = new Game(null, Meteor.userId(), userId, null, null, "waiting", _.random(1,2), null, null);
+        var game = new Game(null, Meteor.userId(), userId, undefined, undefined, "waiting", _.random(1,2), undefined, undefined);
         game.save(function(error, gameId){
             if (!error){
                 var join = new JoinRequest(null, Meteor.userId(), userId, gameId);
@@ -74,7 +70,6 @@ Meteor.methods({
             } else {
                 future.return({status: "error", error: error});
             }
-
         });
         return future.wait();
 

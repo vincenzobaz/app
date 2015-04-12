@@ -13,6 +13,5 @@ http
 jparker:crypto-sha256
 jparker:crypto-hmac
 mike:mocha
-velocity:console-reporter
 sanjo:jasmine
 accounts-password

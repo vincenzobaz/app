@@ -1,4 +1,4 @@
-xdescribe("Player", function() {
+describe("Player", function() {
   var player;
   var song;
 
@@ -7,7 +7,7 @@ xdescribe("Player", function() {
     song = new Song();
   });
 
-  it("should be able to play a Song", function() {
+  xit("should be able to play a Song", function() {
     player.play(song);
     expect(player.currentlyPlayingSong).toEqual(song);
 
@@ -15,7 +15,7 @@ xdescribe("Player", function() {
     expect(player).toBePlaying(song);
   });
 
-  describe("when song has been paused", function() {
+  xdescribe("when song has been paused", function() {
     beforeEach(function() {
       player.play(song);
       player.pause();
@@ -43,16 +43,5 @@ xdescribe("Player", function() {
     player.makeFavorite();
 
     expect(song.persistFavoriteStatus).toHaveBeenCalledWith(true);
-  });
-
-  //demonstrates use of expected exceptions
-  describe("#resume", function() {
-    it("should throw an exception if song is already playing", function() {
-      player.play(song);
-
-      expect(function() {
-        player.resume();
-      }).toThrowError("song is already playing");
-    });
   });
 });

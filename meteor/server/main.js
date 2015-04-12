@@ -11,16 +11,10 @@ Meteor.startup(function () {
     //}
 
     Future = Npm.require('fibers/future');
-
     var board = JSON.parse(Assets.getText("json/gameboards/gameboard1.json"));
-
-    var realBoard = new GameBoard.FromRaw("something", board);
-
-    //console.log(realBoard);
-    //console.log(realBoard.tiles);
-    prettyLog(realBoard);
-
-
+   //Meteor.call("fetchGameBoard", "10153179507419968", function(error, result){
+   //     console.log(result.tiles);
+   //});
 
 
     if (GameBoards.find().count() == 0) {
