@@ -11,6 +11,4 @@ grigio:babel
 http
 jparker:crypto-sha256
 jparker:crypto-hmac
-mike:mocha
-sanjo:jasmine
 accounts-password
