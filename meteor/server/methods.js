@@ -24,7 +24,7 @@ Meteor.methods({
     },
 
     'JoinRequest.decline': function(requestId) {
-        JoinRequests.remove(id);
+        JoinRequests.remove(requestId);
         return {status: "success", error: null};
     },
 

@@ -15,18 +15,18 @@ var JoinRequestStore = {
   },
 
   accept(joinRequest) {
-    debug("accept() is not implemented");
-    // Meteor.call('JoinRequest.accept', joinRequest.getId());
+    const id = joinRequest.getId && joinRequest.getId() || joinRequest;
+    Meteor.call('JoinRequest.accept', id);
   },
 
   decline(joinRequest) {
-    debug("decline() is not implemented");
-    // Meteor.call('JoinRequest.decline', joinRequest.getId());
+    const id = joinRequest.getId && joinRequest.getId() || joinRequest;
+    Meteor.call('JoinRequest.decline', id);
   },
 
   send(user) {
-    debug("send() is not implemented");
-    // Meteor.call('JoinRequest.send', user.getId());
+    const id = user.getId && user.getId() || user;
+    Meteor.call('JoinRequest.send', id);
   }
 
 };
