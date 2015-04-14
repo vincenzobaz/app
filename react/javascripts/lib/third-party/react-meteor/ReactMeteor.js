@@ -1,3 +1,11 @@
+
+/**
+ * ReactMeteor mixin from the react-meteor project.
+ *
+ * @author Ben Newman <bn@cs.stanford.edu>
+ * @url https://github.com/reactjs/react-meteor
+ */
+
 var ReactMeteorMixin = {
   componentWillMount: function() {
     var self = this;
