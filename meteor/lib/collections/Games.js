@@ -71,11 +71,25 @@ Game.prototype = {
         }
         this._playerTurn = value;
     },
+    get currentPlayer() {
+      if (this.playerTurn === 1) {
+        return this.player1;
+      }
+      return this.player2;
+    },
     get player1Scores(){
         return this._player1Scores;
     },
     get player2Scores() {
         return this._player2Scores;
+    },
+    get opponent() {
+      var myId = Meteor.userId();
+
+      if (this.player1 === myId) {
+        return this.player2;
+      }
+      return this.player1;
     },
 
     save: function(callback) {
