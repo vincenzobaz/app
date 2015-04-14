@@ -69,7 +69,7 @@ var CurrentGame = React.createClass({
 
   switchToGame(game) {
     return () => {
-      Session.set('currentGameId', game.getId());
+      GameStore.switchTo(game.getId());
     };
   },
 

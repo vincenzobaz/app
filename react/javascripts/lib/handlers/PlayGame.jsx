@@ -89,7 +89,7 @@ var PlayGame = React.createClass({
 
   onGameLoaded(game) {
     if (this.isMounted()) {
-      Session.set('currentGame', game);
+      GameStore.switchTo(game, false);
     }
   },
 

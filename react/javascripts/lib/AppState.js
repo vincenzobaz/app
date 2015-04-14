@@ -9,8 +9,8 @@ module.exports = function getAppState() {
   return {
     isLoggedIn: UserStore.isLoggedIn() || false,
     user: UserStore.current() || null,
-    currentGameId: Session.get('currentGameId') || null,
-    currentGame: Session.get('currentGame') || null,
+    currentGameId: GameStore.currentId() || null,
+    currentGame: GameStore.current() || null,
     games: GameStore.list(),
     joinRequests: JoinRequestStore.list()
   };

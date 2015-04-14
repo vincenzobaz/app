@@ -11,6 +11,7 @@ var React = require('react'),
     QuitGameModal = require('./modals/QuitGameModal'),
     StartGameModal = require('./modals/StartGameModal'),
     AppState = require('../AppState'),
+    GameToolbarSession = require('../helpers/NamespacedSession')('GameToolbar'),
     debug = require('debug')('GameToolbar');
 
 // TODO: Lots of refactoring.
@@ -20,32 +21,30 @@ var GameToolbar = React.createClass({
 
   getMeteorState() {
     return {
-      showStartModal: Session.get('GameToolbar.showStartModal'),
-      friend: Session.get('GameToolbar.friend')
+      showStartModal: GameToolbarSession.get('showStartModal'),
+      friend: GameToolbarSession.get('friend')
     };
   },
 
   onFriendSelect(friendId) {
     friendId = '1550704362';
     var friend = UserStore.byFacebookId(friendId);
-    Session.set('GameToolbar.friend', friend);
-    Session.set('GameToolbar.showStartModal', true);
+    GameToolbarSession.set('friend', friend);
+    GameToolbarSession.set('showStartModal', true);
   },
 
   startGame(friend) {
-    GameStore.start(friend.id).then(game =>
-      Session.set('currentGame', game)
-    );
+    GameStore.start(friend.id);
   },
 
   onStart() {
-    Session.set('GameToolbar.showStartModal', false);
+    GameToolbarSession.set('showStartModal', false);
     this.startGame(this.state.friend);
   },
 
   onAbortStart() {
-    Session.set('GameToolbar.showStartModal', false);
-    Session.set('GameToolbar.friend', null);
+    GameToolbarSession.set('showStartModal', false);
+    GameToolbarSession.set('friend', null);
   },
 
   onQuit() {
