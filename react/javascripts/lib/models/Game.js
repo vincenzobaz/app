@@ -5,6 +5,7 @@ var merge = require('lodash.merge');
 var lazy = require('../helpers/lazy');
 var User = require('./User');
 var Tile = require('./Tile');
+var UserStore = require('../stores/UserStore');
 
 class Game {
 
@@ -17,11 +18,13 @@ class Game {
   }
 
   getStatus() {
-    return this.status;
+    return this._status;
   }
 
   getOpponent() {
-    return lazy(this, 'opponent', opponent => new User(opponent));
+    var myId = Meteor.userId();
+    var playerId = (this._player1 === myId) ? this._player2 : this._player1;
+    return UserStore.byId(playerId);
   }
 
   isWaiting() {
@@ -33,7 +36,8 @@ class Game {
   }
 
   getCurrentPlayer() {
-    return lazy(this, 'currentPlayer', player => new User(player));
+    var currentPlayer = (this._playerTurn === 1) ? this._player1 : this._player2;
+    return UserStore.byId(currentPlayer);
   }
 
   hasEnded() {

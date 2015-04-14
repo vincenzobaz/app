@@ -29,16 +29,17 @@ var Welcome = React.createClass({
   },
 
   _renderWelcomeText() {
+    var user = this.props.user;
     return (
       <p>
-        Welcome{!this.props.user.firstTime && ' back'}, {this.props.user.firstName}!
+        Welcome{!user.isFirstTime() && ' back'}, {user.getFirstName()}!
       </p>
     );
   },
 
   _renderTrainingText() {
     var user = this.props.user;
-    var hasntTrainedYet = user.trainingStatus && user.trainingStatus === 'not started';
+    var hasntTrainedYet = user.getTrainingStatus() === 'not started';
 
     if (hasntTrainedYet) {
       return (

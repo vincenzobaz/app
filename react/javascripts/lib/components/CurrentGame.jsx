@@ -54,7 +54,7 @@ var CurrentGame = React.createClass({
       desc = <small><b className='player'>Your turn</b></small>;
     }
 
-    var score = this.props.game.score;
+    var score = this.props.game.getScore() || {};
 
     return (
       <small>

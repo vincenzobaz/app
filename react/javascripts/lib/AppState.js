@@ -11,8 +11,8 @@ module.exports = function getAppState() {
     user: UserStore.current() || null,
     currentGameId: GameStore.currentId() || null,
     currentGame: GameStore.current() || null,
-    games: GameStore.list(),
-    joinRequests: JoinRequestStore.list()
+    games: GameStore.list() || [],
+    joinRequests: JoinRequestStore.list() || []
   };
 };
 

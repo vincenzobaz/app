@@ -8,39 +8,53 @@ class User {
 
   constructor(props) {
     merge(this, props);
+    this.fb = this.services && this.services.facebook || {};
+    delete this.services;
   }
 
   getId() {
     return this._id;
   }
 
+  getFacebookId() {
+    return this.fb.id;
+  }
+
   getFirstName() {
-    return this.firstName;
+    return this.fb.first_name;
   }
 
   getLastName() {
-    return this.lastName;
+    return this.fb.last_name;
   }
 
   getFullName() {
-    return this.name || `${this.firstName} ${this.lastName}`;
+    return this.fb.name;
   }
 
-  getFacebookId() {
-    return this.facebookId;
+  getGender() {
+    return this.fb.gender;
+  }
+
+  getEmail() {
+    return this.fb.email;
+  }
+
+  getLocale() {
+    return this.fb.locale;
   }
 
   getTrainingStatus() {
-    return this.trainingStatus;
+    return this.trainingStatus || 'not started';
   }
 
   isFirstTime() {
-    return this.firstTime;
+    return this.firstTime || true;
   }
 
   getAvatarUrl() {
-    if (this.facebookId != null) {
-      return Routes.Facebook.avatar(this.facebookId);
+    if (this.getFacebookId() != null) {
+      return Routes.Facebook.avatar(this.getFacebookId());
     }
 
     return Routes.Assets.at('images/avatar-default.png').url;

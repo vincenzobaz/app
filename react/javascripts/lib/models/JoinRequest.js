@@ -4,6 +4,7 @@
 var merge = require('lodash.merge');
 var lazy = require('../helpers/lazy');
 var User = require('./User');
+var UserStore = require('../stores/UserStore');
 
 class JoinRequest {
 
@@ -16,7 +17,7 @@ class JoinRequest {
   }
 
   getFrom() {
-    return lazy(this, 'from', u => new User(u));
+    return UserStore.byId(this._from);
   }
 
   getOpponent() {
