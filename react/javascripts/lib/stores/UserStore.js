@@ -11,27 +11,31 @@ function hydrate(user) {
 var UserStore = {
 
   isLoggedIn() {
-    return Meteor.userId() != null;
+    if (Meteor.userId() == null || Meteor.user() == null) {
+      return false;
+    }
+
+    var user = Meteor.user();
+    return user.services != null && user.services.facebook != null;
   },
 
   current() {
     if (!this.isLoggedIn()) {
       return null;
     }
+
     var user = Meteor.user();
     return hydrate(user);
   },
 
   byId(id) {
     var user = Meteor.users.findOne(id);
-    return user;
-    // return hydrate(user);
+    return hydrate(user);
   },
 
   byFacebookId(id) {
     var user = Meteor.users.findOne({'services.facebook.id': id});
-    return user;
-    // return hydrate(user);
+    return hydrate(user);
   }
 
 };

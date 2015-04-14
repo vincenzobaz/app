@@ -17,10 +17,17 @@ var App = {
   run() {
     ErrorStore.register();
 
+    this.subscribe();
+
     React.render(<Main />, $$('app'));
     React.render(<ErrorHandler store={ErrorStore} />, $$('error'));
+  },
+
+  subscribe() {
+    debug('Subscribing...');
+    Meteor.subscribe('userServices');
   }
 };
 
-Meteor.startup(App.run);
+Meteor.startup(() => App.run());
 

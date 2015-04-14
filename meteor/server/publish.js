@@ -20,3 +20,11 @@ Meteor.publish("joinRequests", function(){
     //return JoinRequests.find({$or: [{from: this.userId}, {to: this.userId}]})
     return JoinRequests.find({});
 });
+
+// TODO: Don't publish access token etc.
+Meteor.publish('userServices', function() {
+  return Meteor.users.find(
+    { _id: this.userId },
+    { fields: { 'services': 1 } }
+  );
+});
