@@ -2,11 +2,13 @@
 'use strict';
 
 var call = require('../helpers/meteor').call,
-    conf = require('../helpers/getConfig')('facebook');
+    getConfig = require('../helpers/getConfig');
 
 module.exports = {
 
   login(cb = () => {}) {
+    var conf = getConfig('facebook');
+
     Meteor.loginWithFacebook({
       requestPermissions: conf.scope
     }, cb);
