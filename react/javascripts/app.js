@@ -1,6 +1,5 @@
 'use strict';
 
-require('es6ify/node_modules/traceur/bin/traceur-runtime');
 require('./rock-hammer');
 
 // Expose React to enable the React Dev Tools.
@@ -24,7 +23,11 @@ var App = {
   },
 
   subscribe() {
-    debug('Subscribing...');
+    debug('Subscribing to Meteor channels...');
+
+    Meteor.subscribe('games');
+    Meteor.subscribe('gameBoards');
+    Meteor.subscribe('joinRequests');
     Meteor.subscribe('userServices');
   }
 };

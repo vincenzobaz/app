@@ -4,6 +4,7 @@ Meteor.publish("games", function () {
 
 Meteor.publish("gameBoards", function(){
     var playerBoards = [];
+    return [];
     var currentUser = this.userId;
      Games.find({$or: [{player1 : this.userId}, {player2 : this.userId}]},
         {fields: {player1: 1, player1Board: 1, player2:1, player2Board: 1, _id: 0}}).forEach(function(g){
@@ -28,3 +29,4 @@ Meteor.publish('userServices', function() {
     { fields: { 'services': 1 } }
   );
 });
+

@@ -4,7 +4,7 @@
 var React = require('react'),
     CurrentGame = require('./CurrentGame'),
     shapes = require('./shapes'),
-    sortBy = require('lodash.sortby');
+    sortBy = _.sortBy;
 
 var CurrentGames = React.createClass({
 

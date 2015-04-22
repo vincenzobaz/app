@@ -1,8 +1,8 @@
 
 'use strict';
 
+var merge = _.extend;
 var EventEmitter = require('events').EventEmitter;
-var merge = require('lodash.merge');
 var Bluebird = require('bluebird');
 var ErrorStore = merge(EventEmitter.prototype, {
 

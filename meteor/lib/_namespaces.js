@@ -1,5 +1,0 @@
-
-Reminisce = {
-  Collections: {},
-};
-

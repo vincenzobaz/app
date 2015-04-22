@@ -2,7 +2,7 @@
 'use strict';
 
 var React = require('react'),
-    throttle = require('lodash.throttle'),
+    throttle = _.throttle,
     FacebookStore = require('../stores/FacebookStore'),
     Autocomplete = require('../third-party/react-autocomplete'),
     Combobox = Autocomplete.Combobox,

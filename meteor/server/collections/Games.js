@@ -7,7 +7,6 @@ Games = new Mongo.Collection("games", {
     }
 });
 
-
 // data model
 /**
  *

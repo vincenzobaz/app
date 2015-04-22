@@ -1,12 +1,11 @@
 
 (() => {
 
-'use strict';
-
 // FIXME: Awful design...
 // TODO: Handle paging.
 // TODO: Fix caching.
-var FB = Reminisce.Facebook = {
+Facebook = null;
+var FB = Facebook = {
 
   usersInfo: {},
   friends: {},
