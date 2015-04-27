@@ -2,13 +2,17 @@
 JoinRequestService = {
 
   accept(requestId) {
-    var request = JoinRequests.findOne(requestId);
-    var game = Games.findOne(request.gameId);
     var currentUser = Meteor.userId();
+    var request = JoinRequests.findOne(requestId);
 
-    if (currentUser !== request.to){
-        throw Meteor.Error("404", "Request does not exist");
+    console.log(request.to + " : " + Bots[1]._id);
+    console.log(request.to !== Bots[1]._id);
+
+    if (currentUser !== request.to && request.to !== Bots[0]._id && request.to !== Bots[1]._id){
+        throw Meteor.Error("404", "Request does not exist with id" + requestId);
     }
+
+    var game = Games.findOne(request.gameId);
 
     var board1 = Server.fetchGameBoard(request.from);
     var board2 = Server.fetchGameBoard(request.to);
