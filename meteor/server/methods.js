@@ -2,25 +2,12 @@ Meteor.methods({
     'sayHello': function(text){
         console.log("hello " + text);a
     },
-    'fetchGameBoard': function(userId){
-        var gameCreator = process.env.GAMECREATOR_URL;
-        var url = gameCreator+ "/gameboard?user_id=" + userId;
-        var get = Meteor.wrapAsync(Meteor.http.get);
-        var result = get(url);
-        console.log("Gameboards" + result.data);
-        return {status: "success", gameBoard: result.data}
-
+    'fetchGameBoard': function(userId) {
+        var data = Server.fetchGameBoard(userId);
+        return {status: "success", gameBoard: data};
     },
-    'fetchData': function(){
-        var accesstoken = "CAACEdEose0cBAM810upRgDgZAkh5fUm9iNknOhbWfGfJrsYAFowKR6oPTomH87s7kYn7pnVcNOu2iVudoaVXhO3wVDfjEGetjeA1TKVsQkxOGhLtWY6oi9QwnAo11DddNkABttO4NeDFLknlTxKZC7HaXDPeRHg1ZBGeAeiRWLcJ80WbLRkY0Y2RRRq82ISR3rqEl8r7MEEsG7VmEMBgwJoou6YV94ZD";
-        var userId = "10153179507419968";
-        var gameCreator = process.env.GAMECREATOR_URL;
-
-        var url = gameCreator + "/fetchData?user_id=" + userId + "&access_token=" + accesstoken;
-        console.log(url);
-        Meteor.http.get(url, function (err, res) {
-            console.log(res.statusCode, res.data);
-        });
+    'fetchData': function(userId) {
+      Server.fetchData(userId);
     },
 
     'JoinRequest.decline': function(requestId) {
@@ -48,7 +35,6 @@ Meteor.methods({
         gameSave();
 
         return({gameBoards: [board1Id, board2Id]});
-
     },
 
     'JoinRequest.send': function(userId) {
