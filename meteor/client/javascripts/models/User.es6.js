@@ -48,7 +48,8 @@ Reminisce.Model.User = class User {
   }
 
   getAvatarUrl() {
-    return '';
+    var Routes = Reminisce.Routes;
+
     if (this.getFacebookId() != null) {
       return Routes.Facebook.avatar(this.getFacebookId());
     }
