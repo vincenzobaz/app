@@ -18,8 +18,7 @@ Meteor.publish("gameBoards", function(){
 });
 
 Meteor.publish("joinRequests", function(){
-    //return JoinRequests.find({$or: [{from: this.userId}, {to: this.userId}]})
-    return JoinRequests.find({});
+    return JoinRequests.find({to: this.userId});
 });
 
 // TODO: Don't publish access token etc.
