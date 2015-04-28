@@ -21,6 +21,8 @@ JoinRequestService = {
     var gameSave = Meteor.wrapAsync(game.save, game);
     gameSave();
 
+    JoinRequests.remove(requestId);
+
     return {gameBoards: [board1Id, board2Id]};
   },
 
