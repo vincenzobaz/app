@@ -10,11 +10,15 @@ Reminisce.Model.JoinRequest = class JoinRequest {
   }
 
   getFrom() {
-    return Reminisce.Store.UserStore.byId(this._from);
+    return Reminisce.Store.UserStore.byId(this.from);
   }
 
   getOpponent() {
     return this.getFrom();
+  }
+
+  getGame() {
+    return Reminisce.Store.GameStore.byId(this.gameId);
   }
 
 }

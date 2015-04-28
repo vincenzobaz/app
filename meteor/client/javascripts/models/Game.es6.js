@@ -10,12 +10,12 @@ Reminisce.Model.Game = class Game {
   }
 
   getStatus() {
-    return this._status;
+    return this.status;
   }
 
   getOpponent() {
     var myId = Meteor.userId();
-    var playerId = (this._player1 === myId) ? this._player2 : this._player1;
+    var playerId = (this.player1 === myId) ? this.player2 : this.player1;
     return Reminisce.Store.UserStore.byId(playerId);
   }
 
@@ -28,7 +28,7 @@ Reminisce.Model.Game = class Game {
   }
 
   getCurrentPlayer() {
-    var currentPlayer = (this._playerTurn === 1) ? this._player1 : this._player2;
+    var currentPlayer = (this.playerTurn === 1) ? this.player1 : this.player2;
     return Reminisce.Store.UserStore.byId(currentPlayer);
   }
 
