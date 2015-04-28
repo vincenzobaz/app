@@ -31,6 +31,7 @@ Meteor.methods({
 
         game.player1Board = board1Id;
         game.player2Board = board2Id;
+        game.status = 'playing';
         var gameSave = Meteor.wrapAsync(game.save, game);
         gameSave();
 
