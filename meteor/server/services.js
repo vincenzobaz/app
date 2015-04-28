@@ -3,6 +3,7 @@
 
 var appId = process.env.REMINISCE_FACEBOOK_APPID;
 var secret = process.env.REMINISCE_FACEBOOK_SECRET;
+var gmapsKey = process.env.REMINISCE_GMAPS_KEY;
 
 if (appId == null || secret == null) {
   throw new Meteor.Error(500, 'Cannot get Facebook app ID and secret from environment');
@@ -25,7 +26,7 @@ ServiceConfiguration.configurations.upsert(
   {
     $set: {
       zoom: 9,
-      apiKey: "AIzaSyBGVhKl-Aqh5hSTCaCPLIY93dUSqWG1XhE",
+      apiKey: gmapsKey,
       sensor: false,
       marker: {
         initialPosition: {
