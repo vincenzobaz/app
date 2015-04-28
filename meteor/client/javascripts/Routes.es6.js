@@ -1,17 +1,4 @@
 
-function stringify(value) {
-  if (typeof value === 'boolean') {
-    return value ? 'true' : 'false';
-  }
-  return value + '';
-}
-
-function querystring(props) {
-  return Object.keys(props).map(key =>
-    `${key}=${encodeURIComponent(stringify(props[key]))}`
-  ).join('&');
-}
-
 // FIXME: Get rid of URL object.
 function url(path) {
   return {
@@ -36,7 +23,7 @@ Reminisce.Routes = {
   },
   Facebook: {
     avatar: function(facebookId, query) {
-      var qstr = query ? '?' + querystring(query) : '';
+      var qstr = query ? '?' + Querystring.encode(query) : '';
       return url(`https://graph.facebook.com/${facebookId}/picture${qstr}`);
     }
   }
