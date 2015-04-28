@@ -42,6 +42,10 @@ var CurrentGame = React.createClass({
       return <small>In creation</small>;
     }
 
+    if (game.isWaiting()) {
+      return <small>Waiting</small>;
+    }
+
     if (game.hasEnded()) {
       desc = <small>Ended</small>;
     }

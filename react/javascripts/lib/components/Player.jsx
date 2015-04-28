@@ -10,6 +10,7 @@ var Player = React.createClass({
     player: shapes.User.isRequired,
     isOpponent: React.PropTypes.bool,
     isTurn: React.PropTypes.bool.isRequired,
+    waiting: React.PropTypes.bool.isRequired,
     score: React.PropTypes.number.isRequired
   },
 
@@ -36,7 +37,7 @@ var Player = React.createClass({
   },
 
   _renderTurnText() {
-    if (!this.props.isTurn) {
+    if (this.props.waiting || !this.props.isTurn) {
       return 'Waiting';
     }
 
