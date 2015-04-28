@@ -25,7 +25,6 @@ Reminisce.Model.JoinRequest = class JoinRequest {
 
 Reminisce.Collection.JoinRequests = new Mongo.Collection("joinRequests", {
   transform(doc) {
-    console.log('JoinRequest', doc);
     return new Reminisce.Model.JoinRequest(doc);
   }
 });

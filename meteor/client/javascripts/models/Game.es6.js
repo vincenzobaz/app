@@ -68,7 +68,6 @@ Reminisce.Model.Game = class Game {
 
 Reminisce.Collection.Games = new Mongo.Collection("games", {
   transform(doc) {
-    console.log('Game', doc);
     return new Reminisce.Model.Game(doc);
   }
 });
