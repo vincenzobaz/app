@@ -92,31 +92,5 @@ Game = class Game {
       return this.player1;
     }
 
-    save(callback) {
-        var doc = _.pick(this, 'player1', 'player2',
-            'player1Board', 'player2Board', 'status',
-            'playerTurn', 'player1Scores', 'player2Scores');
-
-        if (Meteor.isServer) {
-            console.log("saving game");
-            console.log("saving board " + this.player2Board);
-            if (this.id) {
-                Games.update(this.id, {$set: doc}, callback);
-            } else {
-                // remember the context, since in callback it's changed
-                var that = this;
-                Games.insert(doc, function(error, result) {
-                    that._id = result;
-
-                    if (callback != null) {
-                        callback.call(that, error, result);
-                    }
-                });
-            }
-
-        } else {
-            throw new Meteor.Error(403, "Access Denied");
-        }
-    }
 };
 

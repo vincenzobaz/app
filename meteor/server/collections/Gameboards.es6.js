@@ -197,29 +197,6 @@ GameBoard = class GameBoard {
         return this.tiles;
     }
 
-    save(callback) {
-        var doc = _.pick(this, 'content', 'choices', 'answer');
-        if (Meteor.isServer) {
-
-            if (this.id) {
-                GameBoards.update(this.id, {$set: doc}, callback);
-            } else {
-                // remember the context, since in callback it's changed
-                var that = this;
-                GameBoards.insert(doc, function (error, result) {
-                    that._id = result;
-
-                    if (callback != null) {
-                        callback.call(that, error, result);
-                    }
-                });
-            }
-
-        } else {
-            throw new Meteor.Error(403, "Access Denied");
-        }
-
-    }
 };
 
 GameBoard.FromRaw = function(userId, data){
