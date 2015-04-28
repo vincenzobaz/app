@@ -5,39 +5,32 @@ JoinRequests = new Mongo.Collection("joinRequests", {
     }
 });
 
-//data model
+JoinRequest = class JoinRequest {
 
-/**
- *
- * @param id the mongodb id
- * @param from who sent the request
- * @param to to whom the request is sent
- * @param gameId the id of the game which was created for the request
- * @constructor
- */
+    constructor(id, from, to, gameId) {
+      this.id = id;
+      this.from = from;
+      this.to = to;
+      this.gameId = gameId;
+    }
 
-JoinRequest = function(id, from, to, gameId){
-    this._id = id;
-    this._from = from;
-    this._to = to;
-    this._gameId = gameId;
-};
+    getId() {
+        return this.id;
+    }
 
-JoinRequest.prototype = {
-    get id() {
-        return this._id;
-    },
-    get from(){
-        return this._from;
-    },
-    get to(){
-        return this._to;
-    },
-    get gameId(){
-        return this._gameId;
-    },
+    getFrom(){
+        return this.from;
+    }
 
-    save: function(callback) {
+    getTo(){
+        return this.to;
+    }
+
+    getGameId(){
+        return this.gameId;
+    }
+
+    save(callback) {
         var doc = _.pick(this, 'from', 'to',
             'gameId');
 
