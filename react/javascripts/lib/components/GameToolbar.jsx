@@ -34,7 +34,7 @@ var GameToolbar = React.createClass({
   },
 
   startGame(friend) {
-    GameStore.start(friend.id);
+    GameStore.start(friend._id);
   },
 
   onStart() {

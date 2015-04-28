@@ -19,15 +19,12 @@ Reminisce.Store.GameStore = {
     return Reminisce.Collection.Games.find().fetch().map(hydrate);
   },
 
-  start(opponent) {
-    Meteor.call('Game.start', opponent.getId(), (id) => {
-      GameSession.set('currentId', id);
-      GameSession.set('current', this.load(id));
-    });
+  start(opponentId) {
+    Reminisce.Store.JoinRequestStore.send(opponentId);
   },
 
-  load(id) {
-    var game = Reminisce.Collection.Games.findOne(id).fetch();
+  load(gameId) {
+    var game = Reminisce.Collection.Games.findOne(gameId);
     return hydrate(game);
   },
 
