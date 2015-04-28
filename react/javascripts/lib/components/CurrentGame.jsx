@@ -2,10 +2,8 @@
 'use strict';
 
 var React = require('react'),
-    shapes = require('./shapes');
-
-// TODO: Infer turn from the game's current player
-//       rather than having the turn be part of it.
+    shapes = require('./shapes'),
+    GameStore = require('../stores/GameStore');
 
 var CurrentGame = React.createClass({
 
@@ -20,12 +18,12 @@ var CurrentGame = React.createClass({
     return (
       <li className={classNames.waiting}>
         <div className='media'>
-          <a className='pull-left' title='Switch to this game' href={this.switchToGame(game)}>
+          <a className='pull-left' title='Switch to this game' href="#" onClick={this.switchToGame(game)}>
             <img className='media-object img-circle' width='40' src={game.getOpponent().getAvatarUrl()} alt='' />
           </a>
           <div className='media-body'>
             <h5 className='media-heading'>
-              <a title='Switch to this game' onClick={this.switchToGame(game)}>
+              <a title='Switch to this game' onClick={this.switchToGame(game)} href="#">
                 {game.getOpponent().getFullName()}
               </a>
             </h5>
@@ -47,11 +45,11 @@ var CurrentGame = React.createClass({
     if (game.hasEnded()) {
       desc = <small>Ended</small>;
     }
-    else if (!game.canPlay()) {
-      desc = <small><b>Their turn</b></small>;
-    }
-    else if (game.canPlay()) {
+    else if (game.isMyTurnToPlay()) {
       desc = <small><b className='player'>Your turn</b></small>;
+    }
+    else {
+      desc = <small><b>Their turn</b></small>;
     }
 
     var score = this.props.game.getScore() || {};
@@ -68,7 +66,8 @@ var CurrentGame = React.createClass({
   },
 
   switchToGame(game) {
-    return () => {
+    return (e) => {
+      e.preventDefault();
       GameStore.switchTo(game.getId());
     };
   },

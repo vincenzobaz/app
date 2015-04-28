@@ -3,6 +3,8 @@ Reminisce.Model.Game = class Game {
 
   constructor(props) {
     _.extend(this, props);
+
+    this.opponentId = (this.player1 === Meteor.userId()) ? this.player2 : this.player1;
   }
 
   getId() {
@@ -13,36 +15,44 @@ Reminisce.Model.Game = class Game {
     return this.status;
   }
 
-  getOpponent() {
-    var myId = Meteor.userId();
-    var playerId = (this.player1 === myId) ? this.player2 : this.player1;
-    return Reminisce.Store.UserStore.byId(playerId);
+  getOpponentId() {
+    return this.opponentId;
   }
 
-  isWaiting() {
-    return this.waiting;
+  getOpponent() {
+    return Reminisce.Store.UserStore.byId(this.getOpponentId());
   }
 
   getScore() {
-    return this.score;
+    return {
+      me: 0,
+      them: 0
+    };
+    // return this.score;
+  }
+
+  getCurrentPlayerId() {
+    return (this.playerTurn === 1) ? this.player1 : this.player2;
   }
 
   getCurrentPlayer() {
-    var currentPlayer = (this.playerTurn === 1) ? this.player1 : this.player2;
-    return Reminisce.Store.UserStore.byId(currentPlayer);
+    return Reminisce.Store.UserStore.byId(this.getCurrentPlayerId());
+  }
+
+  isMyTurnToPlay() {
+    return this.getCurrentPlayerId() === Meteor.userId();
   }
 
   hasEnded() {
     return this.getStatus() === 'ended';
   }
 
-  canPlay() {
-    debug('canPlay() is not implemented');
-    return true;
-  }
-
   isPlaying() {
     return this.getStatus() === 'playing';
+  }
+
+  isWaiting() {
+    return this.getStatus() === 'waiting';
   }
 
   isCreating() {

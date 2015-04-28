@@ -6,11 +6,16 @@ var React = require('react'),
     AppState = require('../AppState'),
     GameStore = require('../stores/GameStore'),
     EndGame = require('../components/EndGame'),
+    shapes = require('../components/shapes'),
     debug = require('debug')('PlayGame');
 
 // TODO: MOAR REFACTORING!
 
 var PlayGame = React.createClass({
+
+  propTypes: {
+    currentGame: shapes.Game
+  },
 
   getInitialState() {
     return {
@@ -20,44 +25,40 @@ var PlayGame = React.createClass({
 
   render() {
     debug('currentGame',   this.state.currentGame);
-    debug('gameId',        this.state.currentGameId);
-    debug('isPlaying',     this.isPlayingGame());
-    debug('currentGameId', this.isPlayingGame() && this.state.currentGame.id);
-    debug('inCreation',    this.isGameInCreation());
-    debug('willPlay',      this.isPlayingGame() && this.isOnCurrentGame());
+    debug('isPlaying',     this.isPlaying());
+    debug('inCreation',    this.isCreating());
 
-    var gameId = this.state.currentGameId;
-    var header = <div></div>;
+    const game = this.state.currentGame;
+    const gameId = game.getId();
 
-    if (this.isOnCurrentGame() && this.hasGameEnded()) {
+    if (this.hasGameEnded()) {
       return (
         <div>
-          <EndGame game={this.state.currentGame}
+          <EndGame game={game}
                    localStorageKey={`game-${gameId}-EndGame`} />
 
           <Board gameId={gameId}
-                 game={this.state.currentGame}
-                 tiles={this.state.currentGame.tiles} />
+                 game={game}
+                 tiles={game.getTiles()} />
         </div>
       )
     }
 
-    if (this.isOnCurrentGame() && this.isPlayingGame()) {
+    if (this.isPlaying()) {
       return (
         <div>
-          {header}
           <Board gameId={gameId}
-                 game={this.state.currentGame} />
+                 game={game} />
         </div>
       );
     }
 
-    if (this.isOnCurrentGame() && this.isGameInCreation()) {
-      return this.renderGameInCreation();
+    if (this.isWaiting()) {
+      return this.renderWaiting();
     }
 
-    if (gameId) {
-      this.loadGame(gameId);
+    if (this.isCreating()) {
+      return this.renderCreating();
     }
 
     return this.renderNoGame();
@@ -66,57 +67,54 @@ var PlayGame = React.createClass({
   renderNoGame() {
     var style = {
       textAlign: 'center',
-      lineHeight: '2em'
+      lineHeight: '2em',
+      marginTop: '3em'
     };
 
     return <p style={style}>No game selected.</p>;
   },
 
-  renderGameInCreation() {
+  renderCreating() {
     var style = {
       textAlign: 'center',
-      lineHeight: '2em'
+      lineHeight: '2em',
+      marginTop: '3em'
     };
 
     return <p style={style}>This game is still being created, please check again in a few minutes.</p>
   },
 
-  loadGame(gameId) {
-    GameStore
-      .byId(gameId)
-      .then(this.onGameLoaded);
+  renderWaiting() {
+    var style = {
+      textAlign: 'center',
+      lineHeight: '2em',
+      marginTop: '3em'
+    };
+
+    return <p style={style}>We are still waiting for your opponent to accept your join request.</p>
   },
 
-  onGameLoaded(game) {
-    if (this.isMounted()) {
-      GameStore.switchTo(game, false);
-    }
-  },
-
-  isOnCurrentGame() {
-    return this.withGame(game => {
-      var currentGameId = game.getId();
-      var gameId = this.state.currentGameId;
-
-      return currentGameId === gameId;
-    }, true);
-  },
-
-  isPlayingGame() {
+  isPlaying() {
     return this.withGame(game => {
       return game.isPlaying();
     }, false);
   },
 
-  isGameInCreation() {
+  isCreating() {
     return this.withGame(game => {
       return game.isCreating();
     }, false);
   },
 
+  isWaiting() {
+    return this.withGame(game => {
+      return game.isWaiting();
+    }, false);
+  },
+
   hasGameEnded() {
     return this.withGame(game => {
-      return game.status === 'ended';
+      return game.hasEnded();
     }, false);
   },
 

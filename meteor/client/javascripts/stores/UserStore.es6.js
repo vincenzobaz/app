@@ -19,8 +19,7 @@ Reminisce.Store.UserStore = {
       return null;
     }
 
-    var user = Meteor.user();
-    return hydrate(user);
+    return hydrate(Meteor.user());
   },
 
   byId(id) {

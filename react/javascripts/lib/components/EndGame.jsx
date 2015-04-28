@@ -4,7 +4,7 @@
 var React = require('react'),
     Modal = require('react-bootstrap').Modal,
     LocalStorageMixin = require('react-localstorage'),
-    shapes = require('../shapes');
+    shapes = require('./shapes');
 
 var EndGame = React.createClass({
 

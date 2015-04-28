@@ -1,22 +1,27 @@
 
 var GameSession = NamespacedSession('GameStore');
+var Game = Reminisce.Model.Game;
+var Games = Reminisce.Collection.Games;
 
 function hydrate(game) {
-  return new Reminisce.Model.Game(game);
+  if (!(game instanceof Game)) {
+    game = new Game(game);
+  }
+  return game;
 }
 
 Reminisce.Store.GameStore = {
 
-  currentId() {
-    return GameSession.get('currentId');
-  },
-
   current() {
-    return GameSession.get('current');
+    var game = GameSession.get('current');
+    if (game == null) {
+      return game;
+    }
+    return hydrate(game);
   },
 
   list() {
-    return Reminisce.Collection.Games.find().fetch().map(hydrate);
+    return Games.find().fetch().map(hydrate);
   },
 
   start(opponentId) {
@@ -24,23 +29,22 @@ Reminisce.Store.GameStore = {
   },
 
   load(gameId) {
-    var game = Reminisce.Collection.Games.findOne(gameId);
+    var game = Games.findOne(gameId);
     return hydrate(game);
   },
 
   quit(game) {
     Meteor.call('Game.quit', game.getId(), () => {
-      GameSession.set('currentId', null);
       GameSession.set('current', null);
     });
   },
 
-  switchTo(gameId, isId = true) {
+  switchTo(game, isId = true) {
     if (isId) {
-      GameSession.set('currentId', gameId);
+      GameSession.set('current', this.load(game));
     }
     else {
-      GameSession.set('current', gameId);
+      GameSession.set('current', game);
     }
   }
 

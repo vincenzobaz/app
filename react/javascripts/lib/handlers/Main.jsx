@@ -4,6 +4,7 @@
 var React = require('react'),
     ReactMeteor = require('../third-party/react-meteor'),
     AppState = require('../AppState'),
+    PlayGame = require('./PlayGame'),
     Home = require('./Home'),
     Dashboard = require('./Dashboard'),
     Welcome = require('./Welcome'),
@@ -39,7 +40,7 @@ var Main = React.createClass({
   },
 
   renderInner() {
-    if (this.state.currentGameId != null) {
+    if (this.state.currentGame != null) {
       return <PlayGame {...this.state} />;
     }
 

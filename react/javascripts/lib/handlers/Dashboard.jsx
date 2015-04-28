@@ -5,9 +5,17 @@ var React = require('react'),
     Players = require('../components/Players'),
     CurrentGames = require('../components/CurrentGames'),
     JoinRequests = require('../components/JoinRequests'),
-    Footer = require('../components/Footer');
+    Footer = require('../components/Footer'),
+    shapes = require('../components/shapes');
 
 var Dashboard = React.createClass({
+
+  propTypes: {
+    currentGame: shapes.Game,
+    user: shapes.User,
+    games: React.PropTypes.arrayOf(shapes.Game),
+    joinRequests: React.PropTypes.arrayOf(shapes.JoinRequest)
+  },
 
   render() {
     return (

@@ -197,7 +197,7 @@ var Done = React.createClass({
 
   propTypes: {
     gameId: React.PropTypes.number.isRequired,
-    tile: shapes.tile.isRequired,
+    tile: shapes.Tile.isRequired,
     answers: React.PropTypes.arrayOf(shapes.answer).isRequired,
     onSent: React.PropTypes.func,
     onSendError: React.PropTypes.func,
@@ -278,7 +278,7 @@ var Done = React.createClass({
 var TimeUp = React.createClass({
 
   propTypes: {
-    tile: shapes.tile.isRequired,
+    tile: shapes.Tile.isRequired,
     onSent: React.PropTypes.func,
     onSendError: React.PropTypes.func
   },
