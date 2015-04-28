@@ -116,6 +116,17 @@ TlQuestion.prototype = {
     }
 };
 
+GeoQuestion = function(id, user_id, data, answer) {
+  this.id = id;
+  this.userId = user_id;
+  this.data = data;
+  this.answer = answer;
+};
+
+GeoQuestion.FromRaw = function(raw) {
+  return new GeoQuestion(raw.id, raw.user_id, raw.question, raw.answer);
+}
+
 Tile = function(id, type, question1, question2, question3){
     this._id = id;
     this._type = type;
@@ -172,6 +183,10 @@ GameBoard.FromRaw = function(userId, data){
             question1 = new McQuestion.FromRaw(t.question1);
             question2 = new McQuestion.FromRaw(t.question2);
             question3 = new McQuestion.FromRaw(t.question3);
+        } else if (t.type === "Geolocation") {
+            question1 = new GeoQuestion.FromRaw(t.question1);
+            question2 = new GeoQuestion.FromRaw(t.question2);
+            question3 = new GeoQuestion.FromRaw(t.question3);
         } else {
             throw new Meteor.Error("404", "Unknown Question type " + t.type)
         }
