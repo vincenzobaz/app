@@ -29,23 +29,18 @@ JoinRequestService = {
   },
 
   send(userId) {
-    var future = new Future();
     var game = new Game(null, Meteor.userId(), userId, undefined, undefined, "waiting", _.random(1,2), undefined, undefined);
-    game.save(function(error, gameId){
-      if (!error){
-        var join = new JoinRequest(null, Meteor.userId(), userId, gameId);
-        join.save(function(error, requestId){
-          if (!error){
-            future.return({status: "success", requestId: requestId});
-          } else {
-            future.return({status: "error", error: error});
-          }
-        })
-      } else {
-        future.return({status: "error", error: error});
-      }
-    });
-    return future.wait();
+    var gameSave = Meteor.wrapAsync(game.save, game);
+    try {
+      var gameId = gameSave();
+      var join = new JoinRequest(null, Meteor.userId(), userId, gameId);
+      var joinSave = Meteor.wrapAsync(join.save, join);
+      var requestId = joinSave();
+      return {status: "success", requestId: requestId};
+    }
+    catch (error) {
+      return {status: "error", error: error};
+    }
   }
 
 };
