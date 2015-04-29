@@ -1,5 +1,5 @@
 
-class Question {
+Reminisce.Model.Question = class Question {
 
   constructor(props, tile) {
     _.extend(this, props);
@@ -14,6 +14,10 @@ class Question {
     return this.tile;
   }
 
+  getKind() {
+    return this.kind;
+  }
+
   getType() {
     return this.type;
   }
@@ -22,8 +26,12 @@ class Question {
     return !!this.answered;
   }
 
-  getData() {
-    return this.data;
+  getPost() {
+    return this.post;
+  }
+
+  getComment() {
+    return this.comment;
   }
 
 }

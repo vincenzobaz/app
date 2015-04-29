@@ -3,6 +3,12 @@ Reminisce.Model.Tile = class Tile {
 
   constructor(props) {
     _.extend(this, props);
+
+    this.questions = [
+      this.question1,
+      this.question2,
+      this.question3
+    ];
   }
 
   getId() {
@@ -27,7 +33,7 @@ Reminisce.Model.Tile = class Tile {
 
   getQuestions() {
     return lazy(this, 'questions', qs =>
-      qs.map(q => new Reminisce.Model.Question(q, this)));
+      qs.map(q => new Reminisce.Model.Question(q)));
   }
 
   isAnswered() {

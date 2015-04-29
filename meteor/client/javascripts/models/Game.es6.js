@@ -4,7 +4,9 @@ Reminisce.Model.Game = class Game {
   constructor(props) {
     _.extend(this, props);
 
+    // FIXME: This kind of stuff should be (cleanly) done on the server.
     this.opponentId = (this.player1 === Meteor.userId()) ? this.player2 : this.player1;
+    this.board      = (this.player1 === Meteor.userId()) ? this.player1Board : this.player2Board;
   }
 
   getId() {
@@ -23,12 +25,12 @@ Reminisce.Model.Game = class Game {
     return Reminisce.Store.UserStore.byId(this.getOpponentId());
   }
 
+  // FIXME: This kind of stuff should be (cleanly) done on the server.
   getScore() {
     return {
-      me: 0,
-      them: 0
+      me:   (this.player1 === Meteor.userId() ? this.player1Scores : this.player2Scores)|0,
+      them: (this.player2 === Meteor.userId() ? this.player1Scores : this.player2Scores)|0
     };
-    // return this.score;
   }
 
   getCurrentPlayerId() {
@@ -64,19 +66,13 @@ Reminisce.Model.Game = class Game {
     return winData != null && winData.wonBy != null;
   }
 
-  getWinData() {
-    return this.winData;
-  }
-
-  getTiles() {
-    return lazy(this, 'tiles', tiles =>
-      tiles.map(tile =>
-        new Reminisce.Model.Tile(tile)));
+  getBoard() {
+    return lazy(this, 'board', b => new Reminisce.Model.GameBoard(b));
   }
 
 }
 
-Reminisce.Collection.Games = new Mongo.Collection("games", {
+Reminisce.Collection.Games = new Mongo.Collection('games', {
   transform(doc) {
     console.log('client', doc);
     return new Reminisce.Model.Game(doc);
