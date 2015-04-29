@@ -28,7 +28,7 @@ Server.fetchData = function(userId) {
 
   const url = `${process.env.GAMECREATOR_URL}/fetchData?${Querystring.encode(params)}`;
   Meteor.http.get(url, function (err, res) {
-    console.log(res.statusCode, res.data);
+    console.error(res.statusCode, res.data);
   });
 };
 

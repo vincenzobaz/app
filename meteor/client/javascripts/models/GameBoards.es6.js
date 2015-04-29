@@ -1,8 +1,7 @@
 
 Reminisce.Collection.GameBoards = new Mongo.Collection("gameBoards", {
   transform(doc) {
-    console.log('GameBoard', doc);
-    return new GameBoard(doc)
+    return new Reminisce.Model.GameBoard(doc)
   }
 });
 
@@ -17,9 +16,8 @@ Reminisce.Model.GameBoard = class GameBoard {
   }
 
   getTiles() {
-    return lazy(this, 'tiles', tiles =>
-      tiles.map(tile =>
-        new Reminisce.Model.Tile(tile)));
+    return lazy(this.getId(), this, 'tiles', tiles =>
+      tiles && tiles.map(tile => new Reminisce.Model.Tile(tile))) || [];
   }
 
 };

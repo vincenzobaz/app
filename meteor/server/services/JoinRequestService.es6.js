@@ -32,9 +32,10 @@ JoinRequestService = {
   },
 
   send(userId) {
+    // TODO: Move that logic to GameService
     var game = new Game(null, Meteor.userId(), userId, undefined, undefined, "waiting", _.random(1,2), undefined, undefined);
     try {
-      var gameId = GameRepository.save();
+      var gameId = GameRepository.save(game);
       var join = new JoinRequest(null, Meteor.userId(), userId, gameId);
       var requestId = JoinRequestRepository.save(join);
       return {status: "success", requestId: requestId};

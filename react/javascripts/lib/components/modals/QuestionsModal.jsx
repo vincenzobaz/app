@@ -22,7 +22,7 @@ var QuestionsModal = React.createClass({
   mixins: [MultiStepMixin],
 
   propTypes: {
-    gameId: React.PropTypes.string.isRequired,
+    game: shapes.Game.isRequired,
     maxTime: React.PropTypes.number, /* in seconds */
     tile: shapes.Tile,
     questions: React.PropTypes.arrayOf(shapes.Question).isRequired,
@@ -161,7 +161,7 @@ var QuestionsModal = React.createClass({
     }
 
     if (this.isDone()) {
-      return <Done gameId={this.props.gameId}
+      return <Done game={this.props.game}
                    tile={this.props.tile}
                    answers={this.state.answers}
                    onSent={this.onSent}
@@ -196,7 +196,7 @@ var QuestionsModal = React.createClass({
 var Done = React.createClass({
 
   propTypes: {
-    gameId: React.PropTypes.number.isRequired,
+    game: shapes.Game.isRequired,
     tile: shapes.Tile.isRequired,
     answers: React.PropTypes.arrayOf(shapes.answer).isRequired,
     onSent: React.PropTypes.func,
@@ -224,7 +224,7 @@ var Done = React.createClass({
 
   sendAnswers() {
     AnswerStore
-      .send(this.props.gameId, this.props.tile, this.props.answers)
+      .send(this.props.game.getId(), this.props.tile, this.props.answers)
       .then(res => {
         if (!res || res.status !== "success") {
           this.setState({
@@ -303,7 +303,7 @@ var TimeUp = React.createClass({
 
   sendTimeUp() {
     AnswerStore
-      .timeOut(this.props.gameId, this.props.tile)
+      .timeOut(this.props.game.getId(), this.props.tile)
       .then(res => {
         if (!res || res.status !== "success") {
           this.setState({

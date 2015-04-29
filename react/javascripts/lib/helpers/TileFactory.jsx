@@ -5,13 +5,13 @@ var React = require('react'),
     Tile = require('../components/Tile'),
     debug = require('debug')('TileFactory');
 
-React;
-
 class TileFactory {
 
   constructor(game, modalFactory) {
     this.curTileNum = 1;
     this.game = game;
+    this.board = game.getBoard();
+    console.log(window.board = this.board);
     this.modalFactory = modalFactory;
   }
 
@@ -19,7 +19,7 @@ class TileFactory {
   // TODO: Refactor makeTiles().
   getTiles(tiles) {
     this.curTileNum = 1;
-    return this.game.getTiles().map(this.makeTile.bind(this));
+    return this.board.getTiles().map(this.makeTile.bind(this));
   }
 
   makeTile(tile) {

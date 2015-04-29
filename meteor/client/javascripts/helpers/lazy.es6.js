@@ -1,11 +1,10 @@
 
-lazy = (obj, prop, compute) => {
-  var value;
-  return () => {
-    if (value === undefined) {
-      value = compute(obj[prop]);
-    }
-    return value;
-  };
-}
+var cache = {};
+
+lazy = (key, obj, prop, compute) => {
+  if (cache[key] === undefined) {
+    cache[key] = compute(obj[prop]);
+  }
+  return cache[key];
+};
 

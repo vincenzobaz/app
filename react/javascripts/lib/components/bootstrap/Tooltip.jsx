@@ -45,4 +45,10 @@ var Tooltip = React.createClass({
   }
 });
 
+Tooltip = React.createClass({
+  render() {
+    return this.props.children;
+  }
+});
+
 module.exports = Tooltip;

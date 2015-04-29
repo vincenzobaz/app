@@ -10,7 +10,7 @@ Games = new Mongo.Collection("games", {
 Game = class Game {
 
     constructor(id, player1, player2, player1Board, player2Board, status, playerTurn, player1Scores, player2Scores) {
-      this.id = id;
+      this._id = id;
       this.player1 = player1;
       this.player2 = player2;
       this.player1Board = player1Board;
@@ -22,7 +22,7 @@ Game = class Game {
     }
 
     getId() {
-        return this.id;
+        return this._id;
     }
 
     getPlayer1() {

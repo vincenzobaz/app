@@ -66,15 +66,21 @@ Reminisce.Model.Game = class Game {
     return winData != null && winData.wonBy != null;
   }
 
+  getWinData() {
+    return this.winData;
+  }
+
   getBoard() {
-    return lazy(this, 'board', b => new Reminisce.Model.GameBoard(b));
+    return lazy(this.getId(), this, 'board', boardId => {
+      const board = Reminisce.Collection.GameBoards.findOne(boardId);
+      return new Reminisce.Model.GameBoard(board);
+    })
   }
 
 }
 
 Reminisce.Collection.Games = new Mongo.Collection('games', {
   transform(doc) {
-    console.log('client', doc);
     return new Reminisce.Model.Game(doc);
   }
 });

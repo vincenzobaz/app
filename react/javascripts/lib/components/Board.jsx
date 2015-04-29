@@ -10,10 +10,7 @@ var React = require('react'),
 var Board = React.createClass({
 
   propTypes: {
-    game: shapes.Game
-  },
-
-  getDefaultProps() {
+    game: shapes.Game.isRequired
   },
 
   render() {
@@ -25,7 +22,7 @@ var Board = React.createClass({
   },
 
   renderTiles() {
-    var modalFactory = new ModalFactory(this.props.game.getId(), this.onModalRequestHide);
+    var modalFactory = new ModalFactory(this.props.game, this.onModalRequestHide);
     var tileFactory = new TileFactory(this.props.game, modalFactory);
 
     return tileFactory.getTiles();

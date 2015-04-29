@@ -28,11 +28,14 @@ Reminisce.Model.Tile = class Tile {
   }
 
   getScore() {
-    return this.score;
+    return this.score || {
+      me: 0,
+      them: 0
+    };
   }
 
   getQuestions() {
-    return lazy(this, 'questions', qs =>
+    return lazy(this.getId(), this, 'questions', qs =>
       qs.map(q => new Reminisce.Model.Question(q)));
   }
 

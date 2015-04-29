@@ -58,14 +58,14 @@ Choice.FromRaw = function(data) {
 McQuestion = class McQuestion {
 
     constructor(id, content, choices, answer) {
-        this.id = id;
+        this._id = id;
         this.content = content;
         this.choices = choices;
         this.answer = answer;
     }
 
     getId() {
-        return this.id;
+        return this._id;
     }
 
     getContent() {
@@ -91,7 +91,7 @@ McQuestion.FromRaw = function(data){
 TlQuestion = class TlQuestion {
 
       constructor(id, content, minDate, maxDate, range, answer) {
-        this.id = id;
+        this._id = id;
         this.content = content;
         this.minDate = minDate;
         this.maxDate= maxDate;
@@ -100,7 +100,7 @@ TlQuestion = class TlQuestion {
     }
 
     getId() {
-        return this.id;
+        return this._id;
     }
 
     getMinDate() {
@@ -132,7 +132,7 @@ TlQuestion.FromRaw = function(data){
 
 GeoQuestion = class GeoQuestion {
     constructor(id, userId, data, answer) {
-        this.id = id;
+        this._id = id;
         this.userId = userId;
         this.data = data;
         this.answer = answer;
@@ -146,13 +146,13 @@ GeoQuestion.FromRaw = function(raw) {
 Tile = class Tile {
 
     constructor(id, type, question1, question2, question3) {
-        this.id = id;
+        this._id = id;
         this.type = type;
         this.questions = [question1, question2, question3];
     }
 
     getId() {
-        return this.id;
+        return this._id;
     }
 
     getType() {
@@ -180,13 +180,15 @@ Tile = class Tile {
 GameBoard = class GameBoard {
 
     constructor(id, userId, tiles) {
-      this.id = id;
+      if (id) {
+        this._id = id;
+      }
       this.userId = userId;
       this.tiles = tiles;
     }
 
     getId() {
-        return this.id;
+        return this._id;
     }
 
     getUserId() {
@@ -222,6 +224,6 @@ GameBoard.FromRaw = function(userId, data){
         return new Tile(generateId(), t.type, question1, question2, question3)
 
     });
-    return new GameBoard(generateId(), userId, tiles);
+    return new GameBoard(null, userId, tiles);
 };
 

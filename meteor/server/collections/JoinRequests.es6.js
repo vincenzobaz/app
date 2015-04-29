@@ -8,14 +8,14 @@ JoinRequests = new Mongo.Collection("joinRequests", {
 JoinRequest = class JoinRequest {
 
     constructor(id, from, to, gameId) {
-      this.id = id;
+      this._id = id;
       this.from = from;
       this.to = to;
       this.gameId = gameId;
     }
 
     getId() {
-        return this.id;
+        return this._id;
     }
 
     getFrom(){

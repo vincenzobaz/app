@@ -8,15 +8,15 @@ React;
 
 class ModalFactory {
 
-  constructor(gameId, onRequestHide) {
-    this.gameId = gameId;
+  constructor(game, onRequestHide) {
+    this.game = game;
     this.onRequestHide = onRequestHide;
   }
 
   makeModal(tile) {
     return (
       <QuestionsModal
-        gameId={this.gameId}
+        game={this.game}
         tile={tile}
         questions={tile.getQuestions() || []}
         onRequestHide={this.onRequestHide} />

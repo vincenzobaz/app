@@ -2,15 +2,13 @@
 GameBoardRepository = {
 
   save(gameBoard) {
-    var doc = _.pick(gameBoard, 'content', 'choices', 'answer');
-
-    if (gameBoard.id) {
-      GameBoards.update(gameBoard.id, {$set: doc});
+    if (gameBoard._id) {
+      GameBoards.update(gameBoard._id, {$set: gameBoard});
     } else {
-      gameBoard.id = GameBoards.insert(doc);
+      gameBoard._id = GameBoards.insert(gameBoard);
     }
 
-    return gameBoard.id;
+    return gameBoard._id;
   }
 };
 

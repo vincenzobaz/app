@@ -1,5 +1,5 @@
 generateId = function() {
-    return new Mongo.ObjectID()._str;
+    return new Mongo.Collection.ObjectID()._str;
 };
 
 prettyLog = function(object) {
