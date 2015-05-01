@@ -10,15 +10,15 @@ Games = new Mongo.Collection("games", {
 Game = class Game {
 
     constructor(id, player1, player2, player1Board, player2Board, status, playerTurn, player1Scores, player2Scores) {
-      this._id = id;
-      this.player1 = player1;
-      this.player2 = player2;
-      this.player1Board = player1Board;
-      this.player2Board = player2Board;
-      this.status = status;
-      this.playerTurn = playerTurn;
-      this.player1Scores = player1Scores;
-      this.player2Scores = player2Scores;
+        this._id = id;
+        this.player1 = player1;
+        this.player2 = player2;
+        this.player1Board = player1Board;
+        this.player2Board = player2Board;
+        this.status = status;
+        this.playerTurn = playerTurn;
+        this.player1Scores = player1Scores;
+        this.player2Scores = player2Scores;
     }
 
     getId() {
@@ -69,10 +69,10 @@ Game = class Game {
     }
 
     getCurrentPlayer() {
-      if (this.playerTurn === 1) {
-        return this.player1;
-      }
-      return this.player2;
+        if (this.playerTurn === 1) {
+            return this.player1;
+        }
+        return this.player2;
     }
 
     getPlayer1Scores(){
@@ -84,13 +84,40 @@ Game = class Game {
     }
 
     getOpponent() {
-      var myId = Meteor.userId();
+        var myId = Meteor.userId();
 
-      if (this.player1 === myId) {
-        return this.player2;
-      }
-      return this.player1;
+        if (this.player1 === myId) {
+            return this.player2;
+        }
+        return this.player1;
     }
 
-};
+    //save(callback) {
+    //    var doc = _.pick(this, 'player1', 'player2',
+    //        'player1Board', 'player2Board', 'status',
+    //        'playerTurn', 'player1Scores', 'player2Scores');
+    //
+    //    if (Meteor.isServer) {
+    //        console.log("saving game");
+    //        console.log(this);
+    //        if (this.id) {
+    //            Games.update(this.id, {$set: doc}, callback);
+    //        } else {
+    //            // remember the context, since in callback it's changed
+    //            var that = this;
+    //            Games.insert(doc, function(error, result) {
+    //                that._id = result;
+    //
+    //                if (callback != null) {
+    //                    callback.call(that, error, result);
+    //                }
+    //            });
+    //        }
+    //
+    //    } else {
+    //        throw new Meteor.Error(403, "Access Denied");
+    //    }
+    //}
+
+}
 

@@ -123,6 +123,7 @@ TlQuestion = class TlQuestion {
 TlQuestion.FromRaw = function(data){
     return new TlQuestion(
         generateId(),
+        data.question,
         data.min_date,
         data.max_date,
         data.range,

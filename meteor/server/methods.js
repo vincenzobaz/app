@@ -23,14 +23,7 @@ Meteor.methods({
     },
 
     'Game.start': function(gameId) {
-        console.log("starting game " + gameId);
-
-        var game = Games.findOne(gameId);
-        console.log(game);
-        game.status = "Playing";
-        var gameSave = Meteor.wrapAsync(game.save, game);
-        gameSave();
-        return {status: "success"};
+        return GameService.start(gameId);
     },
 
     'Game.quit': function(gameId) {
