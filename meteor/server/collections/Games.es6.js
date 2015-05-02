@@ -3,13 +3,13 @@ Games = new Mongo.Collection("games", {
     transform: function(doc){
         return new Game(doc._id, doc.player1, doc.player2,
             doc.player1Board, doc.player2Board, doc.status,
-            doc.playerTurn, doc.player1Scores, doc.player2Scores)
+            doc.playerTurn, doc.player1Scores, doc.player2Scores, doc.boardState)
     }
 });
 
 Game = class Game {
 
-    constructor(id, player1, player2, player1Board, player2Board, status, playerTurn, player1Scores, player2Scores) {
+    constructor(id, player1, player2, player1Board, player2Board, status, playerTurn, player1Scores, player2Scores, boardState) {
         this._id = id;
         this.player1 = player1;
         this.player2 = player2;
@@ -19,6 +19,7 @@ Game = class Game {
         this.playerTurn = playerTurn;
         this.player1Scores = player1Scores;
         this.player2Scores = player2Scores;
+        this.boardState = boardState;
     }
 
     getId() {

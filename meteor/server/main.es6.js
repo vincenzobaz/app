@@ -17,7 +17,23 @@ Meteor.startup(() => {
 
     Bots = Meteor.users.find({username: {$in: ["bot1", "bot2"]}}).fetch();
 
-    Server.createBotGame("Random");
+    const boardState = [
+        [{player: 1, score: 3}, {player: 2, score: 3}, {player: 2, score: 3}],
+        [{player: 2, score: 3}, {player: 1, score: 3}, {player: 1, score: 3}],
+        [{player: 0, score: 0}, {player: 1, score: 3}, {player: 2, score: 3}]
+    ];
+
+    const player1Wins = AnswerService.playerWins(boardState, 1, 0, 0);
+    console.log(`did player 1 win ${player1Wins}`);
+    const player2Wins = AnswerService.playerWins(boardState, 2, 0, 0);
+    console.log(`did player 2 win ${player2Wins}`);
+    const isDraw = AnswerService.isDraw(boardState);
+    console.log(`is a draw? ${isDraw}`);
+
+
+    if (process.env.BOTGAME == 1){
+        Server.createBotGame("Random");
+    }
 
     if (GameBoards.find().count() == 0) {
         var board1 = JSON.parse(Assets.getText("json/gameboards/gameboard1.json"));
