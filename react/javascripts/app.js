@@ -5,7 +5,6 @@ require('./rock-hammer');
 // Expose React to enable the React Dev Tools.
 var React = window.React = require('react'),
     Main = require('./lib/handlers/Main'),
-    Footer = require('./lib/components/Footer'),
     ErrorStore = require('./lib/stores/ErrorStore'),
     ErrorHandler = require('./lib/components/ErrorHandler'),
     debug = window.debug = require('debug');
