@@ -1,0 +1,9 @@
+{
+  "stage"    : 2
+, "loose"    : [ "es6.classes"
+             , "es6.modules" ]
+, "optional" : [ "es7.asyncFunctions"
+               , "validation.react"
+               , "utility.deadCodeElimination"
+               , "utility.inlineEnvironmentVariables" ]
+}

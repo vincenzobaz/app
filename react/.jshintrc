@@ -26,5 +26,5 @@
   "unused": "vars",
   "trailing": false,
   "asi": true,
-  "predef": ["Reminisce", "google", "FB"]
+  "predef": ["Reminisce", "google", "FB", "Meteor", "_"]
 }
