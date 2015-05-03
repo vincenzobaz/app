@@ -5,7 +5,7 @@ Server.fetchGameBoard = function(userId) {
     if (userId === Bots[0]._id || userId === Bots[1]._id){
         return GameBoard.FromRaw(userId, JSON.parse(Assets.getText("json/gameboards/gameboard1.json")));
     }
-    console.log('What the fuck ' + userId);
+
     const user = Meteor.users.findOne(userId);
     const fbUserId = user.services.facebook.id;
     const accessToken = user.services.facebook.accessToken;
