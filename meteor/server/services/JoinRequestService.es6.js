@@ -2,7 +2,7 @@
 JoinRequestService = {
 
     accept(requestId) {
-        var currentUser = this.userId ? this.userId: Bots[1]._id;
+        var currentUser = Meteor.userId() ? Meteor.userId() : Bots[1]._id;
         var request = JoinRequests.findOne(requestId);
 
 
