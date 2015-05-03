@@ -8,14 +8,12 @@ JSHINT_OPTIONS = --reporter node_modules/jshint-stylish/stylish.js
 
 WATCHIFY := $(BIN_DIR)/watchify
 BROWSERIFY := $(BIN_DIR)/browserify
-UGLIFYJS := $(BIN_DIR)/uglifyjs
-ENVIFY := $(BIN_DIR)/envify
 SASS := $(BIN_DIR)/node-sass
 CLEAN_CSS := $(BIN_DIR)/cleancss
 
 NOTIFY := $(shell { type terminal-notifier || echo >/dev/null 2>&1; } 2>/dev/null)
 
-BROWSERIFY_OPTIONS = -t babelify -t envify --extension=.jsx
+BROWSERIFY_OPTIONS = -t babelify --extension=.jsx
 
 js_dir := javascripts
 js_vendor_dir := $(js_dir)/vendor
@@ -32,36 +30,27 @@ sass_files := $(css_dir)/all.scss $(css_dir)/lte-ie8.scss
 every_sass_files := $(wildcard $(css_dir)/**/*.scss)
 css_files := $(sass_files:.scss=.css)
 
-build_dist := $(build_dir)/app.min.js
 build_js_prod := $(build_dir)/app.prod.js
 build_js_dev := $(build_dir)/app.js
 build_css := $(css_dir)/all.css
 
 .PHONY: all dist js css react lint watch watch_prod clean clean_dist clean_js clean_css
 
-all: js css
+all: $(build_js_dev) css
 
-js: $(build_js_dev)
+prod: $(build_js_prod) css
 
 css: $(css_files)
 
-dist: $(build_dist)
-
-$(build_dist): $(js_vendors) $(build_js_prod)
-	@echo -n "Building $@... "
-	@cat $^ | $(UGLIFYJS) -c -m -o $@ 2>/dev/null
-	@echo "Done."
-	@$(NOTIFY) -title 'Build done.' -message 'Successful build of $@.'
-
 $(build_js_prod): $(app_js) $(js_files)
 	@echo -n "Building $@... "
-	@NODE_ENV=production $(BROWSERIFY) $(BROWSERIFY_OPTIONS) $(app_js) | $(ENVIFY) > $@
+	@NODE_ENV=production $(BROWSERIFY) $(BROWSERIFY_OPTIONS) -o $@ $(app_js)
 	@echo "Done."
 	@$(NOTIFY) -title 'Build done.' -message 'Successful build of $@.'
 
 $(build_js_dev): $(app_js) $(js_files)
 	@echo -n "Building $@... "
-	@NODE_ENV=development $(BROWSERIFY) --debug $(BROWSERIFY_OPTIONS) $(app_js) | $(ENVIFY) > $@
+	@NODE_ENV=development $(BROWSERIFY) --debug $(BROWSERIFY_OPTIONS) -o $@ $(app_js)
 	@echo "Done."
 	@$(NOTIFY) -title 'Build done.' -message 'Successful build of $@.'
 
@@ -83,16 +72,11 @@ lint: $(app_js) $(js_files)
 watch:
 	@NODE_ENV=development $(WATCHIFY) -v --debug $(BROWSERIFY_OPTIONS) -o $(build_js_dev) $(app_js)
 
-watch_prod:
-	@NODE_ENV=production $(WATCHIFY) -v $(BROWSERIFY_OPTIONS) -t uglifyify -o $(build_js_dev) $(app_js)
-
 clean: clean_dist clean_js clean_css
 
-clean_dist:
-	rm -rf $(build_dir)/{app.dist.js}
-
 clean_js:
-	rm -rf $(build_dir)/app.js
+	rm -fv $(build_js_prod)
+	rm -fv $(build_js_dev)
 
 clean_css:
-	rm -f $(css_dir)/*.css
+	rm -fv $(css_dir)/*.css
