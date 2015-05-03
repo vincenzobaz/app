@@ -34,7 +34,8 @@ JoinRequestService = {
 
     send(userId) {
         // TODO: Move that logic to GameService
-        var currentUser = this.userId ? Meteor.userId: Bots[0]._id;
+        const currentUser = Meteor.userId() ? Meteor.userId() : Bots[0]._id;
+
         const boardState = [
             [{player: 0, score: 0}, {player: 0, score: 0}, {player: 0, score: 0}],
             [{player: 0, score: 0}, {player: 0, score: 0}, {player: 0, score: 0}],
