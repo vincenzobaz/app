@@ -37,7 +37,6 @@ Server.fetchData = function(userId) {
 };
 
 Server.createBotGame = function(strategy){
-    //try {
     var bot1 = Bots[0];
     var bot2 = Bots[1];
     var result = JoinRequestService.send(bot2._id);
@@ -47,12 +46,17 @@ Server.createBotGame = function(strategy){
         changed: function(newGame, oldGame) {
             if (newGame.playerTurn === 1){
                 setTimeout(Meteor.bindEnvironment(function(){
-                    const result = Server.playTurn(newGame)
-                    if (result.win || result.draw){
-                        handle1.stop();
-                        handle2.stop();
-                        console.log(`Game Finished: Player1 won:${result.win}, Draw: ${result.draw}`);
+                    if (newGame.status !== "finished"){
+                        const result = Server.playTurn(newGame);
+                        if (result.win || result.draw){
+                            handle1.stop();
+                            handle2.stop();
+                            newGame.status = "finished";
+                            GameRepository.save(newGame);
+                            console.log(`Game Finished: Player1 won:${result.win}, Draw: ${result.draw}`);
+                        }
                     }
+
                 }), 100);
             }
 
@@ -68,12 +72,15 @@ Server.createBotGame = function(strategy){
         changed: function(newGame, oldGame) {
             if (newGame.playerTurn === 2){
                 setTimeout(Meteor.bindEnvironment(function(){
-                    const result = Server.playTurn(newGame)
-                    if (result.win || result.draw){
-                        handle1.stop();
-                        handle2.stop();
-                        console.log(`Game Finished: Player2 won:${result.win}, Draw: ${result.draw}`);
-
+                    if (newGame.status !== "finished"){
+                        const result = Server.playTurn(newGame);
+                        if (result.win || result.draw){
+                            handle1.stop();
+                            handle2.stop();
+                            newGame.status = "finished";
+                            GameRepository.save(newGame);
+                            console.log(`Game Finished: Player2 won:${result.win}, Draw: ${result.draw}`);
+                        }
                     }
                 }), 100);
             }
@@ -87,22 +94,12 @@ Server.createBotGame = function(strategy){
         }
     });
     GameService.start(game._id);
-    //setTimeout(Meteor.bindEnvironment(function(){handle1.stop()}), 10000);
-    //setTimeout(Meteor.bindEnvironment(function(){handle2.stop();console.log("we are done");}), 10000);
-
-    //} catch (err) {
-    //    console.log("something went wrong: " + err.message);
-    //    //console.log(err);
-    //}
-
-
-    //console.log(game);
 };
 
-Server.playTurn = function(game){
+Server.playTurn = function(game) {
     var boardId;
     var answers;
-    if (game.getPlayerTurn() == 1){
+    if (game.getPlayerTurn() == 1) {
         console.log("Bot1 playing");
         boardId = "player1Board";
     } else {
@@ -111,20 +108,43 @@ Server.playTurn = function(game){
     }
     const gameBoard = GameBoards.findOne(game[boardId]);
     const tiles = gameBoard.getTiles();
-    const tile = _.sample(tiles);
-    if (tile.type === "MultipleChoice"){
+    //const tile = _.sample(tiles);
+    const tile = this.pickTile(game, gameBoard);
+    if (tile.type === "MultipleChoice") {
         console.log("we got a MC");
-        const choices = _.map(tile.questions, function(q){return q.choices});
-        answers = _.map(choices, function(c){return _.random(0, c.length - 1)});
+        const choices = _.map(tile.questions, function (q) {
+            return q.choices
+        });
+        answers = _.map(choices, function (c) {
+            return _.random(0, c.length - 1)
+        });
         return AnswerService.post(game._id, tile._id, answers);
 
     } else {
         console.log("we got type " + tile.type);
-        answers = _.map(tile.questions, function(q){
-            const days = _.random(-q.minDate, q.maxDate);
-            const answer = new Date(q.answer);
-            answer.setDate(answer.getDate() - days);
-            return answer});
+        answers = _.map(tile.questions, function (q) {
+            const days = _.random(-q.minDate, q.maxDate) * 24 * 60 * 60 * 1000;
+            var answer = new Date(new Date(q.answer).getTime() + days);
+            return answer;
+        });
+        console.log("bots answers");
+        console.log(answers);
         return AnswerService.post(game._id, tile._id, answers);
+    }
+
+};
+
+Server.pickTile = function(game, gameBoard){
+    const tiles = gameBoard.getTiles();
+    const boardState = game.boardState;
+    const indexTiles = _.zip(_.range(9),_.flatten(boardState));
+    const potentialTiles = _.filter(indexTiles, function(t){return t[1].player === 0});
+    console.log(`potentialTiles:`);
+    console.log(potentialTiles);
+    if (potentialTiles.length > 0){
+        return tiles[_.sample(potentialTiles)[0]];
+    } else {
+        console.log('no pitential tiles');
+        return _.sample(tiles);
     }
 };

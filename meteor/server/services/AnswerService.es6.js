@@ -4,27 +4,21 @@ AnswerService = {
         var game = Games.findOne(gameId);
         var boardState = game.boardState;
         var board;
-        var otherBoard;
         const board1 = GameBoards.findOne(game.player1Board);
         const board2 = GameBoards.findOne(game.player2Board);
         const currentTurn = game.playerTurn;
         var currentScoreId;
-        var otherScoreId;
 
         var currentUser = this.userId;
 
         if (currentUser === game.player1 || game.player1 === Bots[0]._id && currentTurn === 1) {
             console.log('getting player 1 board');
             board = board1;
-            otherBoard = board2;
             currentScoreId = "player1Scores";
-            otherScoreId = "player2Scores";
         } else if (currentUser === game.player2 || game.player2 === Bots[1]._id && currentTurn === 2) {
             console.log('getting player 2 board');
             board = board2;
-            otherBoard = board1;
             currentScoreId = "player2Scores";
-            otherScoreId = "player1Scores";
         } else {
             throw Meteor.Error(404, "Invalid gameId + " + gameId + "user does not play this game");
         }
@@ -33,10 +27,7 @@ AnswerService = {
             const index = _.indexOf(board.tiles, tile);
             const row = Math.floor(index / 3);
             const col = index % 3;
-            var correctAnswer = _.map(tile.questions, function(q){return q.answer});
-            var result = _.map(_.zip(correctAnswer, answers), function(aa){
-                return aa[0] === aa[1] ? 1 : 0;
-            });
+            const result = this.getResultsForTile(tile, answers);
             var scores = [];
             for (var i = 0; i < tile.questions.length; i++){
                 scores.push({questionId: tile.questions[i]._id, score: result[i]})
@@ -69,37 +60,78 @@ AnswerService = {
 
     },
 
-    playerWins(boardState, playerTurn, row, column) {
-        for (var i = 0; i < boardState[row].length; i++){
-            if (boardState[row][i].player !== playerTurn || boardState[row][i].score === 0){
-                break;
-            }
-            if (i === boardState[row].length){
-                return true;
-            }
+    getResultsForTile(tile, answers) {
+        const questionAnswers = _.zip(tile.questions, answers);
+        if (tile.type === "MultipleChoice"){
+            return _.map(questionAnswers, function(qa){return AnswerService.verifyAnswerMultipleChoice(qa[0], qa[1])});
+        } else if (tile.type === "Timeline"){
+            return _.map(questionAnswers, function(qa){return AnswerService.verifyAnswerTimeLine(qa[0], qa[1])});
+        } else {
+            console.log("got invalid question type" + tile.type)
         }
-
-        for (var j = 0; j < boardState.length; j++){
-            if (boardState[j][column].player !== playerTurn || boardState[j][column].score === 0){
-                break;
-            }
-            if (i === boardState.length){
-                return true;
-            }
-        }
-
-        if (row == column){
-            for (var x = 0; x < boardState.length; x++){
-                if (boardState[x][x].player !== playerTurn || boardState[x][x].score === 0){
-                    break;
-                }
-                if (x == boardState.length){
-                    return true;
-                }
-            }
-        }
-        return false;
     },
+
+    verifyAnswerMultipleChoice(question, answer) {
+        return question.answer === answer ? 1 : 0;
+    },
+
+    verifyAnswerTimeLine(question, answer) {
+        const milliSecondsPerDay = 24 * 60 * 60 * 100;
+        const range = question.range * milliSecondsPerDay;
+        return answer.getTime() - range <= new Date(question.answer).getTime() <= answer.getTime() + range ? 1 : 0;
+    },
+
+    playerWins(boardState, playerTurn, row, column) {
+
+        return AnswerService.verifyWonRow(boardState, row, playerTurn) ||
+            AnswerService.verifyWonColumn(boardState, column, playerTurn) ||
+            AnswerService.verifyWonDiagonal(boardState, playerTurn) ||
+            AnswerService.verifyWonAntiDiagonal(boardState, playerTurn)
+
+    },
+
+    verifyWonRow(boardState, row, player){
+        for (var i = 0; i < 3; i++){
+            if (boardState[row][i].player !== player || boardState[row][i].score === 0){
+                return false;
+            }
+            if (i === boardState[row].length - 1){
+                return true;
+            }
+        }
+    },
+
+    verifyWonColumn(boardState, column, player){
+        for (var j = 0; j < 3; j++){
+            if (boardState[j][column].player !== player || boardState[j][column].score === 0){
+                return false;
+            }
+        }
+        return true;
+
+    },
+
+    verifyWonDiagonal(boardState, player){
+        for (var x = 0; x < 3; x++) {
+            const cell = boardState[x][x];
+            if (cell.player !== player) {
+                return false
+            }
+        }
+        return true;
+    },
+    verifyWonAntiDiagonal(boardState, player) {
+        var y = 2;
+        for (var x = 0; x < 3; x++) {
+            const cell = boardState[y][x];
+                if (cell.player !== player) {
+                    return false;
+                }
+            y--;
+        }
+        return true;
+    },
+
     isDraw(boardState) {
         const impossible = this.checkRows(boardState) +
             this.checkColumns(boardState) +
@@ -122,7 +154,7 @@ AnswerService = {
                         impossible++;
                         break;
                     }
-                    player = boardState[x][y].player;
+                    _.extend(player, boardState[x][y].player);
                 }
             }
         }
@@ -140,7 +172,7 @@ AnswerService = {
                         impossible++;
                         break;
                     }
-                    player = cell.player;
+                    _.extend(player, cell.player);
                 }
             }
         }
@@ -157,7 +189,7 @@ AnswerService = {
                     impossible++;
                     break;
                 }
-                player = cell.player;
+                _.extend(player, cell.player);
             }
 
         }
@@ -175,7 +207,7 @@ AnswerService = {
                     impossible++;
                     break;
                 }
-                player = cell.player;
+                _.extend(player, cell.player);
             }
             y--;
         }
