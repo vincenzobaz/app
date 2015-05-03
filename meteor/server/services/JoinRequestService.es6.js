@@ -20,6 +20,8 @@ JoinRequestService = {
         game.player1Board = board1Id;
         game.player2Board = board2Id;
 
+        game.setStatus("playing");
+
         GameRepository.save(game);
 
         JoinRequests.remove(requestId);
