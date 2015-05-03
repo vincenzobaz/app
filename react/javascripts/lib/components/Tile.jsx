@@ -14,7 +14,7 @@ var Tile = React.createClass({
     title: React.PropTypes.string.isRequired,
     placement: React.PropTypes.string.isRequired,
     answered: React.PropTypes.bool.isRequired,
-    questionModal: React.PropTypes.component.isRequired,
+    questionModal: React.PropTypes.element.isRequired,
     number: React.PropTypes.number.isRequired,
     type: React.PropTypes.string.isRequired,
     icon: React.PropTypes.string.isRequired,
