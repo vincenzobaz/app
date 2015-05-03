@@ -1,9 +1,9 @@
 
 (function() {
 
-var appId = process.env.REMINISCE_FACEBOOK_APPID;
-var secret = process.env.REMINISCE_FACEBOOK_SECRET;
-var gmapsKey = process.env.REMINISCE_GMAPS_KEY;
+var appId = Meteor.settings.facebook.appId;
+var secret = Meteor.settings.facebook.secret;
+var gmapsKey = Meteor.settings.gMaps.key;
 
 if (appId == null || secret == null) {
   throw new Meteor.Error(500, 'Cannot get Facebook app ID and secret from environment');
