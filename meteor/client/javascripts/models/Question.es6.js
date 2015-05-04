@@ -20,7 +20,7 @@ Reminisce.Model.Question = class Question {
   }
 
   getType() {
-    return this.type;
+    return this.tile.getType();
   }
 
   isAnswered() {
