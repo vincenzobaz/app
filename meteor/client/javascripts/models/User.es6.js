@@ -3,7 +3,11 @@ Reminisce.Model.User = class User {
 
   constructor(props) {
     _.extend(this, props);
-    this.fb = this.services && this.services.facebook || {};
+
+    if (this.fb === undefined) {
+        this.fb = this.services && this.services.facebook || {};
+    }
+
     delete this.services;
   }
 

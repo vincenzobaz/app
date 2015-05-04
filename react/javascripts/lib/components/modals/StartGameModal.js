@@ -15,15 +15,17 @@ var StartGameModal = React.createClass({
   },
 
   render() {
-    var opponent = this.props.opponent;
+    const opponent = this.props.opponent;
+    const name = opponent && opponent.getFullName() || 'them';
+
     return (
       <Modal backdrop={true} animation={true} className='error' onRequestHide={this.onCancel}>
         <div className='modal-header'>
-          <h3 id='confirm'>Do you want to play with {opponent.name}?</h3>
+          <h3 id='confirm'>Do you want to play with {name}?</h3>
         </div>
         <div className='modal-body'>
           <p>
-            That will send <em>{opponent.name}</em> a join request, and you will be able to play together once they accept it.
+            That will send <em>{name}</em> a join request, and you will be able to play together once they accept it.
           </p>
         </div>
         <div className='modal-footer'>

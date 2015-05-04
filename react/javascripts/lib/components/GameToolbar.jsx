@@ -27,8 +27,8 @@ var GameToolbar = React.createClass({
   },
 
   onFriendSelect(friendId) {
-    friendId = '1550704362';
-    var friend = UserStore.byFacebookId(friendId);
+    friendId = Meteor.userId();
+    var friend = UserStore.byId(friendId);
     GameToolbarSession.set('friend', friend);
     GameToolbarSession.set('showStartModal', true);
   },
@@ -58,8 +58,11 @@ var GameToolbar = React.createClass({
 
   render() {
     var startModal = '';
+
     if (this.state.showStartModal && this.state.friend) {
-      startModal = <StartGameModal opponent={this.state.friend.profile}
+      const friend = UserStore.hydrate(this.state.friend);
+
+      startModal = <StartGameModal opponent={friend}
                                    onOk={this.onStart}
                                    onCancel={this.onAbortStart}
                                    onRequestHide={this.onAbortStart} />;

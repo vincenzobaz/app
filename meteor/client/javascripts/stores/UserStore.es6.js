@@ -30,6 +30,10 @@ Reminisce.Store.UserStore = {
   byFacebookId(id) {
     var user = Meteor.users.findOne({'services.facebook.id': id});
     return hydrate(user);
+  },
+
+  hydrate(user) {
+    return hydrate(user);
   }
 
 };
