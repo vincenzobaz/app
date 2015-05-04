@@ -11,7 +11,7 @@ function image(s, c) {
 }
 
 function progressImage(score, color) {
-  return Routes.Assets.at('/images/' + image(score, color)).url;
+  return Routes.Assets.at('images/' + image(score, color)).url;
 }
 
 module.exports = progressImage;
