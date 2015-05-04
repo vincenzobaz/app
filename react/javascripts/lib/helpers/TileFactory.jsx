@@ -25,14 +25,12 @@ class TileFactory {
     const opponentId = null;
 
     const icon       = tile.getIcon();
-    const category   = tile.getCategory();
-
     const type       = icon;
     const answered   = (tile.getScore().them >= 3) ? true : tile.isAnswered();
 
     return (
       <Tile key={'tile-' + tileNum}
-            title={category}
+            title={''}
             answered={answered}
             type={type}
             icon={icon}
