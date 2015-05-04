@@ -9,12 +9,6 @@ function url(path) {
   };
 }
 
-function wrap(path) {
-  return function() {
-    return url(path);
-  };
-}
-
 Reminisce.Routes = {
   Assets: {
     at: function(path) {
