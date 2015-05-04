@@ -15,6 +15,9 @@ Server.fetchGameBoard = function(userId) {
     };
 
     const url = `${Meteor.settings.gameCreatorUrl}/gameboard?${Querystring.encode(params)}`;
+
+    console.log(`Server.fetchGameBoard(${userId}) - Fetching URL ${url}`);
+
     const get = Meteor.wrapAsync(Meteor.http.get);
     const result = get(url);
 
@@ -32,6 +35,9 @@ Server.fetchData = function(userId) {
     };
 
     const url = `${Meteor.settings.gameCreatorUrl}/fetchData?${Querystring.encode(params)}`;
+
+    console.log(`Server.fetchGameBoard(${userId}) - Fetching URL ${url}`);
+
     Meteor.http.get(url, function (err, res) {
         console.error(res.statusCode, res.data);
     });
