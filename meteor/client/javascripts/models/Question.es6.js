@@ -2,7 +2,7 @@
 Reminisce.Model.Question = class Question {
 
   constructor(props, tile) {
-    _.extend(this, props);
+    Object.assign(this, props);
 
     this.tile = tile;
   }

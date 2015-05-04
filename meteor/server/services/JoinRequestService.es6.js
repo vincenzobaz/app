@@ -42,10 +42,20 @@ JoinRequestService = {
             [{player: 0, score: 0}, {player: 0, score: 0}, {player: 0, score: 0}],
             [{player: 0, score: 0}, {player: 0, score: 0}, {player: 0, score: 0}]
         ];
-        var game = new Game(null, currentUser, userId, undefined, undefined, "waiting", _.random(1,2), {}, {}, boardState);
+
+        var game = Game.fromRaw({
+            player1: currentUser,
+            player2: userId,
+            status: "waiting",
+            playerTurn: _.random(1,2),
+            player1Scores: {},
+            player2Scores: {},
+            boardState: boardState
+        });
+
         try {
             var gameId = GameRepository.save(game);
-            var join = new JoinRequest(null, currentUser, userId, gameId);
+            var join = JoinRequest.fromRaw({ from: currentUser, to: userId, gameId: gameId });
             var requestId = JoinRequestRepository.save(join);
             return {status: "success", requestId: requestId};
         }

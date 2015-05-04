@@ -3,7 +3,7 @@ Server = function(){};
 
 Server.fetchGameBoard = function(userId) {
     if (userId === Bots[0]._id || userId === Bots[1]._id){
-        return GameBoard.FromRaw(userId, JSON.parse(Assets.getText("json/gameboards/gameboard1.json")));
+        return GameBoard.fromRaw(userId, JSON.parse(Assets.getText("json/gameboards/gameboard1.json")));
     }
 
     const user = Meteor.users.findOne(userId);
@@ -17,7 +17,8 @@ Server.fetchGameBoard = function(userId) {
     const url = `${Meteor.settings.gameCreatorUrl}/gameboard?${Querystring.encode(params)}`;
     const get = Meteor.wrapAsync(Meteor.http.get);
     const result = get(url);
-    return GameBoard.FromRaw(userId, result.data);
+
+    return GameBoard.fromRaw(userId, result.data);
 };
 
 

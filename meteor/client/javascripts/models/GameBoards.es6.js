@@ -8,7 +8,7 @@ Reminisce.Collection.GameBoards = new Mongo.Collection("gameBoards", {
 Reminisce.Model.GameBoard = class GameBoard {
 
   constructor(props) {
-    _.extend(this, props);
+    Object.assign(this, props);
   }
 
   getId() {

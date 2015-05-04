@@ -2,7 +2,7 @@
 Reminisce.Model.Game = class Game {
 
   constructor(props) {
-    _.extend(this, props);
+    Object.assign(this, props);
 
     // FIXME: This kind of stuff should be (cleanly) done on the server.
     this.opponentId = (this.player1 === Meteor.userId()) ? this.player2 : this.player1;

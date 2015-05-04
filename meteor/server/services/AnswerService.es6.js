@@ -154,7 +154,7 @@ AnswerService = {
                         impossible++;
                         break;
                     }
-                    _.extend(player, boardState[x][y].player);
+                    Object.assign(player, boardState[x][y].player);
                 }
             }
         }
@@ -172,7 +172,7 @@ AnswerService = {
                         impossible++;
                         break;
                     }
-                    _.extend(player, cell.player);
+                    Object.assign(player, cell.player);
                 }
             }
         }
@@ -189,7 +189,7 @@ AnswerService = {
                     impossible++;
                     break;
                 }
-                _.extend(player, cell.player);
+                Object.assign(player, cell.player);
             }
 
         }
@@ -207,7 +207,7 @@ AnswerService = {
                     impossible++;
                     break;
                 }
-                _.extend(player, cell.player);
+                Object.assign(player, cell.player);
             }
             y--;
         }

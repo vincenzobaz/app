@@ -2,7 +2,7 @@
 Reminisce.Model.Tile = class Tile {
 
   constructor(props) {
-    _.extend(this, props);
+    Object.assign(this, props);
   }
 
   getId() {

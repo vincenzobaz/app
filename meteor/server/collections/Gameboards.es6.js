@@ -1,23 +1,24 @@
+
 GameBoards = new Mongo.Collection("gameBoards", {
-    transform: function(doc) {
-        return new GameBoard(doc._id, doc.userId, doc.tiles)
+    transform(doc) {
+        return new GameBoard(doc);
     }
 });
 
-Content = class Content {
+const SubjectProps = [ 'type', 'text', 'imageUrl', 'thumbnailUrl', 'url' ];
 
-    constructor(question, text, imageUrl) {
-        this.question = question;
-        this.text = text;
-        this.imageUrl = imageUrl;
+Subject = class Subject {
+
+    constructor(props) {
+        assignProps(this, SubjectProps, props);
     }
 
-    getQuestion(){
-        return this.question;
-    }
-
-    getText(){
+    getText() {
         return this.text;
+    }
+
+    getType() {
+        return this.type;
     }
 
     getImageUrl() {
@@ -26,16 +27,16 @@ Content = class Content {
 };
 
 
-Content.FromRaw = function(data) {
-  return new Content(data.question, data.text, data.image_url);
+Subject.fromRaw = function(data) {
+  return new Subject(data);
 };
+
+const ChoiceProps = [ 'text', 'imageUrl', 'fbId' ];
 
 Choice = class Choice {
 
-    constructor(text, imageUrl, fbId) {
-        this.text = text;
-        this.imageUrl = imageUrl;
-        this.fbId = fbId;
+    constructor(props) {
+        assignProps(this, ChoiceProps, props);
     }
 
     getText() {
@@ -51,25 +52,28 @@ Choice = class Choice {
     }
 };
 
-Choice.FromRaw = function(data) {
-  return new Choice(data.text, data.image_url, data.fb_id);
+Choice.fromRaw = function(data) {
+    return new Choice({
+        text: data.text || data.name,
+        fbId: data.fb_id,
+        imageUrl: data.image_url
+    });
 };
 
-McQuestion = class McQuestion {
+MultipleChoiceQuestionProps = [ '_id', 'subject', 'choices', 'answer' ];
 
-    constructor(id, content, choices, answer) {
-        this._id = id;
-        this.content = content;
-        this.choices = choices;
-        this.answer = answer;
+MultipleChoiceQuestion = class MultipleChoiceQuestion {
+
+    constructor(props) {
+        assignProps(this, MultipleChoiceQuestionProps, props);
     }
 
     getId() {
         return this._id;
     }
 
-    getContent() {
-        return this.content;
+    getSubject() {
+        return this.subject;
     }
 
     getChoices() {
@@ -81,26 +85,29 @@ McQuestion = class McQuestion {
     }
 };
 
-McQuestion.FromRaw = function(data){
-    var choices = _.map(data.choices, function(c){
-        return new Choice.FromRaw(c);
-    });
-    return new McQuestion(generateId(), Content.FromRaw(data.question), choices, data.answer);
+MultipleChoiceQuestion.fromRaw = function(data) {
+    data.choices = _.map(data.choices, c =>
+        Choice.fromRaw(c));
+
+    data.subject = Subject.fromRaw(data.subject);
+
+    return new MultipleChoiceQuestion(data);
 };
 
-TlQuestion = class TlQuestion {
+TimelineQuestionProps = [ '_id', 'subject', 'minDate', 'maxDate', 'range', 'answer' ];
 
-      constructor(id, content, minDate, maxDate, range, answer) {
-        this._id = id;
-        this.content = content;
-        this.minDate = minDate;
-        this.maxDate= maxDate;
-        this.range = range;
-        this.answer = answer;
+TimelineQuestion = class TimelineQuestion {
+
+    constructor(props) {
+        assignProps(this, TimelineQuestionProps, props);
     }
 
     getId() {
         return this._id;
+    }
+
+    getSubject() {
+        return this.subject;
     }
 
     getMinDate() {
@@ -120,36 +127,63 @@ TlQuestion = class TlQuestion {
     }
 };
 
-TlQuestion.FromRaw = function(data){
-    return new TlQuestion(
-        generateId(),
-        data.question,
-        data.min_date,
-        data.max_date,
-        data.range,
-        data.answer
-    );
+TimelineQuestion.fromRaw = function(data){
+    data.subject = Subject.fromRaw(data.subject);
+    return new TimelineQuestion(data);
 };
 
+
+GeoQuestionProps = [ '_id', 'userId', 'data', 'answer' ];
+
 GeoQuestion = class GeoQuestion {
-    constructor(id, userId, data, answer) {
-        this._id = id;
-        this.userId = userId;
-        this.data = data;
-        this.answer = answer;
+    constructor(props) {
+        assignProps(this, GeoQuestionProps, props);
     }
 }
 
-GeoQuestion.FromRaw = function(raw) {
-  return new GeoQuestion(raw.id, raw.user_id, raw.question, raw.answer);
+GeoQuestion.fromRaw = function(raw) {
+  return new GeoQuestion(raw);
 }
+
+Question = {};
+
+Question.Kind = {
+    MultipleChoice: 'MultipleChoice',
+    Timeline: 'Timeline',
+    Geo: 'Geo'
+};
+
+Question.TypeMap = {};
+Question.TypeMap[Question.Kind.MultipleChoice] = MultipleChoiceQuestion;
+Question.TypeMap[Question.Kind.Timeline]       = TimelineQuestion;
+Question.TypeMap[Question.Kind.Geo]            = GeoQuestion;
+
+Question.fromRaw = (tile, data) => {
+    const kind = Question.Kind[data.kind];
+    if (kind == null) {
+        throw new Meteor.Error(500, `Unknown question kind: ${data.kind}`);
+    }
+
+    const Constructor = Question.TypeMap[kind];
+    if (Constructor == null) {
+        throw new Meteor.Error(500, `Cannot find constructor for question of kind ${kind}`);
+    }
+
+    return Constructor.fromRaw(data);
+};
+
+const TileProps = ['_id', 'type', 'question1', 'question2', 'question3'];
 
 Tile = class Tile {
 
-    constructor(id, type, question1, question2, question3) {
-        this._id = id;
-        this.type = type;
-        this.questions = [question1, question2, question3];
+    constructor(props) {
+        assignProps(this, TileProps, props);
+
+        if (this.questions === undefined) {
+            this.questions = [ this.question1,
+                               this.question2,
+                               this.question3 ];
+        }
     }
 
     getId() {
@@ -178,14 +212,12 @@ Tile = class Tile {
 };
 
 
+const GameBoardProps = ['_id', 'userId', 'tiles'];
+
 GameBoard = class GameBoard {
 
-    constructor(id, userId, tiles) {
-      if (id) {
-        this._id = id;
-      }
-      this.userId = userId;
-      this.tiles = tiles;
+    constructor(props) {
+        assignProps(this, GameBoardProps, props);
     }
 
     getId() {
@@ -202,29 +234,26 @@ GameBoard = class GameBoard {
 
 };
 
-GameBoard.FromRaw = function(userId, data){
-    var tiles = _.map(data.tiles, function(t) {
-        var question1;
-        var question2;
-        var question3;
-        if (t.type === "Timeline") {
-            question1 = new TlQuestion.FromRaw(t.question1);
-            question2 = new TlQuestion.FromRaw(t.question2);
-            question3 = new TlQuestion.FromRaw(t.question3);
-        } else if (t.type === "MultipleChoice") {
-            question1 = new McQuestion.FromRaw(t.question1);
-            question2 = new McQuestion.FromRaw(t.question2);
-            question3 = new McQuestion.FromRaw(t.question3);
-        } else if (t.type === "Geolocation") {
-            question1 = new GeoQuestion.FromRaw(t.question1);
-            question2 = new GeoQuestion.FromRaw(t.question2);
-            question3 = new GeoQuestion.FromRaw(t.question3);
-        } else {
-            throw new Meteor.Error("404", "Unknown Question type " + t.type)
-        }
-        return new Tile(generateId(), t.type, question1, question2, question3)
+GameBoard.fromRaw = function(userId, data) {
+    const tiles = _.map(data.tiles, tile => {
+        const question1 = Question.fromRaw(tile, tempFixQuestion(tile.question1));
+        const question2 = Question.fromRaw(tile, tempFixQuestion(tile.question2));
+        const question3 = Question.fromRaw(tile, tempFixQuestion(tile.question3));
 
+        return new Tile({
+            _id: generateId(),
+            type: tile.type,
+            question1,
+            question2,
+            question3
+        });
     });
-    return new GameBoard(null, userId, tiles);
+
+    return new GameBoard({ userId, tiles });
 };
 
+const tempFixQuestion = (q) => {
+    const fixed = Object.assign({}, q.question, q);
+    delete fixed.question;
+    return fixed;
+};

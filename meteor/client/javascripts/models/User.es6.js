@@ -2,7 +2,7 @@
 Reminisce.Model.User = class User {
 
   constructor(props) {
-    _.extend(this, props);
+    Object.assign(this, props);
 
     if (this.fb === undefined) {
         this.fb = this.services && this.services.facebook || {};

@@ -1,17 +1,16 @@
 
 JoinRequests = new Mongo.Collection("joinRequests", {
     transform: function(doc){
-        return new JoinRequest(doc._id, doc.from, doc.to, doc.gameId)
+        return new JoinRequest(doc);
     }
 });
 
+JoinRequestProps = ['_id', 'from', 'to', 'gameId'];
+
 JoinRequest = class JoinRequest {
 
-    constructor(id, from, to, gameId) {
-      this._id = id;
-      this.from = from;
-      this.to = to;
-      this.gameId = gameId;
+    constructor(props) {
+        assignProps(this, JoinRequestProps, props);
     }
 
     getId() {
@@ -31,3 +30,7 @@ JoinRequest = class JoinRequest {
     }
 
 };
+
+JoinRequest.fromRaw = (request) =>
+    new JoinRequest(request);
+
