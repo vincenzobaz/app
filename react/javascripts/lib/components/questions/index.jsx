@@ -4,6 +4,6 @@
 module.exports = {
   MultipleChoice: require('./MultipleChoice'),
   Reorder: require('./Reorder'),
-  TimeRange: require('./TimeRange'),
+  Timeline: require('./Timeline'),
   Geo: require('./Geo')
 };

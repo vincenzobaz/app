@@ -7,9 +7,9 @@ var React = require('react'),
     shapes = require('../shapes'),
     Post = require('../Post'),
     timeAgo = require('../../helpers/timeAgo');
-    // debug = require('debug')('TimeRange');
+    // debug = require('debug')('Timeline');
 
-var TimeRange = React.createClass({
+var Timeline = React.createClass({
 
   propTypes: {
     id: React.PropTypes.number.isRequired,
@@ -67,4 +67,4 @@ var TimeRange = React.createClass({
 
 });
 
-module.exports = TimeRange;
+module.exports = Timeline;
