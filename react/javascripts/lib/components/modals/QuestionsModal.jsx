@@ -48,17 +48,21 @@ var QuestionsModal = React.createClass({
   },
 
   getSteps() {
-    var steps = this.props.questions.map(q => {
-      if (!Questions[q.type]) {
-        ErrorStore.emitError(new Error(`Unknown question type: ${q.type}`));
-        return null;
-      }
+    return this.props.questions.map(this.questionToStep)
+                               .filter(q => q != null);
+  },
 
-      q.onDone = this.onAnswer;
-      return React.createElement(Questions[q.type], q);
-    });
+  questionToStep(q) {
+    const type = q.getType();
 
-    return steps.filter(q => q != null);
+    if (!Questions[type]) {
+      ErrorStore.emitError(new Error(`Unknown question type: ${type}`));
+      return null;
+    }
+
+    q.onDone = this.onAnswer;
+
+    return React.createElement(Questions[type], q);
   },
 
   getTimers() {
