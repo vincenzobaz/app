@@ -1,5 +1,5 @@
 
-const TileProps = ['_id', 'type', 'question1', 'question2', 'question3'];
+const TileProps = ['_id', 'type', 'question1', 'question2', 'question3', 'score', 'answered'];
 
 Tile = class Tile {
 
@@ -13,6 +13,17 @@ Tile = class Tile {
 
     getType() {
         return this.type;
+    }
+
+    getIcon() {
+        return 'list';
+    }
+
+    getScore() {
+        return this.score || {
+            me: 0,
+            them: 0
+        };
     }
 
     getQuestion1() {
@@ -31,6 +42,10 @@ Tile = class Tile {
         return [ this.question1,
                  this.question2,
                  this.question3 ];
+    }
+
+    isAnswered() {
+        return false;
     }
 };
 

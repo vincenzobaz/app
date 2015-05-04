@@ -27,8 +27,6 @@ GameBoard.fromRaw = function(userId, data) {
         userId = data.userId;
     }
 
-    console.log('gameBoard', data);
-
     const tiles = _.map(data.tiles, tile => {
         const question1 = Question.fromRaw(tile, tile.question1);
         const question2 = Question.fromRaw(tile, tile.question2);
