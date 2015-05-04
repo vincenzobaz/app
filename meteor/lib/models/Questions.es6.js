@@ -54,7 +54,7 @@ Choice.fromRaw = function(data) {
     });
 };
 
-MultipleChoiceQuestionProps = [ '_id', 'subject', 'choices', 'answer' ];
+MultipleChoiceQuestionProps = [ '_id', 'subject', 'choices', 'answer', 'type', 'kind' ];
 
 MultipleChoiceQuestion = class MultipleChoiceQuestion {
 
@@ -70,11 +70,23 @@ MultipleChoiceQuestion = class MultipleChoiceQuestion {
         return this.subject;
     }
 
+    getType() {
+        return this.type;
+    }
+
+    getKind() {
+        return this.kind;
+    }
+
     getChoices() {
         return this.choices;
     }
 
     getAnswer() {
+        if (!Meteor.isServer) {
+            throw new Error(`Well tried, there\'s nothing to see here. See for yourself: ${this.answer}`);
+        }
+
         return this.answer;
     }
 };
@@ -88,7 +100,7 @@ MultipleChoiceQuestion.fromRaw = function(data) {
     return new MultipleChoiceQuestion(data);
 };
 
-TimelineQuestionProps = [ '_id', 'subject', 'minDate', 'maxDate', 'range', 'answer' ];
+TimelineQuestionProps = [ '_id', 'subject', 'minDate', 'maxDate', 'range', 'answer', 'type', 'kind' ];
 
 TimelineQuestion = class TimelineQuestion {
 
@@ -98,6 +110,14 @@ TimelineQuestion = class TimelineQuestion {
 
     getId() {
         return this._id;
+    }
+
+    getType() {
+        return this.type;
+    }
+
+    getKind() {
+        return this.kind;
     }
 
     getSubject() {
@@ -117,6 +137,10 @@ TimelineQuestion = class TimelineQuestion {
     }
 
     getAnswer() {
+        if (!Meteor.isServer) {
+            throw new Error(`Well tried, there\'s nothing to see here. See for yourself: ${this.answer}`);
+        }
+
         return this.answer;
     }
 };
@@ -127,11 +151,35 @@ TimelineQuestion.fromRaw = function(data){
 };
 
 
-GeoQuestionProps = [ '_id', 'userId', 'data', 'answer' ];
+GeoQuestionProps = [ '_id', 'data', 'answer', 'type', 'kind' ];
 
 GeoQuestion = class GeoQuestion {
     constructor(props) {
         assignProps(this, GeoQuestionProps, props);
+    }
+
+    getId() {
+        return this._id;
+    }
+
+    getData() {
+        return this.data;
+    }
+
+    getType() {
+        return this.type;
+    }
+
+    getKind() {
+        return this.kind;
+    }
+
+    getAnswer() {
+        if (!Meteor.isServer) {
+            throw new Error(`Well tried, there\'s nothing to see here. See for yourself: ${this.answer}`);
+        }
+
+        return this.answer;
     }
 }
 

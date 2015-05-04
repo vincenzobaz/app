@@ -5,12 +5,6 @@ Tile = class Tile {
 
     constructor(props) {
         assignProps(this, TileProps, props);
-
-        if (this.questions === undefined) {
-            this.questions = [ this.question1,
-                               this.question2,
-                               this.question3 ];
-        }
     }
 
     getId() {
@@ -22,19 +16,21 @@ Tile = class Tile {
     }
 
     getQuestion1() {
-        return this.questions[0];
+        return this.question1;
     }
 
     getQuestion2() {
-        return this.questions[1];
+        return this.question2;
     }
 
     getQuestion3() {
-        return this.questions[2];
+        return this.question3;
     }
 
-    getQuestions(){
-        return this.questions;
+    getQuestions() {
+        return [ this.question1,
+                 this.question2,
+                 this.question3 ];
     }
 };
 
