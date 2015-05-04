@@ -1,5 +1,5 @@
 
-Reminisce.Collection.GameBoards = new Mongo.Collection("gameBoards", {
+Reminisce.Collection.GameBoards = new Mongo.Collection('gameBoards', {
   transform(doc) {
     return new Reminisce.Model.GameBoard(doc)
   }
