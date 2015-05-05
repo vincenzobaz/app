@@ -3,7 +3,6 @@
 
 var React = require('react'),
     Board = require('../components/Board'),
-    AppState = require('../AppState'),
     GameStore = require('../stores/GameStore'),
     EndGame = require('../components/EndGame'),
     shapes = require('../components/shapes'),
@@ -39,7 +38,7 @@ var PlayGame = React.createClass({
                  game={game}
                  tiles={game.getTiles()} />
         </div>
-      )
+      );
     }
 
     if (this.isPlaying()) {
@@ -79,7 +78,11 @@ var PlayGame = React.createClass({
       marginTop: '3em'
     };
 
-    return <p style={style}>This game is still being created, please check again in a few minutes.</p>
+    return (
+      <p style={style}>
+        This game is still being created, please check again in a few minutes.
+      </p>
+    );
   },
 
   renderWaiting() {
@@ -89,7 +92,11 @@ var PlayGame = React.createClass({
       marginTop: '3em'
     };
 
-    return <p style={style}>We are still waiting for your opponent to accept your join request.</p>
+    return (
+      <p style={style}>
+        We are still waiting for your opponent to accept your join request.
+      </p>
+    );
   },
 
   isPlaying() {

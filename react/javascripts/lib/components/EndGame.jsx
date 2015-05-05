@@ -63,7 +63,7 @@ var EndGame = React.createClass({
       <div>
         <p>Sorry, you have lost the game.</p>
       </div>
-    )
+    );
   },
 
   haveWon() {

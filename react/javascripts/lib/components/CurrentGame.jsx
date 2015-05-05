@@ -13,7 +13,7 @@ var CurrentGame = React.createClass({
 
   render() {
     var game = this.props.game,
-        classNames = this._getClassNames();
+        classNames = this.getClassNames();
 
     return (
       <li className={classNames.waiting}>
@@ -27,14 +27,14 @@ var CurrentGame = React.createClass({
                 {game.getOpponent().getFullName()}
               </a>
             </h5>
-            <p>{this._renderDescription()}</p>
+            <p>{this.renderDescription()}</p>
           </div>
         </div>
       </li>
     );
   },
 
-  _renderDescription() {
+  renderDescription() {
     var game = this.props.game;
     var desc = <small></small>;
 
@@ -76,10 +76,10 @@ var CurrentGame = React.createClass({
     };
   },
 
-  _getClassNames() {
+  getClassNames() {
     return {
       waiting: this.props.game.isWaiting() ? 'waiting' : ''
-    }
+    };
   }
 });
 

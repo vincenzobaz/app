@@ -30,7 +30,7 @@ var Board = React.createClass({
 
   onModalRequestHide(modal) {
     debug(modal, 'requested hide');
-  },
+  }
 
 });
 

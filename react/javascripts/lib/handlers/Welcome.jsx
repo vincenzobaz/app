@@ -20,15 +20,16 @@ var Welcome = React.createClass({
   render() {
     return (
       <div className='welcome'>
-        {this._renderWelcomeText()}
-        {this._renderTrainingText()}
-        {this._renderJoinRequestsText()}
-        {this._renderCurrentGamesText()}
+        {this.renderWelcomeText()}
+        {this.renderTrainingText()}
+        {this.renderJoinRequestsText()}
+        {this.renderCurrentGamesText()}
       </div>
     );
   },
 
-  _renderWelcomeText() {
+  /* eslint comma-spacing: 0 */
+  renderWelcomeText() {
     var user = this.props.user;
     return (
       <p>
@@ -37,7 +38,7 @@ var Welcome = React.createClass({
     );
   },
 
-  _renderTrainingText() {
+  renderTrainingText() {
     var user = this.props.user;
     var hasntTrainedYet = user.getTrainingStatus() === 'not started';
 
@@ -52,7 +53,7 @@ var Welcome = React.createClass({
     }
   },
 
-  _renderJoinRequestsText() {
+  renderJoinRequestsText() {
     var requestsNum = this.props.joinRequests && this.props.joinRequests.length || 0;
 
     if (!requestsNum) {
@@ -64,7 +65,7 @@ var Welcome = React.createClass({
     );
   },
 
-  _renderCurrentGamesText() {
+  renderCurrentGamesText() {
     var gamesNum = this.props.games && this.props.games.length || 0;
 
     if (!gamesNum) {

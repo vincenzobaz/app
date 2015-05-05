@@ -1,4 +1,6 @@
 
+/* global ServiceConfiguration */
+
 'use strict';
 
 module.exports = function getConfig(serviceName) {

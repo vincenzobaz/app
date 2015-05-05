@@ -15,12 +15,12 @@ var Players = React.createClass({
   render() {
     return (
       <div className="players">
-        {this._renderPlayers()}
+        {this.renderPlayers()}
       </div>
     );
   },
 
-  _renderPlayers() {
+  renderPlayers() {
     if (this.props.children) {
       return this.props.children;
     }

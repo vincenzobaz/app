@@ -55,7 +55,7 @@ var Picture = React.createClass({
 
   renderPictureCaption(caption) {
     if (caption) {
-      return;
+      return null;
     }
 
     return (
@@ -110,7 +110,7 @@ const Link = React.createClass({
 var Post = React.createClass({
 
   propTypes: {
-    post: shapes.post.isRequired,
+    post: shapes.post.isRequired
   },
 
   types: {
@@ -137,7 +137,7 @@ var Post = React.createClass({
     }
 
     return React.createElement(this.types[post.type], post);
-  },
+  }
 
 });
 

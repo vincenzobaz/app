@@ -10,7 +10,6 @@ var React = require('react'),
     ModalTrigger = Bootstrap.ModalTrigger,
     QuitGameModal = require('./modals/QuitGameModal'),
     StartGameModal = require('./modals/StartGameModal'),
-    AppState = require('../AppState'),
     GameToolbarSession = require('../helpers/NamespacedSession')('GameToolbar'),
     debug = require('debug')('GameToolbar');
 
@@ -33,6 +32,7 @@ var GameToolbar = React.createClass({
     GameToolbarSession.set('showStartModal', true);
   },
 
+  /* eslint no-underscore-dangle: 0 */
   startGame(friend) {
     GameStore.start(friend._id);
   },

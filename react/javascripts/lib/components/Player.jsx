@@ -15,7 +15,7 @@ var Player = React.createClass({
   },
 
   render() {
-    var classNames = this._getClassNames();
+    var classNames = this.getClassNames();
     return (
       <div className={classNames.prefix}>
         <div className={classNames.player}>
@@ -28,7 +28,7 @@ var Player = React.createClass({
                 <span>{this.props.score}</span>
                 <div>{this.props.player.getFullName()}</div>
               </h4>
-              <p>{this._renderTurnText()}</p>
+              <p>{this.renderTurnText()}</p>
             </div>
           </div>
         </div>
@@ -36,7 +36,7 @@ var Player = React.createClass({
     );
   },
 
-  _renderTurnText() {
+  renderTurnText() {
     if (this.props.waiting || !this.props.isTurn) {
       return 'Waiting';
     }
@@ -44,7 +44,7 @@ var Player = React.createClass({
     return this.props.isOpponent ? 'Their turn' : 'Your turn';
   },
 
-  _getClassNames() {
+  getClassNames() {
     return {
       pull: 'pull-' + (this.props.isOpponent ? 'right' : 'left'),
       prefix: 'grid-30' + (this.props.isOpponent ? '' : ' prefix-20'),

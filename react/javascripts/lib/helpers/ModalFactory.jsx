@@ -4,8 +4,6 @@
 var React = require('react'),
     QuestionsModal = require('../components/modals/QuestionsModal');
 
-React;
-
 class ModalFactory {
 
   constructor(game, onRequestHide) {

@@ -16,13 +16,13 @@ var JoinRequests = React.createClass({
       <div className='well'>
         <h4 className='h5'>Join requests</h4>
         <ul className='games'>
-        {this._renderRequests()}
+        {this.renderRequests()}
         </ul>
       </div>
     );
   },
 
-  _renderRequests() {
+  renderRequests() {
     if (this.props.children) {
       return this.props.children;
     }

@@ -40,7 +40,7 @@ var GoogleMap = React.createClass({
       apiKey: 'NO_API_KEY_SET',
       sensor: false,
       onMarkerMove: () => {}
-    }
+    };
   },
 
   render() {

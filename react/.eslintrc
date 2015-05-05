@@ -6,6 +6,7 @@
     "no-multi-spaces": false,
     "no-mixed-requires": false,
     "no-unused-vars": true,
+    "key-spacing": false,
     "react/jsx-uses-react": true,
     "react/jsx-uses-vars": true,
     "react/no-did-mount-set-state": true,

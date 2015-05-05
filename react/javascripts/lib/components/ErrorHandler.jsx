@@ -81,7 +81,7 @@ var ErrorHandler = React.createClass({
       return <noscript />;
     }
 
-    return <Modal onRequestHide={this.dismiss} error={this.state.error} />
+    return <Modal onRequestHide={this.dismiss} error={this.state.error} />;
   }
 
 });

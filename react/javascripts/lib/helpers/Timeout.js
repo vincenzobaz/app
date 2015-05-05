@@ -3,7 +3,8 @@
 
 var nop = function() {};
 
-function Timeout(maxTime /* ms */, onTimeUp, interval, onTick, lastTick) {
+// maxTime in milliseconds
+function Timeout(maxTime, onTimeUp, interval, onTick, lastTick) {
   this.timeLeft = maxTime;
   this.onTimeUp = onTimeUp || nop;
   this.interval = interval || 1000;

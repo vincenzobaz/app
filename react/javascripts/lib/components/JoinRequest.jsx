@@ -17,7 +17,7 @@ var JoinRequest = React.createClass({
     return (
       <li className='waiting'>
         <div className='media'>
-          <a className='pull-left' title='Switch to this game' onClick={this._accept}>
+          <a className='pull-left' title='Switch to this game' onClick={this.accept}>
             <img className='media-object img-circle' width='40' src={from.getAvatarUrl()} alt='' />
           </a>
           <div className='media-body'>
@@ -25,8 +25,8 @@ var JoinRequest = React.createClass({
               {from.getFullName()}
             </h5>
             <div className="waiting-actions">
-              <button className='btn btn-mini btn-success' onClick={this._accept}>ACCEPT</button>
-              <small> or <a href='' onClick={this._decline}>decline</a></small>
+              <button className='btn btn-mini btn-success' onClick={this.accept}>ACCEPT</button>
+              <small> or <a href='' onClick={this.decline}>decline</a></small>
             </div>
           </div>
         </div>
@@ -34,12 +34,12 @@ var JoinRequest = React.createClass({
     );
   },
 
-  _accept(e) {
+  accept(e) {
     e.preventDefault();
     JoinRequestStore.accept(this.props.request.getId());
   },
 
-  _decline(e) {
+  decline(e) {
     e.preventDefault();
     JoinRequestStore.decline(this.props.request.getId());
   }

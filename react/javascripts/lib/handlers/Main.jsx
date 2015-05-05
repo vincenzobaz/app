@@ -3,20 +3,20 @@
 
 var React = require('react'),
     ReactMeteor = require('../third-party/react-meteor'),
-    AppState = require('../AppState'),
     PlayGame = require('./PlayGame'),
     Home = require('./Home'),
     Dashboard = require('./Dashboard'),
     Welcome = require('./Welcome'),
-    debug = require('debug')('Main'),
-    FacebookStore = require('../stores/FacebookStore');
+    FacebookStore = require('../stores/FacebookStore'),
+    getAppState = require('../appState'),
+    debug = require('debug')('Main');
 
 var Main = React.createClass({
 
   mixins: [ReactMeteor.Mixin],
 
   getMeteorState() {
-    return AppState();
+    return getAppState();
   },
 
   render() {
@@ -24,7 +24,7 @@ var Main = React.createClass({
       return this.renderDashboard();
     }
 
-    return this.renderHome()
+    return this.renderHome();
   },
 
   renderHome() {

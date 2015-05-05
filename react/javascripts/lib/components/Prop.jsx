@@ -62,13 +62,13 @@ Props.FacebookId = React.createClass({
   render() {
     return (
       <span>
-        {this._renderIcon()}
+        {this.renderIcon()}
         {this.props.text}
       </span>
     );
   },
 
-  _renderIcon() {
+  renderIcon() {
     if (!this.props.value) {
       return <noscript />;
     }

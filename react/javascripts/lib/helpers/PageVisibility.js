@@ -8,7 +8,7 @@ var EventEmitter = require('events').EventEmitter,
     util = require('util');
 
 function getHiddenProp() {
-  var prefixes = ['webkit','moz','ms','o'];
+  var prefixes = ['webkit', 'moz', 'ms', 'o'];
 
   // if 'hidden' is natively supported just return it
   if ('hidden' in document) {
