@@ -1,0 +1,24 @@
+{
+  "parser": "babel-eslint",
+  "rules": {
+    "strict": false,
+    "quotes": false,
+    "no-multi-spaces": false,
+    "no-mixed-requires": false,
+    "no-unused-vars": true,
+    "no-undef": false,
+    "no-underscore-dangle": false
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "meteor": true,
+    "es6": true
+  },
+  "globals": {
+    "Reminisce": true,
+    "google": true,
+    "FB": true,
+    "_": true
+  }
+}
