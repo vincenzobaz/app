@@ -59,19 +59,19 @@ Reminisce.Model.Game = class Game {
   }
 
   hasEnded() {
-    return this.getStatus() === 'ended';
+    return this.getStatus() === GameStatus.Ended;
   }
 
   isPlaying() {
-    return this.getStatus() === 'playing';
+    return this.getStatus() === GameStatus.Playing;
   }
 
   isWaiting() {
-    return this.getStatus() === 'waiting';
+    return this.getStatus() === GameStatus.Waiting;
   }
 
   isCreating() {
-    return ['creating', 'init'].indexOf(this.getStatus()) > -1;
+    return this.getStatus() === GameStatus.Creating;
   }
 
   isWon() {
@@ -91,3 +91,4 @@ Reminisce.Model.Game = class Game {
 
 }
 
+Reminisce.Model.Game.Status = GameStatus;

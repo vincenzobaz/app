@@ -20,7 +20,7 @@ JoinRequestService = {
         game.player1Board = board1Id;
         game.player2Board = board2Id;
 
-        game.setStatus("playing");
+        game.setStatus(GameStatus.Playing);
 
         GameRepository.save(game);
 
@@ -46,7 +46,7 @@ JoinRequestService = {
         var game = Game.fromRaw({
             player1: currentUser,
             player2: userId,
-            status: "waiting",
+            status: GameStatus.Waiting,
             playerTurn: _.random(1,2),
             player1Scores: {},
             player2Scores: {},
