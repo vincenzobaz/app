@@ -228,7 +228,7 @@ var Done = React.createClass({
 
   sendAnswers() {
     AnswerStore
-      .send(this.props.game.getId(), this.props.tile, this.props.answers)
+      .send(this.props.game, this.props.tile, this.props.answers)
       .then(res => {
         if (!res || res.status !== "success") {
           this.setState({
@@ -243,7 +243,10 @@ var Done = React.createClass({
         this.setState({
           sent: true,
           error: false,
-          results: res.data
+          results: {
+            win: res.win,
+            draw: res.draw
+          }
         });
 
         this.props.onSent();
@@ -307,7 +310,7 @@ var TimeUp = React.createClass({
 
   sendTimeUp() {
     AnswerStore
-      .timeOut(this.props.game.getId(), this.props.tile)
+      .timeOut(this.props.game, this.props.tile)
       .then(res => {
         if (!res || res.status !== "success") {
           this.setState({

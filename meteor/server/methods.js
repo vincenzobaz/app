@@ -27,15 +27,17 @@ Meteor.methods({
     },
 
     'Game.quit': function(gameId) {
+        console.error('Method Game.quit is not implemented yet.');
         return {status: "success"};
     },
 
-    'Game.timeout': function(gameId){
+    'Answer.timeOut': function(gameId) {
+        console.error('Method Answer.timeOut is not implemented yet.');
         return {status: "success"};
     },
 
     'Answer.post': function(gameId, tileId, answers) {
-      AnswerService.post(gameId, tileId, answers);
+      return AnswerService.post(gameId, tileId, answers);
     }
 
 });
