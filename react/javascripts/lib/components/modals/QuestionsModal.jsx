@@ -52,17 +52,17 @@ var QuestionsModal = React.createClass({
                                .filter(q => q != null);
   },
 
-  questionToStep(q) {
-    const kind = q.getKind();
+  questionToStep(question) {
+    const kind = question.getKind();
 
     if (!Questions[kind]) {
       ErrorStore.emitError(new Error(`Unknown question kind: ${kind}`));
       return null;
     }
 
-    q.onDone = this.onAnswer;
+    question.onDone = this.onAnswer;
 
-    return React.createElement(Questions[kind], q);
+    return React.createElement(Questions[kind], question);
   },
 
   getTimers() {

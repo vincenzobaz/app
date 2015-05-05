@@ -1,5 +1,5 @@
 
-Reminisce.Store.AnswersStore = {
+Reminisce.Store.AnswerStore = {
 
   send(game, tile, answers) {
     Meteor.call('Answer.send', {
