@@ -9,8 +9,6 @@ var React = require('react'),
     shapes = require('../components/shapes'),
     debug = require('debug')('PlayGame');
 
-// TODO: MOAR REFACTORING!
-
 var PlayGame = React.createClass({
 
   propTypes: {

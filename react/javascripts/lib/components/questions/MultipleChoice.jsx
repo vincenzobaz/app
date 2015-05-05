@@ -23,6 +23,7 @@ var MultipleChoice = React.createClass({
   },
 
   render() {
+    console.log('MultipleChoice', this.props);
     return (
       <div>
         <h4>{this.props.title}</h4>

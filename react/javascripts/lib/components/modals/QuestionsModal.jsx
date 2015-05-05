@@ -61,6 +61,7 @@ var QuestionsModal = React.createClass({
     }
 
     question.onDone = this.onAnswer;
+    console.log('question', question);
 
     return React.createElement(Questions[kind], question);
   },

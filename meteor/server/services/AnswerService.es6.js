@@ -1,6 +1,8 @@
 
 AnswerService = {
     post(gameId, tileId, answers) {
+        console.log('Answer.post');
+        console.log({gameId, tileId, answers});
         var game = Games.findOne(gameId);
         var boardState = game.boardState;
         var board;
@@ -51,6 +53,7 @@ AnswerService = {
             game.playerTurn = game.playerTurn === 1 ? 2 : 1;
             GameRepository.save(game);
             return {
+                status: 'success',
                 win: this.playerWins(boardState, currentTurn, row, col),
                 draw: this.isDraw(boardState)
             }
