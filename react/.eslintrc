@@ -1,0 +1,32 @@
+{
+  "parser": "babel-eslint",
+  "rules": {
+    "strict": false,
+    "quotes": false,
+    "no-multi-spaces": false,
+    "no-mixed-requires": false,
+    "no-unused-vars": true,
+    "react/jsx-uses-react": true,
+    "react/jsx-uses-vars": true,
+    "react/no-did-mount-set-state": true,
+    "react/no-did-update-set-state": true
+  },
+  "ecmaFeatures": {
+    "jsx": true
+  },
+  "plugins": [
+    "react"
+  ],
+  "env": {
+    "browser": true,
+    "node": true,
+    "meteor": true,
+    "es6": true
+  },
+  "globals": {
+    "Reminisce": true,
+    "google": true,
+    "FB": true,
+    "_": true
+  }
+}

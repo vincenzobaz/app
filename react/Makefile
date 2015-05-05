@@ -3,8 +3,7 @@ SHELL := bash
 
 BIN_DIR := ./node_modules/.bin
 
-JSHINT := $(BIN_DIR)/jsxhint
-JSHINT_OPTIONS = --reporter node_modules/jshint-stylish/stylish.js
+LINT := $(BIN_DIR)/eslint
 
 WATCHIFY := $(BIN_DIR)/watchify
 BROWSERIFY := $(BIN_DIR)/browserify
@@ -21,7 +20,7 @@ css_dir := stylesheets
 build_dir := build
 
 app_js := $(js_dir)/app.js
-js_files := $(wildcard $(js_dir)/lib/**/*.js)
+js_files := $(wildcard $(js_dir)/lib/**/*.js*)
 js_vendors := $(js_vendor_dir)/jquery-2.1.0.min.js \
 							$(js_vendor_dir)/bootstrap-2.2.2.min.js \
 							$(js_dir)/rock-hammer/plugins.js
@@ -41,6 +40,9 @@ all: $(build_js_dev) css
 prod: $(build_js_prod) css
 
 css: $(css_files)
+
+print_js_files:
+	@echo $(app_js) $(js_files)
 
 $(build_js_prod): $(app_js) $(js_files)
 	@echo -n "Building $@... "
@@ -63,7 +65,7 @@ $(css_dir)/%.css: $(css_dir)/%.scss $(every_sass_files)
 	@$(NOTIFY) -title 'Build done.' -message 'Successful build of $@.'
 
 lint: $(app_js) $(js_files)
-	@$(JSHINT) $(JSHINT_OPTIONS) $^; \
+	@$(LINT) $^; \
 	if [ $$? -ne 0 ]; then \
 	$(NOTIFY) -title 'Linting failed!' -message 'make lint was unsuccessful'; \
 	exit 1; \
