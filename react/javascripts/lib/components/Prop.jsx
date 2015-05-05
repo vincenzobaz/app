@@ -42,6 +42,7 @@ var Props = {};
 
 Props.Default = React.createClass({
   propTypes: {
+    pageId: React.PropTypes.string.isRequired,
     text: React.PropTypes.string.isRequired,
     value: React.PropTypes.string.isRequired
   },
@@ -53,6 +54,7 @@ Props.Default = React.createClass({
 
 Props.FacebookId = React.createClass({
   propTypes: {
+    fbId: React.PropTypes.string.isRequired,
     text: React.PropTypes.string.isRequired,
     value: React.PropTypes.string.isRequired
   },
@@ -71,7 +73,7 @@ Props.FacebookId = React.createClass({
       return <noscript />;
     }
 
-    return <FacebookPicture facebookId={this.props.value}
+    return <FacebookPicture facebookId={this.props.fbId}
                             altText={this.props.text} />;
   }
 });
@@ -80,28 +82,34 @@ Props.Page = Props.FacebookId;
 
 var Prop = React.createClass({
   propTypes: {
-    type: React.PropTypes.string,
+    fbId: React.PropTypes.string,
+    pageId: React.PropTypes.string,
     text: React.PropTypes.string.isRequired,
     value: React.PropTypes.string.isRequired
   },
 
   mapping: {
-    fbid: Props.FacebookId,
+    fb: Props.FacebookId,
     page: Props.Page,
-    default: Props.default
+    default: Props.Default
   },
 
   render() {
-    var type = this.props.type;
-
-    if (!this.props.type || !this.mapping[this.props.type]) {
+    console.log(this.props);
+    var type;
+    if (this.props.fbId) {
+      type = 'fb';
+    } else if (this.props.pageId) {
+      type = 'page';
+    } else {
       type = 'default';
     }
 
-    return this.mapping[type]({
-      text: this.props.text,
-      value: this.props.value
-    }, null);
+    if (!this.mapping[type]) {
+      type = 'default';
+    }
+
+    return React.createElement(this.mapping[type], this.props, null);
   }
 });
 

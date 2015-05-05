@@ -30,7 +30,8 @@ var Text = React.createClass({
 var Picture = React.createClass({
 
   propTypes: {
-    picture: shapes.image.isRequired
+    imageUrl: React.PropTypes.string.isRequired,
+    text: React.PropTypes.string
   },
 
   render() {
@@ -38,32 +39,28 @@ var Picture = React.createClass({
       maxHeight: 200
     };
 
-    var picture = this.props.picture;
-
     return (
       <div className="post post-picture">
-        <Zoomable url={picture.url}>
+        <Zoomable url={this.props.imageUrl}>
           <figure className="zoomable">
-            <img src={picture.url}
-                 width={picture.width}
-                 height={picture.height}
+            <img src={this.props.imageUrl}
                  style={imgStyle}
                  alt="" />
           </figure>
         </Zoomable>
-        {this.renderPictureCaption(picture)}
+        {this.renderPictureCaption(this.props.text)}
       </div>
     );
   },
 
-  renderPictureCaption(picture) {
-    if (!picture.caption) {
+  renderPictureCaption(caption) {
+    if (caption) {
       return;
     }
 
     return (
       <div className="picture-caption">
-        {picture.caption}
+        {caption}
       </div>
     );
   }
@@ -91,6 +88,25 @@ var Comment = React.createClass({
 });
 
 
+const Link = React.createClass({
+
+  propTypes: {
+    text: React.PropTypes.string.isRequired,
+    url: React.PropTypes.string.isRequired,
+    thumbnailUrl: React.PropTypes.string
+  },
+
+  render() {
+    return (
+      <div className="post post-link">
+        <blockquote>{this.props.text}</blockquote>
+        <a href={this.props.url} target="_blank">{this.props.url}</a>
+      </div>
+    );
+  }
+
+});
+
 var Post = React.createClass({
 
   propTypes: {
@@ -98,10 +114,10 @@ var Post = React.createClass({
   },
 
   types: {
-    'text'    : Text,
-    'comment' : Comment,
-    'picture' : Picture,
-    'none'    : None
+    TextPost    : Text,
+    CommentPost : Comment,
+    ImagePost   : Picture,
+    LinkPost    : Link
   },
 
   render() {
@@ -120,7 +136,7 @@ var Post = React.createClass({
       return <None />;
     }
 
-    return this.types[post.type](post);
+    return React.createElement(this.types[post.type], post);
   },
 
 });

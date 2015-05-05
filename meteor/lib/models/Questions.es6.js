@@ -25,7 +25,7 @@ Subject.fromRaw = function(data) {
   return new Subject(data);
 };
 
-const ChoiceProps = [ 'text', 'imageUrl', 'fbId' ];
+const ChoiceProps = [ 'text', 'imageUrl', 'fbId', 'pageId' ];
 
 Choice = class Choice {
 
@@ -44,13 +44,18 @@ Choice = class Choice {
     getFbId() {
         return this.fbId;
     }
+
+    getPageId() {
+        return this.pageId;
+    }
 };
 
 Choice.fromRaw = function(data) {
     return new Choice({
         text: data.text || data.name,
-        fbId: data.fb_id,
-        imageUrl: data.image_url
+        fbId: data.fbId || data.fb_id,
+        pageId: data.pageId || data.page_id,
+        imageUrl: data.imageUrl || data.image_url
     });
 };
 

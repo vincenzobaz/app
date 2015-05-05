@@ -11,7 +11,7 @@ var MultipleChoice = React.createClass({
 
   propTypes: {
     title: React.PropTypes.string.isRequired,
-    post: shapes.post.isRequired,
+    subject: shapes.post.isRequired,
     choices: React.PropTypes.arrayOf(shapes.choice).isRequired,
     onDone: React.PropTypes.func.isRequired
   },
@@ -26,25 +26,25 @@ var MultipleChoice = React.createClass({
     return (
       <div>
         <h4>{this.props.title}</h4>
-        <Post post={this.props.post} />
+        <Post post={this.props.subject} />
         <ul className='answers avatar-answers'>
-          {this.props.choices.map(this._renderChoice)}
+          {this.props.choices.map(this.renderChoice)}
         </ul>
       </div>
     );
   },
 
-  _renderChoice(choice, index) {
+  renderChoice(choice, index) {
     return (
       <li key={`${Math.round(Math.random() * 1000) + '-' + choice.value}`}>
-        <Button onClick={this._onChoice(choice, index)}>
-          <Prop type={this.props.propType} text={choice.text} value={choice.value} />
+        <Button onClick={this.onChoice(choice, index)}>
+          <Prop {...choice} />
         </Button>
       </li>
     );
   },
 
-  _onChoice(choice, index) {
+  onChoice(choice, index) {
     return (e) => {
       this.props.onDone({
         choice: index

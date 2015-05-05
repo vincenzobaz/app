@@ -14,7 +14,7 @@ var Timeline = React.createClass({
   propTypes: {
     id: React.PropTypes.number.isRequired,
     title: React.PropTypes.string.isRequired,
-    post: shapes.post.isRequired,
+    subject: shapes.post.isRequired,
     max: React.PropTypes.number.isRequired,
     min: React.PropTypes.number.isRequired,
     step: React.PropTypes.number.isRequired,
@@ -42,7 +42,7 @@ var Timeline = React.createClass({
     return (
       <div className="question-time">
         <h4>{q.title}</h4>
-        <Post post={q.post} />
+        <Post post={q.subject} />
         <input type="range" min={q.min} max={q.max} step={q.step} value={this.state.ago} onChange={this._onChange} />
         <Button onClick={this._onSubmit}>{this.getButtonText(q, this.state.ago)}</Button>
       </div>

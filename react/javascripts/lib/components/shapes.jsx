@@ -24,7 +24,8 @@ var score = React.PropTypes.shape({
 var choice = React.PropTypes.shape({
   text: React.PropTypes.string.isRequired,
   value: React.PropTypes.any.isRequired,
-  propType: React.PropTypes.string,
+  fbId: React.PropTypes.string,
+  pageId: React.PropTypes.string,
   icon: image
 });
 
