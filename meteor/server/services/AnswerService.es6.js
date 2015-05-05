@@ -1,35 +1,17 @@
 
 AnswerService = {
-    post(gameId, tileId, answers) {
-        console.log('Answer.post');
-        console.log({gameId, tileId, answers});
+    post(currentUser, gameId, tileId, answers) {
         var game = Games.findOne(gameId);
         var boardState = game.boardState;
-        var board;
-        const board1 = GameBoards.findOne(game.player1Board);
-        const board2 = GameBoards.findOne(game.player2Board);
+        var [board, currentScoreId] = AnswerService.getBoardAndScoreIdForCurrentPlayer(currentUser, game);
         const currentTurn = game.playerTurn;
-        var currentScoreId;
 
-        var currentUser = this.userId;
-
-        if (currentUser === game.player1 || game.player1 === Bots[0]._id && currentTurn === 1) {
-            console.log('getting player 1 board');
-            board = board1;
-            currentScoreId = "player1Scores";
-        } else if (currentUser === game.player2 || game.player2 === Bots[1]._id && currentTurn === 2) {
-            console.log('getting player 2 board');
-            board = board2;
-            currentScoreId = "player2Scores";
-        } else {
-            throw Meteor.Error(404, "Invalid gameId + " + gameId + "user does not play this game");
-        }
         var tile = _.find(board.tiles, function(tile){return tile._id === tileId});
         if (tile){
             const index = _.indexOf(board.tiles, tile);
             const row = Math.floor(index / 3);
             const col = index % 3;
-            const result = this.getResultsForTile(tile, answers);
+            const result = AnswerService.getResultsForTile(tile, answers);
             var scores = [];
             for (var i = 0; i < tile.questions.length; i++){
                 scores.push({questionId: tile.questions[i]._id, score: result[i]})
@@ -38,29 +20,43 @@ AnswerService = {
             const newScore = _.reduce(_.map(scores, function(s){return s.score}), function(add, x) {
                 return add + x;
             });
-            console.log(boardState);
-
             const otherScore = boardState[row][col].player !== currentTurn? boardState[row][col].score : 0;
             if (newScore > oldScore){
                 game[currentScoreId][tile._id] = scores;
                 if (otherScore < newScore){
                     boardState[row][col].player = currentTurn;
                     boardState[row][col].score = newScore;
-                    console.log(boardState);
-
                 }
             }
+
+            const wins = AnswerService.playerWins(boardState, currentTurn, row, col);
+            const draw = AnswerService.isDraw(boardState);
+            if (wins || draw){
+                game.status = "finished";
+            }
+
             game.playerTurn = game.playerTurn === 1 ? 2 : 1;
+
             GameRepository.save(game);
             return {
                 status: 'success',
-                win: this.playerWins(boardState, currentTurn, row, col),
-                draw: this.isDraw(boardState)
+                win: wins,
+                draw: draw
             }
         } else {
             throw Meteor.Error(404, "Invalid tileId + " + tileId);
         }
 
+    },
+
+    getBoardAndScoreIdForCurrentPlayer(currentUser, game){
+        if (currentUser === game.player1) {
+            return [GameBoards.findOne(game.player1Board), "player1Scores"];
+        } else if (currentUser === game.player2) {
+            return [GameBoards.findOne(game.player2Board), "player2Scores"];
+        } else {
+            throw Meteor.Error(404, "Invalid gameId + " + game._id + "user does not play this game");
+        }
     },
 
     getResultsForTile(tile, answers) {
