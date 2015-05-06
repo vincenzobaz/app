@@ -1,13 +1,13 @@
 
 (function() {
 
+if (Meteor.settings.facebook == null || Meteor.settings.gMaps == null) {
+    throw new Meteor.Error(500, "Please provide settings with the --settings flag when launching Meteor.");
+}
+
 var appId = Meteor.settings.facebook.appId;
 var secret = Meteor.settings.facebook.secret;
 var gmapsKey = Meteor.settings.gMaps.key;
-
-if (appId == null || secret == null) {
-  throw new Meteor.Error(500, 'Cannot get Facebook app ID and secret from environment');
-}
 
 ServiceConfiguration.configurations.upsert(
   { service: 'facebook' },
