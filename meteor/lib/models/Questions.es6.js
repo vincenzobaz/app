@@ -105,7 +105,8 @@ MultipleChoiceQuestion.fromRaw = function(data) {
     return new MultipleChoiceQuestion(data);
 };
 
-TimelineQuestionProps = [ '_id', 'subject', 'minDate', 'maxDate', 'range', 'answer', 'type', 'kind' ];
+TimelineQuestionProps = [ '_id', 'subject', 'min', 'max', 'default', 'unit',
+                          'step', 'threshold', 'answer', 'type', 'kind' ];
 
 TimelineQuestion = class TimelineQuestion {
 
@@ -129,16 +130,28 @@ TimelineQuestion = class TimelineQuestion {
         return this.subject;
     }
 
-    getMinDate() {
-        return this.minDate;
+    getMin() {
+        return this.min;
     }
 
-    getMaxDate() {
-        return this.maxDate;
+    getMax() {
+        return this.max;
     }
 
-    getRange() {
-        return this.range;
+    getStep() {
+        return this.step;
+    }
+
+    getUnit() {
+        return this.unit;
+    }
+
+    getThreshold() {
+        return this.threshold;
+    }
+
+    getDefault() {
+        return this.default;
     }
 
     getAnswer() {
