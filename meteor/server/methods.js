@@ -37,7 +37,7 @@ Meteor.methods({
     },
 
     'Answer.post': function(gameId, tileId, answers) {
-      return AnswerService.post(gameId, tileId, answers);
+      return AnswerService.post(this.userId, gameId, tileId, answers);
     }
 
 });
