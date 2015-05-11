@@ -13,8 +13,15 @@ GameService = {
             [{player: 0, score: 0}, {player: 0, score: 0}, {player: 0, score: 0}],
             [{player: 0, score: 0}, {player: 0, score: 0}, {player: 0, score: 0}]
         ];
-        return new Game(null, player1Id, player2Id, undefined, undefined, "waiting", _.random(1,2), {}, {}, boardState);
 
-
+        return new Game({
+            player1: player1Id,
+            player2: player2Id,
+            status: GameStatus.Waiting,
+            playerTurn: _.random(1, 2),
+            player1Scores: {},
+            player2Scores: {},
+            boardState: boardState
+        });
     }
 };
