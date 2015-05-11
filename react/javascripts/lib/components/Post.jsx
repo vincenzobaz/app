@@ -67,6 +67,27 @@ var Picture = React.createClass({
 
 });
 
+const Video = React.createClass({
+
+  propTypes: {
+    text: React.PropTypes.string,
+    thumbnailUrl: React.PropTypes.string.isRequired,
+    url: React.PropTypes.string.isRequired
+  },
+
+  render() {
+    return (
+      <div className="post post-video">
+        <Text text={this.props.text || ''} />
+        <a href={this.props.url} target="_blank">
+          <img src={this.props.thumbnailUrl} />
+        </a>
+      </div>
+    );
+  }
+
+});
+
 var Comment = React.createClass({
 
   propTypes: {
@@ -117,6 +138,7 @@ var Post = React.createClass({
     TextPost    : Text,
     CommentPost : Comment,
     ImagePost   : Picture,
+    VideoPost   : Video,
     LinkPost    : Link
   },
 
