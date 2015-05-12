@@ -4,6 +4,7 @@
 var React = require('react'),
     Button = require('react-bootstrap').Button,
     pluralize = require('pluralize'),
+    getQuestionTitleByType = require('./getQuestionTitleByType'),
     shapes = require('../shapes'),
     Post = require('../Post'),
     timeAgo = require('../../helpers/timeAgo');
@@ -13,7 +14,7 @@ var Timeline = React.createClass({
 
   propTypes: {
     // id: React.PropTypes.number.isRequired,
-    // title: React.PropTypes.string.isRequired,
+    type: React.PropTypes.string.isRequired,
     subject: shapes.post.isRequired,
     max: React.PropTypes.number.isRequired,
     min: React.PropTypes.number.isRequired,
@@ -36,11 +37,15 @@ var Timeline = React.createClass({
   render() {
     var q = this.props;
     return (
-      <div className="question-time">
-        <h4>{q.title}</h4>
-        <Post post={q.subject} />
-        <input type="range" min={q.min} max={q.max} step={q.step} value={this.state.ago} onChange={this._onChange} />
-        <Button onClick={this._onSubmit}>{this.getButtonText(q, this.state.ago)}</Button>
+      <div className="question question-time">
+        <h4>{getQuestionTitleByType(q.type)}</h4>
+        <div className="question-subject">
+          <Post post={q.subject} />
+        </div>
+        <div className="question-input">
+          <input type="range" min={q.min} max={q.max} step={q.step} value={this.state.ago} onChange={this._onChange} />
+          <Button onClick={this._onSubmit}>{this.getButtonText(q, this.state.ago)}</Button>
+        </div>
       </div>
     );
   },

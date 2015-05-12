@@ -3,6 +3,7 @@
 
 var React = require('react'),
     Button = require('react-bootstrap').Button,
+    getQuestionTitleByType = require('./getQuestionTitleByType'),
     Prop = require('../Prop'),
     shapes = require('../shapes'),
     Post = require('../Post');
@@ -10,7 +11,7 @@ var React = require('react'),
 var MultipleChoice = React.createClass({
 
   propTypes: {
-    title: React.PropTypes.string.isRequired,
+    type: React.PropTypes.string.isRequired,
     subject: shapes.post.isRequired,
     choices: React.PropTypes.arrayOf(shapes.choice).isRequired,
     onDone: React.PropTypes.func.isRequired
@@ -23,14 +24,17 @@ var MultipleChoice = React.createClass({
   },
 
   render() {
-    console.log('MultipleChoice', this.props);
     return (
-      <div>
-        <h4>{this.props.title}</h4>
-        <Post post={this.props.subject} />
-        <ul className='answers avatar-answers'>
-          {this.props.choices.map(this.renderChoice)}
-        </ul>
+      <div className="question question-multiplechoice">
+        <h4>{getQuestionTitleByType(this.props.type)}</h4>
+        <div className="question-subject grid-50">
+          <Post post={this.props.subject} />
+        </div>
+        <div className="question-input grid-50">
+          <ul className='answers avatar-answers'>
+            {this.props.choices.map(this.renderChoice)}
+          </ul>
+        </div>
       </div>
     );
   },

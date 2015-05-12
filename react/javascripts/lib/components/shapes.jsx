@@ -42,6 +42,8 @@ var post = React.PropTypes.shape({
   picture: image
 });
 
+var subject = post;
+
 var map = React.PropTypes.shape({
   latitude: React.PropTypes.number.isRequired,
   longitude: React.PropTypes.number.isRequired,
@@ -70,6 +72,7 @@ module.exports = {
   score: score,
   choice: choice,
   post: post,
+  subject: subject,
   image: image,
   map: map,
   answer: answer,

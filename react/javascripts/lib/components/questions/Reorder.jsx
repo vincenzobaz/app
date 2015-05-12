@@ -29,7 +29,7 @@ var Reorder = React.createClass({
 
   render() {
     return (
-      <div className="question-reorder">
+      <div className="question question-reorder">
         <h4>What is the correct order?</h4>
         <p>Click and drag the items in the correct order.</p>
         <SortableList items={this.state.items}
