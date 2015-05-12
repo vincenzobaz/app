@@ -12,8 +12,8 @@ var React = require('react'),
 var Timeline = React.createClass({
 
   propTypes: {
-    id: React.PropTypes.number.isRequired,
-    title: React.PropTypes.string.isRequired,
+    // id: React.PropTypes.number.isRequired,
+    // title: React.PropTypes.string.isRequired,
     subject: shapes.post.isRequired,
     max: React.PropTypes.number.isRequired,
     min: React.PropTypes.number.isRequired,
@@ -30,10 +30,6 @@ var Timeline = React.createClass({
   },
 
   componentWillReceiveProps(props) {
-    if (props.id === this.props.id) {
-      return;
-    }
-
     this.setState(this.getInitialState());
   },
 
@@ -50,7 +46,7 @@ var Timeline = React.createClass({
   },
 
   getButtonText(q, ago) {
-    return pluralize(q.unit, ago, true) + ' ago (' + timeAgo(ago, q.unit) + ')';
+    return pluralize(q.unit.toLowerCase(), ago, true) + ' ago (' + timeAgo(ago, q.unit) + ')';
   },
 
   _onChange(e) {
