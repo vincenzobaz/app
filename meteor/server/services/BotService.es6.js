@@ -6,8 +6,15 @@ BotService = {
         return Meteor.users.find({username: {$in: ["bot1", "bot2"]}}).fetch();
     },
 
+    botsAsFriends() {
+        return this.bots().map(bot => { return {
+            name: bot.profile.name,
+            id: bot._id,
+            isBot: true
+        }});
+    },
+
     botsCreated() {
-        console.log(`number of bots ${BotService.bots().length}`);
         return BotService.bots().length >= 2;
     },
 
@@ -18,13 +25,19 @@ BotService = {
             Accounts.createUser({
                 username: "bot1",
                 email: "bot1@reminisceme.com",
-                password: "bot1password"
+                password: "bot1password",
+                profile: {
+                    name: "Bot #1"
+                }
             });
 
             Accounts.createUser({
                 username: "bot2",
                 email: "bot2@reminisceme.com",
-                password: "bot2password"
+                password: "bot2password",
+                profile: {
+                    name: "Bot #2"
+                }
             });
         }
     },
@@ -63,6 +76,7 @@ BotService = {
         var game = JoinRequestService.accept(result.requestId);
         GameService.start(game._id);
     },
+
     observeGame(gameId, botId) {
         var query = Games.find(gameId);
         var game = Games.findOne(gameId);

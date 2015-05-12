@@ -4,14 +4,16 @@
 var React = require('react'),
     Bootstrap = require('react-bootstrap'),
     Modal = Bootstrap.Modal,
-    Button = Bootstrap.Button;
+    Button = Bootstrap.Button,
+    shapes = require('../shapes');
 
 var StartGameModal = React.createClass({
 
   propTypes: {
     onOk: React.PropTypes.func.isRequired,
     onCancel: React.PropTypes.func.isRequired,
-    onRequestHide: React.PropTypes.func.isRequired
+    onRequestHide: React.PropTypes.func.isRequired,
+    opponent: shapes.User.isRequired
   },
 
   render() {

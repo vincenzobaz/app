@@ -97,9 +97,8 @@ var FriendsAutocomplete = React.createClass({
   renderComboboxOptions(friends) {
     return this.friendsMatchingQuery(friends, this.state.query)
       .map(item =>
-        <Item key={item.id} value={item.id} label={item.name}>
-          <img className="img-circle" width="32" src={`https://graph.facebook.com/${item.id}/picture`} alt="" />
-          {item.name}
+        <Item key={item.id} value={item} label={item.name}>
+          {this.renderFriend(item)}
         </Item>
       );
   },
@@ -110,6 +109,24 @@ var FriendsAutocomplete = React.createClass({
     }
 
     return friends.filter(f => fuzzy.test(query, f.name));
+  },
+
+  renderFriend(friend) {
+    return (
+      <div>
+        <img className="img-circle" width="32" height="32" src={this.getProfilePictureUrl(friend)} alt="" />
+        {friend.name}
+      </div>
+    );
+  },
+
+  // TODO: Add proper profile pictures to bots
+  getProfilePictureUrl(friend) {
+    if (friend.isBot) {
+      return 'http://www.distilnetworks.com/wp-content/themes/distil/images/theft-bot-home.png';
+    }
+
+    return `https://graph.facebook.com/${friend.id}/picture`;
   }
 
 });

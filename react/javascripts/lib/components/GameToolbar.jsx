@@ -10,7 +10,6 @@ var React = require('react'),
     ModalTrigger = Bootstrap.ModalTrigger,
     QuitGameModal = require('./modals/QuitGameModal'),
     StartGameModal = require('./modals/StartGameModal'),
-    GameToolbarSession = require('../helpers/NamespacedSession')('GameToolbar'),
     debug = require('debug')('GameToolbar');
 
 // TODO: Lots of refactoring.
@@ -20,16 +19,33 @@ var GameToolbar = React.createClass({
 
   getMeteorState() {
     return {
-      showStartModal: GameToolbarSession.get('showStartModal'),
-      friend: GameToolbarSession.get('friend')
+      showStartModal: false,
+      friend: null
     };
   },
 
-  onFriendSelect(friendId) {
-    friendId = Meteor.userId();
-    var friend = UserStore.byId(friendId);
-    GameToolbarSession.set('friend', friend);
-    GameToolbarSession.set('showStartModal', true);
+  onFriendSelect(friend) {
+    // DEV only
+    var friend = {
+      id: Meteor.userId(),
+      name: 'yourself',
+      isBot: true
+    };
+
+    var user = null;
+    if (friend.isBot) {
+      user = UserStore.byId(friend.id);
+    } else {
+      user = UserStore.byFacebookId(friend.id);
+    }
+
+    console.log('friend', friend);
+    console.log('user', user);
+
+    this.setState({
+      friend: user,
+      showStartModal: true
+    });
   },
 
   /* eslint no-underscore-dangle: 0 */
@@ -38,13 +54,15 @@ var GameToolbar = React.createClass({
   },
 
   onStart() {
-    GameToolbarSession.set('showStartModal', false);
+    this.setState({ showStartModal: false});
     this.startGame(this.state.friend);
   },
 
   onAbortStart() {
-    GameToolbarSession.set('showStartModal', false);
-    GameToolbarSession.set('friend', null);
+    this.setState({
+      showStartModal: false,
+      friend: null
+    });
   },
 
   onQuit() {

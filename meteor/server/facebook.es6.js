@@ -58,9 +58,12 @@ var FB = Facebook = {
       return this.friends[user._id];
     }
 
-    var friends = this.api(user, '/me/friends').data;
-    // this.friends[user._id] = friends;
-    return friends;
+    const friends  = this.api(user, '/me/friends').data;
+    const withBots = friends.concat(BotService.botsAsFriends());
+
+    this.friends[user._id] = withBots;
+
+    return withBots;
   },
 
   getUserInfo(user, fbUserId) {
