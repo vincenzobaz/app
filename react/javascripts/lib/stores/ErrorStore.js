@@ -3,12 +3,11 @@
 
 var merge = _.extend;
 var EventEmitter = require('events').EventEmitter;
-var Bluebird = require('bluebird');
 var ErrorStore = merge(EventEmitter.prototype, {
 
   register() {
     // window.onerror = this.onGlobalError.bind(this);
-    Bluebird.onPossiblyUnhandledRejection(this.onPromiseError.bind(this));
+    Promise.onPossiblyUnhandledRejection(this.onPromiseError.bind(this));
   },
 
   emitTurnError(error) {

@@ -231,6 +231,7 @@ var Done = React.createClass({
     AnswerStore
       .send(this.props.game, this.props.tile, this.props.answers)
       .then(res => {
+        console.log(res);
         if (!res || res.status !== "success") {
           this.setState({
             sent: true,

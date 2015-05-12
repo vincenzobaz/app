@@ -1,9 +1,6 @@
 
 'use strict';
 
-/*jshint -W079 */
-var Promise = require('bluebird');
-
 function postJSON(url, data)
 {
   var res = $.ajax({

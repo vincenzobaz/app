@@ -49,3 +49,17 @@ Tile = class Tile {
     }
 };
 
+Tile.fromRaw = (tile) => {
+    const question1 = Question.fromRaw(tile, tile.question1);
+    const question2 = Question.fromRaw(tile, tile.question2);
+    const question3 = Question.fromRaw(tile, tile.question3);
+
+    return new Tile({
+        _id: tile._id || generateId(),
+        type: tile.type,
+        question1,
+        question2,
+        question3
+    });
+};
+

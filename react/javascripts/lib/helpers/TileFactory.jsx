@@ -29,7 +29,7 @@ class TileFactory {
     const answered   = (tile.getScore().them >= 3) ? true : tile.isAnswered();
 
     return (
-      <Tile key={'tile-' + tileNum}
+      <Tile key={'tile-' + tile.getId()}
             title={''}
             answered={answered}
             type={type}

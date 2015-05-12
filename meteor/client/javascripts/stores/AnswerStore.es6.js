@@ -1,8 +1,10 @@
 
+const MeteorCall = Promise.promisify(Meteor.call, Meteor);
+
 Reminisce.Store.AnswerStore = {
 
   send(game, tile, answers) {
-    Meteor.call('Answer.post',
+    return MeteorCall('Answer.post',
       game.getId(),
       tile.getId(),
       answers
@@ -10,7 +12,7 @@ Reminisce.Store.AnswerStore = {
   },
 
   timeOut(game, tile) {
-    Meteor.call('Answer.timeOut',
+    return MeteorCall('Answer.timeOut',
       game.getId(),
       tile.getId()
     );

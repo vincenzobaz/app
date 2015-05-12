@@ -1,20 +1,22 @@
 
 AnswerService = {
     post(currentUser, gameId, tileId, answers) {
-        var game = Games.findOne(gameId);
-        var boardState = game.boardState;
-        var [board, currentScoreId] = AnswerService.getBoardAndScoreIdForCurrentPlayer(currentUser, game);
+        const game = Games.findOne(gameId);
+        const boardState = game.boardState;
+        const [board, currentScoreId] = AnswerService.getBoardAndScoreIdForCurrentPlayer(currentUser, game);
         const currentTurn = game.playerTurn;
 
-        var tile = _.find(board.tiles, function(tile){return tile._id === tileId});
+        const tile = board.getTileById(tileId);
+
         if (tile){
-            const index = _.indexOf(board.tiles, tile);
+            const index = _.findIndex(board.getTiles(), tile => tile.getId() == tileId);
             const row = Math.floor(index / 3);
             const col = index % 3;
             const result = AnswerService.getResultsForTile(tile, answers);
-            var scores = [];
-            for (var i = 0; i < tile.questions.length; i++){
-                scores.push({questionId: tile.questions[i]._id, score: result[i]})
+            const questions = tile.getQuestions();
+            const scores = [];
+            for (var i = 0; i < questions.length; i++){
+                scores.push({questionId: questions[i]._id, score: result[i]})
             }
             const oldScore = boardState[row][col].player === currentTurn? boardState[row][col].score : 0;
             const newScore = _.reduce(_.map(scores, function(s){return s.score}), function(add, x) {
@@ -50,7 +52,7 @@ AnswerService = {
     },
 
     getBoardAndScoreIdForCurrentPlayer(currentUser, game){
-        if (currentUser === game.player1) {
+        if (false && currentUser === game.player1) {
             return [GameBoards.findOne(game.player1Board), "player1Scores"];
         } else if (currentUser === game.player2) {
             return [GameBoards.findOne(game.player2Board), "player2Scores"];
@@ -60,11 +62,11 @@ AnswerService = {
     },
 
     getResultsForTile(tile, answers) {
-        const questionAnswers = _.zip(tile.questions, answers);
+        const questionAnswers = _.zip(tile.getQuestions(), answers);
         if (tile.type === "MultipleChoice"){
-            return _.map(questionAnswers, function(qa){return AnswerService.verifyAnswerMultipleChoice(qa[0], qa[1])});
+            return _.map(questionAnswers, qa => AnswerService.verifyAnswerMultipleChoice(qa[0], qa[1]));
         } else if (tile.type === "Timeline"){
-            return _.map(questionAnswers, function(qa){return AnswerService.verifyAnswerTimeLine(qa[0], qa[1])});
+            return _.map(questionAnswers, qa => AnswerService.verifyAnswerTimeLine(qa[0], qa[1]));
         } else {
             console.log("got invalid question type" + tile.type)
         }
@@ -75,9 +77,13 @@ AnswerService = {
     },
 
     verifyAnswerTimeLine(question, answer) {
-        const milliSecondsPerDay = 24 * 60 * 60 * 100;
-        const range = question.range * milliSecondsPerDay;
-        return answer.getTime() - range <= new Date(question.answer).getTime() <= answer.getTime() + range ? 1 : 0;
+        // FIXME: Currently broken because `answer` is not a Date object. And also because of the double <=.
+
+        // const milliSecondsPerDay = 24 * 60 * 60 * 100;
+        // const range = question.range * milliSecondsPerDay;
+        // return answer.getTime() - range <= new Date(question.answer).getTime() <= answer.getTime() + range ? 1 : 0;
+
+        return true;
     },
 
     playerWins(boardState, playerTurn, row, column) {
