@@ -39,6 +39,8 @@ all: $(build_js_dev) css
 
 prod: $(build_js_prod) css
 
+js: $(build_js_dev)
+
 css: $(css_files)
 
 print_js_files:
