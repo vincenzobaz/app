@@ -5,7 +5,7 @@ Meteor.startup(() => {
 
     _.each(BotService.bots(), function(b){console.log(`bot id ${b._id}`)})
 
-
+ 
     BotService.observeGameCreation();
 
 

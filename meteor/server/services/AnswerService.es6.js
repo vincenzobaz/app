@@ -67,15 +67,15 @@ AnswerService = {
             return _.map(questionAnswers, qa => AnswerService.verifyAnswerMultipleChoice(qa[0], qa[1]));
         } else if (tile.type === "Timeline"){
             return _.map(questionAnswers, qa => AnswerService.verifyAnswerTimeLine(qa[0], qa[1]));
-        } else if (tile.type == "Geolocation"){
+        } else if (tile.type === "Geolocation"){
             return _.map(questionAnswers, qa => AnswerService.verifyAnswerGeolocation(qa[0], qa[1]));
-        } else if (tile.type == "Misc"){
+        } else if (tile.type === "Misc"){
             return _.map(questionAnswers, qa => {
-                if (qa[0].getKind() == "Timeline"){
+                if (qa[0].getKind() === "Timeline"){
                     return AnswerService.verifyAnswerTimeLine(qa[0], qa[1])
-                } else if (qa[0].getKind() == "MultipleChoice"){
+                } else if (qa[0].getKind() === "MultipleChoice"){
                     return AnswerService.verifyAnswerMultipleChoice(qa[0], qa[1])
-                } else if (qa[0].getKind() == "Geolocation") {
+                } else if (qa[0].getKind() === "Geolocation") {
                     return AnswerService.verifyAnswerGeolocation(qa[0], qa[1])
                 } else {
                     console.log("got invalid question kind " + qa[0].getKind())
@@ -94,12 +94,42 @@ AnswerService = {
     verifyAnswerTimeLine(question, answer) {
         // FIXME: Currently broken because `answer` is not a Date object. And also because of the double <=.
 
-        // const milliSecondsPerDay = 24 * 60 * 60 * 100;
-        // const range = question.range * milliSecondsPerDay;
-        // return answer.getTime() - range <= new Date(question.answer).getTime() <= answer.getTime() + range ? 1 : 0;
+        var min = new Date(answer);
+        var max = new Date(answer);
+        const threshold = question.getThreshold();
 
-        return true;
+        switch(question.getUnit()){
+            case "Day":
+                console.log("we do days" + threshold);
+                min = new Date(question.answer).adjustDateDays(-threshold);
+                max = new Date(question.answer).adjustDateDays(threshold);
+                break;
+            case "Week":
+                console.log("we do weeks");
+
+                min = new Date(question.answer).adjustDateWeek(-threshold);
+                max = new Date(question.answer).adjustDateWeek(threshold);
+                break;
+            case "Month":
+                console.log("we do months");
+                min = new Date(question.answer).adjustDateMonth(-threshold);
+                max = new Date(question.answer).adjustDateMonth(threshold);
+                break;
+            case "Year":
+                console.log("we do years");
+
+                min = new Date(question.answer).adjustDateYear(-threshold);
+                max = new Date(question.answer).adjustDateYear(threshold);
+                break;
+        }
+        console.log(`min: ${min}, max: ${max}, anwer: ${new Date(answer)}`);
+
+
+        return min.getTime() <= new Date(answer).getTime() && new Date(answer).getTime()  <= max.getTime() ? 1 : 0;
+
     },
+
+
 
     verifyAnswerGeolocation(question, answer) {
         // FIXME: Handle Geolocations properly
@@ -150,9 +180,9 @@ AnswerService = {
         var y = 2;
         for (var x = 0; x < 3; x++) {
             const cell = boardState[y][x];
-                if (cell.player !== player) {
-                    return false;
-                }
+            if (cell.player !== player) {
+                return false;
+            }
             y--;
         }
         return true;
