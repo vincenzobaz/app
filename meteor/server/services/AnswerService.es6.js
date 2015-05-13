@@ -67,8 +67,23 @@ AnswerService = {
             return _.map(questionAnswers, qa => AnswerService.verifyAnswerMultipleChoice(qa[0], qa[1]));
         } else if (tile.type === "Timeline"){
             return _.map(questionAnswers, qa => AnswerService.verifyAnswerTimeLine(qa[0], qa[1]));
+        } else if (tile.type == "Geolocation"){
+            return _.map(questionAnswers, qa => AnswerService.verifyAnswerGeolocation(qa[0], qa[1]));
+        } else if (tile.type == "Misc"){
+            return _.map(questionAnswers, qa => {
+                if (qa[0].getKind() == "Timeline"){
+                    return AnswerService.verifyAnswerTimeLine(qa[0], qa[1])
+                } else if (qa[0].getKind() == "MultipleChoice"){
+                    return AnswerService.verifyAnswerMultipleChoice(qa[0], qa[1])
+                } else if (qa[0].getKind() == "Geolocation") {
+                    return AnswerService.verifyAnswerGeolocation(qa[0], qa[1])
+                } else {
+                    console.log("got invalid question kind " + qa[0].getKind())
+                    return true;
+                }
+            })
         } else {
-            console.log("got invalid question type" + tile.type)
+            console.log("got invalid question type " + tile.type)
         }
     },
 
@@ -82,6 +97,12 @@ AnswerService = {
         // const milliSecondsPerDay = 24 * 60 * 60 * 100;
         // const range = question.range * milliSecondsPerDay;
         // return answer.getTime() - range <= new Date(question.answer).getTime() <= answer.getTime() + range ? 1 : 0;
+
+        return true;
+    },
+
+    verifyAnswerGeolocation(question, answer) {
+        // FIXME: Handle Geolocations properly
 
         return true;
     },

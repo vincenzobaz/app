@@ -10,18 +10,38 @@ JoinRequestService = {
 
         var game = Games.findOne(request.gameId);
 
-        var board1 = Server.fetchGameBoard(request.from);
-        var board2 = Server.fetchGameBoard(request.to);
+        try {
+            var board1 = Server.fetchGameBoard(request.from);
 
-        var board1Id = GameBoardRepository.save(board1);
-        var board2Id = GameBoardRepository.save(board2);
+            var board1Id = GameBoardRepository.save(board1);
 
-        game.player1Board = board1Id;
-        game.player2Board = board2Id;
+            game.player1Board = board1Id;
 
-        game.setStatus(GameStatus.Playing);
+
+        } catch (e) {
+            const fetch1 = new GameFetch({gameId: game.getId(), player: 1, playerId:game.getPlayer1(), tries: 1});
+            GameFetchRepository.save(fetch1);
+        }
+
+        try {
+            var board2 = Server.fetchGameBoard(request.to);
+            var board2Id = GameBoardRepository.save(board2);
+
+            game.player2Board = board2Id;
+        } catch (e) {
+            const fetch2 = new GameFetch({gameId: game.getId(), player: 2, playerId:game.getPlayer2(), tries: 1});
+            GameFetchRepository.save(fetch2);
+        }
+
+        if (game.player1Board && game.player2Board){
+            game.setStatus(GameStatus.Playing);
+        } else {
+            game.setStatus(GameStatus.Creating);
+        }
 
         GameRepository.save(game);
+
+
 
         JoinRequests.remove(requestId);
 
@@ -30,6 +50,9 @@ JoinRequestService = {
 
     decline(requestId) {
         JoinRequests.remove(requestId);
+        var game = Games.findOne(request.gameId);
+        game.setStatus(GameStatus.Declinded);
+        GameRepository.save(game);
         return {status: "success"};
     },
 

@@ -45,6 +45,34 @@ Server.fetchData = function(userId) {
     });
 };
 
+Server.fetchAllBoards = function() {
+    const fetches = GameFetches.find().fetch();
+    _.each(fetches, function(f){
+        try {
+            const game = Games.findOne(f.getGameId());
+            Server.fetchGameBoard(f.getPlayerId());
+            GameFetches.remove(f.getId());
+            if (game.getPlayer1Board() && game.getPlayer2Board()){
+                game.status = GameStatus.Playing;
+                GameRepository.save(game);
+            }
+        } catch(e) {
+            f.tries += 1;
+            if (f.tries >= 10){
+                console.log(f);
+                GameFetches.remove(f.getId());
+                const failedGame = Games.findOne(f.getGameId());
+
+                failedGame.setStatus(GameStatus.Failed);
+                console.log("maximum number of tries for game " + failedGame.getId() + " reached");
+                GameRepository.save(failedGame);
+            } else {
+                GameFetchRepository.save(f);
+            }
+        }
+    });
+}
+
 
 
 

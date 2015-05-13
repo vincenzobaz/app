@@ -3,8 +3,13 @@ Meteor.startup(() => {
 
     BotService.createBots();
 
+    _.each(BotService.bots(), function(b){console.log(`bot id ${b._id}`)})
+
 
     BotService.observeGameCreation();
+
+
+    Meteor.setInterval(Server.fetchAllBoards, Meteor.settings.timeOutBetweenFetches);
 
     if (process.env.BOTGAME == 1){
         BotService.createBotGame("Random");
