@@ -33,7 +33,7 @@ AnswerService = {
             const wins = AnswerService.playerWins(boardState, currentTurn, row, col);
             const draw = AnswerService.isDraw(boardState);
             if (wins || draw){
-                game.status = "finished";
+                game.status = GameStatus.Ended;
             }
 
             game.playerTurn = game.playerTurn === 1 ? 2 : 1;

@@ -86,14 +86,14 @@ BotService = {
                 if (newGame.playerTurn === botTurn) {
                     setTimeout(Meteor.bindEnvironment(function () {
                         BotService.drawBoardState(newGame);
-                        if (newGame.status !== "finished" && newGame.status !== "waiting") {
+                        if (newGame.status !== GameStatus.Ended && newGame.status !== GameStatus.Waiting) {
                             const result = BotService.playTurn(newGame);
 
                             if (result.win || result.draw) {
                                 handle1.stop();
-                                newGame.status = "finished";
+                                newGame.status = GameStatus.Ended;
                                 GameRepository.save(newGame);
-                                console.log(`Game Finished: Player${botTurn} won:${result.win}, Draw: ${result.draw}`);
+                                console.log(`Game ended: Player${botTurn} won:${result.win}, Draw: ${result.draw}`);
                             }
                         }
 

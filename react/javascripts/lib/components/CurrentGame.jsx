@@ -38,22 +38,32 @@ var CurrentGame = React.createClass({
     var game = this.props.game;
     var desc = <small></small>;
 
-    if (game.isCreating()) {
-      return <small>In creation</small>;
-    }
+    switch (game.getStatus().toLowerCase()) {
+      case GameStatus.Creating:
+        return <small>In creation</small>;
 
-    if (game.isWaiting()) {
-      return <small>Waiting</small>;
-    }
+      case GameStatus.Waiting:
+        return <small>Waiting</small>;
 
-    if (game.hasEnded()) {
-      desc = <small>Ended</small>;
-    }
-    else if (game.isMyTurnToPlay()) {
-      desc = <small><b className='player'>Your turn</b></small>;
-    }
-    else {
-      desc = <small><b>Their turn</b></small>;
+      case GameStatus.Declined:
+        return <small>Declined</small>;
+        break;
+
+      case GameStatus.Ended:
+      case GameStatus.Finished:
+        desc = <small><b>Ended</b></small>;
+        break;
+
+      case GameStatus.Failed:
+        desc = <small><b>Failed</b></small>;
+        break;
+
+      case GameStatus.Playing:
+        if (game.isMyTurnToPlay()) {
+          desc = <small><b className='player'>Your turn</b></small>;
+        } else {
+          desc = <small><b>Their turn</b></small>;
+        }
     }
 
     var score = this.props.game.getScore() || {};

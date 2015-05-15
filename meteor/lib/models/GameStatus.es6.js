@@ -4,7 +4,10 @@ GameStatus = {
     Waiting  : 'waiting',
     Creating : 'creating',
     Failed   : 'failed',
-    Declinded: 'declined',
-    Ended    : 'ended'
+    Declined : 'declined',
+    Ended    : 'ended',
+
+    // Backward-compatibility
+    Finished : 'finished',
 };
 
