@@ -68,6 +68,9 @@ var EndGame = React.createClass({
 
   haveWon() {
     var game = this.props.game;
+    return true;
+
+    // FIXME: game.isWonBy isn't how we do this anymore.
     return game.isWonBy(game.getOpponent());
   },
 
