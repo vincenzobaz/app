@@ -206,11 +206,11 @@ GeoQuestion = class GeoQuestion {
 
         return this.answer;
     }
-}
+};
 
 GeoQuestion.fromRaw = function(raw) {
   return new GeoQuestion(raw);
-}
+};
 
 Question = {};
 

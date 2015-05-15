@@ -61,7 +61,7 @@ var QuestionsModal = React.createClass({
     }
 
     question.onDone = this.onAnswer;
-    console.log('question', question);
+    // console.log('question', question);
 
     return React.createElement(Questions[kind], question);
   },
@@ -98,19 +98,18 @@ var QuestionsModal = React.createClass({
   },
 
   onAnswer(answer) {
-    debug('answer', answer);
+    // debug('answer', answer);
 
     var timer = this.timers[this.state.step];
-
     timer.stop();
 
     this.state.answers.push({
-      questionId: this.props.questions[this.state.step].id,
+      // questionId: this.props.questions[this.state.step].getId(),
       data: answer,
       timeSpent: timer.time()
     });
 
-    debug('answers', this.state.answers);
+    // debug('answers', this.state.answers);
 
     this.setState({
       done: this.isDone()
@@ -231,7 +230,6 @@ var Done = React.createClass({
     AnswerStore
       .send(this.props.game, this.props.tile, this.props.answers)
       .then(res => {
-        console.log(res);
         if (!res || res.status !== "success") {
           this.setState({
             sent: true,

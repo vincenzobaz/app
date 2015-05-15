@@ -7,7 +7,8 @@
     "no-mixed-requires": false,
     "no-unused-vars": true,
     "no-undef": false,
-    "no-underscore-dangle": false
+    "no-underscore-dangle": false,
+    "comma-spacing": false
   },
   "env": {
     "browser": true,

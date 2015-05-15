@@ -9,20 +9,18 @@ AnswerService = {
         const tile = board.getTileById(tileId);
 
         if (tile){
-            const index = _.findIndex(board.getTiles(), tile => tile.getId() == tileId);
+            const index = _.findIndex(board.getTiles(), t => t.getId() === tileId);
             const row = Math.floor(index / 3);
             const col = index % 3;
             const result = AnswerService.getResultsForTile(tile, answers);
             const questions = tile.getQuestions();
             const scores = [];
             for (var i = 0; i < questions.length; i++){
-                scores.push({questionId: questions[i]._id, score: result[i]})
+                scores.push({questionId: questions[i]._id, score: result[i]});
             }
             const correctAnswersNum = scores.reduce((acc, s) => acc + s.score, 0);
             const oldScore = boardState[row][col].player === currentTurn? boardState[row][col].score : 0;
-            const newScore = _.reduce(_.map(scores, function(s){return s.score}), function(add, x) {
-                return add + x;
-            });
+            const newScore = _.reduce(_.map(scores, s => s.score), (add, x) => add + x);
             const otherScore = boardState[row][col].player !== currentTurn? boardState[row][col].score : 0;
             if (newScore > oldScore){
                 game[currentScoreId][tile._id] = scores;
@@ -142,7 +140,7 @@ AnswerService = {
         return AnswerService.verifyWonRow(boardState, row, playerTurn) ||
             AnswerService.verifyWonColumn(boardState, column, playerTurn) ||
             AnswerService.verifyWonDiagonal(boardState, playerTurn) ||
-            AnswerService.verifyWonAntiDiagonal(boardState, playerTurn)
+            AnswerService.verifyWonAntiDiagonal(boardState, playerTurn);
 
     },
 
@@ -171,7 +169,7 @@ AnswerService = {
         for (var x = 0; x < 3; x++) {
             const cell = boardState[x][x];
             if (cell.player !== player) {
-                return false
+                return false;
             }
         }
         return true;
@@ -232,7 +230,7 @@ AnswerService = {
                 }
             }
         }
-        return impossible
+        return impossible;
     },
     checkDiagonal(boardState) {
         var player = 0;
