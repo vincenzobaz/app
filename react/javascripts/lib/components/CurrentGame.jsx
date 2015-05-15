@@ -40,13 +40,13 @@ var CurrentGame = React.createClass({
 
     switch (game.getStatus().toLowerCase()) {
       case GameStatus.Creating:
-        return <small>In creation</small>;
+        return <small><b>In creation</b></small>;
 
       case GameStatus.Waiting:
-        return <small>Waiting</small>;
+        return <small><b>Waiting</b></small>;
 
       case GameStatus.Declined:
-        return <small>Declined</small>;
+        return <small><b>Declined</b></small>;
         break;
 
       case GameStatus.Ended:
