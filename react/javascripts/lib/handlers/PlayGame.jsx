@@ -14,29 +14,16 @@ var PlayGame = React.createClass({
     currentGame: shapes.Game
   },
 
-  getInitialState() {
-    return {
-      currentGame: this.props.currentGame
-    };
-  },
-
   render() {
-    debug('currentGame',   this.state.currentGame);
-    debug('isPlaying',     this.isPlaying());
-    debug('inCreation',    this.isCreating());
-
-    const game = this.state.currentGame;
+    const game = this.props.currentGame;
     const gameId = game.getId();
 
     if (this.hasGameEnded()) {
+      const lsKey = `game-${gameId}-EndGame`;
       return (
         <div>
-          <EndGame game={game}
-                   localStorageKey={`game-${gameId}-EndGame`} />
-
-          <Board gameId={gameId}
-                 game={game}
-                 tiles={game.getTiles()} />
+          <EndGame game={game} localStorageKey={lsKey} />
+          <Board gameId={gameId} game={game} />
         </div>
       );
     }
@@ -44,8 +31,7 @@ var PlayGame = React.createClass({
     if (this.isPlaying()) {
       return (
         <div>
-          <Board gameId={gameId}
-                 game={game} />
+          <Board gameId={gameId} game={game} />
         </div>
       );
     }
@@ -124,7 +110,7 @@ var PlayGame = React.createClass({
   },
 
   withGame(fn, defValue) {
-    var game = this.state.currentGame;
+    var game = this.props.currentGame;
 
     if (game == null) {
       return defValue;
