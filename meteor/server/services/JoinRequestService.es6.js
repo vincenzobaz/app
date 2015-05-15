@@ -51,7 +51,7 @@ JoinRequestService = {
     decline(requestId) {
         JoinRequests.remove(requestId);
         var game = Games.findOne(request.gameId);
-        game.setStatus(GameStatus.Declinded);
+        game.setStatus(GameStatus.Declined);
         GameRepository.save(game);
         return {status: "success"};
     },
