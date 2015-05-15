@@ -42,6 +42,10 @@ Game = class Game {
         this.player2Board = value;
     }
 
+    getBoardState() {
+        return this.boardState;
+    }
+
     getStatus(){
         return this.status;
     }

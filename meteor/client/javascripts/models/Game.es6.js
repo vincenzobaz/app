@@ -12,6 +12,7 @@ Reminisce.Collection.Games = new Mongo.Collection('games', {
                 me   : (isPlayer1  ? doc.player1Scores : doc.player2Scores)|0,
                 them : (!isPlayer1 ? doc.player1Scores : doc.player2Scores)|0
             },
+            boardState : doc.boardState,
             board      : (isPlayer1) ? doc.player1Board : doc.player2Board,
             opponentId : (isPlayer1) ? doc.player2      : doc.player1
         };
@@ -86,9 +87,13 @@ Reminisce.Model.Game = class Game {
   getBoard() {
     return lazy(this.getId(), this, 'board', boardId => {
       return Reminisce.Collection.GameBoards.findOne(boardId);
-    })
+    });
   }
 
-}
+  getBoardState() {
+    return this.boardState;
+  }
+
+};
 
 Reminisce.Model.Game.Status = GameStatus;
