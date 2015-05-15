@@ -18,6 +18,7 @@ AnswerService = {
             for (var i = 0; i < questions.length; i++){
                 scores.push({questionId: questions[i]._id, score: result[i]})
             }
+            const correctAnswersNum = scores.reduce((acc, s) => acc + s.score, 0);
             const oldScore = boardState[row][col].player === currentTurn? boardState[row][col].score : 0;
             const newScore = _.reduce(_.map(scores, function(s){return s.score}), function(add, x) {
                 return add + x;
@@ -40,11 +41,14 @@ AnswerService = {
             game.playerTurn = game.playerTurn === 1 ? 2 : 1;
 
             GameRepository.save(game);
+
             return {
                 status: 'success',
                 win: wins,
-                draw: draw
-            }
+                draw: draw,
+                correct: correctAnswersNum,
+                wrong: questions.length - correctAnswersNum
+            };
         } else {
             throw Meteor.Error(404, "Invalid tileId + " + tileId);
         }
@@ -64,26 +68,26 @@ AnswerService = {
     getResultsForTile(tile, answers) {
         const questionAnswers = _.zip(tile.getQuestions(), answers);
         if (tile.type === "MultipleChoice"){
-            return _.map(questionAnswers, qa => AnswerService.verifyAnswerMultipleChoice(qa[0], qa[1]));
+            return _.map(questionAnswers, qa => AnswerService.verifyAnswerMultipleChoice(qa[0], qa[1].data));
         } else if (tile.type === "Timeline"){
-            return _.map(questionAnswers, qa => AnswerService.verifyAnswerTimeLine(qa[0], qa[1]));
+            return _.map(questionAnswers, qa => AnswerService.verifyAnswerTimeLine(qa[0], qa[1].data));
         } else if (tile.type === "Geolocation"){
-            return _.map(questionAnswers, qa => AnswerService.verifyAnswerGeolocation(qa[0], qa[1]));
+            return _.map(questionAnswers, qa => AnswerService.verifyAnswerGeolocation(qa[0], qa[1].data));
         } else if (tile.type === "Misc"){
             return _.map(questionAnswers, qa => {
                 if (qa[0].getKind() === "Timeline"){
-                    return AnswerService.verifyAnswerTimeLine(qa[0], qa[1])
+                    return AnswerService.verifyAnswerTimeLine(qa[0], qa[1].data);
                 } else if (qa[0].getKind() === "MultipleChoice"){
-                    return AnswerService.verifyAnswerMultipleChoice(qa[0], qa[1])
+                    return AnswerService.verifyAnswerMultipleChoice(qa[0], qa[1].data);
                 } else if (qa[0].getKind() === "Geolocation") {
-                    return AnswerService.verifyAnswerGeolocation(qa[0], qa[1])
+                    return AnswerService.verifyAnswerGeolocation(qa[0], qa[1].data);
                 } else {
-                    console.log("got invalid question kind " + qa[0].getKind())
+                    console.log("got invalid question kind " + qa[0].getKind());
                     return true;
                 }
-            })
+            });
         } else {
-            console.log("got invalid question type " + tile.type)
+            throw new Meteor.Error(500, `Invalid question type: '${tile.type}'`);
         }
     },
 
@@ -92,44 +96,40 @@ AnswerService = {
     },
 
     verifyAnswerTimeLine(question, answer) {
-        // FIXME: Currently broken because `answer` is not a Date object. And also because of the double <=.
-
-        var min = new Date(answer);
-        var max = new Date(answer);
+        var min = new Date(answer.date);
+        var max = new Date(answer.date);
         const threshold = question.getThreshold();
 
-        switch(question.getUnit()){
-            case "Day":
-                console.log("we do days" + threshold);
+        switch(question.getUnit()) {
+            case TimelineUnit.Day:
                 min = new Date(question.answer).adjustDateDays(-threshold);
                 max = new Date(question.answer).adjustDateDays(threshold);
                 break;
-            case "Week":
-                console.log("we do weeks");
 
+            case TimelineUnit.Week:
                 min = new Date(question.answer).adjustDateWeek(-threshold);
                 max = new Date(question.answer).adjustDateWeek(threshold);
                 break;
-            case "Month":
-                console.log("we do months");
+
+            case TimelineUnit.Month:
                 min = new Date(question.answer).adjustDateMonth(-threshold);
                 max = new Date(question.answer).adjustDateMonth(threshold);
                 break;
-            case "Year":
-                console.log("we do years");
 
+            case TimelineUnit.Year:
                 min = new Date(question.answer).adjustDateYear(-threshold);
                 max = new Date(question.answer).adjustDateYear(threshold);
                 break;
+
+            default:
+                throw new Meteor.Error(500, `Unknown unit ${question.getUnit()}`);
         }
-        console.log(`min: ${min}, max: ${max}, anwer: ${new Date(answer)}`);
 
+        console.log(`min: ${min}, max: ${max}, answer: ${new Date(answer.date)} (${answer.date})`);
 
-        return min.getTime() <= new Date(answer).getTime() && new Date(answer).getTime()  <= max.getTime() ? 1 : 0;
+        return min.getTime() <= new Date(answer.date).getTime() && new Date(answer.date).getTime() <= max.getTime() ? 1 : 0;
 
     },
-
-
 
     verifyAnswerGeolocation(question, answer) {
         // FIXME: Handle Geolocations properly

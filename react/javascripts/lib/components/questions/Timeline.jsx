@@ -7,7 +7,7 @@ var React = require('react'),
     getQuestionTitleByType = require('./getQuestionTitleByType'),
     shapes = require('../shapes'),
     Post = require('../Post'),
-    timeAgo = require('../../helpers/timeAgo');
+    { agoToDate, dateToAgo } = require('../../helpers/timeAgo');
     // debug = require('debug')('Timeline');
 
 var Timeline = React.createClass({
@@ -16,17 +16,17 @@ var Timeline = React.createClass({
     // id: React.PropTypes.number.isRequired,
     type: React.PropTypes.string.isRequired,
     subject: shapes.post.isRequired,
-    max: React.PropTypes.number.isRequired,
-    min: React.PropTypes.number.isRequired,
+    max: React.PropTypes.string.isRequired,
+    min: React.PropTypes.string.isRequired,
     step: React.PropTypes.number.isRequired,
-    default: React.PropTypes.number.isRequired,
+    default: React.PropTypes.string.isRequired,
     unit: React.PropTypes.string.isRequired,
     onDone: React.PropTypes.func.isRequired
   },
 
   getInitialState() {
     return {
-      ago: this.props.default
+      ago: this.toRelative(this.props.default)
     };
   },
 
@@ -34,35 +34,55 @@ var Timeline = React.createClass({
     this.setState(this.getInitialState());
   },
 
+  toRelative(date) {
+    return dateToAgo(date, this.props.unit.toLowerCase());
+  },
+
+  propsToRelative() {
+    return {
+      min: this.toRelative(this.props.min),
+      max: this.toRelative(this.props.max),
+      default: this.toRelative(this.props.default),
+    };
+  },
+
   render() {
-    var q = this.props;
+    const rel = this.propsToRelative();
+
     return (
       <div className="question question-time">
-        <h4>{getQuestionTitleByType(q.type)}</h4>
+        <h4>{getQuestionTitleByType(this.props.type)}</h4>
         <div className="question-subject">
-          <Post post={q.subject} />
+          <Post post={this.props.subject} />
         </div>
         <div className="question-input">
-          <input type="range" min={q.min} max={q.max} step={q.step} value={this.state.ago} onChange={this._onChange} />
-          <Button onClick={this._onSubmit}>{this.getButtonText(q, this.state.ago)}</Button>
+          <input
+            type="range"
+            max={rel.min}
+            min={rel.max}
+            step={this.props.step}
+            value={this.state.ago}
+            onChange={this.onChange} />
+          <Button onClick={this.onSubmit}>{this.getButtonText()}</Button>
         </div>
       </div>
     );
   },
 
-  getButtonText(q, ago) {
-    return pluralize(q.unit.toLowerCase(), ago, true) + ' ago (' + timeAgo(ago, q.unit) + ')';
+  getButtonText() {
+    return pluralize(this.props.unit.toLowerCase(), this.state.ago, true) + ' ago ' +
+           '(' + agoToDate(this.state.ago, this.props.unit) + ')';
   },
 
-  _onChange(e) {
+  onChange(e) {
     this.setState({
       ago: +e.target.value
     });
   },
 
-  _onSubmit() {
+  onSubmit() {
     this.props.onDone({
-      ago: this.state.ago
+      date: agoToDate(this.state.ago, this.props.unit, null)
     });
   }
 

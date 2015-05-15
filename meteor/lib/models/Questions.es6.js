@@ -105,6 +105,13 @@ MultipleChoiceQuestion.fromRaw = function(data) {
     return new MultipleChoiceQuestion(data);
 };
 
+TimelineUnit = {
+    Day: 'Day',
+    Week: 'Week',
+    Month: 'Month',
+    Year: 'Year'
+};
+
 TimelineQuestionProps = [ '_id', 'subject', 'min', 'max', 'default', 'unit',
                           'step', 'threshold', 'answer', 'type', 'kind' ];
 

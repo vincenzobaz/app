@@ -1,9 +1,18 @@
 
 'use strict';
 
-var moment = require('moment');
+const moment = require('moment');
 
-module.exports = (time, unit, format = 'ddd Do MMMM YYYY') => {
+const agoToDate = (time, unit, format = 'ddd Do MMMM YYYY') => {
   return moment().subtract(time, unit).format(format);
+};
+
+const dateToAgo = (date, unit) => {
+  return moment().diff(date, unit);
+};
+
+module.exports = {
+  agoToDate,
+  dateToAgo
 };
 

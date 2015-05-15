@@ -245,10 +245,7 @@ var Done = React.createClass({
         this.setState({
           sent: true,
           error: false,
-          results: {
-            win: res.win,
-            draw: res.draw
-          }
+          results: res
         });
 
         this.props.onSent();
