@@ -60,7 +60,10 @@ Reminisce.Model.Game = class Game {
   }
 
   hasEnded() {
-    return this.getStatus() === GameStatus.Ended;
+    return (
+        this.getStatus() === GameStatus.Ended ||
+        this.getStatus() === GameStatus.Finished
+    );
   }
 
   isPlaying() {
