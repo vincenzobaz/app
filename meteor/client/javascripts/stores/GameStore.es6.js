@@ -13,11 +13,11 @@ function hydrate(game) {
 Reminisce.Store.GameStore = {
 
   current() {
-    var game = GameSession.get('current');
-    if (game == null) {
-      return game;
+    const gameId = GameSession.get('currentId');
+    if (gameId == null) {
+      return null;
     }
-    return hydrate(game);
+    return this.load(gameId);
   },
 
   list() {
@@ -29,22 +29,22 @@ Reminisce.Store.GameStore = {
   },
 
   load(gameId) {
-    var game = Games.findOne(gameId);
+    const game = Games.findOne(gameId);
     return hydrate(game);
   },
 
   quit(game) {
     Meteor.call('Game.quit', game.getId(), () => {
-      GameSession.set('current', null);
+      GameSession.set('currentId', null);
     });
   },
 
   switchTo(game, isId = true) {
     if (isId) {
-      GameSession.set('current', this.load(game));
+      GameSession.set('currentId', game);
     }
     else {
-      GameSession.set('current', game);
+      GameSession.set('currentId', game._id);
     }
   }
 

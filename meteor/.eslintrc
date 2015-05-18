@@ -3,6 +3,7 @@
   "rules": {
     "strict": false,
     "quotes": false,
+    "key-spacing": false,
     "no-multi-spaces": false,
     "no-mixed-requires": false,
     "no-unused-vars": true,
