@@ -1,16 +1,32 @@
 
+
+const reduceScore = (scores) =>
+    scores.reduce((acc, x) => acc + x.score, 0);
+
+const computeScoreForPlayer = (boardState, player) => {
+    var score = 0;
+    for (let i = 0; i < 3; i += 1) {
+        for (let j = 0; i < 3; i += 1) {
+            const state = boardState[i][j];
+            if (state.player === player) {
+                score += state.score|0;
+            }
+        }
+    }
+    return score;
+};
+
 Reminisce.Collection.Games = new Mongo.Collection('games', {
     transform(doc) {
         const isPlayer1 = this.player1 === Meteor.userId();
-
         const game = {
             _id     : doc._id,
             player1 : doc.player1,
             player2 : doc.player2,
             status  : doc.status,
             score   : {
-                me   : (isPlayer1  ? doc.player1Scores : doc.player2Scores)|0,
-                them : (!isPlayer1 ? doc.player1Scores : doc.player2Scores)|0
+                me   : computeScoreForPlayer(doc.boardState, isPlayer1 ? 1 : 2),
+                them : computeScoreForPlayer(doc.boardState, isPlayer1 ? 2 : 1)
             },
             boardState : doc.boardState,
             board      : (isPlayer1) ? doc.player1Board : doc.player2Board,

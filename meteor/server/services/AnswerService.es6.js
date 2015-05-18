@@ -15,14 +15,18 @@ AnswerService = {
             const result = AnswerService.getResultsForTile(tile, answers);
             const questions = tile.getQuestions();
             const scores = [];
-            for (var i = 0; i < questions.length; i++){
-                scores.push({questionId: questions[i]._id, score: result[i]});
+            for (let i = 0; i < questions.length; i++){
+                let score = {
+                    questionId: questions[i]._id,
+                    score: result[i]
+                };
+                scores.push(score);
             }
             const correctAnswersNum = scores.reduce((acc, s) => acc + s.score, 0);
             const oldScore = boardState[row][col].player === currentTurn? boardState[row][col].score : 0;
             const newScore = _.reduce(_.map(scores, s => s.score), (add, x) => add + x);
             const otherScore = boardState[row][col].player !== currentTurn? boardState[row][col].score : 0;
-            if (newScore > oldScore){
+            if (newScore >= oldScore){
                 game[currentScoreId][tile._id] = scores;
                 if (otherScore < newScore){
                     boardState[row][col].player = currentTurn;
