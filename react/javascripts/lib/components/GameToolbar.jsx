@@ -25,12 +25,13 @@ var GameToolbar = React.createClass({
   },
 
   onFriendSelect(friend) {
-    // DEV only
-    var friend = {
-      id: Meteor.userId(),
-      name: 'yourself',
-      isBot: true
-    };
+    if (process.env.SINGLE_PLAYER === "1") {
+      friend = {
+        id: Meteor.userId(),
+        name: 'yourself',
+        isBot: true
+      };
+    }
 
     var user = null;
     if (friend.isBot) {
