@@ -14,6 +14,7 @@ var Board = React.createClass({
   },
 
   render() {
+    debug('Rendering game', this.props.game);
     return (
       <div className='board'>
         {this.renderTiles()}

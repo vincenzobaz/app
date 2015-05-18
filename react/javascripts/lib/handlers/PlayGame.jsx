@@ -29,6 +29,7 @@ var PlayGame = React.createClass({
     }
 
     if (this.isPlaying()) {
+      debug('Rendering isPlaying game', game);
       return (
         <div>
           <Board gameId={gameId} game={game} />

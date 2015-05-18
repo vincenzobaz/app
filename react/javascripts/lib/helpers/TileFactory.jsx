@@ -33,6 +33,7 @@ class TileFactory {
     const row = Math.floor((tileNum - 1) / 3);
     const col = tileNum - 1 - (row * 3);
     const tileState = this.boardState[row][col];
+    debug(`State for tile ${tileNum}`, tileState);
     const score = {
       me: tileState.score,
       them: 0

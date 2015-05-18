@@ -41,6 +41,7 @@ var Main = React.createClass({
 
   renderInner() {
     if (this.state.currentGame != null) {
+      debug('Rendering PlayGame', this.state.currentGame);
       return <PlayGame {...this.state} />;
     }
 
