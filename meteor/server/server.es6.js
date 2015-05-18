@@ -5,7 +5,7 @@ Server.fetchGameBoard = function(userId) {
     var [bot1, bot2] = BotService.bots();
 
     if (userId === bot1._id || userId === bot2._id){
-        return GameBoard.FromRaw(userId, JSON.parse(Assets.getText("json/gameboards/gameboard1.json")));
+        return GameBoard.fromRaw(userId, JSON.parse(Assets.getText("json/gameboards/gameboard1.json")));
     }
 
     const user = Meteor.users.findOne(userId);
@@ -26,7 +26,7 @@ Server.fetchGameBoard = function(userId) {
     return GameBoard.fromRaw(userId, result.data);
 };
 
-
+/*eslint camelcase:0*/
 Server.fetchData = function(userId) {
     const user = Meteor.users.findOne(userId);
     const fbUserId = user.services.facebook.id;
@@ -57,8 +57,8 @@ Server.fetchAllBoards = function() {
                 GameRepository.save(game);
             }
         } catch(e) {
-            f.tries += 1;
-            if (f.tries >= 10){
+            f.incrementTries();
+            if (f.getTries() >= 10) {
                 console.log(f);
                 GameFetches.remove(f.getId());
                 const failedGame = Games.findOne(f.getGameId());
@@ -71,7 +71,7 @@ Server.fetchAllBoards = function() {
             }
         }
     });
-}
+};
 
 
 

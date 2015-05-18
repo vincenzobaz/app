@@ -1,23 +1,10 @@
 GameFetches = new Mongo.Collection('gameFetches', {
     transform(doc) {
         return new GameFetch(doc);
-    },
-
-
+    }
 });
 
-
-var cache = {};
-
-const lazy = (key, obj, prop, compute) => {
-    if (cache[key] === undefined) {
-        cache[key] = compute(obj[prop]);
-    }
-    return cache[key];
-};
-
 const GameFetchProps = ['_id', 'gameId', 'playerId', 'player', 'tries'];
-
 
 GameFetch = class GameFetch {
 
@@ -49,9 +36,5 @@ GameFetch = class GameFetch {
         this.tries += 1;
     }
 
-
-
 };
-
-
 
