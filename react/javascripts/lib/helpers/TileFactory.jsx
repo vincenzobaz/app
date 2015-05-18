@@ -5,6 +5,7 @@ const React = require('react'),
       Tile = require('../components/Tile'),
       debug = require('debug')('TileFactory');
 
+// TODO: Refactor this mess.
 class TileFactory {
 
   constructor(game, modalFactory) {
@@ -27,22 +28,22 @@ class TileFactory {
 
     const icon       = tile.getIcon();
     const type       = icon;
-    const answered   = (tile.getScore().them >= 3) ? true : tile.isAnswered();
+    const answered   = (tile.getScore().them >= 3) ? true : tile.isAnswered(); // FIXME: This is wrong
+    const disabled   = this.game.hasEnded() || !this.game.isMyTurnToPlay();
 
-    // FIXME: This is wrong.
     const row = Math.floor((tileNum - 1) / 3);
     const col = tileNum - 1 - (row * 3);
     const tileState = this.boardState[row][col];
-    debug(`State for tile ${tileNum}`, tileState);
+    const playerNum = this.game.getMyPlayerNumber();
+
     const score = {
-      me: tileState.score,
-      them: 0
+      me:   playerNum === tileState.player ? tileState.score : 0,
+      them: playerNum !== tileState.player ? tileState.score : 0
     };
 
     return (
       <Tile key={'tile-' + tile.getId()}
             title={''}
-            answered={answered}
             type={type}
             icon={icon}
             placement={placement}
@@ -50,7 +51,8 @@ class TileFactory {
             score={score || tile.getScore()}
             questionModal={modal}
             opponentId={opponentId}
-            disabled={this.game.hasEnded()} />
+            answered={answered}
+            disabled={disabled} />
     );
   }
 

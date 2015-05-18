@@ -25,8 +25,9 @@ Reminisce.Collection.Games = new Mongo.Collection('games', {
             player2 : doc.player2,
             status  : doc.status,
             score   : {
-                me   : computeScoreForPlayer(doc.boardState, isPlayer1 ? 1 : 2),
-                them : computeScoreForPlayer(doc.boardState, isPlayer1 ? 2 : 1)
+                // FIXME: Should be the other around, right?
+                me   : computeScoreForPlayer(doc.boardState, isPlayer1 ? 2 : 1),
+                them : computeScoreForPlayer(doc.boardState, isPlayer1 ? 1 : 2)
             },
             boardState : doc.boardState,
             board      : (isPlayer1) ? doc.player1Board : doc.player2Board,
@@ -73,6 +74,10 @@ Reminisce.Model.Game = class Game {
 
   isMyTurnToPlay() {
     return this.getCurrentPlayerId() === Meteor.userId();
+  }
+
+  getMyPlayerNumber() {
+    return this.player1 === Meteor.userId() ? 1 : 2;
   }
 
   hasEnded() {
