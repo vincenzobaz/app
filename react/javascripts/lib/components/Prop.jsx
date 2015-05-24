@@ -4,7 +4,8 @@
 var React = require('react'),
     Routes = require('../Routes'),
     renderIcon = require('../helpers/renderIcon'),
-    FacebookStore = require('../stores/FacebookStore');
+    FacebookStore = require('../stores/FacebookStore'),
+    debug = require('debug');
 
 var FacebookPicture = React.createClass({
   propTypes: {
@@ -95,7 +96,7 @@ var Prop = React.createClass({
   },
 
   render() {
-    console.log(this.props);
+    debug('Prop')(this.props);
     var type;
     if (this.props.fbId) {
       type = 'fb';
