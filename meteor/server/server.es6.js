@@ -41,7 +41,12 @@ Server.fetchData = function(userId) {
     console.log(`Server.fetchGameBoard(${userId}) - Fetching URL ${url}`);
 
     Meteor.http.get(url, function (err, res) {
-        console.error(res.statusCode, res.data);
+        if (err) {
+            console.error(err);
+        }
+        if (res) {
+            console.error(res.statusCode, res.data);
+        }
     });
 };
 
