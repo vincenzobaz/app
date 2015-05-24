@@ -37,6 +37,16 @@ Friend = class Friend {
         return !!this.isBot;
     }
 
+    getAvatarUrl() {
+        var Routes = Reminisce.Routes;
+
+        if (this.getFacebookId() != null) {
+          return Routes.Facebook.avatar(this.getFacebookId());
+        }
+
+        return Routes.Assets.at('images/avatar-default.png').url;
+    }
+
 };
 
 Friend.fromRaw = (data) => new Friend(data);

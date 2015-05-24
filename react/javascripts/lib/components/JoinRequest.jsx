@@ -22,7 +22,7 @@ var JoinRequest = React.createClass({
           </a>
           <div className='media-body'>
             <h5 className='media-heading'>
-              {from.getFullName()}
+              {from.getName()}
             </h5>
             <div className="waiting-actions">
               <button className='btn btn-mini btn-success' onClick={this.accept}>ACCEPT</button>

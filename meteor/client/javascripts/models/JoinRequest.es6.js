@@ -10,7 +10,7 @@ Reminisce.Model.JoinRequest = class JoinRequest {
   }
 
   getFrom() {
-    return Reminisce.Store.UserStore.byId(this.from);
+    return Friends.findOne({userId: this.from});
   }
 
   getOpponent() {
@@ -21,7 +21,7 @@ Reminisce.Model.JoinRequest = class JoinRequest {
     return Reminisce.Store.GameStore.byId(this.gameId);
   }
 
-}
+};
 
 Reminisce.Collection.JoinRequests = new Mongo.Collection("joinRequests", {
   transform(doc) {
