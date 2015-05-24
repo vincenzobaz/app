@@ -47,15 +47,13 @@ var CurrentGame = React.createClass({
 
       case GameStatus.Declined:
         return <small><b>Declined</b></small>;
-        break;
+
+      case GameStatus.Failed:
+        return <small><b>Failed</b></small>;
 
       case GameStatus.Ended:
       case GameStatus.Finished:
         desc = <small><b>Ended</b></small>;
-        break;
-
-      case GameStatus.Failed:
-        desc = <small><b>Failed</b></small>;
         break;
 
       case GameStatus.Playing:
