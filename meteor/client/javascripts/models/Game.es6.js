@@ -57,7 +57,7 @@ Reminisce.Model.Game = class Game {
   }
 
   getOpponent() {
-    return Reminisce.Store.UserStore.byId(this.getOpponentId());
+    return Friends.findOne({userId: this.getOpponentId()});
   }
 
   getScore() {

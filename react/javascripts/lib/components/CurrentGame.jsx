@@ -12,19 +12,22 @@ var CurrentGame = React.createClass({
   },
 
   render() {
-    var game = this.props.game,
-        classNames = this.getClassNames();
+    const game         = this.props.game;
+    const opponent     = game.getOpponent();
+    const opponentName = opponent != null ? opponent.getName() : 'Loading...';
+    const avatarUrl    = opponent != null ? opponent.getAvatarUrl() : '';
+    const classNames   = this.getClassNames();
 
     return (
       <li className={classNames.waiting}>
         <div className='media'>
           <a className='pull-left' title='Switch to this game' href="#" onClick={this.switchToGame(game)}>
-            <img className='media-object img-circle' width='40' src={game.getOpponent().getAvatarUrl()} alt='' />
+            <img className='media-object img-circle' width='40' src={avatarUrl} alt='' />
           </a>
           <div className='media-body'>
             <h5 className='media-heading'>
               <a title='Switch to this game' onClick={this.switchToGame(game)} href="#">
-                {game.getOpponent().getFullName()}
+                {opponentName}
               </a>
             </h5>
             <p>{this.renderDescription()}</p>

@@ -12,17 +12,19 @@ var JoinRequest = React.createClass({
   },
 
   render() {
-    var from = this.props.request.getFrom();
+    const from      = this.props.request.getFrom();
+    const avatarUrl = from != null ? from.getAvatarUrl() : '';
+    const name      = from != null ? from.getName() : 'Loading...';
 
     return (
       <li className='waiting'>
         <div className='media'>
           <a className='pull-left' title='Switch to this game' onClick={this.accept}>
-            <img className='media-object img-circle' width='40' src={from.getAvatarUrl()} alt='' />
+            <img className='media-object img-circle' width='40' src={avatarUrl} alt='' />
           </a>
           <div className='media-body'>
             <h5 className='media-heading'>
-              {from.getName()}
+              {name}
             </h5>
             <div className="waiting-actions">
               <button className='btn btn-mini btn-success' onClick={this.accept}>ACCEPT</button>
