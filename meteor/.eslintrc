@@ -8,6 +8,7 @@
     "no-mixed-requires": false,
     "no-unused-vars": true,
     "no-undef": false,
+    "new-cap": false,
     "no-underscore-dangle": false,
     "comma-spacing": false
   },

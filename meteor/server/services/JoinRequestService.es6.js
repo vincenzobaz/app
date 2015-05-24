@@ -12,12 +12,8 @@ JoinRequestService = {
 
         try {
             var board1 = Server.fetchGameBoard(request.from);
-
             var board1Id = GameBoardRepository.save(board1);
-
             game.player1Board = board1Id;
-
-
         } catch (e) {
             const fetch1 = new GameFetch({gameId: game.getId(), player: 1, playerId:game.getPlayer1(), tries: 1});
             GameFetchRepository.save(fetch1);
@@ -26,23 +22,17 @@ JoinRequestService = {
         try {
             var board2 = Server.fetchGameBoard(request.to);
             var board2Id = GameBoardRepository.save(board2);
-
             game.player2Board = board2Id;
-        } catch (e) {
+        }
+        catch (e) {
             const fetch2 = new GameFetch({gameId: game.getId(), player: 2, playerId:game.getPlayer2(), tries: 1});
             GameFetchRepository.save(fetch2);
         }
 
-        if (game.player1Board && game.player2Board){
-            game.setStatus(GameStatus.Playing);
-        } else {
-            game.setStatus(GameStatus.Creating);
-        }
+        const status = (game.player1Board && game.player2Board) ? GameStatus.Playing : GameStatus.Creating;
+        game.setStatus(status);
 
         GameRepository.save(game);
-
-
-
         JoinRequests.remove(requestId);
 
         return game;
@@ -56,13 +46,23 @@ JoinRequestService = {
         return {status: "success"};
     },
 
-    send(currentUser, opponentId) {
-        var game = GameService.createGame(currentUser, opponentId);
-        var gameId = GameRepository.save(game);
-        var join = JoinRequest.fromRaw({ from: currentUser, to: opponentId, gameId: gameId });
-        var requestId = JoinRequestRepository.save(join);
+    send(currentUserId, friendId) {
+        const opponent  = Friends.findOne(friendId);
 
-        return {status: "success", requestId: requestId};
+        if (!opponent) {
+            return { status: 'error', msg: 'Couldn\'t find a friend with id ' + friendId };
+        }
+
+        if (!opponent.userId) {
+            return { status: 'error', msg: 'Friend with id ' + friendId + ' has no associated user id.' };
+        }
+
+        const game      = GameService.createGame(currentUserId, opponent.userId);
+        const gameId    = GameRepository.save(game);
+        const join      = JoinRequest.fromRaw({ from: currentUserId, to: opponent.userId, gameId: gameId });
+        const requestId = JoinRequestRepository.save(join);
+
+        return { status: "success", requestId: requestId };
     }
 
 };

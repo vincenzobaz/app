@@ -2,7 +2,6 @@
 'use strict';
 
 var React = require('react'),
-    ReactMeteor = require('../third-party/react-meteor'),
     FriendsAutocomplete = require('./FriendsAutocomplete'),
     GameStore = require('../stores/GameStore'),
     UserStore = require('../stores/UserStore'),
@@ -15,9 +14,7 @@ var React = require('react'),
 // TODO: Lots of refactoring.
 var GameToolbar = React.createClass({
 
-  mixins: [ReactMeteor.Mixin],
-
-  getMeteorState() {
+  getInitialState() {
     return {
       showStartModal: false,
       friend: null
@@ -25,33 +22,22 @@ var GameToolbar = React.createClass({
   },
 
   onFriendSelect(friend) {
-    if (process.env.SINGLE_PLAYER === "1") {
-      friend = {
-        id: Meteor.userId(),
-        name: 'yourself',
-        isBot: true
-      };
-    }
-
-    var user = null;
-    if (friend.isBot) {
-      user = UserStore.byId(friend.id);
-    } else {
-      user = UserStore.byFacebookId(friend.id);
-    }
-
-    console.log('friend', friend);
-    console.log('user', user);
-
+    debug('friend', friend);
     this.setState({
-      friend: user,
+      friend,
       showStartModal: true
     });
   },
 
   /* eslint no-underscore-dangle: 0 */
   startGame(friend) {
-    GameStore.start(friend._id);
+    GameStore.start(friend._id)
+      .then(res => {
+        debug('after starGame:', res);
+        if (res.status !== 'success') {
+          // TODO: Show error modal.
+        }
+      });
   },
 
   onStart() {
@@ -79,12 +65,9 @@ var GameToolbar = React.createClass({
     var startModal = '';
 
     if (this.state.showStartModal && this.state.friend) {
-      const friend = UserStore.hydrate(this.state.friend);
-
-      startModal = <StartGameModal opponent={friend}
+      startModal = <StartGameModal friend={this.state.friend}
                                    onOk={this.onStart}
-                                   onCancel={this.onAbortStart}
-                                   onRequestHide={this.onAbortStart} />;
+                                   onCancel={this.onAbortStart} />;
     }
 
     return (

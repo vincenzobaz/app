@@ -8,7 +8,6 @@ Facebook = null;
 var FB = Facebook = {
 
   usersInfo: {},
-  friends: {},
   avatars: {},
 
   API_URL: 'https://graph.facebook.com/v2.3',
@@ -34,6 +33,7 @@ var FB = Facebook = {
       throw new Meteor.Error(401, "User isn't logged in or doesn't have an access token");
     }
 
+    /* eslint camelcase:0 */
     var params = Object.assign(options, {
       access_token: accessToken,
       appsecret_proof: this.computeProof(accessToken)
@@ -54,14 +54,8 @@ var FB = Facebook = {
   },
 
   getFriends(user) {
-    if (this.friends.hasOwnProperty(user._id)) {
-      return this.friends[user._id];
-    }
-
     const friends  = this.api(user, '/me/friends').data;
     const withBots = friends.concat(BotService.botsAsFriends());
-
-    this.friends[user._id] = withBots;
 
     return withBots;
   },
@@ -105,16 +99,27 @@ Meteor.methods({
     var user = Meteor.users.findOne(this.userId);
     return FB.getUserInfo(user, userId);
   },
+
   'Facebook.getAvatar'(facebookId, type) {
     this.unblock();
     var user = Meteor.users.findOne(this.userId);
     return FB.getAvatar(user, facebookId, type);
   },
+
   'Facebook.getFriends'() {
     this.unblock();
-    var user = Meteor.users.findOne(this.userId);
-    return FB.getFriends(user);
+    const user = Meteor.users.findOne(this.userId);
+    const friends = FriendRepository.friendsOf(this.userId);
+
+    // TODO: Figure out when to refresh friends from Facebook
+    if (friends && friends.length > 0) {
+        return friends;
+    }
+
+    const fbFriends = FB.getFriends(user);
+    return FriendRepository.updateFriends(this.userId, fbFriends);
   },
+
   'Facebook.getPermissions'() {
     this.unblock();
     var user = Meteor.users.findOne(this.userId);

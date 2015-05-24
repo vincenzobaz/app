@@ -10,9 +10,10 @@ var Question = require('../models/Question');
 var JoinRequest = require('../models/JoinRequest');
 var EventEmitter = require('events').EventEmitter;
 
-var tile = React.PropTypes.instanceOf(Tile);
-var game = React.PropTypes.instanceOf(Game);
-var user = React.PropTypes.instanceOf(User);
+var tile   = React.PropTypes.instanceOf(Tile);
+var game   = React.PropTypes.instanceOf(Game);
+var user   = React.PropTypes.instanceOf(User);
+var friend = React.PropTypes.instanceOf(Friend);
 var joinRequest = React.PropTypes.instanceOf(JoinRequest);
 var question = React.PropTypes.instanceOf(Question);
 
@@ -67,6 +68,7 @@ module.exports = {
   Tile: tile,
   Game: game,
   User: user,
+  Friend: friend,
   JoinRequest: joinRequest,
   Question: question,
   score: score,

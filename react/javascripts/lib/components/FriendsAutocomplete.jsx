@@ -126,7 +126,7 @@ var FriendsAutocomplete = React.createClass({
       return 'http://www.distilnetworks.com/wp-content/themes/distil/images/theft-bot-home.png';
     }
 
-    return `https://graph.facebook.com/${friend.id}/picture`;
+    return `https://graph.facebook.com/${friend.facebookId}/picture`;
   }
 
 });

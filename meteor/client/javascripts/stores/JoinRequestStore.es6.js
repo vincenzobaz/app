@@ -1,5 +1,6 @@
 
-var JoinRequestSession = NamespacedSession('JoinRequestStore');
+const JoinRequestSession = NamespacedSession('JoinRequestStore');
+const callMeteor = Promise.promisify(Meteor.call, Meteor);
 
 function hydrate(req) {
   return new Reminisce.Model.JoinRequest(req);
@@ -13,17 +14,16 @@ Reminisce.Store.JoinRequestStore = {
 
   accept(joinRequest) {
     const id = joinRequest.getId && joinRequest.getId() || joinRequest;
-    Meteor.call('JoinRequest.accept', id);
+    return callMeteor('JoinRequest.accept', id);
   },
 
   decline(joinRequest) {
     const id = joinRequest.getId && joinRequest.getId() || joinRequest;
-    Meteor.call('JoinRequest.decline', id);
+    return callMeteor('JoinRequest.decline', id);
   },
 
-  send(user) {
-    const id = user.getId && user.getId() || user;
-    Meteor.call('JoinRequest.send', id);
+  send(friendId) {
+    return callMeteor('JoinRequest.send', friendId);
   }
 
 };

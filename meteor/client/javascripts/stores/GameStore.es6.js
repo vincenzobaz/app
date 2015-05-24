@@ -24,8 +24,8 @@ Reminisce.Store.GameStore = {
     return Games.find().fetch().map(hydrate);
   },
 
-  start(opponentId) {
-    Reminisce.Store.JoinRequestStore.send(opponentId);
+  start(friendId) {
+    return Reminisce.Store.JoinRequestStore.send(friendId);
   },
 
   load(gameId) {

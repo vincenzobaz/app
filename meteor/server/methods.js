@@ -18,8 +18,8 @@ Meteor.methods({
       return JoinRequestService.accept(requestId);
     },
 
-    'JoinRequest.send': function(to) {
-      return JoinRequestService.send(this.userId, to);
+    'JoinRequest.send': function(friendId) {
+      return JoinRequestService.send(this.userId, friendId);
     },
 
     'Game.start': function(gameId) {

@@ -4,13 +4,13 @@ JoinRequestRepository = {
   save(joinRequest) {
     var doc = _.pick(joinRequest, 'from', 'to', 'gameId');
 
-    if (joinRequest.id) {
-      JoinRequest.update(joinRequest.id, {$set: doc});
+    if (joinRequest._id) {
+      JoinRequest.update(joinRequest._id, {$set: doc});
     } else {
-      joinRequest.id = JoinRequests.insert(doc);
+      joinRequest._id = JoinRequests.insert(doc);
     }
 
-    return joinRequest.id;
+    return joinRequest._id;
   }
 
 };

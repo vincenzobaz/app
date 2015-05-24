@@ -28,6 +28,7 @@ var App = {
     Meteor.subscribe('gameBoards');
     Meteor.subscribe('joinRequests');
     Meteor.subscribe('userServices');
+    Meteor.subscribe('friends');
   }
 };
 

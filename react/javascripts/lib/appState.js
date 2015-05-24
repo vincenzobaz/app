@@ -8,7 +8,6 @@ var debug = require('debug')('AppState');
 
 module.exports = function getAppState() {
   debug('AppState refresh');
-  debug(GameStore.current());
   return {
     isLoggedIn: UserStore.isLoggedIn() || false,
     user: UserStore.current() || null,
