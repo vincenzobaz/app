@@ -8,6 +8,7 @@ FriendRepository = {
             if (doc.isBot) {
                 doc.userId = doc.facebookId;
                 delete doc.facebookId;
+                return doc;
             }
             else {
                 const user = UserRepository.byFacebookId(doc.facebookId);

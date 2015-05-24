@@ -53,10 +53,7 @@ Facebook = {
   },
 
   getFriends(user) {
-    const friends  = this.api(user, '/me/friends').data;
-    const withBots = friends.concat(BotService.botsAsFriends());
-
-    return withBots;
+    return this.api(user, '/me/friends').data;
   },
 
   getUserInfo(user, fbUserId) {
@@ -116,7 +113,9 @@ Meteor.methods({
     }
 
     const fbFriends = Facebook.getFriends(user);
-    return FriendRepository.updateFriends(this.userId, fbFriends);
+    const withBots = fbFriends.concat(BotService.botsAsFriends());
+
+    return FriendRepository.updateFriends(this.userId, withBots);
   },
 
   'Facebook.getPermissions'() {

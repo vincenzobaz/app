@@ -8,9 +8,17 @@ function hydrate(friend) {
 
 Reminisce.Store.FriendStore = {
 
-  list() {
-    return Friends.find().fetch().map(hydrate);
-  }
+    byUserId(userId) {
+        return hydrate(Friends.findOne({userId: userId}));
+    },
+
+    byFacebookId(facebookId) {
+        return hydrate(Friends.findOne({facebookId: facebookId}));
+    },
+
+    list() {
+        return Friends.find().fetch().map(hydrate);
+    }
 
 };
 
