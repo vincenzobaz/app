@@ -21,10 +21,7 @@ Accounts.onLogin(attempt => {
         return;
     }
 
-    if (attempt.type === 'resume') {
-        // TODO: Figure out if/when we need to trigger a new fetch on resume.
-        return;
-    }
+    // if (attempt.type === 'resume') {}
 
     const user = attempt.user;
 
