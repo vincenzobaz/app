@@ -1,9 +1,14 @@
 
 function hydrate(friend) {
-  if (!(friend instanceof Friend)) {
-    friend = new Friend(friend);
-  }
-  return friend;
+    if (friend == null) {
+        return friend;
+    }
+
+    if (!(friend instanceof Friend)) {
+        friend = new Friend(friend);
+    }
+
+    return friend;
 }
 
 Reminisce.Store.FriendStore = {
