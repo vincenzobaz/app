@@ -4,6 +4,7 @@
 var UserStore = require('./stores/UserStore');
 var JoinRequestStore = require('./stores/JoinRequestStore');
 var GameStore = require('./stores/GameStore');
+var FriendStore = require('./stores/FriendStore');
 var debug = require('debug')('AppState');
 
 module.exports = function getAppState() {
@@ -13,7 +14,8 @@ module.exports = function getAppState() {
     user: UserStore.current() || null,
     currentGame: GameStore.current() || null,
     games: GameStore.list() || [],
-    joinRequests: JoinRequestStore.list() || []
+    joinRequests: JoinRequestStore.list() || [],
+    friends: FriendStore.list() || []
   };
 };
 
