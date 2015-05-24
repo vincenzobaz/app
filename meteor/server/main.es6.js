@@ -2,9 +2,6 @@
 Meteor.startup(() => {
 
     BotService.createBots();
-
-    _.each(BotService.bots(), bot => console.log(`bot id ${bot._id}`))
-
     BotService.observeGameCreation();
 
     if (Meteor.settings.timeOutBetweenFetches == null) {
