@@ -23,8 +23,16 @@ Accounts.onLogin(attempt => {
 
     if (attempt.type === 'resume') {
         // TODO: Figure out if/when we need to trigger a new fetch on resume.
+        return;
     }
-    else {
-        Server.fetchData(attempt.user._id);
-    }
+
+    const user = attempt.user;
+
+    console.log(`Fetching data for user ${user._id}...`);
+    Server.fetchData(user._id);
+
+    // TODO: Move this somewhere else.
+    console.log(`Fetching friends for user ${user._id}...`);
+    const fbFriends = Facebook.getFriends(user);
+    FriendRepository.updateFriends(user._id, fbFriends);
 });
