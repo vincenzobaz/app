@@ -4,8 +4,7 @@
 // FIXME: Awful design...
 // TODO: Handle paging.
 // TODO: Fix caching.
-Facebook = null;
-var FB = Facebook = {
+Facebook = {
 
   usersInfo: {},
   avatars: {},
@@ -97,13 +96,13 @@ Meteor.methods({
   'Facebook.getUserInfo'(userId) {
     this.unblock();
     var user = Meteor.users.findOne(this.userId);
-    return FB.getUserInfo(user, userId);
+    return Facebook.getUserInfo(user, userId);
   },
 
   'Facebook.getAvatar'(facebookId, type) {
     this.unblock();
     var user = Meteor.users.findOne(this.userId);
-    return FB.getAvatar(user, facebookId, type);
+    return Facebook.getAvatar(user, facebookId, type);
   },
 
   'Facebook.getFriends'() {
@@ -116,14 +115,14 @@ Meteor.methods({
         return friends;
     }
 
-    const fbFriends = FB.getFriends(user);
+    const fbFriends = Facebook.getFriends(user);
     return FriendRepository.updateFriends(this.userId, fbFriends);
   },
 
   'Facebook.getPermissions'() {
     this.unblock();
     var user = Meteor.users.findOne(this.userId);
-    return FB.getPermissions(user);
+    return Facebook.getPermissions(user);
   }
 });
 
