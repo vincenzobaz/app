@@ -13,7 +13,6 @@ var React = require('react'),
 var Timeline = React.createClass({
 
   propTypes: {
-    // id: React.PropTypes.number.isRequired,
     type: React.PropTypes.string.isRequired,
     subject: shapes.post.isRequired,
     max: React.PropTypes.string.isRequired,
@@ -31,7 +30,9 @@ var Timeline = React.createClass({
   },
 
   componentWillReceiveProps(props) {
-    this.setState(this.getInitialState());
+    this.replaceState({
+      ago: this.toRelative(props.default)
+    });
   },
 
   toRelative(date) {
