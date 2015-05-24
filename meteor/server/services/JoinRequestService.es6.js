@@ -47,19 +47,32 @@ JoinRequestService = {
     },
 
     send(currentUserId, friendId) {
-        const opponent  = Friends.findOne(friendId);
+        const friend = Friends.findOne(friendId);
 
-        if (!opponent) {
-            return { status: 'error', msg: 'Couldn\'t find a friend with id ' + friendId };
+        if (!friend) {
+            return {
+                status: 'error',
+                msg: `Couldn't find a friend with id  ${friendId}.`
+            };
         }
 
-        if (!opponent.userId) {
-            return { status: 'error', msg: 'Friend with id ' + friendId + ' has no associated user id.' };
+        if (friend.friendOf !== currentUserId) {
+            return {
+                status: 'error',
+                msg: `Friend with id ${friendId} is not a friend of the logged-in user.`
+            };
         }
 
-        const game      = GameService.createGame(currentUserId, opponent.userId);
+        if (!friend.userId) {
+            return {
+                status: 'error',
+                msg: `Friend with id ${friendId} has no associated user id.`
+            };
+        }
+
+        const game      = GameService.createGame(currentUserId, friend.userId);
         const gameId    = GameRepository.save(game);
-        const join      = JoinRequest.fromRaw({ from: currentUserId, to: opponent.userId, gameId: gameId });
+        const join      = JoinRequest.fromRaw({ from: currentUserId, to: friend.userId, gameId: gameId });
         const requestId = JoinRequestRepository.save(join);
 
         return { status: "success", requestId: requestId };
