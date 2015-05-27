@@ -1,6 +1,15 @@
 
 FriendRepository = {
 
+    updateUserId(friend) {
+        const user = UserRepository.byFacebookId(friend.facebookId);
+        if (user != null) {
+            friend.userId = user._id;
+            return true;
+        }
+        return false;
+    },
+
     save(friend) {
         const doc = _.pick(friend, ...FriendProps);
 
@@ -11,8 +20,7 @@ FriendRepository = {
                 return doc;
             }
             else {
-                const user = UserRepository.byFacebookId(doc.facebookId);
-                doc.userId = user ? user._id : null;
+                FriendRepository.updateUserId(doc);
             }
         }
 
@@ -44,6 +52,9 @@ FriendRepository = {
                     name: f.name,
                     isBot: !!f.isBot
                 });
+            } else {
+                FriendRepository.updateUserId(friend);
+                FriendRepository.save(friend);
             }
             return friend;
         });
