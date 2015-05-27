@@ -7,7 +7,7 @@ var React = require('react'),
 var Player = React.createClass({
 
   propTypes: {
-    player: shapes.User.isRequired,
+    player: React.PropTypes.oneOfType([shapes.User, shapes.Friend]).isRequired,
     isOpponent: React.PropTypes.bool,
     isTurn: React.PropTypes.bool.isRequired,
     waiting: React.PropTypes.bool.isRequired,
@@ -26,7 +26,7 @@ var Player = React.createClass({
             <div className="media-body">
               <h4 className="media-heading">
                 <span>{this.props.score}</span>
-                <div>{this.props.player.getFullName()}</div>
+                <div>{this.props.player.getName()}</div>
               </h4>
               <p>{this.renderTurnText()}</p>
             </div>

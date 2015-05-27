@@ -27,7 +27,7 @@ Reminisce.Model.User = class User {
     return this.fb.last_name;
   }
 
-  getFullName() {
+  getName() {
     return this.fb.name;
   }
 
