@@ -49,7 +49,7 @@ JoinRequestService = {
     send(currentUserId, friendId) {
         const friend = Friends.findOne(friendId);
 
-        if (!friend) {
+        if (friend == null) {
             const msg = `Couldn't find a friend with id ${friendId}.`;
             console.error(msg);
             return {
@@ -67,13 +67,29 @@ JoinRequestService = {
             };
         }
 
-        if (!friend.userId) {
-            const msg = `Friend with id ${friendId} has no associated user id.`;
+        if (friend.facebookId == null) {
+            const msg = `Friend with id ${friendId} has no associated Facebook id.`;
             console.error(msg);
             return {
                 status: 'error',
                 msg: msg
             };
+        }
+
+        if (friend.userId == null) {
+            const friendUser = UserRepository.byFacebookId(friend.facebookId);
+
+            if (friendUser == null) {
+                const msg = `Friend ${friendId} has no associated user.`;
+                console.error(msg);
+                return {
+                    status: 'error',
+                    msg: msg
+                };
+            }
+
+            friend.userId = friendUser._id;
+            FriendRepository.save(friend);
         }
 
         const game      = GameService.createGame(currentUserId, friend.userId);

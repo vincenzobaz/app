@@ -1,10 +1,4 @@
 
-Friends = new Mongo.Collection('friends', {
-    transform(doc) {
-        return Friend.fromRaw(doc);
-    }
-});
-
 FriendProps = ['_id', 'userId', 'facebookId', 'name', 'friendOf', 'isBot'];
 
 Friend = class Friend {
