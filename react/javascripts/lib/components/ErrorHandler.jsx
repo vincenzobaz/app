@@ -6,6 +6,7 @@ var NetworkErrorModal = require('./modals/NetworkErrorModal');
 var GenericErrorModal = require('./modals/GenericErrorModal');
 var OverlayMixin = require('react-bootstrap').OverlayMixin;
 var shapes = require('./shapes');
+var debug = require('debug')('ErrorHandler');
 
 var ErrorHandler = React.createClass({
 
@@ -41,6 +42,7 @@ var ErrorHandler = React.createClass({
   },
 
   onNewError(e) {
+    debug(e);
     this.state.pendingErrors.push(e);
     this.showNextError();
   },
