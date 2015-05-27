@@ -136,10 +136,15 @@ var Post = React.createClass({
 
   types: {
     TextPost    : Text,
+    Text        : Text,
     CommentPost : Comment,
+    Comment     : Comment,
     ImagePost   : Picture,
+    Image       : Picture,
     VideoPost   : Video,
-    LinkPost    : Link
+    Video       : Video,
+    LinkPost    : Link,
+    Link        : Link
   },
 
   render() {
