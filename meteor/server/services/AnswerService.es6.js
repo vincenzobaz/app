@@ -58,7 +58,7 @@ AnswerService = {
     },
 
     getBoardAndScoreIdForCurrentPlayer(currentUser, game){
-        if (false && currentUser === game.player1) {
+        if (currentUser === game.player1) {
             return [GameBoards.findOne(game.player1Board), "player1Scores"];
         } else if (currentUser === game.player2) {
             return [GameBoards.findOne(game.player2Board), "player2Scores"];
