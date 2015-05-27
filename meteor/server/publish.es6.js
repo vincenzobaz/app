@@ -1,24 +1,12 @@
+
 Meteor.publish("games", function () {
     // console.log('Publishing games');
     return Games.find({ $or: [{player1 : this.userId}, {player2 : this.userId}]});
 });
 
-// FIXME: We'd better store the id of the user whom
-//        the board is for in the GameBoard document.
-//        See https://github.com/reminisceme/app/issues/58.
 Meteor.publish("gameBoards", function(){
     // console.log('Publishing gameBoards');
-    // var playerBoards = [];
-    //  Games.find({$or: [{player1 : this.userId}, {player2 : this.userId}]},
-    //     {fields: {player1: 1, player1Board: 1, player2:1, player2Board: 1, _id: 0}}).forEach(function(g){
-    //          if (g.player1 == this.userId){
-    //              playerBoards.push(g.player1Board)
-    //          } else {
-    //              playerBoards.push(g.player2Board)
-    //          }
-    //  });
-    // return GameBoards.find({_id: {$in: playerBoards}});
-    return GameBoards.find();
+    return GameBoards.find({ userId: this.userId });
 });
 
 Meteor.publish("joinRequests", function(){
