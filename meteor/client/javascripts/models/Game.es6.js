@@ -30,7 +30,8 @@ Reminisce.Collection.Games = new Mongo.Collection('games', {
             },
             boardState : doc.boardState,
             board      : (isPlayer1) ? doc.player1Board : doc.player2Board,
-            opponentId : (isPlayer1) ? doc.player2      : doc.player1
+            opponentId : (isPlayer1) ? doc.player2      : doc.player1,
+            playerTurn : doc.playerTurn
         };
 
         return new Reminisce.Model.Game(game);
