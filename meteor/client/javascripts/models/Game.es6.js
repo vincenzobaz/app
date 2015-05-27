@@ -18,16 +18,15 @@ const computeScoreForPlayer = (boardState, player) => {
 
 Reminisce.Collection.Games = new Mongo.Collection('games', {
     transform(doc) {
-        const isPlayer1 = this.player1 === Meteor.userId();
+        const isPlayer1 = doc.player1 === Meteor.userId();
         const game = {
             _id     : doc._id,
             player1 : doc.player1,
             player2 : doc.player2,
             status  : doc.status,
             score   : {
-                // FIXME: Should be the other around, right?
-                me   : computeScoreForPlayer(doc.boardState, isPlayer1 ? 2 : 1),
-                them : computeScoreForPlayer(doc.boardState, isPlayer1 ? 1 : 2)
+                me   : computeScoreForPlayer(doc.boardState, isPlayer1 ? 1 : 2),
+                them : computeScoreForPlayer(doc.boardState, isPlayer1 ? 2 : 1)
             },
             boardState : doc.boardState,
             board      : (isPlayer1) ? doc.player1Board : doc.player2Board,
@@ -57,8 +56,7 @@ Reminisce.Model.Game = class Game {
   }
 
   getOpponent() {
-    console.log(Reminisce.Store.FriendStore.byUserId(this.getOpponentId()));
-    return Friends.findOne({userId: this.getOpponentId()});
+    return Reminisce.Store.FriendStore.byUserId(this.getOpponentId());
   }
 
   getScore() {
