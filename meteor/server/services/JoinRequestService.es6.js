@@ -50,23 +50,29 @@ JoinRequestService = {
         const friend = Friends.findOne(friendId);
 
         if (!friend) {
+            const msg = `Couldn't find a friend with id ${friendId}.`;
+            console.error(msg);
             return {
                 status: 'error',
-                msg: `Couldn't find a friend with id  ${friendId}.`
+                msg: msg
             };
         }
 
         if (friend.friendOf !== currentUserId) {
+            const msg = `Friend with id ${friendId} is not a friend of the logged-in user.`;
+            console.error(msg);
             return {
                 status: 'error',
-                msg: `Friend with id ${friendId} is not a friend of the logged-in user.`
+                msg: msg
             };
         }
 
         if (!friend.userId) {
+            const msg = `Friend with id ${friendId} has no associated user id.`;
+            console.error(msg);
             return {
                 status: 'error',
-                msg: `Friend with id ${friendId} has no associated user id.`
+                msg: msg
             };
         }
 
@@ -74,6 +80,8 @@ JoinRequestService = {
         const gameId    = GameRepository.save(game);
         const join      = JoinRequest.fromRaw({ from: currentUserId, to: friend.userId, gameId: gameId });
         const requestId = JoinRequestRepository.save(join);
+
+        console.log(`Created join request ${requestId} from ${currentUserId} to ${friend.userId} for game ${gameId}`);
 
         return { status: "success", requestId: requestId };
     }
