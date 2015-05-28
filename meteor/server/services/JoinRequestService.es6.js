@@ -13,8 +13,11 @@ JoinRequestService = {
         try {
             var board1 = Server.fetchGameBoard(request.from);
             var board1Id = GameBoardRepository.save(board1);
+            console.log("we fetched board 1");
             game.player1Board = board1Id;
         } catch (e) {
+            console.log("we didn't fetched board 1");
+
             const fetch1 = new GameFetch({gameId: game.getId(), player: 1, playerId:game.getPlayer1(), tries: 1});
             GameFetchRepository.save(fetch1);
         }
@@ -34,6 +37,8 @@ JoinRequestService = {
 
         GameRepository.save(game);
         JoinRequests.remove(requestId);
+
+        console.log(game);
 
         return game;
     },
@@ -69,7 +74,7 @@ JoinRequestService = {
         //     };
         // }
 
-        if (friend.facebookId == null) {
+        if (!friend.isBot && friend.facebookId == null) {
             const msg = `Friend with id ${friendId} has no associated Facebook id.`;
             console.error(msg);
             return {
@@ -78,7 +83,7 @@ JoinRequestService = {
             };
         }
 
-        if (friend.userId == null) {
+        if (!friend.isBot && friend.userId == null) {
             const friendUser = UserRepository.byFacebookId(friend.facebookId);
 
             if (friendUser == null) {
@@ -96,10 +101,14 @@ JoinRequestService = {
 
         const game      = GameService.createGame(currentUserId, friend.userId);
         const gameId    = GameRepository.save(game);
-        const join      = JoinRequest.fromRaw({ from: currentUserId, to: friend.userId, gameId: gameId });
+
+        console.log(`c: ${currentUserId}, f: ${friendId}`);
+        const join      = JoinRequest.fromRaw({ from: currentUserId, to: friendId, gameId: gameId });
         const requestId = JoinRequestRepository.save(join);
 
-        console.log(`Created join request ${requestId} from ${currentUserId} to ${friend.userId} for game ${gameId}`);
+        //console.log(`Created join request ${requestId} from ${currentUserId} to ${friend.userId} for game ${gameId}`);
+
+        console.log(`Created join request ${requestId} from ${currentUserId} to ${friendId} for game ${gameId}`);
 
         return { status: "success", requestId: requestId };
     }

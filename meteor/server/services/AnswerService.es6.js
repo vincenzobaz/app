@@ -34,7 +34,7 @@ AnswerService = {
                 }
             }
 
-            const wins = AnswerService.playerWins(boardState, currentTurn, row, col);
+            const wins = AnswerService.playerWinsForRowAndColumn(boardState, currentTurn, row, col);
             const draw = AnswerService.isDraw(boardState);
             if (wins || draw){
                 game.status = GameStatus.Ended;
@@ -144,7 +144,26 @@ AnswerService = {
         return true;
     },
 
-    playerWins(boardState, playerTurn, row, column) {
+    playerWins(boardState, player) {
+
+        if (AnswerService.verifyWonDiagonal(boardState, player) ||
+            AnswerService.verifyWonAntiDiagonal(boardState, player)) {
+            return true;
+        }
+
+        for (var i = 0; i < 3; i++){
+            if (AnswerService.verifyWonRow(boardState, i, player)){
+                return true;
+            }
+            if (AnswerService.verifyWonColumn(boardState, player)){
+                return true;
+            }
+        }
+
+        return false;
+    },
+
+    playerWinsForRowAndColumn(boardState, playerTurn, row, column) {
 
         return AnswerService.verifyWonRow(boardState, row, playerTurn) ||
             AnswerService.verifyWonColumn(boardState, column, playerTurn) ||

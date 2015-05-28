@@ -118,6 +118,7 @@ BotService = {
             player = game.player2;
         }
         const gameBoard = GameBoards.findOne(game[boardId]);
+        console.log(`gameBoard found: ${gameBoard}`);
         const tile = BotService.pickTile(game, gameBoard);
         if (tile.type === "MultipleChoice") {
             console.log("we got a MC");
@@ -141,17 +142,77 @@ BotService = {
     },
 
     pickTile(game, gameBoard) {
+        console.log(`gameboard: ${gameBoard}`);
         const tiles = gameBoard.getTiles();
         const boardState = game.boardState;
         const indexTiles = _.zip(_.range(9), _.flatten(boardState));
-        const potentialTiles = _.filter(indexTiles, function (t) {
-            return t[1].player === 0
-        });
-        if (potentialTiles.length > 0) {
-            return tiles[_.sample(potentialTiles)[0]];
-        } else {
-            return _.sample(tiles);
+        const result = BotService.minmax(game, game.getCurrentPlayer());
+        console.log(`result: ${result}`);
+        return tiles[result.move.row * 3 + result.move.column];
+        //const potentialTiles = _.filter(indexTiles, function (t) {
+        //    return t[1].player === 0
+        //});
+        //if (potentialTiles.length > 0) {
+        //    return tiles[_.sample(potentialTiles)[0]];
+        //} else {
+        //    return _.sample(tiles);
+        //}
+    },
+
+    minmax(game, player) {
+        const score = BotService.score(game.boardState, game.getCurrentPlayer());
+        if (score !== 0){
+            return {move: null, score: score};
         }
+
+        var scores = [];
+        var moves = [];
+
+        const possibilities = BotService.getAvailableMoves(game.boardState, game.getCurrentPlayer());
+        _.forEach(possibilities, m => {
+            const updatedGame = makeMove(game, m);
+            scores.push(BotService.minmax(updatedGame, player).score);
+            moves.push(m);
+        });
+
+        if (game.getCurrentPlayer() == player){
+            const maxScoreIndex = _.indexOf(scores, _.max(scores));
+            const move = moves[maxScoreIndex];
+            return {move: move, score: scores[maxScoreIndex]}
+        } else {
+            const minScoreIndex = _.indexOf(scores, _.min(scores));
+            const move = moves[minScoreIndex];
+            return {move: move, score: scores[minScoreIndex]}
+        }
+    },
+
+    makeMove(game, move, player) {
+        const newGame  = _.extend(game);
+        newGame.boardState[move.row][move.column] = {player: player, score: 3};
+        newGame.setPlayerTurn((player  % 2) + 1);
+        return newGame;
+    },
+
+    score(boardState, currentPlayer) {
+      if (AnswerService.playerWins(boardState, currentPlayer)){
+          return 10;
+      } else if (AnswerService.playerWins(boardState, (currentPlayer  % 2) + 1)){
+          return - 10;
+      } else {
+          return 0;
+      }
+    },
+
+    getAvailableMoves(boardState, currentPlayer) {
+        var moves = [];
+        for (var i = 0; i < 3; i++) {
+            for (var j = 0; j < 3; j++){
+                if (boardState[i][j].score < 3 && boardState[i][j].player != currentPlayer){
+                    moves.push({row: i, column: j})
+                }
+            }
+        }
+      return moves;
     },
 
     drawBoardState(game) {

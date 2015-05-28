@@ -13,6 +13,19 @@ Meteor.startup(() => {
     if (process.env.BOTGAME === '1') {
         BotService.createBotGame("Random");
     }
+    const boardState = [
+        [{player: 0, score: 0}, {player: 1, score: 0}, {player: 2, score: 3}],
+        [{player: 0, score: 0}, {player: 0, score: 0}, {player: 2, score: 3}],
+        [{player: 0, score: 0}, {player: 0, score: 0}, {player: 0, score: 0}]
+    ];
+    const result = BotService.getAvailableMoves(boardState, 1);
+
+    console.log(`bot1: ${BotService.bots()[0]._id}`);
+    console.log(`bot2: ${BotService.bots()[1]._id}`);
+    console.log(result);
+
+    BotService.createBotGame("whatever");
+
 
 });
 
