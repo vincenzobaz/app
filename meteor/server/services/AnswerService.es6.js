@@ -22,11 +22,24 @@ AnswerService = {
                 };
                 scores.push(score);
             }
+
             const correctAnswersNum = scores.reduce((acc, s) => acc + s.score, 0);
             const oldScore = boardState[row][col].player === currentTurn? boardState[row][col].score : 0;
             const newScore = _.reduce(_.map(scores, s => s.score), (add, x) => add + x);
             const otherScore = boardState[row][col].player !== currentTurn? boardState[row][col].score : 0;
-            if (newScore >= oldScore){
+
+            if (newScore === 3) {
+                game.setPlayer1AvailableMoves(_.filter(game.getPlayer1AvailableMoves(), m => {return m.row !== row || m.column !== col}));
+                game.setPlayer2AvailableMoves(_.filter(game.getPlayer1AvailableMoves(), m => {return m.row !== row || m.column !== col}));
+            } else {
+                if (currentTurn === 1){
+                    game.setPlayer1AvailableMoves(_.filter(game.getPlayer1AvailableMoves(), m => {return m.row !== row || m.column !== col}));
+                } else {
+                    game.setPlayer2AvailableMoves(_.filter(game.getPlayer1AvailableMoves(), m => {return m.row !== row || m.column !== col}));
+                }
+            }
+
+            if (newScore >= oldScore || oldScore === 0){
                 game[currentScoreId][tile._id] = scores;
                 if (otherScore < newScore){
                     boardState[row][col].player = currentTurn;
@@ -35,7 +48,9 @@ AnswerService = {
             }
 
             const wins = AnswerService.playerWinsForRowAndColumn(boardState, currentTurn, row, col);
-            const draw = AnswerService.isDraw(boardState);
+            game.playerTurn = game.playerTurn === 1 ? 2 : 1;
+            const draw = AnswerService.isDraw(game);
+
             if (wins || draw){
                 game.status = GameStatus.Ended;
             }
@@ -103,6 +118,7 @@ AnswerService = {
     },
 
     verifyAnswerTimeLine(question, answer) {
+        const answerDate = new Date(answer);
         var min = new Date(answer.date);
         var max = new Date(answer.date);
         const threshold = question.getThreshold();
@@ -132,9 +148,9 @@ AnswerService = {
                 throw new Meteor.Error(500, `Unknown unit ${question.getUnit()}`);
         }
 
-        console.log(`min: ${min}, max: ${max}, answer: ${new Date(answer.date)} (${answer.date})`);
+        //console.log(`min: ${min}, max: ${max}, answer: ${answerDate} (${answer})`);
 
-        return min.getTime() <= new Date(answer.date).getTime() && new Date(answer.date).getTime() <= max.getTime() ? 1 : 0;
+        return min.getTime() <= answerDate.getTime() && answerDate <= max.getTime() ? 1 : 0;
 
     },
 
@@ -155,7 +171,7 @@ AnswerService = {
             if (AnswerService.verifyWonRow(boardState, i, player)){
                 return true;
             }
-            if (AnswerService.verifyWonColumn(boardState, player)){
+            if (AnswerService.verifyWonColumn(boardState,i, player)){
                 return true;
             }
         }
@@ -174,21 +190,22 @@ AnswerService = {
 
     verifyWonRow(boardState, row, player){
         for (var i = 0; i < 3; i++){
-            if (boardState[row][i].player !== player || boardState[row][i].score === 0){
+            if (boardState[row][i].player !== player){
                 return false;
             }
-            if (i === boardState[row].length - 1){
-                return true;
-            }
         }
+        //console.log(`player: ${player} won through row`);
+        return true;
     },
 
     verifyWonColumn(boardState, column, player){
         for (var j = 0; j < 3; j++){
-            if (boardState[j][column].player !== player || boardState[j][column].score === 0){
+            if (boardState[j][column].player !== player){
                 return false;
             }
         }
+        //console.log(`player: ${player} won through column`);
+
         return true;
 
     },
@@ -200,6 +217,8 @@ AnswerService = {
                 return false;
             }
         }
+        //console.log(`player: ${player} won through diag`);
+
         return true;
     },
     verifyWonAntiDiagonal(boardState, player) {
@@ -211,19 +230,16 @@ AnswerService = {
             }
             y--;
         }
+
         return true;
     },
 
-    isDraw(boardState) {
-        const impossible = this.checkRows(boardState) +
-            this.checkColumns(boardState) +
-            this.checkDiagonal(boardState) +
-            this.checkAntiDiagonal(boardState);
-
-        return impossible === 8;
-
-
-
+    isDraw(game) {
+        if (game.getPlayerTurn() == 1){
+            return (_.isEmpty(game.getPlayer1AvailableMoves()));
+        } else {
+            return (_.isEmpty(game.getPlayer2AvailableMoves()));
+        }
     },
 
     checkRows(boardState){
@@ -231,14 +247,13 @@ AnswerService = {
         var impossible = 0;
         for (var x = 0; x < boardState.length; x++){
             for (var y = 0; y < boardState.length; y++){
-                if (boardState[x][y].score === 3){
-                    if (player !== 0 && boardState[x][y].player !== player){
-                        impossible++;
-                        break;
-                    }
-                    Object.assign(player, boardState[x][y].player);
+                if (boardState[x][y].player !== player){
+                    impossible++;
+                    break;
                 }
+                Object.assign(player, boardState[x][y].player);
             }
+
         }
         return impossible;
     },
@@ -249,14 +264,13 @@ AnswerService = {
         for (var x = 0; x < n; x++){
             for (var y = 0; y < n; y++){
                 const cell = boardState[y][x];
-                if (cell.score === 3){
-                    if (player !== 0 && cell.player !== player){
-                        impossible++;
-                        break;
-                    }
-                    Object.assign(player, cell.player);
+                if (cell.player !== player){
+                    impossible++;
+                    break;
                 }
+                Object.assign(player, cell.player);
             }
+
         }
         return impossible;
     },
@@ -266,13 +280,11 @@ AnswerService = {
         const n = 3;
         for (var x = 0; x < n; x++) {
             const cell = boardState[x][x];
-            if (cell.score === 3) {
-                if (player !== 0 && cell.player !== player) {
-                    impossible++;
-                    break;
-                }
-                Object.assign(player, cell.player);
+            if (player !== 0 && cell.player !== player) {
+                impossible++;
+                break;
             }
+            Object.assign(player, cell.player);
 
         }
         return impossible;
@@ -284,13 +296,11 @@ AnswerService = {
         var y = 2;
         for (var x = 0; x < n; x++) {
             const cell = boardState[y][x];
-            if (cell.score === 3) {
-                if (player !== 0 && cell.player !== player) {
-                    impossible++;
-                    break;
-                }
-                Object.assign(player, cell.player);
+            if (player !== 0 && cell.player !== player) {
+                impossible++;
+                break;
             }
+            Object.assign(player, cell.player);
             y--;
         }
         return impossible;

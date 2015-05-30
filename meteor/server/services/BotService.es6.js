@@ -44,7 +44,13 @@ BotService = {
 
     observeGameCreation() {
         var [bot1, bot2] = BotService.bots();
-        var query1 = Games.find({$or: [{player1: bot1._id}, {player2: bot1._id}]});
+        var query1 = Games.find(
+            {$and:
+                [{$or:
+                    [{player1: bot1._id}, {player2: bot1._id}]},
+                    {status:
+                    {$in: [GameStatus.Playing, GameStatus.Creating, GameStatus.Waiting]}}]
+            });
 
         var handle1 = query1.observe({
             added: function (game) {
@@ -56,11 +62,15 @@ BotService = {
             }
         });
 
-        var query2 = Games.find({$or: [{player1: bot2._id}, {player2: bot2._id}]});
+        var query2 = Games.find(
+            {$and:
+                [{$or:
+                [{player1: bot2._id}, {player2: bot2._id}]},
+                {status: {$in: [GameStatus.Playing, GameStatus.Creating, , GameStatus.Waiting]}}]
+            });
 
         var handle2 = query2.observe({
             added: function (game) {
-                console.log("it added");
                 BotService.observeGame(game._id, bot2._id);
             },
             removed: function (id) {
@@ -85,9 +95,11 @@ BotService = {
             changed: function (newGame, oldGame) {
                 if (newGame.playerTurn === botTurn) {
                     setTimeout(Meteor.bindEnvironment(function () {
-                        BotService.drawBoardState(newGame);
                         if (newGame.status !== GameStatus.Ended && newGame.status !== GameStatus.Waiting) {
                             const result = BotService.playTurn(newGame);
+                            console.log("results for bot turn");
+                            console.log(result);
+                            BotService.drawBoardState(Games.findOne(newGame._id));
 
                             if (result.win || result.draw) {
                                 handle1.stop();
@@ -108,74 +120,93 @@ BotService = {
         var boardId;
         var answers;
         var player;
+        var firstTurn = false;
         if (game.getPlayerTurn() == 1) {
             console.log("Bot1 playing");
             boardId = "player1Board";
             player = game.player1;
+            if (game.getPlayer1AvailableMoves().length === 9){
+                firstTurn = true;
+            }
         } else {
             console.log("Bot2 playing");
             boardId = "player2Board";
             player = game.player2;
+            if (game.getPlayer2AvailableMoves().length === 9){
+                firstTurn = true;
+            }
         }
-        const gameBoard = GameBoards.findOne(game[boardId]);
-        console.log(`gameBoard found: ${gameBoard}`);
-        const tile = BotService.pickTile(game, gameBoard);
-        if (tile.type === "MultipleChoice") {
-            console.log("we got a MC");
-            const choices = _.map(tile.questions, function (q) {
-                return q.choices
-            });
-            answers = _.map(choices, function (c) {
-                return _.random(0, c.length - 1)
-            });
-            return AnswerService.post(player, game._id, tile._id, answers);
 
-        } else {
-            console.log("we got type " + tile.type);
-            answers = _.map(tile.questions, function (q) {
-                const days = _.random(-q.minDate, q.maxDate) * 24 * 60 * 60 * 1000;
-                return new Date(new Date(q.answer).getTime() + days);
-            });
-            return AnswerService.post(player, game._id, tile._id, answers);
-        }
+        const gameBoard = GameBoards.findOne(game[boardId]);
+        const tile = firstTurn? BotService.pickRandom(game, gameBoard) : BotService.pickTile(game, gameBoard);
+
+
+        answers = _.map(tile.getQuestions(), q => {
+            switch(q.kind) {
+                case Question.Kind.Timeline:
+                    //return {data: _.sample([q.answer, q.default])};
+                    return {data: q.answer};
+                    break;
+                case Question.Kind.MultipleChoice:
+                    //return {data: _.sample([q.answer, q.answer + 1 % 4])};
+                    return {data: q.answer};
+                    break;
+                case Question.Kind.Geo:
+                    //return {data:_.sample([q.answer, {latitude: 0, longitude: 0}])};
+                    return {data: q.answer};
+                    break;
+                default:
+                    throw new Meteor.Error(500, `Unknown Question Kind ${q.kind} for Bot`);
+            }
+        });
+        return AnswerService.post(player, game._id, tile._id, answers);
 
     },
 
     pickTile(game, gameBoard) {
-        console.log(`gameboard: ${gameBoard}`);
         const tiles = gameBoard.getTiles();
-        const boardState = game.boardState;
-        const indexTiles = _.zip(_.range(9), _.flatten(boardState));
-        const result = BotService.minmax(game, game.getCurrentPlayer());
-        console.log(`result: ${result}`);
-        return tiles[result.move.row * 3 + result.move.column];
-        //const potentialTiles = _.filter(indexTiles, function (t) {
-        //    return t[1].player === 0
-        //});
-        //if (potentialTiles.length > 0) {
-        //    return tiles[_.sample(potentialTiles)[0]];
-        //} else {
-        //    return _.sample(tiles);
-        //}
+        const result = BotService.minmax(game, game.getPlayerTurn(), 0);
+        const tile = tiles[result.move.row * 3 + result.move.column];
+        return tile;
+
     },
 
-    minmax(game, player) {
-        const score = BotService.score(game.boardState, game.getCurrentPlayer());
+    pickRandom(game, gameBoard) {
+        const tiles = gameBoard.getTiles();
+
+        const indexTiles = _.zip(_.range(9), _.flatten(game.boardState));
+
+        const potentialTiles = _.filter(indexTiles, function (t) {
+            return t[1].player === 0
+        });
+        if (potentialTiles.length > 0) {
+            return tiles[_.sample(potentialTiles)[0]];
+        } else {
+            return _.sample(tiles);
+        }
+    },
+
+    minmax(game, player, depth) {
+        const score = BotService.score(game.boardState, player, depth);
         if (score !== 0){
             return {move: null, score: score};
         }
-
+        depth += 1;
         var scores = [];
         var moves = [];
 
-        const possibilities = BotService.getAvailableMoves(game.boardState, game.getCurrentPlayer());
+        const possibilities = BotService.getAvailableMoves(game.boardState, game.getPlayerTurn());
+        if (_.isEmpty(possibilities)){
+            return {move: null, score: 0};
+        }
         _.forEach(possibilities, m => {
-            const updatedGame = makeMove(game, m);
-            scores.push(BotService.minmax(updatedGame, player).score);
+            const updatedGame = game.createCopy();
+            BotService.makeMove(updatedGame, m, game.getPlayerTurn());
+            scores.push(BotService.minmax(updatedGame, player, depth).score);
             moves.push(m);
         });
 
-        if (game.getCurrentPlayer() == player){
+        if (game.getPlayerTurn() === player){
             const maxScoreIndex = _.indexOf(scores, _.max(scores));
             const move = moves[maxScoreIndex];
             return {move: move, score: scores[maxScoreIndex]}
@@ -187,17 +218,15 @@ BotService = {
     },
 
     makeMove(game, move, player) {
-        const newGame  = _.extend(game);
-        newGame.boardState[move.row][move.column] = {player: player, score: 3};
-        newGame.setPlayerTurn((player  % 2) + 1);
-        return newGame;
+        game.boardState[move.row][move.column] = {player: player, score: 3};
+        game.setPlayerTurn((player  % 2) + 1);
     },
 
-    score(boardState, currentPlayer) {
+    score(boardState, currentPlayer, depth) {
       if (AnswerService.playerWins(boardState, currentPlayer)){
-          return 10;
+          return 10 - depth;
       } else if (AnswerService.playerWins(boardState, (currentPlayer  % 2) + 1)){
-          return - 10;
+          return depth - 10;
       } else {
           return 0;
       }
@@ -207,7 +236,7 @@ BotService = {
         var moves = [];
         for (var i = 0; i < 3; i++) {
             for (var j = 0; j < 3; j++){
-                if (boardState[i][j].score < 3 && boardState[i][j].player != currentPlayer){
+                if (boardState[i][j].score < 3 && boardState[i][j].player !== currentPlayer){
                     moves.push({row: i, column: j})
                 }
             }

@@ -1,744 +1,370 @@
 {
-  "_id": "sTiTYFdAara5uyj3D",
-  "user_id": "10153179507419968",
+  "userId": "10153179507419968",
   "tiles": [
     {
-      "type": "MultipleChoice",
+      "type": "Timeline",
       "question1": {
-        "id": "10153662281024968_10153662283454968",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhoMadeThisCommentOnThePost",
-          "text": [
-            "I will post some weird things in the future, but its for science so be prepared to see some abnormal activity...",
-            "I just noticed that. How is it scientific if it's not your usual and natural behavior ? ;)"
-          ],
-          "image_url": ""
+        "userId": "10153179507419968",
+        "kind": "Timeline",
+        "type": "TLWhenDidYouShareThisPost",
+        "subject": {
+          "text": "\nYou added 9 new photos to the album: Barcelona \u2014 with Mark Cloostermans.",
+          "imageUrl": "https://fbcdn-sphotos-f-a.akamaihd.net/hphotos-ak-xft1/v/t1.0-9/1936047_125036799967_643541_n.jpg?oh=218cfc6e08527f2f9935fb16de740f64&oe=560899BC&__gda__=1443027309_39218c7d5846b45c8114be7cce06c4bc",
+          "facebookImageUrl": "https://www.facebook.com/photo.php?fbid=125036799967&set=a.125032854967.128090.656209967&type=1",
+          "type": "ImagePost"
         },
-        "choices": [
-          {
-            "text": "George Stefanidis",
-            "image_url": "",
-            "fb_id": "10152164136899635"
-          },
-          {
-            "text": "Dennys Kuhnert",
-            "image_url": "",
-            "fb_id": "10152763514958012"
-          },
-          {
-            "text": "Bühler Pascal",
-            "image_url": "",
-            "fb_id": "10152329532881380"
-          },
-          {
-            "text": "Roger Küng",
-            "image_url": "",
-            "fb_id": "10153179507419968"
-          }
-        ],
-        "answer": 1
+        "answer": "2009-07-05T23:52:41+0000",
+        "min": "2009-06-09T23:52:41+0000",
+        "max": "2009-07-09T23:52:41+0000",
+        "default": "2009-06-09T23:52:41+0000",
+        "unit": "Day",
+        "step": 1,
+        "threshold": 3
       },
       "question2": {
-        "id": "10153662281024968_10153663164384968",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhoMadeThisCommentOnThePost",
-          "text": [
-            "I will post some weird things in the future, but its for science so be prepared to see some abnormal activity...",
-            "Hahahah"
-          ],
-          "image_url": ""
+        "userId": "10153179507419968",
+        "kind": "Timeline",
+        "type": "TLWhenDidYouShareThisPost",
+        "subject": {
+          "text": "\nYou added a life event from September 2013: Started School at Ecole Polytechnique Fédérale de Lausanne (EPFL).",
+          "url": "https://www.facebook.com/10153179507419968/timeline/story?ut=32&wstart=-2051193600&wend=2147483647&hash=10152716711339968&pagefilter=3&ustart=1",
+          "type": "LinkPost"
         },
-        "choices": [
-          {
-            "text": "Bühler Pascal",
-            "image_url": "",
-            "fb_id": "10152329532881380"
-          },
-          {
-            "text": "Roger Küng",
-            "image_url": "",
-            "fb_id": "10153179507419968"
-          },
-          {
-            "text": "Dennys Kuhnert",
-            "image_url": "",
-            "fb_id": "10152763514958012"
-          },
-          {
-            "text": "George Stefanidis",
-            "image_url": "",
-            "fb_id": "10152164136899635"
-          }
-        ],
-        "answer": 3
+        "answer": "2013-09-01T07:00:00+0000",
+        "min": "2013-08-26T07:00:00+0000",
+        "max": "2013-09-25T07:00:00+0000",
+        "default": "2013-08-26T07:00:00+0000",
+        "unit": "Day",
+        "step": 1,
+        "threshold": 3
       },
       "question3": {
-        "id": "10153179507419968_436783463023857",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhoLikedThisPost",
-          "text": [
-            "Well probably not many will get this..."
-          ],
-          "image_url": ""
+        "userId": "10153179507419968",
+        "kind": "Timeline",
+        "type": "TLWhenDidYouShareThisPost",
+        "subject": {
+          "text": "\nRoger Küng is playing World War.",
+          "type": "TextPost"
         },
-        "choices": [
-          {
-            "text": "George Stefanidis",
-            "image_url": "",
-            "fb_id": "10152164136899635"
-          },
-          {
-            "text": "Ramona Pauchard-Batschulat",
-            "image_url": "",
-            "fb_id": "10204575155519831"
-          },
-          {
-            "text": "Christian M. Schmid",
-            "image_url": "",
-            "fb_id": "10201396264188446"
-          },
-          {
-            "text": "Dennys Kuhnert",
-            "image_url": "",
-            "fb_id": "10152763514958012"
-          }
-        ],
-        "answer": 3
+        "answer": "2008-12-02T22:02:40+0000",
+        "min": "2008-11-29T22:02:40+0000",
+        "max": "2008-12-29T22:02:40+0000",
+        "default": "2008-11-29T22:02:40+0000",
+        "unit": "Day",
+        "step": 1,
+        "threshold": 3
       }
     },
     {
       "type": "MultipleChoice",
       "question1": {
-        "id": "45430270534_191456",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhoMadeThisCommentOnThePost",
-          "text": [
-            "is happy because of the good news",
-            "Well actutually it is because of my new job... finally found one which suites me :)"
-          ],
-          "image_url": ""
+        "userId": "10153179507419968",
+        "kind": "MultipleChoice",
+        "type": "MCWhoLikedYourPost",
+        "subject": {
+          "text": "\nYou changed your profile picture.",
+          "imageUrl": "https://scontent.xx.fbcdn.net/hphotos-xfa1/v/t1.0-9/p180x540/396092_10151324342204968_433100355_n.jpg?oh=107c5dc045e438b5273a14d568c934c5&oe=55F0453B",
+          "facebookImageUrl": "https://www.facebook.com/photo.php?fbid=10151324342204968&set=a.499536429967.288132.656209967&type=1",
+          "type": "ImagePost"
         },
         "choices": [
           {
-            "text": "Andrea Blättler",
-            "image_url": "",
-            "fb_id": "10152411515051192"
+            "name": "Mark Cloostermans",
+            "type": "Person",
+            "fbId": "10152429814583577"
           },
           {
-            "text": "Seiichi Sato",
-            "image_url": "",
-            "fb_id": "10204327443686311"
+            "name": "Francois Riv",
+            "type": "Person",
+            "fbId": "10152478815799191"
           },
           {
-            "text": "Mirjam Mathis",
-            "image_url": "",
-            "fb_id": "10152934607671320"
+            "name": "Bianca Egli Uche",
+            "type": "Person",
+            "fbId": "10154569540755144"
           },
           {
-            "text": "Roger Küng",
-            "image_url": "",
-            "fb_id": "10153179507419968"
+            "name": "Andri Granziol",
+            "type": "Person",
+            "fbId": "10152394993881298"
+          }
+        ],
+        "answer": 2
+      },
+      "question2": {
+        "userId": "10153179507419968",
+        "kind": "MultipleChoice",
+        "type": "MCWhoLikedYourPost",
+        "subject": {
+          "text": "\nRoger Küng shared a link.",
+          "thumbnailUrl": "https://fbexternal-a.akamaihd.net/safe_image.php?d=AQD7rH6nk2VQdben&w=720&h=720&url=https%3A%2F%2Ffbcdn-sphotos-d-a.akamaihd.net%2Fhphotos-ak-xap1%2Fv%2Ft1.0-9%2Fs720x720%2F10991257_10155264188050078_8267303349379896564_n.png%3Foh%3Deabcf538999a30b02a9cf23502293cf0%26oe%3D559548F5%26__gda__%3D1431635790_94e1263c935aad9bb1662dcfd812475b&cfs=1",
+          "url": "http://theoatmeal.com/comics/cats_actually_kill",
+          "type": "LinkPost"
+        },
+        "choices": [
+          {
+            "name": "Christian M. Schmid",
+            "type": "Person",
+            "fbId": "10201396264188446"
+          },
+          {
+            "name": "Andrea Blättler",
+            "type": "Person",
+            "fbId": "10152411515051192"
+          },
+          {
+            "name": "George Stefanidis",
+            "type": "Person",
+            "fbId": "10152164136899635"
+          },
+          {
+            "name": "Dennis van der Bij",
+            "type": "Person",
+            "fbId": "10204666335476227"
           }
         ],
         "answer": 3
       },
-      "question2": {
-        "id": "135214323207628_1109434",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhoMadeThisCommentOnThePost",
-          "text": [
-            "Don't you just love those beta oxidation potentials, i mean as long as they contain the capability to produce the substance which will help the organism which carries chromosomes which are partially identical to yours, to create a proton gradient?",
-            "I do..."
-          ],
-          "image_url": ""
-        },
-        "choices": [
-          {
-            "text": "Renaud Goupil",
-            "image_url": "",
-            "fb_id": "858161940893940"
-          },
-          {
-            "text": "Roger Küng",
-            "image_url": "",
-            "fb_id": "10153179507419968"
-          },
-          {
-            "text": "Tereza Kl",
-            "image_url": "",
-            "fb_id": "10205150122016559"
-          },
-          {
-            "text": "Nathália Furtado",
-            "image_url": "",
-            "fb_id": "10152439061991516"
-          }
-        ],
-        "answer": 3
-      },
       "question3": {
-        "id": "10153179507419968_10153662295269968",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhoLikedThisPost",
-          "text": [
-            "Predestination is one of the few examples where the time travel paradox is well implemented..."
-          ],
-          "image_url": ""
+        "userId": "10153179507419968",
+        "kind": "MultipleChoice",
+        "type": "MCWhoLikedYourPost",
+        "subject": {
+          "text": "\nYou updated your cover photo.",
+          "imageUrl": "https://scontent.xx.fbcdn.net/hphotos-xaf1/v/t1.0-9/p180x540/599960_10151324333344968_1397596433_n.jpg?oh=58d4c5fe3466c6ea20acb3a508d721f5&oe=55C5580A",
+          "facebookImageUrl": "https://www.facebook.com/photo.php?fbid=10151324333344968&set=a.10151324333279968.566984.656209967&type=1",
+          "type": "ImagePost"
         },
         "choices": [
           {
-            "text": "Aggelos Spyratos",
-            "image_url": "",
-            "fb_id": "10204711590929315"
+            "name": "Zelal Al-Shemmery",
+            "type": "Person",
+            "fbId": "768569646537959"
           },
           {
-            "text": "George Stefanidis",
-            "image_url": "",
-            "fb_id": "10152164136899635"
+            "name": "Edoardo D'Anna",
+            "type": "Person",
+            "fbId": "10152617087584244"
           },
           {
-            "text": "Ramona Pauchard-Batschulat",
-            "image_url": "",
-            "fb_id": "10204575155519831"
+            "name": "Sacha Vost",
+            "type": "Person",
+            "fbId": "927385577288610"
           },
           {
-            "text": "Christian M. Schmid",
-            "image_url": "",
-            "fb_id": "10201396264188446"
-          }
-        ],
-        "answer": 0
-      }
-    },
-    {
-      "type": "MultipleChoice",
-      "question1": {
-        "id": "135214323207628_1109434",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhoMadeThisCommentOnThePost",
-          "text": [
-            "Don't you just love those beta oxidation potentials, i mean as long as they contain the capability to produce the substance which will help the organism which carries chromosomes which are partially identical to yours, to create a proton gradient?",
-            "I do..."
-          ],
-          "image_url": ""
-        },
-        "choices": [
-          {
-            "text": "Nathália Furtado",
-            "image_url": "",
-            "fb_id": "10152439061991516"
-          },
-          {
-            "text": "Renaud Goupil",
-            "image_url": "",
-            "fb_id": "858161940893940"
-          },
-          {
-            "text": "Roger Küng",
-            "image_url": "",
-            "fb_id": "10153179507419968"
-          },
-          {
-            "text": "Tereza Kl",
-            "image_url": "",
-            "fb_id": "10205150122016559"
-          }
-        ],
-        "answer": 0
-      },
-      "question2": {
-        "id": "45430270534_189061",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhoMadeThisCommentOnThePost",
-          "text": [
-            "is happy because of the good news",
-            "would also be interested in what kind of good news...? xx"
-          ],
-          "image_url": ""
-        },
-        "choices": [
-          {
-            "text": "Mirjam Mathis",
-            "image_url": "",
-            "fb_id": "10152934607671320"
-          },
-          {
-            "text": "Seiichi Sato",
-            "image_url": "",
-            "fb_id": "10204327443686311"
-          },
-          {
-            "text": "Andrea Blättler",
-            "image_url": "",
-            "fb_id": "10152411515051192"
-          },
-          {
-            "text": "Roger Küng",
-            "image_url": "",
-            "fb_id": "10153179507419968"
+            "name": "Dennis van der Bij",
+            "type": "Person",
+            "fbId": "10204666335476227"
           }
         ],
         "answer": 2
-      },
-      "question3": {
-        "id": "135214323207628_946997",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhoMadeThisCommentOnThePost",
-          "text": [
-            "Don't you just love those beta oxidation potentials, i mean as long as they contain the capability to produce the substance which will help the organism which carries chromosomes which are partially identical to yours, to create a proton gradient?",
-            "There are times where i find myself regretting for not being in second year, having to loose 2 more semesters in first year. But now is definitely not one of those times :)"
-          ],
-          "image_url": ""
-        },
-        "choices": [
-          {
-            "text": "Tereza Kl",
-            "image_url": "",
-            "fb_id": "10205150122016559"
-          },
-          {
-            "text": "Renaud Goupil",
-            "image_url": "",
-            "fb_id": "858161940893940"
-          },
-          {
-            "text": "Roger Küng",
-            "image_url": "",
-            "fb_id": "10153179507419968"
-          },
-          {
-            "text": "Nathália Furtado",
-            "image_url": "",
-            "fb_id": "10152439061991516"
-          }
-        ],
-        "answer": 1
-      }
-    },
-    {
-      "type": "MultipleChoice",
-      "question1": {
-        "id": "10153662281024968_10153662283454968",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhoMadeThisCommentOnThePost",
-          "text": [
-            "I will post some weird things in the future, but its for science so be prepared to see some abnormal activity...",
-            "I just noticed that. How is it scientific if it's not your usual and natural behavior ? ;)"
-          ],
-          "image_url": ""
-        },
-        "choices": [
-          {
-            "text": "Bühler Pascal",
-            "image_url": "",
-            "fb_id": "10152329532881380"
-          },
-          {
-            "text": "Roger Küng",
-            "image_url": "",
-            "fb_id": "10153179507419968"
-          },
-          {
-            "text": "Dennys Kuhnert",
-            "image_url": "",
-            "fb_id": "10152763514958012"
-          },
-          {
-            "text": "George Stefanidis",
-            "image_url": "",
-            "fb_id": "10152164136899635"
-          }
-        ],
-        "answer": 2
-      },
-      "question2": {
-        "id": "135214323207628_946997",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhoMadeThisCommentOnThePost",
-          "text": [
-            "Don't you just love those beta oxidation potentials, i mean as long as they contain the capability to produce the substance which will help the organism which carries chromosomes which are partially identical to yours, to create a proton gradient?",
-            "There are times where i find myself regretting for not being in second year, having to loose 2 more semesters in first year. But now is definitely not one of those times :)"
-          ],
-          "image_url": ""
-        },
-        "choices": [
-          {
-            "text": "Roger Küng",
-            "image_url": "",
-            "fb_id": "10153179507419968"
-          },
-          {
-            "text": "Tereza Kl",
-            "image_url": "",
-            "fb_id": "10205150122016559"
-          },
-          {
-            "text": "Renaud Goupil",
-            "image_url": "",
-            "fb_id": "858161940893940"
-          },
-          {
-            "text": "Nathália Furtado",
-            "image_url": "",
-            "fb_id": "10152439061991516"
-          }
-        ],
-        "answer": 2
-      },
-      "question3": {
-        "id": "45430270534_191456",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhoMadeThisCommentOnThePost",
-          "text": [
-            "is happy because of the good news",
-            "Well actutually it is because of my new job... finally found one which suites me :)"
-          ],
-          "image_url": ""
-        },
-        "choices": [
-          {
-            "text": "Mirjam Mathis",
-            "image_url": "",
-            "fb_id": "10152934607671320"
-          },
-          {
-            "text": "Roger Küng",
-            "image_url": "",
-            "fb_id": "10153179507419968"
-          },
-          {
-            "text": "Seiichi Sato",
-            "image_url": "",
-            "fb_id": "10204327443686311"
-          },
-          {
-            "text": "Andrea Blättler",
-            "image_url": "",
-            "fb_id": "10152411515051192"
-          }
-        ],
-        "answer": 1
       }
     },
     {
       "type": "Timeline",
       "question1": {
-        "id": "10153179507419968_10151862570404968",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhenDidYouShareThisPost",
-          "text": [
-            "Well this is one great medley"
-          ],
-          "image_url": ""
+        "userId": "10153179507419968",
+        "kind": "Timeline",
+        "type": "TLWhenDidYouShareThisPost",
+        "subject": {
+          "text": "\nYou added a new photo to the album: EPFL work.",
+          "imageUrl": "https://scontent.xx.fbcdn.net/hphotos-xaf1/v/t1.0-9/s720x720/383857_10150714193384968_538147790_n.jpg?oh=5eaf139abcc380a6da1a1eb4459a3afb&oe=55EF78EB",
+          "facebookImageUrl": "https://www.facebook.com/photo.php?fbid=10150714193384968&set=a.10150714192469968.500949.656209967&type=1",
+          "type": "ImagePost"
         },
-        "min_date": 29,
-        "max_date": 31,
-        "range": 10,
-        "answer": "2013-03-28T00:00:00Z"
+        "answer": "2012-01-15T22:15:26+0000",
+        "min": "2011-12-25T22:15:26+0000",
+        "max": "2012-01-24T22:15:26+0000",
+        "default": "2011-12-25T22:15:26+0000",
+        "unit": "Day",
+        "step": 1,
+        "threshold": 3
       },
       "question2": {
-        "id": "10153179507419968_316198743567",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhenDidYouShareThisPost",
-          "text": [
-            "Well just pack from Thailand and already the University is starting... I need more holidays seriously"
-          ],
-          "image_url": ""
+        "userId": "10153179507419968",
+        "kind": "Timeline",
+        "type": "TLWhenDidYouShareThisPost",
+        "subject": {
+          "text": "\nRoger Küng is playing OnLive.",
+          "type": "TextPost"
         },
-        "min_date": 50,
-        "max_date": 10,
-        "range": 10,
-        "answer": "2010-02-21T00:00:00Z"
+        "answer": "2011-10-17T19:19:05+0000",
+        "min": "2011-09-27T19:19:05+0000",
+        "max": "2011-10-27T19:19:05+0000",
+        "default": "2011-09-27T19:19:05+0000",
+        "unit": "Day",
+        "step": 1,
+        "threshold": 3
       },
       "question3": {
-        "id": "10153179507419968_22230019823",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhenDidYouShareThisPost",
-          "text": [
-            "is preparing to leave... already"
-          ],
-          "image_url": ""
+        "userId": "10153179507419968",
+        "kind": "Timeline",
+        "type": "TLWhenDidYouShareThisPost",
+        "subject": {
+          "text": "Well I go and take care of my health then....\n",
+          "thumbnailUrl": "https://fbexternal-a.akamaihd.net/safe_image.php?d=AQDQ5oUY02-PliR1&w=720&h=720&url=https%3A%2F%2Fimages-na.ssl-images-amazon.com%2Fimages%2FG%2F01%2Freading%2Fimages%2Famazonkindle._V167628528_.png&cfs=1",
+          "url": "http://amzn.com/k/YJONYCBSQF73",
+          "type": "LinkPost"
         },
-        "min_date": 25,
-        "max_date": 35,
-        "range": 10,
-        "answer": "2008-08-22T00:00:00Z"
-      }
-    },
-    {
-      "type": "MultipleChoice",
-      "question1": {
-        "id": "45430270534_189199",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhoMadeThisCommentOnThePost",
-          "text": [
-            "is happy because of the good news",
-            "Bonne chance de Montreal,mon ami!!"
-          ],
-          "image_url": ""
-        },
-        "choices": [
-          {
-            "text": "Mirjam Mathis",
-            "image_url": "",
-            "fb_id": "10152934607671320"
-          },
-          {
-            "text": "Andrea Blättler",
-            "image_url": "",
-            "fb_id": "10152411515051192"
-          },
-          {
-            "text": "Roger Küng",
-            "image_url": "",
-            "fb_id": "10153179507419968"
-          },
-          {
-            "text": "Seiichi Sato",
-            "image_url": "",
-            "fb_id": "10204327443686311"
-          }
-        ],
-        "answer": 3
-      },
-      "question2": {
-        "id": "45430270534_189036",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhoMadeThisCommentOnThePost",
-          "text": [
-            "is happy because of the good news",
-            "good news?!? got your job confirmed??? (I'm sorry, I'm not up to date at all!)"
-          ],
-          "image_url": ""
-        },
-        "choices": [
-          {
-            "text": "Mirjam Mathis",
-            "image_url": "",
-            "fb_id": "10152934607671320"
-          },
-          {
-            "text": "Seiichi Sato",
-            "image_url": "",
-            "fb_id": "10204327443686311"
-          },
-          {
-            "text": "Andrea Blättler",
-            "image_url": "",
-            "fb_id": "10152411515051192"
-          },
-          {
-            "text": "Roger Küng",
-            "image_url": "",
-            "fb_id": "10153179507419968"
-          }
-        ],
-        "answer": 0
-      },
-      "question3": {
-        "id": "45430270534_189061",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhoMadeThisCommentOnThePost",
-          "text": [
-            "is happy because of the good news",
-            "would also be interested in what kind of good news...? xx"
-          ],
-          "image_url": ""
-        },
-        "choices": [
-          {
-            "text": "Andrea Blättler",
-            "image_url": "",
-            "fb_id": "10152411515051192"
-          },
-          {
-            "text": "Seiichi Sato",
-            "image_url": "",
-            "fb_id": "10204327443686311"
-          },
-          {
-            "text": "Mirjam Mathis",
-            "image_url": "",
-            "fb_id": "10152934607671320"
-          },
-          {
-            "text": "Roger Küng",
-            "image_url": "",
-            "fb_id": "10153179507419968"
-          }
-        ],
-        "answer": 0
+        "answer": "2011-12-24T19:31:44+0000",
+        "min": "2011-12-21T19:31:44+0000",
+        "max": "2012-01-20T19:31:44+0000",
+        "default": "2011-12-21T19:31:44+0000",
+        "unit": "Day",
+        "step": 1,
+        "threshold": 3
       }
     },
     {
       "type": "Timeline",
       "question1": {
-        "id": "10153179507419968_10152155768914968",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhenDidYouShareThisPost",
-          "text": [
-            "Using it nearly every day..."
-          ],
-          "image_url": ""
+        "userId": "10153179507419968",
+        "kind": "Timeline",
+        "type": "TLWhenDidYouShareThisPost",
+        "subject": {
+          "text": "\nRoger Küng shared a link.",
+          "thumbnailUrl": "https://fbexternal-a.akamaihd.net/safe_image.php?d=AQB4u5Rx51T7IEtV&w=720&h=720&url=http%3A%2F%2Fi.ytimg.com%2Fvi%2FfzMhh8zhTiY%2F0.jpg&cfs=1",
+          "url": "http://www.youtube.com/watch?v=fzMhh8zhTiY",
+          "type": "VideoPost"
         },
-        "min_date": 49,
-        "max_date": 11,
-        "range": 10,
-        "answer": "2013-07-24T00:00:00Z"
+        "answer": "2010-11-23T21:49:47+0000",
+        "min": "2010-11-02T21:49:47+0000",
+        "max": "2010-12-02T21:49:47+0000",
+        "default": "2010-11-02T21:49:47+0000",
+        "unit": "Day",
+        "step": 1,
+        "threshold": 3
       },
       "question2": {
-        "id": "10153179507419968_45430270534",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhenDidYouShareThisPost",
-          "text": [
-            "is happy because of the good news"
-          ],
-          "image_url": ""
+        "userId": "10153179507419968",
+        "kind": "Timeline",
+        "type": "TLWhenDidYouShareThisPost",
+        "subject": {
+          "text": "\nYou added a life event from 2010: First Met Romy Hasler.",
+          "url": "https://www.facebook.com/10153179507419968/posts/10152578603354968",
+          "type": "LinkPost"
         },
-        "min_date": 52,
-        "max_date": 8,
-        "range": 10,
-        "answer": "2008-10-21T00:00:00Z"
+        "answer": "2010-01-01T08:00:00+0000",
+        "min": "2009-12-29T08:00:00+0000",
+        "max": "2010-01-28T08:00:00+0000",
+        "default": "2009-12-29T08:00:00+0000",
+        "unit": "Day",
+        "step": 1,
+        "threshold": 3
       },
       "question3": {
-        "id": "10153179507419968_10150245084084968",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhenDidYouShareThisPost",
-          "text": [
-            "Trying to make sense of it all"
-          ],
-          "image_url": ""
+        "userId": "10153179507419968",
+        "kind": "Timeline",
+        "type": "TLWhenDidYouShareThisPost",
+        "subject": {
+          "text": "is very tired in his apparment in Montreal\n",
+          "type": "TextPost"
         },
-        "min_date": 56,
-        "max_date": 4,
-        "range": 10,
-        "answer": "2008-03-10T00:00:00Z"
+        "answer": "2008-06-30T02:20:37+0000",
+        "min": "2008-06-04T02:20:37+0000",
+        "max": "2008-07-04T02:20:37+0000",
+        "default": "2008-06-04T02:20:37+0000",
+        "unit": "Day",
+        "step": 1,
+        "threshold": 3
       }
     },
     {
       "type": "MultipleChoice",
       "question1": {
-        "id": "45430270534_189061",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhoMadeThisCommentOnThePost",
-          "text": [
-            "is happy because of the good news",
-            "would also be interested in what kind of good news...? xx"
-          ],
-          "image_url": ""
+        "userId": "10153179507419968",
+        "kind": "MultipleChoice",
+        "type": "MCWhoLikedYourPost",
+        "subject": {
+          "text": "Don't you just love those beta oxidation potentials, i mean as long as they contain the capability to produce the substance which will help the organism which carries chromosomes which are partially identical to yours, to create a proton gradient?\n",
+          "type": "TextPost"
         },
         "choices": [
           {
-            "text": "Mirjam Mathis",
-            "image_url": "",
-            "fb_id": "10152934607671320"
+            "name": "Romy Hasler",
+            "type": "Person",
+            "fbId": "10204440016983177"
           },
           {
-            "text": "Roger Küng",
-            "image_url": "",
-            "fb_id": "10153179507419968"
+            "name": "Edoardo D'Anna",
+            "type": "Person",
+            "fbId": "10152617087584244"
           },
           {
-            "text": "Andrea Blättler",
-            "image_url": "",
-            "fb_id": "10152411515051192"
+            "name": "Aline Zed",
+            "type": "Person",
+            "fbId": "10203519324236357"
           },
           {
-            "text": "Seiichi Sato",
-            "image_url": "",
-            "fb_id": "10204327443686311"
+            "name": "Dennys Kuhnert",
+            "type": "Person",
+            "fbId": "10152763514958012"
           }
         ],
-        "answer": 2
+        "answer": 1
       },
       "question2": {
-        "id": "135214323207628_946997",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhoMadeThisCommentOnThePost",
-          "text": [
-            "Don't you just love those beta oxidation potentials, i mean as long as they contain the capability to produce the substance which will help the organism which carries chromosomes which are partially identical to yours, to create a proton gradient?",
-            "There are times where i find myself regretting for not being in second year, having to loose 2 more semesters in first year. But now is definitely not one of those times :)"
-          ],
-          "image_url": ""
+        "userId": "10153179507419968",
+        "kind": "MultipleChoice",
+        "type": "MCWhoLikedYourPost",
+        "subject": {
+          "text": "Never thought it would be that cold in San Francisco... As someone told us \"The coldest winter I ever spent was the summer in San Francisco.\"\n",
+          "type": "TextPost"
         },
         "choices": [
           {
-            "text": "Tereza Kl",
-            "image_url": "",
-            "fb_id": "10205150122016559"
+            "name": "Rose Anna K",
+            "type": "Person",
+            "fbId": "10152333475531482"
           },
           {
-            "text": "Nathália Furtado",
-            "image_url": "",
-            "fb_id": "10152439061991516"
+            "name": "Mark Cloostermans",
+            "type": "Person",
+            "fbId": "10152429814583577"
           },
           {
-            "text": "Roger Küng",
-            "image_url": "",
-            "fb_id": "10153179507419968"
+            "name": "Edoardo D'Anna",
+            "type": "Person",
+            "fbId": "10152617087584244"
           },
           {
-            "text": "Renaud Goupil",
-            "image_url": "",
-            "fb_id": "858161940893940"
+            "name": "Pau Aguilar",
+            "type": "Person",
+            "fbId": "10203927426850024"
           }
         ],
-        "answer": 3
+        "answer": 1
       },
       "question3": {
-        "id": "45430270534_191456",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhoMadeThisCommentOnThePost",
-          "text": [
-            "is happy because of the good news",
-            "Well actutually it is because of my new job... finally found one which suites me :)"
-          ],
-          "image_url": ""
+        "userId": "10153179507419968",
+        "kind": "MultipleChoice",
+        "type": "MCWhoLikedYourPost",
+        "subject": {
+          "text": "Well probably not many will get this...\nRoger Küng shared Trust Me, I'm an \"Engineer\"'s photo.",
+          "imageUrl": "https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-xfa1/v/t1.0-9/643883_10151178412373360_874707777_n.jpg?oh=fcc8301e3d77cfc4e8319fa0cdb4dfe9&oe=55FE1C14&__gda__=1442723875_0b0693ee9b00e79311a7c8a199083259",
+          "facebookImageUrl": "https://www.facebook.com/trustmestore/photos/a.379473193359.158222.290539813359/10151178412373360/?type=1",
+          "type": "ImagePost"
         },
         "choices": [
           {
-            "text": "Seiichi Sato",
-            "image_url": "",
-            "fb_id": "10204327443686311"
+            "name": "Rose Anna K",
+            "type": "Person",
+            "fbId": "10152333475531482"
           },
           {
-            "text": "Andrea Blättler",
-            "image_url": "",
-            "fb_id": "10152411515051192"
+            "name": "Edoardo D'Anna",
+            "type": "Person",
+            "fbId": "10152617087584244"
           },
           {
-            "text": "Mirjam Mathis",
-            "image_url": "",
-            "fb_id": "10152934607671320"
+            "name": "Bianca Egli Uche",
+            "type": "Person",
+            "fbId": "10154569540755144"
           },
           {
-            "text": "Roger Küng",
-            "image_url": "",
-            "fb_id": "10153179507419968"
+            "name": "Dennys Kuhnert",
+            "type": "Person",
+            "fbId": "10152763514958012"
           }
         ],
         "answer": 3
@@ -747,50 +373,217 @@
     {
       "type": "Timeline",
       "question1": {
-        "id": "10153179507419968_341166999240956",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhenDidYouShareThisPost",
-          "text": [
-            "Because life is not just work..."
-          ],
-          "image_url": ""
+        "userId": "10153179507419968",
+        "kind": "Timeline",
+        "type": "TLWhenDidYouShareThisPost",
+        "subject": {
+          "text": "\nYou changed your profile picture.",
+          "imageUrl": "https://scontent.xx.fbcdn.net/hphotos-xaf1/v/t1.0-9/p180x540/399785_10150714185214968_1440074411_n.jpg?oh=62379338d46dd1575b4b2421c3d3f015&oe=55C13DBC",
+          "facebookImageUrl": "https://www.facebook.com/photo.php?fbid=10150714185214968&set=a.499536429967.288132.656209967&type=1",
+          "type": "ImagePost"
         },
-        "min_date": 59,
-        "max_date": 1,
-        "range": 10,
-        "answer": "2012-01-22T00:00:00Z"
+        "answer": "2012-01-15T22:12:23+0000",
+        "min": "2012-01-02T22:12:23+0000",
+        "max": "2012-02-01T22:12:23+0000",
+        "default": "2012-01-02T22:12:23+0000",
+        "unit": "Day",
+        "step": 1,
+        "threshold": 3
       },
       "question2": {
-        "id": "10153179507419968_23088649910",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhenDidYouShareThisPost",
-          "text": [
-            "is tired in Los Angeles after the first day"
-          ],
-          "image_url": ""
+        "userId": "10153179507419968",
+        "kind": "Timeline",
+        "type": "TLWhenDidYouShareThisPost",
+        "subject": {
+          "text": "is not knowing what happened yesterday exactly\n",
+          "type": "TextPost"
         },
-        "min_date": 11,
-        "max_date": 49,
-        "range": 10,
-        "answer": "2008-08-25T00:00:00Z"
+        "answer": "2008-08-01T13:25:55+0000",
+        "min": "2008-07-13T13:25:55+0000",
+        "max": "2008-08-12T13:25:55+0000",
+        "default": "2008-07-13T13:25:55+0000",
+        "unit": "Day",
+        "step": 1,
+        "threshold": 3
       },
       "question3": {
-        "id": "10153179507419968_23813319967",
-        "user_id": "10153179507419968",
-        "question": {
-          "question": "WhenDidYouShareThisPost",
-          "text": [
-            "is very tired in his apparment in Montreal"
-          ],
-          "image_url": ""
+        "userId": "10153179507419968",
+        "kind": "Timeline",
+        "type": "TLWhenDidYouShareThisPost",
+        "subject": {
+          "text": "is tired in Los Angeles after the first day\n",
+          "type": "TextPost"
         },
-        "min_date": 43,
-        "max_date": 17,
-        "range": 10,
-        "answer": "2008-06-30T00:00:00Z"
+        "answer": "2008-08-25T05:18:29+0000",
+        "min": "2008-07-29T05:18:29+0000",
+        "max": "2008-08-28T05:18:29+0000",
+        "default": "2008-07-29T05:18:29+0000",
+        "unit": "Day",
+        "step": 1,
+        "threshold": 3
+      }
+    },
+    {
+      "type": "Timeline",
+      "question1": {
+        "userId": "10153179507419968",
+        "kind": "Timeline",
+        "type": "TLWhenDidYouShareThisPost",
+        "subject": {
+          "text": "\nYou added a life event from 2008: Graduated from École Polytechnique Fédérale de Lausanne.",
+          "thumbnailUrl": "https://fbexternal-a.akamaihd.net/safe_image.php?d=AQBZCJP6q_jh4UKL&w=720&h=720&url=http%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2Ff%2Ff4%2FLogo_EPFL.svg%2F720px-Logo_EPFL.svg.png&cfs=1&f&fallback=hub_education",
+          "url": "https://www.facebook.com/10153179507419968/timeline/story?ut=32&wstart=-2051193600&wend=2147483647&hash=10150208576819968&pagefilter=3&ustart=1",
+          "type": "LinkPost"
+        },
+        "answer": "2008-01-01T08:00:00+0000",
+        "min": "2007-12-15T08:00:00+0000",
+        "max": "2008-01-14T08:00:00+0000",
+        "default": "2007-12-15T08:00:00+0000",
+        "unit": "Day",
+        "step": 1,
+        "threshold": 3
+      },
+      "question2": {
+        "userId": "10153179507419968",
+        "kind": "Timeline",
+        "type": "TLWhenDidYouShareThisPost",
+        "subject": {
+          "text": "\nRoger Küng shared a link.",
+          "thumbnailUrl": "https://fbexternal-a.akamaihd.net/safe_image.php?d=AQDliGCQYd2g_FvH&w=720&h=720&url=http%3A%2F%2Fi2.ytimg.com%2Fvi%2F1cJkmv8slxk%2Fmqdefault.jpg&cfs=1",
+          "url": "http://www.youtube.com/watch?v=1cJkmv8slxk",
+          "type": "VideoPost"
+        },
+        "answer": "2012-07-27T10:48:13+0000",
+        "min": "2012-07-18T10:48:13+0000",
+        "max": "2012-08-17T10:48:13+0000",
+        "default": "2012-07-18T10:48:13+0000",
+        "unit": "Day",
+        "step": 1,
+        "threshold": 3
+      },
+      "question3": {
+        "userId": "10153179507419968",
+        "kind": "Timeline",
+        "type": "TLWhenDidYouShareThisPost",
+        "subject": {
+          "text": "\nYou added 22 new photos to the album: Me and Friends \u2014 with Caroline Contat.",
+          "imageUrl": "https://scontent.xx.fbcdn.net/hphotos-xaf1/v/t1.0-9/p180x540/393394_10150714227679968_1396215278_n.jpg?oh=3c7e45dd06877295d5a98b062195c1d6&oe=5604BD59",
+          "facebookImageUrl": "https://www.facebook.com/photo.php?fbid=10150714227679968&set=a.125040099967.128099.656209967&type=1",
+          "type": "ImagePost"
+        },
+        "answer": "2012-01-15T22:34:12+0000",
+        "min": "2012-01-02T22:34:12+0000",
+        "max": "2012-02-01T22:34:12+0000",
+        "default": "2012-01-02T22:34:12+0000",
+        "unit": "Day",
+        "step": 1,
+        "threshold": 3
+      }
+    },
+    {
+      "type": "Timeline",
+      "question1": {
+        "userId": "10153179507419968",
+        "kind": "Timeline",
+        "type": "TLWhenDidYouShareThisPost",
+        "subject": {
+          "text": "Using it nearly every day...\n",
+          "thumbnailUrl": "https://fbexternal-a.akamaihd.net/safe_image.php?d=AQDnbnodUII7nwDA&w=720&h=720&url=http%3A%2F%2Fumanoapp.com%2Fimg%2Femail%2Fvideo-image.png&cfs=1",
+          "url": "https://vimeo.com/69579013",
+          "type": "LinkPost"
+        },
+        "answer": "2013-07-24T07:53:46+0000",
+        "min": "2013-07-17T07:53:46+0000",
+        "max": "2013-08-16T07:53:46+0000",
+        "default": "2013-07-17T07:53:46+0000",
+        "unit": "Day",
+        "step": 1,
+        "threshold": 3
+      },
+      "question2": {
+        "userId": "10153179507419968",
+        "kind": "Timeline",
+        "type": "TLWhenDidYouShareThisPost",
+        "subject": {
+          "text": "está cansado\n",
+          "type": "TextPost"
+        },
+        "answer": "2009-05-22T08:21:01+0000",
+        "min": "2009-05-01T08:21:01+0000",
+        "max": "2009-05-31T08:21:01+0000",
+        "default": "2009-05-01T08:21:01+0000",
+        "unit": "Day",
+        "step": 1,
+        "threshold": 3
+      },
+      "question3": {
+        "userId": "10153179507419968",
+        "kind": "Timeline",
+        "type": "TLWhenDidYouShareThisPost",
+        "subject": {
+          "text": "\nRoger Küng is playing ORBITAL.",
+          "type": "TextPost"
+        },
+        "answer": "2010-01-20T14:24:54+0000",
+        "min": "2010-01-15T14:24:54+0000",
+        "max": "2010-02-14T14:24:54+0000",
+        "default": "2010-01-15T14:24:54+0000",
+        "unit": "Day",
+        "step": 1,
+        "threshold": 3
+      }
+    },
+    {
+      "type": "Timeline",
+      "question1": {
+        "userId": "10153179507419968",
+        "kind": "Timeline",
+        "type": "TLWhenDidYouShareThisPost",
+        "subject": {
+          "text": "Thank you all for your congratulations and remember me!\nI also wish you all the best and hope i can see you all soon again!\n",
+          "type": "TextPost"
+        },
+        "answer": "2012-05-04T20:54:09+0000",
+        "min": "2012-04-15T20:54:09+0000",
+        "max": "2012-05-15T20:54:09+0000",
+        "default": "2012-04-15T20:54:09+0000",
+        "unit": "Day",
+        "step": 1,
+        "threshold": 3
+      },
+      "question2": {
+        "userId": "10153179507419968",
+        "kind": "Timeline",
+        "type": "TLWhenDidYouShareThisPost",
+        "subject": {
+          "text": "Well just pack from Thailand and already the University is starting... I need more holidays seriously\n",
+          "type": "TextPost"
+        },
+        "answer": "2010-02-21T18:00:44+0000",
+        "min": "2010-02-10T18:00:44+0000",
+        "max": "2010-03-12T18:00:44+0000",
+        "default": "2010-02-10T18:00:44+0000",
+        "unit": "Day",
+        "step": 1,
+        "threshold": 3
+      },
+      "question3": {
+        "userId": "10153179507419968",
+        "kind": "Timeline",
+        "type": "TLWhenDidYouShareThisPost",
+        "subject": {
+          "text": "is still freaked out\n",
+          "type": "TextPost"
+        },
+        "answer": "2008-08-05T23:54:28+0000",
+        "min": "2008-07-29T23:54:28+0000",
+        "max": "2008-08-28T23:54:28+0000",
+        "default": "2008-07-29T23:54:28+0000",
+        "unit": "Day",
+        "step": 1,
+        "threshold": 3
       }
     }
-  ]
+  ],
+  "isTokenStale": false
 }

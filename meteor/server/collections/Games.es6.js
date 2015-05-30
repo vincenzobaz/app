@@ -5,12 +5,21 @@ Games = new Mongo.Collection("games", {
     }
 });
 
-const GameProps = ['_id', 'player1', 'player2', 'player1Board', 'player2Board',
-                   'status', 'playerTurn', 'player1Scores', 'player2Scores', 'boardState'];
+GameProps = ['_id', 'player1', 'player2', 'player1Board', 'player2Board',
+    'status', 'playerTurn', 'player1Scores', 'player2Scores', 'boardState',
+    'player1AvailableMoves',
+    'player2AvailableMoves'
+];
 
 Game = class Game {
 
+
+
     constructor(props) {
+        const diff = _.difference(Object.keys(props), GameProps);
+        if (!_.isEmpty(diff)){
+            throw new Meteor.Error(500, "Game constructor with unusable parameters " + diff);
+        }
         assignProps(this, GameProps, props);
     }
 
@@ -93,9 +102,63 @@ Game = class Game {
         return this.player1;
     }
 
-}
+    getPlayer1AvailableMoves(){
+        return this.player1AvailableMoves;
+    }
+
+    setPlayer1AvailableMoves(value) {
+        this.player1AvailableMoves = value;
+    }
+
+    getPlayer2AvailableMoves(){
+        return this.player2AvailableMoves;
+    }
+
+    setPlayer2AvailableMoves(value) {
+        this.player2AvailableMoves = value;
+    }
+
+    createCopy() {
+        var newBoardState = GameBoardClone(this.getBoardState());
+        //for (var i = 0; i < this.getBoardState().length; i++){
+        //    newBoardState.push([]);
+        //    for (var j = 0; j < this.getBoardState()[i].length; j++){
+        //        newBoardState[i][j] = this.getBoardState()[i][j].slice(0);
+        //    }
+        //}
+        return new Game({
+            _id: this.getId(),
+            player1: this.getPlayer1(),
+            player2: this.getPlayer2(),
+            player1Board: this.getPlayer1Board(),
+            player2Board: this.getPlayer2Board(),
+            status: this.getStatus(),
+            playerTurn: this.getPlayerTurn(),
+            player1Scores: this.getPlayer1Scores(),
+            player2Scores: this.getPlayer2Scores(),
+            boardState: newBoardState,
+            player1AvailableMoves: this.getPlayer1AvailableMoves(),
+            player2AvailableMoves: this.getPlayer2AvailableMoves()
+        });
+    }
+
+
+
+};
 
 Game.fromRaw = (game) => {
     return new Game(game);
 };
 
+GameBoardClone = (existingArray) => {
+    var newObj = (existingArray instanceof Array) ? [] : {};
+    for (i in existingArray) {
+        if (i == 'clone') continue;
+        if (existingArray[i] && typeof existingArray[i] == "object") {
+            newObj[i] = GameBoardClone(existingArray[i]);
+        } else {
+            newObj[i] = existingArray[i]
+        }
+    }
+    return newObj;
+};

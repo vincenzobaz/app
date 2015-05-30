@@ -4,8 +4,8 @@ Server = function(){};
 Server.fetchGameBoard = function(userId) {
     var [bot1, bot2] = BotService.bots();
     console.log(`fetching for: ${userId}`);
-    console.log(bot1);
     if (userId === bot1._id || userId === bot2._id){
+        console.log("creating bot board");
         return GameBoard.fromRaw(userId, JSON.parse(Assets.getText("json/gameboards/gameboard1.json")));
     }
 

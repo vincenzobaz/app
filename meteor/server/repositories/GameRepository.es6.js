@@ -1,14 +1,9 @@
 
 GameRepository = {
 
-  props: ['player1', 'player2',
-          'player1Board', 'player2Board',
-          'status', 'playerTurn',
-          'player1Scores', 'player2Scores',
-          'boardState'],
 
   save(game) {
-    const doc = _.pick(game, ...this.props);
+    const doc = _.pick(game, ...GameProps);
     if (game._id) {
       Games.update(game._id, doc);
     } else {
