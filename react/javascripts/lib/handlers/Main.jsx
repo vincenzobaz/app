@@ -7,6 +7,7 @@ var React = require('react'),
     Home = require('./Home'),
     Dashboard = require('./Dashboard'),
     Welcome = require('./Welcome'),
+    Stats = require('./Stats'),
     FacebookStore = require('../stores/FacebookStore'),
     getAppState = require('../appState'),
     debug = require('debug')('Main');
@@ -21,7 +22,8 @@ var Main = React.createClass({
 
   render() {
     if (this.state.isLoggedIn) {
-      return this.renderDashboard();
+      //return this.renderDashboard();
+        return this.renderStats()
     }
 
     return this.renderHome();
@@ -30,6 +32,10 @@ var Main = React.createClass({
   renderHome() {
     return <Home />;
   },
+
+    renderStats(){
+        return <Stats />
+    },
 
   renderDashboard() {
     return (
