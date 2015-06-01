@@ -140,20 +140,19 @@ BotService = {
         const gameBoard = GameBoards.findOne(game[boardId]);
         const tile = firstTurn? BotService.pickRandom(game, gameBoard) : BotService.pickTile(game, gameBoard);
 
+        const successrate = 66;
 
         answers = _.map(tile.getQuestions(), q => {
             switch(q.kind) {
                 case Question.Kind.Timeline:
-                    //return {data: _.sample([q.answer, q.default])};
-                    return {data: q.answer};
+                    return {data: _.random(0, 100) < successrate ? q.answer: q.default};
                     break;
                 case Question.Kind.MultipleChoice:
-                    //return {data: _.sample([q.answer, q.answer + 1 % 4])};
                     return {data: q.answer};
+                    return {data: _.random(0, 100) < successrate ? q.answer: q.answer + 1 % 4};
                     break;
                 case Question.Kind.Geo:
-                    //return {data:_.sample([q.answer, {latitude: 0, longitude: 0}])};
-                    return {data: q.answer};
+                    return {data: _.random(0, 100) < successrate ? q.answer: {latitude: 0, longitude: 0}};
                     break;
                 default:
                     throw new Meteor.Error(500, `Unknown Question Kind ${q.kind} for Bot`);
