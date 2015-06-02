@@ -3,9 +3,12 @@
 
 var React = require('react'),
     shapes = require('../components/shapes'),
+    ReactMeteor = require('../third-party/react-meteor'),
     debug = require('debug')('Stats');
 
 var Stats = React.createClass({
+
+    mixins: [ReactMeteor.Mixin],
 
     startMeteorSubscriptions: function() {
         Meteor.subscribe('gameStats');
