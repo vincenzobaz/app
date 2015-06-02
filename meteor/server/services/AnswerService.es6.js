@@ -23,6 +23,7 @@ AnswerService = {
                 scores.push(score);
             }
 
+            GamestatsService.updateStatsForQuestions(tile.getQuestions(), currentUser, result);
             const correctAnswersNum = scores.reduce((acc, s) => acc + s.score, 0);
             const oldScore = boardState[row][col].player === currentTurn? boardState[row][col].score : 0;
             const newScore = _.reduce(_.map(scores, s => s.score), (add, x) => add + x);
@@ -51,7 +52,18 @@ AnswerService = {
             game.playerTurn = game.playerTurn === 1 ? 2 : 1;
             const draw = AnswerService.isDraw(game);
 
+
+
             if (wins || draw){
+                if (wins){
+                    GamestatsService.updateStatsGameWon(currentUser);
+                    GamestatsService.updateStatsGameLost(game.getOpponentForUser(currentUser));
+                }
+
+                if (draw) {
+                    GamestatsService.updateStatsGameDraw(currentUser);
+                    GamestatsService.updateStatsGameDraw(game.getOpponentForUser(currentUser));
+                }
                 game.status = GameStatus.Ended;
             }
 
@@ -157,7 +169,7 @@ AnswerService = {
     verifyAnswerGeolocation(question, answer) {
         // FIXME: Handle Geolocations properly
 
-        return true;
+        return 1;
     },
 
     playerWins(boardState, player) {
@@ -304,5 +316,10 @@ AnswerService = {
             y--;
         }
         return impossible;
-    }
+    },
+
+
+
+
+
 };

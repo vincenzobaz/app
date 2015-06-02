@@ -148,7 +148,6 @@ BotService = {
                     return {data: _.random(0, 100) < successrate ? q.answer: q.default};
                     break;
                 case Question.Kind.MultipleChoice:
-                    return {data: q.answer};
                     return {data: _.random(0, 100) < successrate ? q.answer: q.answer + 1 % 4};
                     break;
                 case Question.Kind.Geo:

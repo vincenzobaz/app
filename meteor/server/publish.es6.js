@@ -28,3 +28,6 @@ Meteor.publish('friends', function() {
     return Friends.find({ friendOf: this.userId });
 });
 
+Meteor.publish('gameStats', function() {
+    return Gamestats.find();
+});

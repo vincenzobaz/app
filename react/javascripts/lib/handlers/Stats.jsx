@@ -7,14 +7,23 @@ var React = require('react'),
 
 var Stats = React.createClass({
 
+    startMeteorSubscriptions: function() {
+        Meteor.subscribe('gameStats');
+    },
+
+    getMeteorState: function() {
+        return {
+            statCount: GameStats.find()
+        }
+    },
 
     render() {
         return (
             <div>
-                <h1>Welcome To Your Stats</h1>
+                <h1>Welcome To Your Stats {this.state.statCount}</h1>
             </div>
         );
-    },
+    }
 
 
 });

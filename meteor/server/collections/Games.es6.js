@@ -102,6 +102,13 @@ Game = class Game {
         return this.player1;
     }
 
+    getOpponentForUser(userId) {
+        if (this.player1 === userId) {
+            return this.player2;
+        }
+        return this.player1;
+    }
+
     getPlayer1AvailableMoves(){
         return this.player1AvailableMoves;
     }

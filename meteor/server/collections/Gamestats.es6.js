@@ -1,11 +1,11 @@
 
-Stats = new Mongo.Collection("stats", {
+Gamestats = new Mongo.Collection("gamestats", {
     transform: function(doc){
-        return new Stat(doc);
+        return new Gamestat(doc);
     }
 });
 
-StatProps = ['_id', 'userId', 'gamesPlayed', 'gamesWon', 'gamesLost',
+GamestatProps = ['_id', 'userId', 'gamesPlayed', 'gamesWon', 'gamesLost',
     'MCWhoLikedYourPostQuestionsTried', 'MCWhoLikedYourPostCorrect',
     'MCWhoMadeThisCommentOnYourPostQuestionsTried', 'MCWhoMadeThisCommentOnYourPostCorrect',
     'MCWhichPageDidYouLikeQuestionsTried', 'MCWhichPageDidYouLikeCorrect',
@@ -16,16 +16,55 @@ StatProps = ['_id', 'userId', 'gamesPlayed', 'gamesWon', 'gamesLost',
     'GeoTried', 'GeoCorrect'
 ];
 
+QuestionTypes = {
+    MCWhoLikedYourPost: 'MCWhoLikedYourPost',
+    MCWhoMadeThisCommentOnYourPost: 'MCWhoMadeThisCommentOnYourPost',
+    MCWhichPageDidYouLike: 'MCWhichPageDidYouLike',
+    TLWhenDidYouShareThisPost: 'TLWhenDidYouShareThisPost',
+    GeoWhatCoordinatesWereYouAt: 'GeoWhatCoordinatesWereYouAt'
+};
 
-Stat = class Stat {
+
+Gamestat = class Gamestat {
 
     constructor(props) {
-        const diff = _.difference(Object.keys(props), StatProps);
+        const diff = _.difference(Object.keys(props), GamestatProps);
         if (!_.isEmpty(diff)){
             throw new Meteor.Error(500, "Game constructor with unusable parameters " + diff);
         }
-        assignProps(this, GameProps, props);
+
+        _.forEach(GamestatProps, p => {
+            if (!props[p] && p !== '_id') {
+                props[p] = 0;
+            }
+        });
+        assignProps(this, GamestatProps, props);
     }
+
+    getGamesPlayed(){
+        return this.gamesPlayed;
+    }
+    setGamesPlayed(value) {
+        this.gamesPlayed = value;
+    }
+
+    getGamesWon() {
+        return this.gamesWon;
+    }
+
+    setGamesWon(value) {
+        this.gamesWon = value;
+    }
+
+    getGamesLost() {
+        return this.gamesLost;
+    }
+
+    setGamesLost(value) {
+        this.gamesLost = value;
+    }
+
+
 
     getMCWhoLikedYourPostQuestionsTried() {
         return this.MCWhoLikedYourPostQuestionsTried;
