@@ -13,7 +13,7 @@ var Stats = React.createClass({
 
     getMeteorState: function() {
         return {
-            statCount: GameStats.find()
+            statCount: Gamestats.find().count()
         }
     },
 
