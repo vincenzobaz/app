@@ -39,6 +39,7 @@
     "react": "^0.13.2",
     "react-autocomplete": "0.0.2",
     "react-bootstrap": "^0.21.2",
+    "react-d3-components": "^0.4.8",
     "react-localstorage": "^0.2.2",
     "react-sortable-bis": "git://github.com/romac/react-sortable-bis.git#v0.2.4",
     "timer-machine": "^1.0.1"

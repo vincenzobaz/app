@@ -140,7 +140,7 @@ BotService = {
         const gameBoard = GameBoards.findOne(game[boardId]);
         const tile = firstTurn? BotService.pickRandom(game, gameBoard) : BotService.pickTile(game, gameBoard);
 
-        const successrate = 66;
+        const successrate = 30;
 
         answers = _.map(tile.getQuestions(), q => {
             switch(q.kind) {
