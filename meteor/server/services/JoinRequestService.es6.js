@@ -58,6 +58,8 @@ JoinRequestService = {
             };
         }
 
+        console.log('checking if user ' + currentUserId + ' is friend with ', friend);
+
         // if (friend.friendOf !== currentUserId) {
         //     const msg = `Friend with id ${friendId} is not a friend of the logged-in user.`;
         //     console.error(msg);
