@@ -20,11 +20,16 @@ var Stats = React.createClass({
     getMeteorState: function () {
         var gameStat = Gamestats.findOne();
         return {
-            userId: "tFNJJGLnd9p2CQgXc"
+          userId: "tFNJJGLnd9p2CQgXc",
+          loaded: Session.get('googleChartsLoaded')
         }
     },
 
     render() {
+        if (!this.state.loaded) {
+          return <div>Loading...</div>;
+        }
+
         return (
             <div>
                 <h1>Welcome To Your Stats</h1>

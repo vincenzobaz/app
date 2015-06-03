@@ -18,6 +18,7 @@ var App = {
     ErrorStore.register();
 
     this.subscribe();
+    this.loadGoogleCharts();
 
     React.render(<ErrorHandler store={ErrorStore} />, $$('error'));
     React.render(<Main />, $$('app'));
@@ -33,6 +34,14 @@ var App = {
     Meteor.subscribe('userServices');
     Meteor.subscribe('friends');
     Meteor.subscribe('gameStats');
+  },
+
+  loadGoogleCharts() {
+    // ...
+
+    const callback = () => {
+      Session.set('googleChartsLoaded', true);
+    };
   }
 };
 
