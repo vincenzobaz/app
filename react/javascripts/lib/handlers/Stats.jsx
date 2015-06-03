@@ -13,11 +13,10 @@ var React = require('react'),
 
 
 var Stats = React.createClass({
+
     mixins: [ReactMeteor.Mixin],
 
-
-
-startMeteorSubscriptions: function () {
+    startMeteorSubscriptions: function () {
         Meteor.subscribe('gameStats');
     },
 
@@ -30,6 +29,7 @@ startMeteorSubscriptions: function () {
         var gameStat = Gamestats.findOne({userId: Meteor.userId()});
 
         console.log("Gamestats loaded? ", gameStat);
+
         if (gameStat) {
             return {
                 userId: Meteor.userId,
