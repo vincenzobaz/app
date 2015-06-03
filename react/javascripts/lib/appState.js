@@ -11,6 +11,7 @@ module.exports = function getAppState() {
   debug('AppState refresh');
   return {
     isLoggedIn: UserStore.isLoggedIn() || false,
+    page: Session.get('page') || 'home',
     user: UserStore.current() || null,
     currentGame: GameStore.current() || null,
     games: GameStore.list() || [],

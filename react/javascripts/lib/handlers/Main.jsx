@@ -21,9 +21,9 @@ var Main = React.createClass({
   },
 
   render() {
+    debug(this.state);
     if (this.state.isLoggedIn) {
-      //return this.renderDashboard();
-        return this.renderStats()
+      return this.renderDashboard();
     }
 
     return this.renderHome();
@@ -32,10 +32,6 @@ var Main = React.createClass({
   renderHome() {
     return <Home />;
   },
-
-    renderStats(){
-        return <Stats />
-    },
 
   renderDashboard() {
     return (
@@ -46,11 +42,17 @@ var Main = React.createClass({
   },
 
   renderInner() {
+    if (this.state.page === 'stats') {
+      debug('Rendering stats');
+      return <Stats {...this.state} />;
+    }
+
     if (this.state.currentGame != null) {
       debug('Rendering PlayGame', this.state.currentGame);
       return <PlayGame {...this.state} />;
     }
 
+    debug('Rendering Welcome');
     return <Welcome {...this.state} />;
   }
 

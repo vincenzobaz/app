@@ -11,7 +11,6 @@ var React = require('react'),
     StartGameModal = require('./modals/StartGameModal'),
     debug = require('debug')('GameToolbar');
 
-// TODO: Lots of refactoring.
 var GameToolbar = React.createClass({
 
   getInitialState() {
@@ -34,6 +33,7 @@ var GameToolbar = React.createClass({
     GameStore.start(friend._id)
       .then(res => {
         debug('after starGame:', res);
+        Session.set('page', 'game');
         if (res.status !== 'success') {
           // TODO: Show error modal.
         }
@@ -55,6 +55,7 @@ var GameToolbar = React.createClass({
   onQuit() {
     debug('quit game');
     GameStore.quit(this.props.game);
+    Session.set('page', 'home');
   },
 
   onResume() {
