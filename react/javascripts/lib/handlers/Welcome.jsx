@@ -13,7 +13,8 @@ var Welcome = React.createClass({
     games: React.PropTypes.arrayOf(shapes.Game)
   },
 
-  switchToTraining() {
+  switchToTraining(e) {
+    e.preventDefault();
     debug('TODO: Switch to training');
   },
 
@@ -47,7 +48,7 @@ var Welcome = React.createClass({
         <p>
           Looks like you have not completed the training yet.
           &nbsp;
-          <a href={this.switchToTraining}>{'Let\'s take it!'}</a>
+          <a href="#" onClick={this.switchToTraining}>{'Let\'s take it!'}</a>
         </p>
       );
     }
