@@ -47,7 +47,7 @@ var Welcome = React.createClass({
         <p>
           Looks like you have not completed the training yet.
           &nbsp;
-          <a href={this.switchToTraining()}>{'Let\'s take it!'}</a>
+          <a href={this.switchToTraining}>{'Let\'s take it!'}</a>
         </p>
       );
     }
