@@ -58,14 +58,14 @@ JoinRequestService = {
             };
         }
 
-        if (friend.friendOf !== currentUserId) {
-            const msg = `Friend with id ${friendId} is not a friend of the logged-in user.`;
-            console.error(msg);
-            return {
-                status: 'error',
-                msg: msg
-            };
-        }
+        // if (friend.friendOf !== currentUserId) {
+        //     const msg = `Friend with id ${friendId} is not a friend of the logged-in user.`;
+        //     console.error(msg);
+        //     return {
+        //         status: 'error',
+        //         msg: msg
+        //     };
+        // }
 
         if (friend.facebookId == null) {
             const msg = `Friend with id ${friendId} has no associated Facebook id.`;
