@@ -50,18 +50,26 @@ var FriendsAutocomplete = React.createClass({
   }, 700, {leading: false}),
 
   query(input) {
-    if (this.pendingRequest && this.pendingRequest.abort) {
-      this.pendingRequest.abort();
-    }
-    this.pendingRequest = FacebookStore.getFriends();
-    this.pendingRequest.done(friends => {
-      this.setState({
-        loading: false,
-        response: {
-          count: friends.length,
-          items: friends
-        }
-      });
+    // if (this.pendingRequest && this.pendingRequest.abort) {
+    //   this.pendingRequest.abort();
+    // }
+    // this.pendingRequest = FacebookStore.getFriends();
+    // this.pendingRequest.done(friends => {
+    //   this.setState({
+    //     loading: false,
+    //     response: {
+    //       count: friends.length,
+    //       items: friends
+    //     }
+    //   });
+    // });
+    const friends = Friends.find().fetch();
+    this.setState({
+      loading: false,
+      response: {
+        count: friends.length,
+        items: friends
+      }
     });
   },
 
@@ -97,7 +105,7 @@ var FriendsAutocomplete = React.createClass({
   renderComboboxOptions(friends) {
     return this.friendsMatchingQuery(friends, this.state.query)
       .map(item =>
-        <Item key={item.id} value={item} label={item.name}>
+        <Item key={item._id} value={item} label={item.name}>
           {this.renderFriend(item)}
         </Item>
       );
