@@ -65,6 +65,10 @@ Game = class Game {
         this.playerTurn = value;
     }
 
+    nextTurn() {
+        this.setPlayerTurn(this.getPlayerTurn() === 1 ? 2 : 1);
+    }
+
     getCurrentPlayer() {
         if (this.playerTurn === 1) {
             return this.player1;

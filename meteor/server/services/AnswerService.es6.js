@@ -40,7 +40,11 @@ AnswerService = {
                 game.status = GameStatus.Ended;
             }
 
-            game.playerTurn = game.playerTurn === 1 ? 2 : 1;
+            // FIXME: Just a temporary hack to fix #61
+            Meteor.setTimeout(() => {
+                game.nextTurn();
+                GameRepository.save(game);
+            }, 5 * 1000);
 
             GameRepository.save(game);
 
