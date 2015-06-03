@@ -8,6 +8,7 @@ var React = require('react'),
     Dashboard = require('./Dashboard'),
     Welcome = require('./Welcome'),
     Stats = require('./Stats'),
+    About = require('./About'),
     FacebookStore = require('../stores/FacebookStore'),
     getAppState = require('../appState'),
     debug = require('debug')('Main');
@@ -50,6 +51,11 @@ var Main = React.createClass({
     if (this.state.page === 'home') {
       debug('Rendering Welcome');
       return <Welcome {...this.state} />;
+    }
+
+    if (this.state.page === 'about') {
+      debug('Rendering About');
+      return <About {...this.state} />;
     }
 
     if (this.state.page === 'game') {
