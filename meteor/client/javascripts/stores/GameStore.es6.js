@@ -36,10 +36,13 @@ Reminisce.Store.GameStore = {
   quit(game) {
     Meteor.call('Game.quit', game.getId(), () => {
       GameSession.set('currentId', null);
+      Session.set('page', 'home');
     });
   },
 
   switchTo(game, isId = true) {
+    Session.set('page', 'game');
+
     if (isId) {
       GameSession.set('currentId', game);
     }

@@ -25,6 +25,7 @@ var Stats = React.createClass({
     },
 
     render() {
+        return <h1>Stats</h1>;
         return (
             <div>
                 <h1>Welcome To Your Stats</h1>

@@ -47,7 +47,12 @@ var Main = React.createClass({
       return <Stats {...this.state} />;
     }
 
-    if (this.state.currentGame != null) {
+    if (this.state.page === 'home') {
+      debug('Rendering Welcome');
+      return <Welcome {...this.state} />;
+    }
+
+    if (this.state.page === 'game') {
       debug('Rendering PlayGame', this.state.currentGame);
       return <PlayGame {...this.state} />;
     }
