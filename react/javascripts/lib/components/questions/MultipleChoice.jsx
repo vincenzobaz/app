@@ -24,6 +24,7 @@ var MultipleChoice = React.createClass({
   },
 
   render() {
+    console.log(this.props);
     return (
       <div className="question question-multiplechoice">
         <h4>{getQuestionTitleByType(this.props.type)}</h4>
