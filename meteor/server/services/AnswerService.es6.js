@@ -98,8 +98,8 @@ AnswerService = {
     },
 
     verifyAnswerMultipleChoice(question, answer) {
-        console.log('multiple choice answer: %d %d', question.answer, answer);
-        return question.answer === answer ? 1 : 0;
+        console.log('multiple choice answer: %d %d', question.answer, answer.choice);
+        return question.answer === answer.choice ? 1 : 0;
     },
 
     verifyAnswerTimeLine(question, answer) {
