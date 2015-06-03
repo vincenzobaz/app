@@ -1,5 +1,5 @@
 
-const SubjectProps = [ 'type', 'text', 'imageUrl', 'thumbnailUrl', 'url' ];
+const SubjectProps = [ 'type', 'text', 'imageUrl', 'thumbnailUrl', 'url', 'post', 'comment' ];
 
 Subject = class Subject {
 
@@ -17,6 +17,18 @@ Subject = class Subject {
 
     getImageUrl() {
         return this.imageUrl;
+    }
+
+    getThumbnailUrl() {
+        return this.thumbnailUrl;
+    }
+
+    getComment() {
+        return this.comment;
+    }
+
+    getPost() {
+        return Subject.fromRaw(this.post);
     }
 };
 

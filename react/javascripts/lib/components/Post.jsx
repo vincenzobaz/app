@@ -91,14 +91,14 @@ const Video = React.createClass({
 var Comment = React.createClass({
 
   propTypes: {
-    text: React.PropTypes.string.isRequired,
+    post: shapes.subject.isRequired,
     comment: React.PropTypes.string.isRequired
   },
 
   render() {
     return (
       <div>
-        <Text text={this.props.text} />
+        <Post post={this.props.post} />
         <div className="post post-comment">
           <blockquote>{this.props.comment}</blockquote>
         </div>
@@ -131,7 +131,7 @@ const Link = React.createClass({
 var Post = React.createClass({
 
   propTypes: {
-    post: shapes.post.isRequired
+    post: shapes.subject.isRequired
   },
 
   types: {
