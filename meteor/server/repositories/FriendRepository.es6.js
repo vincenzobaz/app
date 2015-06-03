@@ -43,11 +43,8 @@ FriendRepository = {
     },
 
     updateFriends(userId, friends) {
-        console.log('Updating friends for user ' + userId);
         return friends.map(f => {
-            console.log('Processing friend', f);
             var friend = FriendRepository.byFacebookId(f.id, userId);
-            console.log('Found', friend);
             if (friend == null) {
                 friend = FriendRepository.save({
                     facebookId: f.id,
