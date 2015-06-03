@@ -13,6 +13,10 @@ function hydrate(friend) {
 
 Reminisce.Store.FriendStore = {
 
+    byId(id) {
+        return hydrate(Friends.findOne(id));
+    },
+
     byUserId(userId) {
         return hydrate(Friends.findOne({userId: userId}));
     },
