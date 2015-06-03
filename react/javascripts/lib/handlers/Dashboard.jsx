@@ -28,7 +28,9 @@ var Dashboard = React.createClass({
             </div>
           </div>
           <div className='grid-50 prefix-5'>
-            {this.props.children}
+            <div className="dashboard-main">
+              {this.props.children}
+            </div>
           </div>
           <div className='grid-20 prefix-5'>
             <div className='notifications'>
