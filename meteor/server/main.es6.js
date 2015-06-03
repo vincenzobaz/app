@@ -31,5 +31,6 @@ Accounts.onLogin(attempt => {
     // TODO: Move this somewhere else.
     console.log(`Fetching friends for user ${user._id}...`);
     const fbFriends = Facebook.getFriends(user);
+    console.log('Got ' + fbFriends.length + ' friends: ', fbFriends);
     FriendRepository.updateFriends(user._id, fbFriends);
 });

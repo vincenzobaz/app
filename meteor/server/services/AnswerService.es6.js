@@ -98,6 +98,7 @@ AnswerService = {
     },
 
     verifyAnswerMultipleChoice(question, answer) {
+        console.log('multiple choice answer: %d %d', question.answer, answer);
         return question.answer === answer ? 1 : 0;
     },
 

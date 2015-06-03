@@ -227,6 +227,7 @@ var Done = React.createClass({
   },
 
   sendAnswers() {
+    console.log(this.props.tile, this.props.answers);
     AnswerStore
       .send(this.props.game, this.props.tile, this.props.answers)
       .then(res => {
