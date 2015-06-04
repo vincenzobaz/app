@@ -60,7 +60,9 @@ JoinRequestService = {
         }
 
         console.log('checking if user ' + currentUserId + ' is friend with ', friend);
+        const opponent = Meteor.users.findOne({"services.facebook.id": friend.facebookId});
 
+        console.log("we found opponent ", opponent);
         // if (friend.friendOf !== currentUserId) {
         //     const msg = `Friend with id ${friendId} is not a friend of the logged-in user.`;
         //     console.error(msg);
@@ -95,16 +97,16 @@ JoinRequestService = {
             FriendRepository.save(friend);
         }
 
-        const game      = GameService.createGame(currentUserId, friend.userId);
+        const game      = GameService.createGame(currentUserId, opponent._id);
         const gameId    = GameRepository.save(game);
 
         console.log(`c: ${currentUserId}, f: ${friendId}`);
-        const join      = JoinRequest.fromRaw({ from: currentUserId, to: friendId, gameId: gameId });
+        const join      = JoinRequest.fromRaw({ from: currentUserId, to: opponent._id, gameId: gameId });
         const requestId = JoinRequestRepository.save(join);
 
         //console.log(`Created join request ${requestId} from ${currentUserId} to ${friend.userId} for game ${gameId}`);
 
-        console.log(`Created join request ${requestId} from ${currentUserId} to ${friendId} for game ${gameId}`);
+        console.log(`Created join request ${requestId} from ${currentUserId} to ${ opponent._id} for game ${gameId}`);
 
         return { status: "success", requestId: requestId };
     }

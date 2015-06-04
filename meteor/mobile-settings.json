@@ -15,7 +15,7 @@
     }
   },
 
-  "rootUrl": "http://localhost:3000",
+  "rootUrl": "http://dev.reminisce.me",
   "gameCreatorUrl": "http://localhost:9900",
   "facebook": {
     "appId": "163998950420801",
