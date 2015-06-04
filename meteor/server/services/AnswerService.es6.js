@@ -49,10 +49,7 @@ AnswerService = {
             }
 
             const wins = AnswerService.playerWinsForRowAndColumn(boardState, currentTurn, row, col);
-            game.playerTurn = game.playerTurn === 1 ? 2 : 1;
             const draw = AnswerService.isDraw(game);
-
-
 
             if (wins || draw){
                 if (wins){
