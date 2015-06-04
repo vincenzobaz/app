@@ -9,6 +9,8 @@ module.exports = {
   login(cb = () => {}) {
     var conf = getConfig('facebook');
 
+    console.log("FAcebook config is", conf);
+
     Meteor.loginWithFacebook({
       requestPermissions: conf.scope
     }, cb);
