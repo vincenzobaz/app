@@ -65,8 +65,8 @@ BotService = {
         var query2 = Games.find(
             {$and:
                 [{$or:
-                [{player1: bot2._id}, {player2: bot2._id}]},
-                {status: {$in: [GameStatus.Playing, GameStatus.Creating, , GameStatus.Waiting]}}]
+                    [{player1: bot2._id}, {player2: bot2._id}]},
+                    {status: {$in: [GameStatus.Playing, GameStatus.Creating, , GameStatus.Waiting]}}]
             });
 
         var handle2 = query2.observe({
@@ -140,15 +140,16 @@ BotService = {
         const gameBoard = GameBoards.findOne(game[boardId]);
         const tile = firstTurn? BotService.pickRandom(game, gameBoard) : BotService.pickTile(game, gameBoard);
 
-        const successrate = 30;
+        //const tile = BotService.pickTile(game, gameBoard);
+        const successrate = 66;
 
         answers = _.map(tile.getQuestions(), q => {
             switch(q.kind) {
                 case Question.Kind.Timeline:
-                    return {date: _.random(0, 100) < successrate ? q.answer: q.default};
+                    return {data: {date: _.random(0, 100) < successrate ? q.answer: q.default}};
                     break;
                 case Question.Kind.MultipleChoice:
-                    return {data: _.random(0, 100) < successrate ? q.answer: q.answer + 1 % 4};
+                    return {data: {choice: _.random(0, 100) < successrate ? q.answer: q.answer + 1 % 4}};
                     break;
                 case Question.Kind.Geo:
                     return {data: _.random(0, 100) < successrate ? q.answer: {latitude: 0, longitude: 0}};
@@ -193,7 +194,8 @@ BotService = {
         var scores = [];
         var moves = [];
 
-        const possibilities = BotService.getAvailableMoves(game.boardState, game.getPlayerTurn());
+        const possibilities = BotService.getAvailableMoves(game, game.getPlayerTurn());
+        //console.log("possibilities: ", possibilities);
         if (_.isEmpty(possibilities)){
             return {move: null, score: 0};
         }
@@ -216,30 +218,28 @@ BotService = {
     },
 
     makeMove(game, move, player) {
+        game.setPlayer1AvailableMoves(_.filter(game.getPlayer1AvailableMoves(), m => {return m.row !== move.row || m.column !== move.column}));
+        game.setPlayer2AvailableMoves(_.filter(game.getPlayer2AvailableMoves(), m => {return m.row !== move.row || m.column !== move.column}));
         game.boardState[move.row][move.column] = {player: player, score: 3};
         game.setPlayerTurn((player  % 2) + 1);
     },
 
     score(boardState, currentPlayer, depth) {
-      if (AnswerService.playerWins(boardState, currentPlayer)){
-          return 10 - depth;
-      } else if (AnswerService.playerWins(boardState, (currentPlayer  % 2) + 1)){
-          return depth - 10;
-      } else {
-          return 0;
-      }
+        if (AnswerService.playerWins(boardState, currentPlayer)){
+            return 10 - depth;
+        } else if (AnswerService.playerWins(boardState, (currentPlayer  % 2) + 1)){
+            return depth - 10;
+        } else {
+            return 0;
+        }
     },
 
-    getAvailableMoves(boardState, currentPlayer) {
-        var moves = [];
-        for (var i = 0; i < 3; i++) {
-            for (var j = 0; j < 3; j++){
-                if (boardState[i][j].score < 3 && boardState[i][j].player !== currentPlayer){
-                    moves.push({row: i, column: j})
-                }
-            }
+    getAvailableMoves(game, currentPlayer) {
+        if (currentPlayer == 1){
+            return game.getPlayer1AvailableMoves();
+        } else {
+            return game.getPlayer2AvailableMoves();
         }
-      return moves;
     },
 
     drawBoardState(game) {

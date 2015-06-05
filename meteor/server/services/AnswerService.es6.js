@@ -65,10 +65,10 @@ AnswerService = {
             }
 
             // FIXME: Just a temporary hack to fix #61
-            Meteor.setTimeout(() => {
-                game.nextTurn();
-                GameRepository.save(game);
-            }, 5 * 1000);
+            //Meteor.setTimeout(() => {
+            game.nextTurn();
+                //GameRepository.save(game);
+            //}, 5 * 1000);
 
             GameRepository.save(game);
 
@@ -122,7 +122,7 @@ AnswerService = {
     },
 
     verifyAnswerMultipleChoice(question, answer) {
-        console.log('multiple choice answer: %d %d', question.answer, answer.choice);
+        console.log('multiple choice answer: %d ', question.answer, answer.choice);
         return question.answer === answer.choice ? 1 : 0;
     },
 

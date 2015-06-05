@@ -49,43 +49,15 @@ JoinRequestService = {
 
     send(currentUserId, friendId) {
         const friend = Friends.findOne(friendId);
+        const bots = BotService.bots();
+        var opponent;
+        if (friendId === bots[0]._id || friendId === bots[1]._id){
+            opponent = Meteor.users.findOne(friendId);
 
-        if (friend == null) {
-            const msg = `Couldn't find a friend with id ${friendId}.`;
-            console.error(msg);
-            return {
-                status: 'error',
-                msg: msg
-            };
-        }
+        } else {
 
-        console.log('checking if user ' + currentUserId + ' is friend with ', friend);
-        const opponent = Meteor.users.findOne({"services.facebook.id": friend.facebookId});
-
-        console.log("we found opponent ", opponent);
-        // if (friend.friendOf !== currentUserId) {
-        //     const msg = `Friend with id ${friendId} is not a friend of the logged-in user.`;
-        //     console.error(msg);
-        //     return {
-        //         status: 'error',
-        //         msg: msg
-        //     };
-        // }
-
-        if (!friend.isBot && friend.facebookId == null) {
-            const msg = `Friend with id ${friendId} has no associated Facebook id.`;
-            console.error(msg);
-            return {
-                status: 'error',
-                msg: msg
-            };
-        }
-
-        if (!friend.isBot && friend.userId == null) {
-            const friendUser = UserRepository.byFacebookId(friend.facebookId);
-
-            if (friendUser == null) {
-                const msg = `Friend ${friendId} has no associated user.`;
+            if (friend == null) {
+                const msg = `Couldn't find a friend with id ${friendId}.`;
                 console.error(msg);
                 return {
                     status: 'error',
@@ -93,8 +65,43 @@ JoinRequestService = {
                 };
             }
 
-            friend.userId = friendUser._id;
-            FriendRepository.save(friend);
+            console.log('checking if user ' + currentUserId + ' is friend with ', friend);
+            opponent = Meteor.users.findOne({"services.facebook.id": friend.facebookId});
+
+            console.log("we found opponent ", opponent);
+            // if (friend.friendOf !== currentUserId) {
+            //     const msg = `Friend with id ${friendId} is not a friend of the logged-in user.`;
+            //     console.error(msg);
+            //     return {
+            //         status: 'error',
+            //         msg: msg
+            //     };
+            // }
+
+            if (!friend.isBot && friend.facebookId == null) {
+                const msg = `Friend with id ${friendId} has no associated Facebook id.`;
+                console.error(msg);
+                return {
+                    status: 'error',
+                    msg: msg
+                };
+            }
+
+            if (!friend.isBot && friend.userId == null) {
+                const friendUser = UserRepository.byFacebookId(friend.facebookId);
+
+                if (friendUser == null) {
+                    const msg = `Friend ${friendId} has no associated user.`;
+                    console.error(msg);
+                    return {
+                        status: 'error',
+                        msg: msg
+                    };
+                }
+
+                friend.userId = friendUser._id;
+                FriendRepository.save(friend);
+            }
         }
 
         const game      = GameService.createGame(currentUserId, opponent._id);
