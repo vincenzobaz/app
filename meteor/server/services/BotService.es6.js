@@ -145,7 +145,7 @@ BotService = {
         answers = _.map(tile.getQuestions(), q => {
             switch(q.kind) {
                 case Question.Kind.Timeline:
-                    return {data: _.random(0, 100) < successrate ? q.answer: q.default};
+                    return {date: _.random(0, 100) < successrate ? q.answer: q.default};
                     break;
                 case Question.Kind.MultipleChoice:
                     return {data: _.random(0, 100) < successrate ? q.answer: q.answer + 1 % 4};

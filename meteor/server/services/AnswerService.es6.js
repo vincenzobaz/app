@@ -127,7 +127,7 @@ AnswerService = {
     },
 
     verifyAnswerTimeLine(question, answer) {
-        const answerDate = new Date(answer);
+        const answerDate = new Date(answer.date);
         var min = new Date(answer.date);
         var max = new Date(answer.date);
         const threshold = question.getThreshold();
@@ -157,7 +157,7 @@ AnswerService = {
                 throw new Meteor.Error(500, `Unknown unit ${question.getUnit()}`);
         }
 
-        //console.log(`min: ${min}, max: ${max}, answer: ${answerDate} (${answer})`);
+        console.log(`min: ${min}, max: ${max}, answer: ${answerDate} =>`, answer);
 
         return min.getTime() <= answerDate.getTime() && answerDate <= max.getTime() ? 1 : 0;
 
