@@ -18,7 +18,7 @@ var GamesStatQuestions = React.createClass({
     },
 
     getMeteorState: function() {
-        var gameStat = Gamestats.findOne({userId: this.props.userId});
+        var gameStat = this.props.gameStats;
         var mcStat = gameStat.getMCTried() === 0 ? 0: gameStat.getMCCorrect() / gameStat.getMCTried();
         var tlStat = gameStat.getTLTried() === 0 ? 0: gameStat.getTLCorrect() / gameStat.getTLTried()
         var geoStat = gameStat.getGeoTried() === 0 ? 0: gameStat.getGeoCorrect() / gameStat.getGeoTried()
@@ -32,11 +32,6 @@ var GamesStatQuestions = React.createClass({
         };
 
         return {
-
-            statCount: Gamestats.find().count(),
-            gameStat: Gamestats.findOne(),
-            gamesPlayed: gameStat.getGamesPlayed(),
-            gamesWon: Gamestats.findOne().getGamesWon(),
             barData: data
         }
     },
@@ -54,7 +49,7 @@ var GamesStatQuestions = React.createClass({
             .range(["#1E5C82", "#271533" , "#BE2032"]);
         var colorScale = d3.scale.category20();
         var y = d3.scale.linear().domain([0, 1]).range([height - margins.top - margins.bottom, 0]);
-        if (this.state.gameStat == null) { return <div>Loading...</div>; }
+        if (this.state.barData == null) { return <div>Loading...</div>; }
         return (
             <div>
                 <h2>Success Per Question Type</h2>

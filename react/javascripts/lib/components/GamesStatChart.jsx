@@ -18,24 +18,39 @@ var GamesStatChart = React.createClass({
     },
 
     getMeteorState: function() {
-        var gameStat = Gamestats.findOne({userId: this.props.userId});
-        const gamesDraw = gameStat.getGamesPlayed() - gameStat.getGamesWon() - gameStat.getGamesLost();
-        var data = {
-            label: 'Game Stats',
-            values: [
-                {x: 'Games Won', y: gameStat.getGamesWon()},
-                {x: "Draw", y: gamesDraw},
-                {x: 'Games Lost', y: gameStat.getGamesLost()}
-            ]
-        };
-        return {
+        var gameStat = this.props.gameStats;
 
-            statCount: Gamestats.find().count(),
-            gameStat: Gamestats.findOne(),
-            gamesPlayed: gameStat.getGamesPlayed(),
-            gamesWon: Gamestats.findOne().getGamesWon(),
-            pieData: data
+        if (gameStat){
+            const gamesDraw = gameStat.getGamesPlayed() - gameStat.getGamesWon() - gameStat.getGamesLost();
+            var data = {
+                label: 'Game Stats',
+                values: [
+                    {x: 'Games Won', y: gameStat.getGamesWon()},
+                    {x: "Draw", y: gamesDraw},
+                    {x: 'Games Lost', y: gameStat.getGamesLost()}
+                ]
+            };
+            return {
+                gamesPlayed: gameStat.getGamesPlayed(),
+                gamesWon: gameStat.getGamesWon(),
+                pieData: data
+            };
+        } else {
+            var data = {
+                label: 'Game Stats',
+                values: [
+                    {x: 'Games Won', y: 3},
+                    {x: "Draw", y: 2},
+                    {x: 'Games Lost', y: 1}
+                ]
+            };
+            return {
+                gamesPlayed: 6,
+                gamesWon: 3,
+                pieData: data
+            };
         }
+
     },
 
     render() {
@@ -46,7 +61,7 @@ var GamesStatChart = React.createClass({
                 "Games Lost"
             ])
             .range(["#1E5C82", "#271533" , "#BE2032"]);
-        if (this.state.gameStat == null) { return <div>Loading...</div>; }
+
         return (
             <div>
                 <h2>Total Games Played: {this.state.gamesPlayed}</h2>

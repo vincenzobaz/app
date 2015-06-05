@@ -59,19 +59,13 @@ startMeteorSubscriptions: function () {
         });
 
         return (
-            <Modal backdrop={true} animation={true} className='question fullscreen'>
-                <div className='modal-header'>
-                    <h3>
-                        Question 2 of 3
-                    </h3>
-                </div>
-                <div className='modal-body'>
-                    <Geo type="GeoWhatCoordinatesWereYouAt"
-                         subject={subject}
-                         onDone={() => {}}/>
-                </div>
-                <div className='modal-footer'></div>
-            </Modal>
+            <div>
+                <h1>Welcome To Your Stats</h1>
+                <GameStatChart gameStats={this.state.gameStats}/>
+
+                <GameStatQuestions gameStats={this.state.gameStats}/>
+
+            </div>
         );
 
     }
@@ -80,13 +74,21 @@ startMeteorSubscriptions: function () {
 });
 
 
-//<div>
-//    <h1>Welcome To Your Stats</h1>
-//<GameStatChart gameStats={this.state.gameStats}/>
-//
-//<GameStatQuestions gameStats={this.state.gameStats}/>
-//
-//</div>
+
+
+//<Modal backdrop={true} animation={true} className='question fullscreen'>
+//    <div className='modal-header'>
+//        <h3>
+//            Question 2 of 3
+//        </h3>
+//    </div>
+//    <div className='modal-body'>
+//        <Geo type="GeoWhatCoordinatesWereYouAt"
+//             subject={subject}
+//             onDone={() => {}}/>
+//    </div>
+//    <div className='modal-footer'></div>
+//</Modal>
 
 
 
