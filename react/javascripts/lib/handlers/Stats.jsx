@@ -14,14 +14,11 @@ var React = require('react'),
 
 var Stats = React.createClass({
 
-    mixins: [ReactMeteor.Mixin],
-
     startMeteorSubscriptions: function () {
         Meteor.subscribe('gameStats');
     },
 
-    getInitialState: () => {
-
+    getInitialState() {
         return {loaded: false}
     },
 
@@ -41,11 +38,6 @@ var Stats = React.createClass({
                 loaded: false
             }
         }
-
-        //return {
-        //  userId: "tFNJJGLnd9p2CQgXc",
-        //  loaded: Session.get('googleChartsLoaded')
-        //}
     },
 
     render() {
@@ -72,24 +64,5 @@ var Stats = React.createClass({
 
 
 });
-
-
-
-
-//<Modal backdrop={true} animation={true} className='question fullscreen'>
-//    <div className='modal-header'>
-//        <h3>
-//            Question 2 of 3
-//        </h3>
-//    </div>
-//    <div className='modal-body'>
-//        <Geo type="GeoWhatCoordinatesWereYouAt"
-//             subject={subject}
-//             onDone={() => {}}/>
-//    </div>
-//    <div className='modal-footer'></div>
-//</Modal>
-
-
 
 module.exports = Stats;
