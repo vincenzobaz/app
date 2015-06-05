@@ -7,47 +7,87 @@ var React = require('react'),
     GameStatChart = require('../components/GamesStatChart.jsx'),
     GameStatQuestions = require('../components/GamesStatQuestions.jsx'),
     GameStatQuestionsDetail = require('../components/GamesStatQuestionsDetail.jsx'),
-    debug = require('debug')('Stats');
+    debug = require('debug')('Stats'),
+    Modal = require('react-bootstrap').Modal,
+    Geo = require('../components/questions/Geo.jsx');
 
 
 var Stats = React.createClass({
     mixins: [ReactMeteor.Mixin],
 
-    startMeteorSubscriptions: function () {
+
+
+startMeteorSubscriptions: function () {
         Meteor.subscribe('gameStats');
     },
 
+    getInitialState: () => {
+
+        return {loaded: false}
+    },
+
     getMeteorState: function () {
-        var gameStat = Gamestats.findOne();
-        return {
-          userId: "tFNJJGLnd9p2CQgXc",
-          loaded: Session.get('googleChartsLoaded')
+        var gameStat = Gamestats.findOne({userId: Meteor.userId()});
+
+        console.log("Gamestats loaded? ", gameStat);
+        if (gameStat) {
+            return {
+                userId: Meteor.userId,
+                gameStats: gameStat,
+                loaded: true
+            }
+        } else {
+            return {
+                loaded: false
+            }
         }
+
+        //return {
+        //  userId: "tFNJJGLnd9p2CQgXc",
+        //  loaded: Session.get('googleChartsLoaded')
+        //}
     },
 
     render() {
         if (!this.state.loaded) {
-          return <div>Loading...</div>;
+            return <div>Loading...</div>;
         }
 
-        return (
-            <div>
-                <h1>Welcome To Your Stats</h1>
-                <table>
-                    <td>
-                        <GameStatChart userId={this.state.userId}/>
-                    </td>
-                    <td>
-                        <GameStatQuestions userId={this.state.userId}/>
-                    </td>
-                </table>
-                <GameStatQuestionsDetail userId={this.state.userId}/>
+        const subject = new Subject({
+            type: 'Text',
+            text: 'Chilling at my favorite restaurant'
+        });
 
-            </div>
+        return (
+            <Modal backdrop={true} animation={true} className='question fullscreen'>
+                <div className='modal-header'>
+                    <h3>
+                        Question 2 of 3
+                    </h3>
+                </div>
+                <div className='modal-body'>
+                    <Geo type="GeoWhatCoordinatesWereYouAt"
+                         subject={subject}
+                         onDone={() => {}}/>
+                </div>
+                <div className='modal-footer'></div>
+            </Modal>
         );
+
     }
 
 
 });
+
+
+//<div>
+//    <h1>Welcome To Your Stats</h1>
+//<GameStatChart gameStats={this.state.gameStats}/>
+//
+//<GameStatQuestions gameStats={this.state.gameStats}/>
+//
+//</div>
+
+
 
 module.exports = Stats;
