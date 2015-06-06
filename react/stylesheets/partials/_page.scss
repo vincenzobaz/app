@@ -496,6 +496,9 @@
 
 /*! responsive-nav.js v1.0.14 by @viljamis */
 
+#dashboard {
+  padding-bottom: 65px; // height of #navigation-toggle
+}
 
 nav[role=navigation] {
 clear : both;

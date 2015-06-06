@@ -21,7 +21,7 @@ var Dashboard = React.createClass({
     return (
       <div>
         <Players game={this.props.currentGame} user={this.props.user} />
-        <div className="grid-container">
+        <div id="dashboard" className="grid-container">
           <div className="grid-20">
             <div className="notifications">
               <CurrentGames games={this.props.games} />
