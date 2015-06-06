@@ -2,8 +2,7 @@
 'use strict';
 
 var React = require('react'),
-    ModalFactory = require('../helpers/ModalFactory'),
-    TileFactory = require('../helpers/TileFactory'),
+    createTiles = require('../helpers/createTiles'),
     shapes = require('./shapes'),
     debug = require('debug')('Board');
 
@@ -23,14 +22,7 @@ var Board = React.createClass({
   },
 
   renderTiles() {
-    var modalFactory = new ModalFactory(this.props.game, this.onModalRequestHide);
-    var tileFactory = new TileFactory(this.props.game, modalFactory);
-
-    return tileFactory.getTiles();
-  },
-
-  onModalRequestHide(modal) {
-    debug(modal, 'requested hide');
+    return createTiles(this.props.game);
   }
 
 });
