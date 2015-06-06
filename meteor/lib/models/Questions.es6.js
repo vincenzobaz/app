@@ -188,7 +188,7 @@ TimelineQuestion.fromRaw = function(data){
 };
 
 
-GeoQuestionProps = [ '_id', 'data', 'answer', 'type', 'kind' ];
+GeoQuestionProps = [ '_id', 'subject', 'range', 'defaultPosition', 'answer', 'type', 'kind' ];
 
 GeoQuestion = class GeoQuestion {
     constructor(props) {
@@ -199,18 +199,44 @@ GeoQuestion = class GeoQuestion {
         return this._id;
     }
 
-    getData() {
-        return this.data;
+    /**
+     *
+     * @returns {Subject}
+     */
+
+    getSubject() {
+        return this.subject;
     }
 
     getType() {
         return this.type;
     }
 
+    /**
+     * The allowed distance which is still considered correct
+     * @returns {number}
+     */
+    getRange() {
+        return this.range;
+    }
+
+    /**
+     *
+     * @returns {Marker}
+     */
+    getDefaultPosition() {
+        return this.defaultPosition;
+    }
+
+
+
     getKind() {
         return this.kind;
     }
 
+    /**
+     * @return {Marker}
+     */
     getAnswer() {
         if (!Meteor.isServer) {
             throw new Error(`Well tried, there\'s nothing to see here. See for yourself: ${this.answer}`);

@@ -11,13 +11,13 @@ Facebook = {
 
   API_URL: 'https://graph.facebook.com/v2.3',
 
-  get appSecret() {
+  getAppSecret() {
     var conf = ServiceConfiguration.configurations.findOne({service: 'facebook'});
     return conf.secret;
   },
 
   computeProof(accessToken) {
-    return CryptoJS.HmacSHA256(accessToken, this.appSecret).toString();
+    return CryptoJS.HmacSHA256(accessToken, this.getAppSecret()).toString();
   },
 
   api(user, url, options = {}) {

@@ -37,7 +37,25 @@ Meteor.methods({
     },
 
     'Answer.post': function(gameId, tileId, answers) {
-      return AnswerService.post(this.userId, gameId, tileId, answers);
+        const /**Game*/ game = Games.findOne(gameId);
+        const board = game.getCurrentBoard();
+        const tile = board.getTileById(tileId);
+        const typedAnswers = _.map(_.zip(tile.getQuestions(), answers), (qa) => {
+            switch(qa[0].getKind()) {
+                case Question.Kind.MultipleChoice:
+                    return new MultipleChoiceAnswer(new MultipleChoiceData(qa[1].data.choice));
+                break;
+                case Question.Kind.Timeline:
+                    return new TimelineAnswer(new TimelineData(qa[1].data.date));
+                break;
+                case Question.Kind.Geo:
+                    return new GeoAnswer(GeoData(data.marker));
+                break;
+                default:
+                    Meteor.Error(500, 'Unsupported question type ' + qa[0].getKind());
+            }
+        });
+      return AnswerService.post(this.userId, gameId, tileId, typedAnswers);
     },
 
     'PlayBotGame': function() {

@@ -47,6 +47,16 @@ Game = class Game {
         return this.player2Board;
     }
 
+    /**
+     *
+     * @returns {GameBoard}
+     */
+    getCurrentBoard() {
+        console.log("current player " + this.getPlayerTurn());
+        console.log("player" + this.getPlayerTurn() + "Board");
+        return GameBoards.findOne(this["player" + this.getPlayerTurn() + "Board"])
+    }
+
     setPlayer2Board(value) {
         this.player2Board = value;
     }

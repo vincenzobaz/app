@@ -12,7 +12,7 @@ AnswerService = {
             const index = _.findIndex(board.getTiles(), t => t.getId() === tileId);
             const row = Math.floor(index / 3);
             const col = index % 3;
-            const result = AnswerService.getResultsForTile(tile, answers);
+            const result = AnswerVerificationService.verifyTile(tile, answers);
             const questions = tile.getQuestions();
             const scores = [];
             for (let i = 0; i < questions.length; i++){
@@ -40,12 +40,10 @@ AnswerService = {
                 }
             }
 
-            if (newScore >= oldScore || oldScore === 0){
+            if (newScore > oldScore || oldScore === 0){
                 game[currentScoreId][tile._id] = scores;
-                if (otherScore < newScore){
-                    boardState[row][col].player = currentTurn;
-                    boardState[row][col].score = newScore;
-                }
+                boardState[row][col].player = currentTurn;
+                boardState[row][col].score = newScore;
             }
 
             const wins = AnswerService.playerWinsForRowAndColumn(boardState, currentTurn, row, col);
@@ -85,6 +83,9 @@ AnswerService = {
 
     },
 
+    /**
+     * return {[GameBoard, String]}
+     */
     getBoardAndScoreIdForCurrentPlayer(currentUser, game){
         if (currentUser === game.player1) {
             return [GameBoards.findOne(game.player1Board), "player1Scores"];
@@ -95,79 +96,6 @@ AnswerService = {
         }
     },
 
-    getResultsForTile(tile, answers) {
-        const questionAnswers = _.zip(tile.getQuestions(), answers);
-        if (tile.type === "MultipleChoice"){
-            return _.map(questionAnswers, qa => AnswerService.verifyAnswerMultipleChoice(qa[0], qa[1].data));
-        } else if (tile.type === "Timeline"){
-            return _.map(questionAnswers, qa => AnswerService.verifyAnswerTimeLine(qa[0], qa[1].data));
-        } else if (tile.type === "Geolocation"){
-            return _.map(questionAnswers, qa => AnswerService.verifyAnswerGeolocation(qa[0], qa[1].data));
-        } else if (tile.type === "Misc"){
-            return _.map(questionAnswers, qa => {
-                if (qa[0].getKind() === "Timeline"){
-                    return AnswerService.verifyAnswerTimeLine(qa[0], qa[1].data);
-                } else if (qa[0].getKind() === "MultipleChoice"){
-                    return AnswerService.verifyAnswerMultipleChoice(qa[0], qa[1].data);
-                } else if (qa[0].getKind() === "Geolocation") {
-                    return AnswerService.verifyAnswerGeolocation(qa[0], qa[1].data);
-                } else {
-                    console.log("got invalid question kind " + qa[0].getKind());
-                    return true;
-                }
-            });
-        } else {
-            throw new Meteor.Error(500, `Invalid question type: '${tile.type}'`);
-        }
-    },
-
-    verifyAnswerMultipleChoice(question, answer) {
-        console.log('multiple choice answer: %d ', question.answer, answer.choice);
-        return question.answer === answer.choice ? 1 : 0;
-    },
-
-    verifyAnswerTimeLine(question, answer) {
-        const answerDate = new Date(answer.date);
-        var min = new Date(answer.date);
-        var max = new Date(answer.date);
-        const threshold = question.getThreshold();
-
-        switch(question.getUnit()) {
-            case TimelineUnit.Day:
-                min = new Date(question.answer).adjustDateDays(-threshold);
-                max = new Date(question.answer).adjustDateDays(threshold);
-                break;
-
-            case TimelineUnit.Week:
-                min = new Date(question.answer).adjustDateWeek(-threshold);
-                max = new Date(question.answer).adjustDateWeek(threshold);
-                break;
-
-            case TimelineUnit.Month:
-                min = new Date(question.answer).adjustDateMonth(-threshold);
-                max = new Date(question.answer).adjustDateMonth(threshold);
-                break;
-
-            case TimelineUnit.Year:
-                min = new Date(question.answer).adjustDateYear(-threshold);
-                max = new Date(question.answer).adjustDateYear(threshold);
-                break;
-
-            default:
-                throw new Meteor.Error(500, `Unknown unit ${question.getUnit()}`);
-        }
-
-        console.log(`min: ${min}, max: ${max}, answer: ${answerDate} =>`, answer);
-
-        return min.getTime() <= answerDate.getTime() && answerDate <= max.getTime() ? 1 : 0;
-
-    },
-
-    verifyAnswerGeolocation(question, answer) {
-        // FIXME: Handle Geolocations properly
-
-        return 1;
-    },
 
     playerWins(boardState, player) {
 
@@ -199,7 +127,7 @@ AnswerService = {
 
     verifyWonRow(boardState, row, player){
         for (var i = 0; i < 3; i++){
-            if (boardState[row][i].player !== player){
+            if (boardState[row][i].player !== player || boardState[row][i].score === 0){
                 return false;
             }
         }
@@ -209,7 +137,7 @@ AnswerService = {
 
     verifyWonColumn(boardState, column, player){
         for (var j = 0; j < 3; j++){
-            if (boardState[j][column].player !== player){
+            if (boardState[j][column].player !== player || boardState[j][column].score === 0){
                 return false;
             }
         }
@@ -222,7 +150,7 @@ AnswerService = {
     verifyWonDiagonal(boardState, player){
         for (var x = 0; x < 3; x++) {
             const cell = boardState[x][x];
-            if (cell.player !== player) {
+            if (cell.player !== player || cell.score === 0) {
                 return false;
             }
         }
@@ -234,7 +162,7 @@ AnswerService = {
         var y = 2;
         for (var x = 0; x < 3; x++) {
             const cell = boardState[y][x];
-            if (cell.player !== player) {
+            if (cell.player !== player || cell.score === 0) {
                 return false;
             }
             y--;
@@ -313,7 +241,7 @@ AnswerService = {
             y--;
         }
         return impossible;
-    },
+    }
 
 
 

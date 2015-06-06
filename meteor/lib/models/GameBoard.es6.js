@@ -34,6 +34,11 @@ GameBoard = class GameBoard {
         }));
     }
 
+    /**
+     *
+     * @param {string} tileId
+     * @returns {Tile}
+     */
     getTileById(tileId) {
         return _.find(this.getTiles(), tile => tile._id === tileId);
     }

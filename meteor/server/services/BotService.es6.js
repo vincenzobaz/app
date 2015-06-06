@@ -66,15 +66,15 @@ BotService = {
             {$and:
                 [{$or:
                     [{player1: bot2._id}, {player2: bot2._id}]},
-                    {status: {$in: [GameStatus.Playing, GameStatus.Creating, , GameStatus.Waiting]}}]
+                    {status: {$in: [GameStatus.Playing, GameStatus.Creating, GameStatus.Waiting]}}]
             });
 
         var handle2 = query2.observe({
-            added: function (game) {
+            added: function(game) {
                 BotService.observeGame(game._id, bot2._id);
             },
-            removed: function (id) {
-                console.log("it removed");
+            removed: function(id) {
+                console.log(`it removed`);
             }
         });
     },
@@ -125,14 +125,14 @@ BotService = {
             console.log("Bot1 playing");
             boardId = "player1Board";
             player = game.player1;
-            if (game.getPlayer1AvailableMoves().length === 9){
+            if (game.getPlayer1AvailableMoves().length === 9) {
                 firstTurn = true;
             }
         } else {
             console.log("Bot2 playing");
             boardId = "player2Board";
             player = game.player2;
-            if (game.getPlayer2AvailableMoves().length === 9){
+            if (game.getPlayer2AvailableMoves().length === 9) {
                 firstTurn = true;
             }
         }
@@ -144,15 +144,21 @@ BotService = {
         const successrate = 66;
 
         answers = _.map(tile.getQuestions(), q => {
-            switch(q.kind) {
+            switch (q.kind) {
                 case Question.Kind.Timeline:
-                    return {data: {date: _.random(0, 100) < successrate ? q.answer: q.default}};
+                    return new TimelineAnswer(
+                        new TimelineData(_.random(0, 100) < successrate ? q.answer: q.default)
+                    );
                     break;
                 case Question.Kind.MultipleChoice:
-                    return {data: {choice: _.random(0, 100) < successrate ? q.answer: q.answer + 1 % 4}};
+                    return new MultipleChoiceAnswer(
+                        new MultipleChoiceData(_.random(0, 100) < successrate ? q.answer: q.answer + 1 % 4)
+                    );
                     break;
                 case Question.Kind.Geo:
-                    return {data: _.random(0, 100) < successrate ? q.answer: {latitude: 0, longitude: 0}};
+                    return new GeoAnswer(
+                        new GeoData(_.random(0, 100) < successrate ? q.answer: Marker(0, 0))
+                    );
                     break;
                 default:
                     throw new Meteor.Error(500, `Unknown Question Kind ${q.kind} for Bot`);
@@ -165,8 +171,7 @@ BotService = {
     pickTile(game, gameBoard) {
         const tiles = gameBoard.getTiles();
         const result = BotService.minmax(game, game.getPlayerTurn(), 0);
-        const tile = tiles[result.move.row * 3 + result.move.column];
-        return tile;
+        return tiles[result.move.row * 3 + result.move.column];
 
     },
 
@@ -242,14 +247,15 @@ BotService = {
         }
     },
 
+
     drawBoardState(game) {
         const bs = game.boardState;
         for (var i = 0; i < bs.length; i++) {
             const line = _.map(bs[i], function(s) {
                 if (s.player === 1){
-                    return "x";
+                    return s.score === 0? '-' : "x";
                 } else if (s.player === 2){
-                    return "o";
+                    return s.score === 0? '-' : "o";
                 } else {
                     return " "
                 }
