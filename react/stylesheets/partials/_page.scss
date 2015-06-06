@@ -50,27 +50,29 @@
 
         top: 42%;
         left: 42%;
+        width: 32px;
+        height: 32px;
     }
 
-    &.geo i, &.globe i {
-        top: 41.5%;
-        left: 42.5%;
-    }
+    // &.geo i, &.globe i {
+    //     top: 41.5%;
+    //     left: 42.5%;
+    // }
 
-    &.bugout i, &.list i {
-        top: 42%;
-        left: 41.5%;
-    }
+    // &.bugout i, &.list i {
+    //     top: 42%;
+    //     left: 41.5%;
+    // }
 
-    &.calendar  i {
-        top: 41%;
-        left: 42%;
-    }
+    // &.calendar  i {
+    //     top: 41%;
+    //     left: 42%;
+    // }
 
-    &.picture  i {
-        top: 41%;
-        left: 41%;
-    }
+    // &.picture  i {
+    //     top: 41%;
+    //     left: 41%;
+    // }
 
     img {
       cursor: pointer;
