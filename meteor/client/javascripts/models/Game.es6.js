@@ -1,5 +1,4 @@
 
-
 const reduceScore = (scores) =>
     scores.reduce((acc, x) => acc + x.score, 0);
 
@@ -57,8 +56,14 @@ Reminisce.Model.Game = class Game {
   }
 
   getOpponent() {
+    const opId = this.getOpponentId();
+
+    if (opId == Meteor.userId()) {
+        return Reminisce.Store.UserStore.byId(opId);
+    }
+
     const FriendStore = Reminisce.Store.FriendStore;
-    return FriendStore.byId(this.getOpponentId()) || FriendStore.byUserId(this.getOpponentId());
+    return FriendStore.byId(opId) || FriendStore.byUserId(opId);
   }
 
   getScore() {
