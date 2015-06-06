@@ -63,8 +63,6 @@ FriendRepository = {
         bots.forEach(bot => {
             var friend = FriendRepository.byUserId(bot.id, userId);
 
-            console.log(bot, friend);
-
             if (friend != null) {
                 return;
             }
