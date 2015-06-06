@@ -8,6 +8,17 @@ var React = require('react'),
     shapes = require('./shapes'),
     progressImage = require('../helpers/progressImage');
 
+const icons = {
+  Order: 'sort', // 'sort-up'
+  MultipleChoice: 'list',
+  Timeline: 'time', // 'calendar'
+  Geolocation: 'map-marker', // 'geo'
+  Misc: 'question'
+};
+
+const typeToIcon = (type) =>
+  icons[type] || icons.Misc
+
 var Tile = React.createClass({
 
   propTypes: {
@@ -16,7 +27,6 @@ var Tile = React.createClass({
     questionModal: shapes.modalDesc.isRequired,
     number: React.PropTypes.number.isRequired,
     type: React.PropTypes.string.isRequired,
-    icon: React.PropTypes.string.isRequired,
     opponentId: React.PropTypes.string,
     score: shapes.score.isRequired,
     disabled: React.PropTypes.bool.isRequired
@@ -65,8 +75,9 @@ var Tile = React.createClass({
   },
 
   getIconClassNames() {
+    console.log(this.props.type, typeToIcon(this.props.type));
     return [
-      `icon-${this.props.icon}`,
+      `icon-${typeToIcon(this.props.type)}`,
       'icon-2x'
     ].join(' ');
   },

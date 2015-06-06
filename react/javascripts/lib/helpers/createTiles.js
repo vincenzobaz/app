@@ -14,8 +14,7 @@ const createTile = (game, tile, tileNum) => {
 
   const modal     = getModalDesc(game, tile);
   const placement = placementForTileAt(tileNum);
-  const icon      = tile.getIcon();
-  const type      = icon;
+  const type      = tile.getType();
   const disabled  = tile.disabled || game.hasEnded() || !game.isMyTurnToPlay();
 
   const row       = Math.floor((tileNum - 1) / 3);
@@ -32,7 +31,6 @@ const createTile = (game, tile, tileNum) => {
     <Tile key={'tile-' + tile.getId()}
           title={''}
           type={type}
-          icon={icon}
           placement={placement}
           number={tileNum}
           score={score || tile.getScore()}

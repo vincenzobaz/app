@@ -15,10 +15,6 @@ Tile = class Tile {
         return this.type;
     }
 
-    getIcon() {
-        return 'list';
-    }
-
     getScore() {
         return this.score || {
             me: 0,
