@@ -13,14 +13,12 @@ var Tile = React.createClass({
   propTypes: {
     title: React.PropTypes.string.isRequired,
     placement: React.PropTypes.string.isRequired,
-    answered: React.PropTypes.bool.isRequired,
     questionModal: React.PropTypes.element.isRequired,
     number: React.PropTypes.number.isRequired,
     type: React.PropTypes.string.isRequired,
     icon: React.PropTypes.string.isRequired,
     opponentId: React.PropTypes.string,
     score: scoreShape.isRequired,
-    wonBy: React.PropTypes.oneOf(['me', 'opponent']),
     disabled: React.PropTypes.bool.isRequired
   },
 
@@ -48,25 +46,30 @@ var Tile = React.createClass({
 
   renderButton(enabled) {
     // FIXME: Horrible hack to shut up JSLint.
-    var href = enabled ? '#' : 'java script:;'.replace(/\s/, '');
     return (
-      <a role='button' href={href}>
+      <a role='button' href='#' onClick={this.onClick(enabled)}>
         <img src={this.getProgressImage()} alt={this.props.title} style={this.getImageStyle()} />
         <i className={this.getIconClassNames()}></i>
       </a>
     );
   },
 
+  onClick(enabled) {
+    (e) => {
+      if (!enabled) {
+        e.preventDefault();
+      }
+    }
+  },
+
   isDisabled() {
-    return this.props.answered || this.props.disabled || this.props.wonBy;
+    return this.props.disabled;
   },
 
   getCellClassNames() {
     return [
       'cell',
       `cell-${this.props.number}`,
-      this.props.wonBy != null ? `win-${this.props.wonBy}` : '',
-      this.props.answered ? 'answered' : '',
       this.isDisabled() ? 'disabled' : '',
       this.props.type
     ].join(' ');

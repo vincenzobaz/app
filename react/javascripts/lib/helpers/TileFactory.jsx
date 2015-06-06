@@ -28,8 +28,7 @@ class TileFactory {
 
     const icon       = tile.getIcon();
     const type       = icon;
-    const answered   = (tile.getScore().them >= 3) ? true : tile.isAnswered(); // FIXME: This is wrong
-    const disabled   = this.game.hasEnded() || !this.game.isMyTurnToPlay();
+    const disabled   = tile.disabled || this.game.hasEnded() || !this.game.isMyTurnToPlay();
 
     const row = Math.floor((tileNum - 1) / 3);
     const col = tileNum - 1 - (row * 3);
@@ -51,7 +50,6 @@ class TileFactory {
             score={score || tile.getScore()}
             questionModal={modal}
             opponentId={opponentId}
-            answered={answered}
             disabled={disabled} />
     );
   }
