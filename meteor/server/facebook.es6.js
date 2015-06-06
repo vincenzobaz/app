@@ -113,9 +113,7 @@ Meteor.methods({
     }
 
     const fbFriends = Facebook.getFriends(user);
-    const withBots = fbFriends.concat(BotService.botsAsFriends());
-
-    return FriendRepository.updateFriends(this.userId, withBots);
+    return FriendRepository.updateFriends(this.userId, fbFriends);
   },
 
   'Facebook.getPermissions'() {

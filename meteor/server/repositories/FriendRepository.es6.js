@@ -3,10 +3,12 @@ FriendRepository = {
 
     updateUserId(friend) {
         const user = UserRepository.byFacebookId(friend.facebookId);
+
         if (user != null) {
             friend.userId = user._id;
             return true;
         }
+
         return false;
     },
 
@@ -14,14 +16,7 @@ FriendRepository = {
         const doc = _.pick(friend, ...FriendProps);
 
         if (!doc.userId) {
-            if (doc.isBot) {
-                doc.userId = doc.facebookId;
-                delete doc.facebookId;
-                return doc;
-            }
-            else {
-                FriendRepository.updateUserId(doc);
-            }
+            FriendRepository.updateUserId(doc);
         }
 
         if (friend._id) {
@@ -42,6 +37,10 @@ FriendRepository = {
         return Friends.findOne({ facebookId: facebookId, friendOf: userId });
     },
 
+    byUserId(friendUserId, userId) {
+        return Friends.findOne({ userId: friendUserId, friendOf: userId });
+    },
+
     updateFriends(userId, friends) {
         return friends.map(f => {
             var friend = FriendRepository.byFacebookId(f.id, userId);
@@ -57,6 +56,28 @@ FriendRepository = {
                 FriendRepository.save(friend);
             }
             return friend;
+        });
+    },
+
+    addBots(userId, bots) {
+        bots.forEach(bot => {
+            var friend = FriendRepository.byUserId(bot.id, userId);
+
+            console.log(bot, friend);
+
+            if (friend != null) {
+                return;
+            }
+
+            friend = {
+                facebookId: bot.id,
+                userId: bot.id,
+                friendOf: userId,
+                name: bot.name,
+                isBot: true
+            };
+
+            FriendRepository.save(friend);
         });
     }
 
