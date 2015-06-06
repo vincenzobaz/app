@@ -26,7 +26,7 @@ js_vendors := $(js_vendor_dir)/jquery-2.1.0.min.js \
 							$(js_vendor_dir)/bootstrap-2.2.2.min.js \
 							$(js_dir)/rock-hammer/plugins.js
 
-sass_files := $(css_dir)/all.scss $(css_dir)/lte-ie8.scss
+sass_files := $(css_dir)/all.scss
 every_sass_files := $(wildcard $(css_dir)/**/*.scss)
 css_files := $(sass_files:.scss=.css)
 
