@@ -64,6 +64,12 @@ var eventEmitter = React.PropTypes.shape(objWithAllKeysAt([
   'removeAllListeners', 'listeners', 'emit'
 ], React.PropTypes.func.isRequired));
 
+var modalDesc = React.PropTypes.shape({
+  element: React.PropTypes.any.isRequired,
+  props: React.PropTypes.object.isRequired,
+  onDismiss: React.PropTypes.func
+});
+
 module.exports = {
   Tile: tile,
   Game: game,
@@ -78,6 +84,7 @@ module.exports = {
   image: image,
   map: map,
   answer: answer,
-  EventEmitter: eventEmitter
+  EventEmitter: eventEmitter,
+  modalDesc: modalDesc
 };
 

@@ -72,7 +72,7 @@ var ErrorHandler = React.createClass({
     return <noscript />;
   },
 
-  renderOverlay: function () {
+  renderOverlay() {
     if (!this.state.isModalOpen) {
       return <noscript />;
     }

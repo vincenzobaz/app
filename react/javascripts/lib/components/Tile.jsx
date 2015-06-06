@@ -3,9 +3,9 @@
 
 var React = require('react'),
     Tooltip = require('./bootstrap/Tooltip'),
-    ModalTrigger = require('react-bootstrap').ModalTrigger,
+    ModalManager = require('../stores/ModalManager'),
     Routes = require('../Routes'),
-    scoreShape = require('./shapes').score,
+    shapes = require('./shapes'),
     progressImage = require('../helpers/progressImage');
 
 var Tile = React.createClass({
@@ -13,12 +13,12 @@ var Tile = React.createClass({
   propTypes: {
     title: React.PropTypes.string.isRequired,
     placement: React.PropTypes.string.isRequired,
-    questionModal: React.PropTypes.element.isRequired,
+    questionModal: shapes.modalDesc.isRequired,
     number: React.PropTypes.number.isRequired,
     type: React.PropTypes.string.isRequired,
     icon: React.PropTypes.string.isRequired,
     opponentId: React.PropTypes.string,
-    score: scoreShape.isRequired,
+    score: shapes.score.isRequired,
     disabled: React.PropTypes.bool.isRequired
   },
 
@@ -33,33 +33,22 @@ var Tile = React.createClass({
   },
 
   renderTrigger() {
-    if (this.isDisabled()) {
-      return this.renderButton(false);
-    }
-
     return (
-      <ModalTrigger modal={this.props.questionModal}>
-        {this.renderButton(true)}
-      </ModalTrigger>
-    );
-  },
-
-  renderButton(enabled) {
-    // FIXME: Horrible hack to shut up JSLint.
-    return (
-      <a role='button' href='#' onClick={this.onClick(enabled)}>
+      <a role='button' href='#' onClick={this.onClick}>
         <img src={this.getProgressImage()} alt={this.props.title} style={this.getImageStyle()} />
         <i className={this.getIconClassNames()}></i>
       </a>
     );
   },
 
-  onClick(enabled) {
-    (e) => {
-      if (!enabled) {
-        e.preventDefault();
-      }
+  onClick(e) {
+    e.preventDefault();
+
+    if (this.isDisabled()) {
+      return;
     }
+
+    ModalManager.showModal(this.props.questionModal);
   },
 
   isDisabled() {

@@ -6,7 +6,9 @@ require('./rock-hammer');
 var React = window.React = require('react'),
     Main = require('./lib/handlers/Main'),
     ErrorStore = require('./lib/stores/ErrorStore'),
+    ModalManager = require('./lib/stores/ModalManager'),
     ErrorHandler = require('./lib/components/ErrorHandler'),
+    ModalHandler = require('./lib/components/ModalHandler'),
     debug = window.debug = require('debug');
 
 var $$ = document.getElementById.bind(document);
@@ -17,8 +19,9 @@ var App = {
 
     this.subscribe();
 
-    React.render(<Main />, $$('app'));
     React.render(<ErrorHandler store={ErrorStore} />, $$('error'));
+    React.render(<Main />, $$('app'));
+    React.render(<ModalHandler manager={ModalManager} />, $$('modal'));
   },
 
   subscribe() {

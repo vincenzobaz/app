@@ -20,7 +20,8 @@ css_dir := stylesheets
 build_dir := build
 
 app_js := $(js_dir)/app.js
-js_files := $(wildcard $(js_dir)/lib/**/*.js*)
+js_files := $(wildcard $(js_dir)/lib/**/*.js*) $(wildcard $(js_dir)/*.js*)
+
 js_vendors := $(js_vendor_dir)/jquery-2.1.0.min.js \
 							$(js_vendor_dir)/bootstrap-2.2.2.min.js \
 							$(js_dir)/rock-hammer/plugins.js
