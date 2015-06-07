@@ -53,10 +53,6 @@ TimelineVerificationService = class TimelineVerificationService {
      * @return {number} 0 for incorrect 1 for correct
      */
     static verifyAnswer(question, answer) {
-        const answerDate = answer.getData().getDate();
-        var min = answer.getData().getDate();
-        var max = answer.getData().getDate();
-        const threshold = Math.max(question.getThreshold(), 1);
         switch(question.getUnit()) {
             case TimelineUnit.Day:
                 console.log(`Timeline: Answer day: ${moment(answer.getData().getDate()).dayOfYear()}
@@ -86,8 +82,6 @@ TimelineVerificationService = class TimelineVerificationService {
             default:
                 throw new Meteor.Error(500, `Unknown unit ${question.getUnit()}`);
         }
-
-        return 0;
 
     }
 };
