@@ -1,48 +1,34 @@
+const React = require('react'),
+      SortableMixin = require('sortablejs/react-sortable-mixin'),
+      shapes = require('./shapes');
 
-'use strict';
+const SortableList = React.createClass({
 
-var React = require('react');
-var SortableItem = require('react-sortable-bis').SortableItem;
+    mixins: [SortableMixin],
 
-var id = function(x) { return x; };
-var nop = function() {};
+    propTypes: {
+      items: React.PropTypes.arrayOf(shapes.item).isRequired,
+      onSort: React.PropTypes.func.isRequired
+    },
 
-var SortableList = React.createClass({
+    getInitialState() {
+        return {
+            items: this.props.items
+        };
+    },
 
-  propTypes: {
-    items: React.PropTypes.array.isRequired,
-    dragging: React.PropTypes.number,
-    listTag: React.PropTypes.string,
-    itemTag: React.PropTypes.string,
-    renderItem: React.PropTypes.func,
-    onUpdate: React.PropTypes.func
-  },
+    handleSort(e) {
+      this.props.onSort(this.state.items);
+    },
 
-  getDefaultProps() {
-    return {
-      listTag: 'ul',
-      itemTag: 'li',
-      renderItem: id,
-      onUpdate: nop
-    };
-  },
-
-  render() {
-    var items = this.props.items.map((item, i) => {
-      var renderedItem = this.props.renderItem(item);
-      return <SortableItem tagName={this.props.itemTag}
-                           onSortUpdate={this.props.onUpdate}
-                           items={this.props.items}
-                           dragging={this.props.dragging}
-                           key={i}
-                           item={renderedItem} />;
-    }, this);
-
-    return this.transferPropsTo(
-      React.DOM[this.props.listTag](null, items)
-    );
-  }
-
+    render() {
+      return (
+        <ul className="sortable">
+          {this.state.items.map(item => <li key={item.id}>{item.text}</li>)}
+        </ul>
+      );
+    }
 });
 
 module.exports = SortableList;
+

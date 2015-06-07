@@ -3,22 +3,14 @@
 
 var React = require('react'),
     Button = require('react-bootstrap').Button,
-    SortableList = require('../SortableList');
-
-var itemShape = React.PropTypes.shape({
-  title: React.PropTypes.string,
-  id: React.PropTypes.number
-});
+    SortableList = require('../SortableList'),
+    shapes = require('../shapes');
 
 var Reorder = React.createClass({
 
   propTypes: {
-    items: React.PropTypes.arrayOf(itemShape).isRequired,
+    items: React.PropTypes.arrayOf(shapes.item).isRequired,
     onDone: React.PropTypes.func.isRequired
-  },
-
-  getDefaultProps() {
-    return {};
   },
 
   getInitialState() {
@@ -32,28 +24,19 @@ var Reorder = React.createClass({
       <div className="question question-reorder">
         <h4>What is the correct order?</h4>
         <p>Click and drag the items in the correct order.</p>
-        <SortableList items={this.state.items}
-                      dragging={this.state.dragging}
-                      onUpdate={this._onReorder}
-                      renderItem={this._renderItem}
-                      className='answers sortable' />
-        <Button onClick={this._onDone}>Done</Button>
+        <SortableList items={this.props.items} onSort={this.onSort} />
+        <Button onClick={this.onDone}>Done</Button>
       </div>
     );
   },
 
-  _renderItem(item) {
-    return item.title;
-  },
-
-  _onReorder(items, dragging) {
+  onSort(items) {
     this.setState({
-      items,
-      dragging
+      items: items
     });
   },
 
-  _onDone() {
+  onDone() {
     this.props.onDone({
       items: this.state.items
     });

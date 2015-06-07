@@ -70,6 +70,11 @@ var modalDesc = React.PropTypes.shape({
   onDismiss: React.PropTypes.func
 });
 
+var item = React.PropTypes.shape({
+  text: React.PropTypes.string.isRequired,
+  id: React.PropTypes.number.isRequired
+});
+
 module.exports = {
   Tile: tile,
   Game: game,
@@ -85,6 +90,7 @@ module.exports = {
   map: map,
   answer: answer,
   EventEmitter: eventEmitter,
-  modalDesc: modalDesc
+  modalDesc: modalDesc,
+  item: item
 };
 
