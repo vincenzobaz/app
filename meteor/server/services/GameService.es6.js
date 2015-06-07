@@ -19,8 +19,8 @@ GameService = {
             player2: player2Id,
             status: GameStatus.Waiting,
             playerTurn: _.random(1, 2),
-            player1Scores: {},
-            player2Scores: {},
+            player1Scores: 0,
+            player2Scores: 0,
             boardState: boardState,
             player1AvailableMoves: GameService.createAvailableMoves(),
             player2AvailableMoves: GameService.createAvailableMoves()

@@ -103,6 +103,10 @@ Game = class Game {
         return this.player2Scores;
     }
 
+    incrementCurrentPlayerScore(value) {
+        this['player' + this.getPlayerTurn() + 'Scores'] += value;
+    }
+
     getOpponent() {
         var myId = Meteor.userId();
 

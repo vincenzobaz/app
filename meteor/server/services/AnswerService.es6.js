@@ -28,6 +28,8 @@ AnswerService = {
             const oldScore = boardState[row][col].player === currentTurn? boardState[row][col].score : 0;
             const newScore = _.reduce(_.map(scores, s => s.score), (add, x) => add + x);
             const otherScore = boardState[row][col].player !== currentTurn? boardState[row][col].score : 0;
+            game.incrementCurrentPlayerScore(newScore);
+
 
             if (newScore === 3) {
                 game.setPlayer1AvailableMoves(_.filter(game.getPlayer1AvailableMoves(), m => {return m.row !== row || m.column !== col}));
@@ -62,11 +64,7 @@ AnswerService = {
                 game.status = GameStatus.Ended;
             }
 
-            // FIXME: Just a temporary hack to fix #61
-            //Meteor.setTimeout(() => {
             game.nextTurn();
-                //GameRepository.save(game);
-            //}, 5 * 1000);
 
             GameRepository.save(game);
 
