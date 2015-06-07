@@ -234,6 +234,7 @@ GeoQuestion = class GeoQuestion {
         return this.kind;
     }
 
+    //TODO: Improve the creation through props to properly show types, create a constructor
     /**
      * @return {Marker}
      */
@@ -241,8 +242,8 @@ GeoQuestion = class GeoQuestion {
         if (!Meteor.isServer) {
             throw new Error(`Well tried, there\'s nothing to see here. See for yourself: ${this.answer}`);
         }
-
-        return this.answer;
+        console.log('getting the answser ', this.answer);
+        return new Marker(this.answer.latitude, this.answer.longitude);
     }
 };
 
@@ -255,13 +256,15 @@ Question = {};
 Question.Kind = {
     MultipleChoice: 'MultipleChoice',
     Timeline: 'Timeline',
-    Geo: 'Geo'
+    Geolocation: 'Geolocation',
+    Order: 'Order'
 };
 
 Question.TypeMap = {};
 Question.TypeMap[Question.Kind.MultipleChoice] = MultipleChoiceQuestion;
 Question.TypeMap[Question.Kind.Timeline]       = TimelineQuestion;
-Question.TypeMap[Question.Kind.Geo]            = GeoQuestion;
+Question.TypeMap[Question.Kind.Geolocation]    = GeoQuestion;
+Question.TypeMap[Question.Kind.Order]          = OrderQuestion;
 
 Question.fromRaw = (tile, data) => {
     const kind = Question.Kind[data.kind];

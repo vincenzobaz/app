@@ -1,7 +1,14 @@
-class Marker {
+Marker = class Marker {
 
-    latitude;
-    longitude;
+    /**
+     *
+      * @param {number} latitude
+     * @param {number} longitude
+     */
+    constructor (latitude, longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 
     /**
      * Returns the latitude
@@ -18,11 +25,17 @@ class Marker {
     getLongitude() {
         return this.longitude;
     }
-}
+};
 
-class GeoData {
+GeoData = class GeoData {
 
-    marker;
+    /**
+     *
+     * @param {Marker} marker
+     */
+    constructor(marker) {
+        this.marker = marker;
+    }
 
     /**
      * Contains the marker put by the user
@@ -31,12 +44,20 @@ class GeoData {
     getMarker() {
         return this.marker;
     }
-}
+};
 
 /**
  * @extends {Answer}
  */
-class GeoAnswer {
+GeoAnswer = class GeoAnswer {
+
+    /**
+     *
+     * @param {GeoData} data
+     */
+    constructor(data) {
+        this.data = data;
+    }
     /**
      * A data object
      * @type {GeoData}
@@ -44,9 +65,9 @@ class GeoAnswer {
     getData() {
         return this.data;
     }
-}
+};
 
-GeoVerificationService = {
+GeoVerificationService = class GeoVerificationService {
     /**
      * verifies if the answer provided is at the correct location
      *
@@ -56,8 +77,9 @@ GeoVerificationService = {
      * @return {number} 1 for correct answer 0 for incorrect
      */
 
-        verifyAnswer(question, answer)  {
+        static verifyAnswer(question, answer)  {
 
+        console.error("Geo answer correct", question.getAnswer(), answer.getData().getMarker());
         const pickedLocation = answer.getData().getMarker();
         const correctLocation = question.getAnswer();
 

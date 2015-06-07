@@ -15,7 +15,7 @@ JoinRequestService = {
             var board1Id = GameBoardRepository.save(board1);
             game.player1Board = board1Id;
         } catch (e) {
-            console.log("we didn't fetched board 1" + e);
+            console.error("we didn't fetched board 1" + e);
             const fetch1 = new GameFetch({gameId: game.getId(), player: 1, playerId:game.getPlayer1(), tries: 1});
             GameFetchRepository.save(fetch1);
         }
@@ -26,6 +26,7 @@ JoinRequestService = {
             game.player2Board = board2Id;
         }
         catch (e) {
+            console.error("we didn't fetched board 2 " + e);
             const fetch2 = new GameFetch({gameId: game.getId(), player: 2, playerId:game.getPlayer2(), tries: 1});
             GameFetchRepository.save(fetch2);
         }

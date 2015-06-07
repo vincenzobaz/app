@@ -56,36 +56,38 @@ TimelineVerificationService = class TimelineVerificationService {
         const answerDate = answer.getData().getDate();
         var min = answer.getData().getDate();
         var max = answer.getData().getDate();
-        const threshold = question.getThreshold();
-
+        const threshold = Math.max(question.getThreshold(), 1);
         switch(question.getUnit()) {
             case TimelineUnit.Day:
-                min = new Date(question.getAnswer()).adjustDateDays(-threshold);
-                max = new Date(question.getAnswer()).adjustDateDays(threshold);
+                console.log(`Timeline: Answer day: ${moment(answer.getData().getDate()).dayOfYear()}
+                question day: ${moment(question.getAnswer()).dayOfYear()}`);
+                return moment(answer.getData().getDate()).dayOfYear() === moment(question.getAnswer()).dayOfYear()? 1: 0;
                 break;
 
             case TimelineUnit.Week:
-                min = new Date(question.getAnswer).adjustDateWeek(-threshold);
-                max = new Date(question.getAnswer).adjustDateWeek(threshold);
+                console.log(`Timeline: Answer week: ${moment(answer.getData().getDate()).week()}
+                question week: ${moment(question.getAnswer()).week()}`);
+                return moment(answer.getData().getDate()).week() === moment(question.getAnswer()).week()? 1: 0;
                 break;
 
             case TimelineUnit.Month:
-                min = new Date(question.getAnswer).adjustDateMonth(-threshold);
-                max = new Date(question.getAnswer).adjustDateMonth(threshold);
+                console.log(`Timeline: Answer month: ${moment(answer.getData().getDate()).month()}
+                question month: ${moment(question.getAnswer()).month()}`);
+                return moment(answer.getData().getDate()).month() === moment(question.getAnswer()).month()? 1: 0;
+
                 break;
 
             case TimelineUnit.Year:
-                min = new Date(question.getAnswer).adjustDateYear(-threshold);
-                max = new Date(question.getAnswer).adjustDateYear(threshold);
+                console.log(`Timeline: Answer year: ${moment(answer.getData().getDate()).year()}
+                question year: ${moment(question.getAnswer()).year()}`);
+                return moment(answer.getData().getDate()).year() === moment(question.getAnswer()).year()? 1: 0;
                 break;
 
             default:
                 throw new Meteor.Error(500, `Unknown unit ${question.getUnit()}`);
         }
 
-        console.log(`min: ${min}, max: ${max}, answer: ${answerDate} =>`, answer);
-
-        return min.getTime() <= answerDate.getTime() && answerDate <= max.getTime() ? 1 : 0;
+        return 0;
 
     }
 };

@@ -49,8 +49,12 @@ Meteor.methods({
                     return new TimelineAnswer(new TimelineData(qa[1].data.date));
                 break;
                 case Question.Kind.Geo:
-                    return new GeoAnswer(GeoData(data.marker));
+                    return new GeoAnswer(new GeoData(new Marker(qa[1].data.marker.latitude, qa[1].data.marker.longitude)));
                 break;
+                case Question.Kind.Order:
+                    return new OrderAnswer(qa[1].timespent, new OrderData(_.map(qa[1].data.items, i => {
+                        return new OrderItem(i.id, i.title);
+                    })));
                 default:
                     Meteor.Error(500, 'Unsupported question type ' + qa[0].getKind());
             }

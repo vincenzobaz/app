@@ -21,7 +21,12 @@ QuestionTypes = {
     MCWhoMadeThisCommentOnYourPost: 'MCWhoMadeThisCommentOnYourPost',
     MCWhichPageDidYouLike: 'MCWhichPageDidYouLike',
     TLWhenDidYouShareThisPost: 'TLWhenDidYouShareThisPost',
-    GeoWhatCoordinatesWereYouAt: 'GeoWhatCoordinatesWereYouAt'
+    GeoWhatCoordinatesWereYouAt: 'GeoWhatCoordinatesWereYouAt',
+    ORDPostLikesNumber: 'ORDPostLikesNumber',
+    ORDPageLike: 'ORDPageLike',
+    ORDPageLikeTime: 'ORDPageLikeTime',
+    ORDPostCommentsNumber: 'ORDPostCommentsNumber',
+    ORDPostTime: 'ORDPostTime'
 };
 
 

@@ -155,11 +155,28 @@ BotService = {
                         new MultipleChoiceData(_.random(0, 100) < successrate ? q.answer: q.answer + 1 % 4)
                     );
                     break;
-                case Question.Kind.Geo:
-                    return new GeoAnswer(
-                        new GeoData(_.random(0, 100) < successrate ? q.answer: Marker(0, 0))
+                case Question.Kind.Geolocation:
+                    const geoAnswer = new GeoAnswer(
+                        //new GeoData(new Marker(0, 0))
+                        new GeoData(_.random(0, 100) < successrate ? q.getAnswer(): new Marker(0, 0))
                     );
+                    return geoAnswer;
                     break;
+                case Question.Kind.Order:
+                    const correctOrder = new OrderData(
+                        [new OrderItem(q.answer[0], ""),
+                            new OrderItem(q.answer[1], ""),
+                            new OrderItem(q.answer[2], ""),
+                            new OrderItem(q.answer[3], "")
+                        ]);
+                    const incorrectOrder = new OrderData(
+                        [new OrderItem(0, ""),
+                            new OrderItem(0, ""),
+                            new OrderItem(0, ""),
+                            new OrderItem(0, "")
+                        ]);
+                    return new OrderAnswer(0, _.random(0, 100) < successrate? correctOrder: incorrectOrder);
+                break;
                 default:
                     throw new Meteor.Error(500, `Unknown Question Kind ${q.kind} for Bot`);
             }

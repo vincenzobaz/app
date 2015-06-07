@@ -13,3 +13,4 @@ jparker:crypto-sha256
 jparker:crypto-hmac
 accounts-password
 mvrx:bluebird
+momentjs:moment

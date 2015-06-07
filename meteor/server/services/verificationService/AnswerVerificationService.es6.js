@@ -21,31 +21,24 @@ AnswerVerificationService = class AnswerVerificationService {
      *
      * @return {[number]} the array of the results: 0 for incorrect 1 for correct per question
      */
-  static verifyTile(tile, answers) {
+    static verifyTile(tile, answers) {
 
         const questionAnswers = _.zip(tile.getQuestions(), answers);
         console.log("ansswers", answers);
-        if (tile.type === "MultipleChoice"){
-            return _.map(questionAnswers, qa => MultipleChoiceVerificationService.verifyAnswer(qa[0], qa[1]));
-        } else if (tile.type === "Timeline"){
-            return _.map(questionAnswers, qa => TimelineVerificationService.verifyAnswer(qa[0], qa[1]));
-        } else if (tile.type === "Geolocation"){
-            return _.map(questionAnswers, qa => GeoVerificationService.verifyAnswer(qa[0], qa[1]));
-        } else if (tile.type === "Misc"){
-            return _.map(questionAnswers, qa => {
-                if (qa[0].getKind() === "Timeline"){
-                    return TimelineVerificationService.verifyAnswer(qa[0], qa[1]);
-                } else if (qa[0].getKind() === "MultipleChoice"){
-                    return MultipleChoiceVerificationService.verifyAnswer(qa[0], qa[1]);
-                } else if (qa[0].getKind() === "Geolocation") {
-                    return GeoVerificationService.verifyAnswer(qa[0], qa[1]);
-                } else {
-                    console.log("got invalid question kind " + qa[0].getKind());
-                    return true;
-                }
-            });
-        } else {
-            throw new Meteor.Error(500, `Invalid question type: '${tile.type}'`);
-        }
-  }
-}
+        return _.map(questionAnswers, qa => {
+            if (qa[0].getKind() === Question.Kind.Timeline){
+                return TimelineVerificationService.verifyAnswer(qa[0], qa[1]);
+            } else if (qa[0].getKind() === Question.Kind.MultipleChoice){
+                return MultipleChoiceVerificationService.verifyAnswer(qa[0], qa[1]);
+            } else if (qa[0].getKind() === Question.Kind.Geolocation) {
+                console.error("verifying geo", qa[1]);
+                return GeoVerificationService.verifyAnswer(qa[0], qa[1]);
+            } else if (qa[0].getKind() === Question.Kind.Order) {
+                return OrderVerificationService.verifyAnswer(qa[0], qa[1]);
+            } else {
+                console.error("got invalid question kind " + qa[0].getKind());
+                return 0;
+            }
+        });
+    }
+};

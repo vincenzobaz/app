@@ -24,7 +24,14 @@ Server.fetchGameBoard = function(userId) {
     const get = Meteor.wrapAsync(Meteor.http.get);
     const result = get(url);
 
-    return GameBoard.fromRaw(userId, result.data);
+    try {
+        const gameBoard = GameBoard.fromRaw(userId, result.data);
+        console.log("managed to fetch gameboard " + gameBoard + " for user" + userId);
+        return gameBoard;
+
+    } catch (e) {
+        console.error("ERROR: Can't create gameboard from gamecreator result " + e )
+    }
 };
 
 /*eslint camelcase:0*/

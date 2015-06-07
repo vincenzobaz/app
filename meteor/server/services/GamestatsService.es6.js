@@ -70,6 +70,7 @@ GamestatsService = {
                         stat.setTLCorrect(stat.getTLCorrect() + 1);
                     }
                     break;
+                case QuestionTypes.
                 default:
                     Meteor.Error(500, `Unkown Question type for stats for user: ${userId}, type: ${question.getType()}`);
             }
