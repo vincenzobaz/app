@@ -11,6 +11,7 @@ GameProps = ['_id', 'player1', 'player2', 'player1Board', 'player2Board',
     'player2AvailableMoves'
 ];
 
+
 Game = class Game {
 
 
@@ -127,6 +128,7 @@ Game = class Game {
         return this.player1AvailableMoves;
     }
 
+
     setPlayer1AvailableMoves(value) {
         this.player1AvailableMoves = value;
     }
@@ -137,6 +139,20 @@ Game = class Game {
 
     setPlayer2AvailableMoves(value) {
         this.player2AvailableMoves = value;
+    }
+
+    getCurrentPlayerAvailableMoves() {
+        return this['player' + this.getPlayerTurn() + 'AvailableMoves'];
+    }
+
+    setCurrentPlayerAvailableMoves(value) {
+        this['player' + this.getPlayerTurn() + 'AvailableMoves'] = value;
+    }
+
+    removeCurrentPlayerAvailableMove(move) {
+        this.setCurrentPlayerAvailableMoves(
+        _.filter(this.getCurrentPlayerAvailableMoves(), m => {return m.row !== move.row || m.column !== move.column})
+        );
     }
 
     createCopy() {

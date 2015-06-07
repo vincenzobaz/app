@@ -10,11 +10,20 @@ Meteor.methods({
     },
 
     'Account.deleteAllData': function() {
-        console.error('Account.deleteAllData is not implemented yet');
+        console.error(`Deleting Data for user: ${Meteor.userId()}`);
+        const user = Meteor.users.findOne(Meteor.userId());
+        const fbUserId = user.services.facebook.id;
+        const url = `${Meteor.settings.gameCreatorUrl}/removeUser?user_id=${fbUserId}`;
+        const del = Meteor.wrapAsync(Meteor.http.del);
+        const result = del(url);
 
+        if (result.statusCode === 200) {
+            Meteor.users.remove(Meteor.userId());
+        }
+        console.error(`We deleted with following result:`, result.data.message);
         return {
-            status: 'error',
-            msg: 'Account.deleteAllData is not implemented yet'
+            status: 'success',
+            msg: result.data.message
         };
     },
 
@@ -40,8 +49,17 @@ Meteor.methods({
         return {status: "success"};
     },
 
-    'Answer.timeOut': function(gameId) {
+    'Answer.timeOut': function(gameId, tileId) {
         console.error('Method Answer.timeOut is not implemented yet.');
+        const /**Game*/ game = Games.findOne(gameId);
+        const board = game.getCurrentBoard();
+        const tile = board.getTileById(tileId);
+        const index = _.findIndex(board.getTiles(), t => t.getId() === tileId);
+        const row = Math.floor(index / 3);
+        const col = index % 3;
+        game.removeCurrentPlayerAvailableMove({row: row, column: col});
+        tile.setDisabled(true);
+        GameBoardRepository.save(board);
         return {status: "success"};
     },
 
