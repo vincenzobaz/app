@@ -9,6 +9,15 @@ Meteor.methods({
       Server.fetchData(userId);
     },
 
+    'Account.deleteAllData': function() {
+        console.error('Account.deleteAllData is not implemented yet');
+
+        return {
+            status: 'error',
+            msg: 'Account.deleteAllData is not implemented yet'
+        };
+    },
+
     'JoinRequest.decline': function(requestId) {
       JoinRequestService.decline(requestId);
       return {status: "success", error: null};
