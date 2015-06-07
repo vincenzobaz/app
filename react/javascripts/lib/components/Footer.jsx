@@ -16,34 +16,31 @@ var Footer = React.createClass({
     return (
       <ul className='menu'>
         <li className='branding'>
-            <a href="#" onClick={this.showHome}>
+            <a href="#" onClick={this.showPage('home')}>
               <img src={Routes.Assets.at('images/reminisce-logo-ios.png').url} alt='Reminisce' width='48' height='48' />
             </a>
         </li>
         <li className=''>
-          <a href="#" onClick={this.showAbout}>About</a>
+          <a href="#" onClick={this.showPage('about')}>About</a>
         </li>
         <li className=''>
-          <a href="#" onClick={this.showStats}>Stats</a>
+          <a href="#" onClick={this.showPage('stats')}>Stats</a>
         </li>
-        <GameToolbar game={this.props.currentGame} />
+        <li className='right'>
+          <a href="#" onClick={this.showPage('account')}>Account</a>
+        </li>
+        <li className='manage-game right'>
+          <GameToolbar game={this.props.currentGame} />
+        </li>
       </ul>
     );
   },
 
-  showHome(e) {
-    e.preventDefault();
-    Session.set('page', 'home');
-  },
-
-  showAbout(e) {
-    e.preventDefault();
-    Session.set('page', 'about');
-  },
-
-  showStats(e) {
-    e.preventDefault();
-    Session.set('page', 'stats');
+  showPage(page) {
+    return (e) => {
+      e.preventDefault();
+      Session.set('page', page);
+    };
   }
 
 });

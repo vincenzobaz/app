@@ -72,7 +72,7 @@ var GameToolbar = React.createClass({
     }
 
     return (
-      <li className='manage-game right'>
+      <span>
         <span className='start-game'>
           Start new game with
           &nbsp;
@@ -83,7 +83,7 @@ var GameToolbar = React.createClass({
         &nbsp;
         {this.renderQuitGameButton()}
         {startModal}
-      </li>
+      </span>
     );
   },
 

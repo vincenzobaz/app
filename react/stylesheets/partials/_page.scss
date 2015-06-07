@@ -532,6 +532,10 @@ background-color : $navigationbackgroundcolor;
             }
         }
 
+        &.manage-game {
+            padding-top: 4px;
+        }
+
         &.right {
             float: right;
             text-align: right;

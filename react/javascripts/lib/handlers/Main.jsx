@@ -9,6 +9,7 @@ var React = require('react'),
     Welcome = require('./Welcome'),
     Stats = require('./Stats'),
     About = require('./About'),
+    Account = require('./Account'),
     FacebookStore = require('../stores/FacebookStore'),
     getAppState = require('../appState'),
     debug = require('debug')('Main');
@@ -42,29 +43,19 @@ var Main = React.createClass({
     );
   },
 
+  pages: {
+    stats: Stats,
+    welcome: Welcome,
+    about: About,
+    account: Account,
+    game: PlayGame
+  },
+
   renderInner() {
-    if (this.state.page === 'stats') {
-      debug('Rendering stats');
-      return <Stats {...this.state} />;
-    }
+    const page = (this.pages[this.state.page]) ? this.state.page : 'welcome';
+    const Page = this.pages[page];
 
-    if (this.state.page === 'home') {
-      debug('Rendering Welcome');
-      return <Welcome {...this.state} />;
-    }
-
-    if (this.state.page === 'about') {
-      debug('Rendering About');
-      return <About {...this.state} />;
-    }
-
-    if (this.state.page === 'game') {
-      debug('Rendering PlayGame', this.state.currentGame);
-      return <PlayGame {...this.state} />;
-    }
-
-    debug('Rendering Welcome');
-    return <Welcome {...this.state} />;
+    return <Page {...this.state} />;
   }
 
 });
