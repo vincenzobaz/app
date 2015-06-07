@@ -1,9 +1,10 @@
 
-const TileProps = ['_id', 'type', 'question1', 'question2', 'question3', 'score', 'answered'];
+const TileProps = ['_id', 'type', 'question1', 'question2', 'question3', 'score', 'answered', 'disabled'];
 
 Tile = class Tile {
 
     constructor(props) {
+        console.log("creating new tile with proprs", props);
         assignProps(this, TileProps, props);
     }
 
@@ -42,6 +43,14 @@ Tile = class Tile {
         return [this.question1, this.question2, this.question3];
     }
 
+    setDisabled(value) {
+        this.disabled = value;
+    }
+
+    getIsDisabled() {
+        return this.disabled;
+    }
+
     isAnswered() {
         return false;
     }
@@ -54,9 +63,12 @@ Tile = class Tile {
         return new Tile({
             _id: tile._id || generateId(),
             type: tile.type,
-            question1,
-            question2,
-            question3
+            question1: question1,
+            question2: question2,
+            question3: question3,
+            score: 0,
+            answered: false,
+            disabled: false
         });
     }
 };

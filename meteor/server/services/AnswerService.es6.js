@@ -9,6 +9,7 @@ AnswerService = {
         const tile = board.getTileById(tileId);
 
         if (tile){
+            tile.setDisabled(true);
             const index = _.findIndex(board.getTiles(), t => t.getId() === tileId);
             const row = Math.floor(index / 3);
             const col = index % 3;
@@ -67,6 +68,7 @@ AnswerService = {
             game.nextTurn();
 
             GameRepository.save(game);
+            GameBoardRepository.save(board);
 
             return {
                 status: 'success',
