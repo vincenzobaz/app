@@ -87,11 +87,12 @@ OrderVerificationService = {
 
         const answerNumber = _.map(answer.data.items, (i) => i.id);
         const correct = _.reduce(
-            _.zip(question.getAnswer(), answerNumber), (qa) => {
-                return qa[0] === qa[1]? 1 : 0;
-            });
+            _.zip(question.getAnswer(), answerNumber), (memo, qa) => {
+                console.log(`the answer is ${qa[0]}, chosen ${qa[1]}`);
+                return memo + (qa[0] === qa[1]? 1 : 0);
+            }, 0);
 
-
-        return correct === 3? 1 : 0;
+        console.log(`Correctly ordered ${correct} number of thingys`);
+        return correct === 4? 1 : 0;
     }
 };

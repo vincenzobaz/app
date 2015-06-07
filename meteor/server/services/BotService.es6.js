@@ -56,6 +56,10 @@ BotService = {
             added: function (game) {
                 console.log(`Starting to observe game ${game._id}`);
                 BotService.observeGame(game._id, bot1._id);
+                const request = JoinRequests.findOne({gameId: game._id});
+                if (request) {
+                    JoinRequestService.accept(request._id);
+                }
             },
             removed: function (id) {
                 console.log("it removed");

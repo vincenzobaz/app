@@ -66,8 +66,13 @@ JoinRequestService = {
                 };
             }
 
+            if (friend.isBot){
+                opponent = Meteor.users.findOne(friend.userId);
+
+            } else {
+                opponent = Meteor.users.findOne({"services.facebook.id": friend.facebookId});
+            }
             console.log('checking if user ' + currentUserId + ' is friend with ', friend);
-            opponent = Meteor.users.findOne({"services.facebook.id": friend.facebookId});
 
             console.log("we found opponent ", opponent);
             // if (friend.friendOf !== currentUserId) {
