@@ -71,8 +71,9 @@ var modalDesc = React.PropTypes.shape({
 });
 
 var item = React.PropTypes.shape({
-  text: React.PropTypes.string.isRequired,
-  id: React.PropTypes.number.isRequired
+  text: React.PropTypes.string,
+  id: React.PropTypes.number.isRequired,
+  subject: subject.isRequired
 });
 
 module.exports = {
