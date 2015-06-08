@@ -43,7 +43,11 @@ var EndGame = React.createClass({
   },
 
   renderTitle() {
-    if (this.haveWon()) {
+    if (this.props.game.isDraw()) {
+      return "It's a draw!";
+    }
+
+    if (this.props.game.isWon()) {
       return 'You won!';
     }
 
@@ -51,7 +55,15 @@ var EndGame = React.createClass({
   },
 
   renderBody() {
-    if (this.haveWon()) {
+    if (this.props.game.isDraw()) {
+      return (
+        <div>
+          <p>Nobody won, but nobody lost either :)</p>
+        </div>
+      );
+    }
+
+    if (this.props.game.isWon()) {
       return (
         <div>
           <p>Congratulations, you have won the game!</p>
@@ -64,14 +76,6 @@ var EndGame = React.createClass({
         <p>Sorry, you have lost the game.</p>
       </div>
     );
-  },
-
-  haveWon() {
-    var game = this.props.game;
-    return true;
-
-    // FIXME: game.isWonBy isn't how we do this anymore.
-    return game.isWonBy(game.getOpponent());
   },
 
   onRequestHide() {

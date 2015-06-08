@@ -23,6 +23,7 @@ Reminisce.Collection.Games = new Mongo.Collection('games', {
             player1 : doc.player1,
             player2 : doc.player2,
             status  : doc.status,
+            wonBy   : doc.wonBy,
             score   : {
                 me   : computeScoreForPlayer(doc.boardState, isPlayer1 ? 1 : 2),
                 them : computeScoreForPlayer(doc.boardState, isPlayer1 ? 2 : 1)
@@ -105,13 +106,20 @@ Reminisce.Model.Game = class Game {
     return this.getStatus() === GameStatus.Creating;
   }
 
-  isWon() {
-    var winData = this.getWinData();
-    return winData != null && winData.wonBy != null;
+  isDraw() {
+    return this.wonBy === 0;
   }
 
-  getWinData() {
-    return this.winData;
+  isWon() {
+    if (this.isDraw()) {
+        return false;
+    }
+
+    return this.getMyPlayerNumber() === this.wonBy;
+  }
+
+  isLost() {
+    return !this.isWon();
   }
 
   getBoard() {
