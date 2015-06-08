@@ -89,22 +89,22 @@ OrderQuestion = class OrderQuestion {
         this.items = _.map(value, c => {
             switch (c.subject.type) {
                 case SubjectTypes.Page:
-                    return {id: c.uId, text: c.subject.name};
+                    return {id: c.uId, text: c.subject.name, subject:c.subject};
                     break;
                 case SubjectTypes.TextPost:
-                    return {id: c.uId, text: c.subject.text};
+                    return {id: c.uId, text: c.subject.text, subject:c.subject};
                     break;
                 case SubjectTypes.ImagePost:
-                    return {id: c.uId, text: c.subject.text};
+                    return {id: c.uId, text: c.subject.text, subject:c.subject};
                     break;
                 case SubjectTypes.VideoPost:
-                    return {id: c.uId, text: c.subject.text};
+                    return {id: c.uId, text: c.subject.text, subject:c.subject};
                     break;
                 case SubjectTypes.LinkPost:
-                    return {id: c.uId, text: c.subject.text};
+                    return {id: c.uId, text: c.subject.text, subject:c.subject};
                     break;
                 case SubjectTypes.Comment:
-                    return {id: c.uId, text: c.subject.comment};
+                    return {id: c.uId, text: c.subject.comment, subject:c.subject};
                     break;
                 default:
                     console.error("Ordering subject type not defined: " + c.type);

@@ -8,7 +8,8 @@ Games = new Mongo.Collection("games", {
 GameProps = ['_id', 'player1', 'player2', 'player1Board', 'player2Board',
     'status', 'playerTurn', 'player1Scores', 'player2Scores', 'boardState',
     'player1AvailableMoves',
-    'player2AvailableMoves'
+    'player2AvailableMoves',
+    'wonBy'
 ];
 
 
@@ -153,6 +154,14 @@ Game = class Game {
         this.setCurrentPlayerAvailableMoves(
         _.filter(this.getCurrentPlayerAvailableMoves(), m => {return m.row !== move.row || m.column !== move.column})
         );
+    }
+
+    getWonBy() {
+        return this.wonBy;
+    }
+
+    setWonBy(value) {
+        this.wonBy = value;
     }
 
     createCopy() {

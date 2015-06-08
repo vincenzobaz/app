@@ -23,7 +23,8 @@ GameService = {
             player2Scores: 0,
             boardState: boardState,
             player1AvailableMoves: GameService.createAvailableMoves(),
-            player2AvailableMoves: GameService.createAvailableMoves()
+            player2AvailableMoves: GameService.createAvailableMoves(),
+            wonBy: null
         });
     },
 

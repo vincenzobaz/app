@@ -52,15 +52,17 @@ AnswerService = {
             const wins = AnswerService.playerWinsForRowAndColumn(boardState, currentTurn, row, col);
             const draw = AnswerService.isDraw(game);
 
-            if (wins || draw){
+            if ((wins || draw) && game.status !== GameStatus.Ended){
                 if (wins){
                     GamestatsService.updateStatsGameWon(currentUser);
                     GamestatsService.updateStatsGameLost(game.getOpponentForUser(currentUser));
+                    game.setWonBy(currentTurn);
                 }
 
                 if (draw) {
                     GamestatsService.updateStatsGameDraw(currentUser);
                     GamestatsService.updateStatsGameDraw(game.getOpponentForUser(currentUser));
+                    game.setWonBy(0);
                 }
                 game.status = GameStatus.Ended;
             }
@@ -131,7 +133,6 @@ AnswerService = {
                 return false;
             }
         }
-        //console.log(`player: ${player} won through row`);
         return true;
     },
 
@@ -141,8 +142,6 @@ AnswerService = {
                 return false;
             }
         }
-        //console.log(`player: ${player} won through column`);
-
         return true;
 
     },
@@ -154,8 +153,6 @@ AnswerService = {
                 return false;
             }
         }
-        //console.log(`player: ${player} won through diag`);
-
         return true;
     },
     verifyWonAntiDiagonal(boardState, player) {

@@ -107,8 +107,6 @@ BotService = {
 
                             if (result.win || result.draw) {
                                 handle1.stop();
-                                newGame.status = GameStatus.Ended;
-                                GameRepository.save(newGame);
                                 console.log(`Game ended: Player${botTurn} won:${result.win}, Draw: ${result.draw}`);
                             }
                         }
