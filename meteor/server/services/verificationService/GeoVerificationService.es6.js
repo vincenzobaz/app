@@ -79,7 +79,7 @@ GeoVerificationService = class GeoVerificationService {
 
         static verifyAnswer(question, answer)  {
 
-        console.error("Geo answer correct", question.getAnswer(), answer.getData().getMarker());
+
         const pickedLocation = answer.getData().getMarker();
         const correctLocation = question.getAnswer();
 
@@ -87,6 +87,11 @@ GeoVerificationService = class GeoVerificationService {
             Math.pow(pickedLocation.getLatitude() - correctLocation.getLatitude(), 2) +
             Math.pow(pickedLocation.getLongitude() - correctLocation.getLongitude(), 2));
 
+
+        console.error("Geo answer correct", question.getAnswer());
+        console.error("Geo answer given", answer.getData().getMarker());
+        console.error("Geo allowed distance", question.getRange());
+        console.error("Geo actuall distance", distance);
         return distance < question.getRange() ? 1 : 0;
     }
 };

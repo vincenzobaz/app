@@ -188,7 +188,7 @@ TimelineQuestion.fromRaw = function(data){
 };
 
 
-GeoQuestionProps = [ '_id', 'subject', 'range', 'defaultPosition', 'answer', 'type', 'kind' ];
+GeoQuestionProps = [ '_id', 'subject', 'range', 'defaultLocation', 'answer', 'type', 'kind' ];
 
 GeoQuestion = class GeoQuestion {
     constructor(props) {
@@ -224,8 +224,8 @@ GeoQuestion = class GeoQuestion {
      *
      * @returns {Marker}
      */
-    getDefaultPosition() {
-        return this.defaultPosition;
+    getDefaultLocation() {
+        return this.defaultLocation;
     }
 
 
@@ -242,7 +242,6 @@ GeoQuestion = class GeoQuestion {
         if (!Meteor.isServer) {
             throw new Error(`Well tried, there\'s nothing to see here. See for yourself: ${this.answer}`);
         }
-        console.log('getting the answser ', this.answer);
         return new Marker(this.answer.latitude, this.answer.longitude);
     }
 };

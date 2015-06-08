@@ -53,6 +53,7 @@ var QuestionsModal = React.createClass({
   },
 
   questionToStep(question) {
+      console.log("Question modal question", question);
     const kind = question.getKind();
 
     if (!Questions[kind]) {
@@ -61,7 +62,7 @@ var QuestionsModal = React.createClass({
     }
 
     question.onDone = this.onAnswer;
-    // debug('question', question);
+      //debug('question', question);
 
     return React.createElement(Questions[kind], question);
   },

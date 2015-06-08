@@ -30,11 +30,12 @@ var Geo = React.createClass({
     },
 
     getInitialState() {
+        console.log('geo props', this.props);
         conf = {
             "zoom": 9,
             "apiKey": "AIzaSyBGVhKl-Aqh5hSTCaCPLIY93dUSqWG1XhE",
             "sensor": false,
-            "marker": {"initialPosition": {"latitude": 46.5285085, "longitude": 6.5601122}}
+            "marker": {"initialPosition": this.props.defaultLocation}
         };
         return {
             marker: conf.marker.initialPosition
@@ -42,7 +43,16 @@ var Geo = React.createClass({
 
     },
 
+    componentWillReceiveProps(props) {
+        console.log('Geo just received new props', props.defaultLocation);
+        this.setState({
+            marker: {latitude: 0, longitude: 0}
+        });
+    },
+
     render() {
+        console.log('rerendering the geo part',  this.state.marker);
+
         if (!this.state.marker){
             return (<div>Loading...</div>);
         }
@@ -58,6 +68,7 @@ var Geo = React.createClass({
                                    width={510} height={250}
                                    apiKey={conf.apiKey} sensor={conf.sensor}
                                    onMarkerMove={this._onMarkerMove} />
+
                     </div>
                     <Button onClick={this._onDone}>Done</Button>
                 </div>
