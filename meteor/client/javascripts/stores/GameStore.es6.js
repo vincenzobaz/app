@@ -41,14 +41,14 @@ Reminisce.Store.GameStore = {
   },
 
   switchTo(game, isId = true) {
-    Session.set('page', 'game');
-
     if (isId) {
       GameSession.set('currentId', game);
     }
     else {
       GameSession.set('currentId', game._id);
     }
+
+    Session.set('page', 'game');
   }
 
 };

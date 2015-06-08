@@ -52,7 +52,12 @@ var Main = React.createClass({
   },
 
   renderInner() {
-    const page = (this.pages[this.state.page]) ? this.state.page : 'welcome';
+    var page = (this.pages[this.state.page]) ? this.state.page : 'welcome';
+
+    if (page === 'game' && this.state.currentGame == null) {
+      page = 'welcome';
+    }
+
     const Page = this.pages[page];
 
     return <Page {...this.state} />;

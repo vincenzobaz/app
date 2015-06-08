@@ -11,7 +11,7 @@ var React = require('react'),
 var PlayGame = React.createClass({
 
   propTypes: {
-    currentGame: shapes.Game
+    currentGame: shapes.Game.isRequired
   },
 
   render() {
