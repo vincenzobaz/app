@@ -224,7 +224,7 @@
 
     }
 
-    .sortable  {
+    ul.sortable  {
 
         min-height: 188px; /* 4 items */
 
@@ -250,10 +250,19 @@
                 background: $primarycolor;
             }
 
-            &.dragging {
+            &.sortable-ghost {
               opacity: 0;
             }
 
+            img {
+                height: 50px;
+                margin-right: 10px;
+                max-width: 100px;
+            }
+
+            span {
+              line-height: 50px;
+            }
         }
     }
 
