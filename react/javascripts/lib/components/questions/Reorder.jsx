@@ -35,14 +35,16 @@ var Reorder = React.createClass({
   },
 
   onSort(items) {
-    this.setState({
-      items: items
-    });
+      console.log("new item order", items);
+    //this.setState({
+    //  items: items
+    //});
+      this.state.items = items;
   },
 
   onDone() {
     this.props.onDone({
-      items: this.props.items
+      items: this.state.items
     });
   }
 

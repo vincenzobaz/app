@@ -12,8 +12,6 @@ const SortableList = React.createClass({
     },
 
     getInitialState() {
-        console.log("this is the inital sort state", this.props);
-
         return {
             items: this.props.items
         };
