@@ -41,7 +41,7 @@ var CurrentGame = React.createClass({
     var game = this.props.game;
     var desc = <small></small>;
 
-    switch (game.getStatus().toLowerCase()) {
+    switch (game.getStatus()) {
       case GameStatus.Creating:
         return <small><b>In creation</b></small>;
 

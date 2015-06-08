@@ -28,9 +28,10 @@ var CurrentGames = React.createClass({
       return <CurrentGame.None />;
     }
 
-    var games = this.sortGamesByIdDesc(this.props.games);
+    const filteredGames = this.props.games.filter(game => !game.hasEnded());
+    const sortedGames   = this.sortGamesByIdDesc(filteredGames);
 
-    return games.map(game =>
+    return sortedGames.map(game =>
       <CurrentGame key={game.getId()} game={game} />
     );
   },

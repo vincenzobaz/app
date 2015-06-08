@@ -49,7 +49,7 @@ Reminisce.Model.Game = class Game {
   }
 
   getStatus() {
-    return this.status;
+    return this.status.toLowerCase();
   }
 
   getOpponentId() {
