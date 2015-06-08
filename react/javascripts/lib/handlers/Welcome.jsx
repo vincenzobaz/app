@@ -67,10 +67,14 @@ var Welcome = React.createClass({
   },
 
   renderCurrentGamesText() {
-    var gamesNum = this.props.games && this.props.games.length || 0;
+    if (!this.props.games) {
+      return null;
+    }
+
+    const gamesNum = this.props.games.filter(g => !g.hasEnded()).length;
 
     if (!gamesNum) {
-      return '';
+      return null;
     }
 
     return (
