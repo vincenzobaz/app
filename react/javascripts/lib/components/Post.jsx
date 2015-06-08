@@ -44,13 +44,7 @@ var Picture = React.createClass({
   render() {
     return (
       <div className="post post-picture">
-        <Zoomable url={this.props.imageUrl}>
-          <figure className="zoomable">
-            <img src={this.props.imageUrl}
-                 style={imgStyle}
-                 alt="" />
-          </figure>
-        </Zoomable>
+        {this.renderPicture()}
         {this.renderPictureCaption(this.props.text)}
       </div>
     );
