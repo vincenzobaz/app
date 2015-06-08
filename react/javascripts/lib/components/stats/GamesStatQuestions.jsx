@@ -1,6 +1,6 @@
 var React = require('react'),
-    shapes = require('../components/shapes'),
-    ReactMeteor = require('../third-party/react-meteor'),
+    shapes = require('../shapes'),
+    ReactMeteor = require('../../third-party/react-meteor'),
     ReactD3Components = require('react-d3-components'),
     debug = require('debug')('Stats');
 

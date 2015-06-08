@@ -1,6 +1,6 @@
 var React = require('react'),
-    shapes = require('../components/shapes'),
-    ReactMeteor = require('../third-party/react-meteor'),
+    shapes = require('../shapes'),
+    ReactMeteor = require('../../third-party/react-meteor'),
     ReactD3Components = require('react-d3-components'),
     debug = require('debug')('Stats');
 
@@ -10,8 +10,6 @@ var BarChart = ReactD3Components.BarChart;
 var GamesStatQuestionsDetail = React.createClass({
 
     mixins: [ReactMeteor.Mixin],
-
-
 
     startMeteorSubscriptions: function() {
         Meteor.subscribe('gameStats');

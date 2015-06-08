@@ -3,10 +3,9 @@
 var React = require('react'),
     shapes = require('../components/shapes'),
     ReactMeteor = require('../third-party/react-meteor'),
-    ReactD3Components = require('react-d3-components'),
-    GameStatChart = require('../components/GamesStatChart.jsx'),
-    GameStatQuestions = require('../components/GamesStatQuestions.jsx'),
-    GameStatQuestionsDetail = require('../components/GamesStatQuestionsDetail.jsx'),
+    GameStatChart = require('../components/stats/GamesStatChart.jsx'),
+    GameStatQuestions = require('../components/stats/GamesStatQuestions.jsx'),
+    GameStatQuestionsDetail = require('../components/stats/GamesStatQuestionsDetail.jsx'),
     debug = require('debug')('Stats'),
     Modal = require('react-bootstrap').Modal,
     Geo = require('../components/questions/Geo.jsx');
