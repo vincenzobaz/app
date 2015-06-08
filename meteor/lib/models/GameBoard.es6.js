@@ -52,8 +52,6 @@ GameBoard.fromRaw = function(userId, data) {
     }
 
     const tiles = _.map(data.tiles, Tile.fromRaw);
-
-    console.log("Tiles", tiles);
     return new GameBoard({ userId, tiles });
 };
 

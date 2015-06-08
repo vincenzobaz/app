@@ -4,7 +4,6 @@ const TileProps = ['_id', 'type', 'question1', 'question2', 'question3', 'score'
 Tile = class Tile {
 
     constructor(props) {
-        console.log("creating new tile with proprs", props);
         assignProps(this, TileProps, props);
     }
 

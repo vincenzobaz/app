@@ -1,4 +1,4 @@
-OrderQuestionProps = ['_id', 'subject', 'choices', 'answer', 'type', 'kind'];
+OrderQuestionProps = ['_id', 'subject', 'choices', 'answer', 'type', 'kind', 'items'];
 
 
 SubjectWithId = class SubjectWithId {
@@ -30,6 +30,16 @@ SubjectWithId = class SubjectWithId {
     }
 };
 
+let SubjectTypes = {
+    TextPost: 'TextPost',
+    ImagePost: 'ImagePost',
+    VideoPost: 'VideoPost',
+    LinkPost: 'LinkPost',
+    Comment: 'Comment',
+    Page: 'Page'
+
+};
+
 OrderQuestion = class OrderQuestion {
 
 
@@ -38,7 +48,7 @@ OrderQuestion = class OrderQuestion {
         if (!_.isEmpty(diff)) {
             throw new Meteor.Error(500, "OrderQuestion constructor with unusable parameters " + diff);
         }
-        assignProps(this, GeoQuestionProps, props);
+        assignProps(this, OrderQuestionProps, props);
     }
 
     /**
@@ -62,14 +72,46 @@ OrderQuestion = class OrderQuestion {
         return this.type;
     }
 
+    getItems() {
+        return this.items;
+    }
+
     /**
      * returns an array of SubjectWithIds
      * @returns {[SubjectWithId]}
      */
-    choices() {
+    getChoices() {
         return this.choices;
     }
 
+    setChoices(value) {
+        this.choices = value;
+        this.items = _.map(value, c => {
+            switch (c.subject.type) {
+                case SubjectTypes.Page:
+                    return {id: c.uId, text: c.subject.name};
+                    break;
+                case SubjectTypes.TextPost:
+                    return {id: c.uId, text: c.subject.text};
+                    break;
+                case SubjectTypes.ImagePost:
+                    return {id: c.uId, text: c.subject.text};
+                    break;
+                case SubjectTypes.VideoPost:
+                    return {id: c.uId, text: c.subject.text};
+                    break;
+                case SubjectTypes.LinkPost:
+                    return {id: c.uId, text: c.subject.text};
+                    break;
+                case SubjectTypes.Comment:
+                    return {id: c.uId, text: c.subject.comment};
+                    break;
+                default:
+                    console.error("Ordering subject type not defined: " + c.type);
+                    Meteor.Error(500, "Ordering subject type not defined: " + c.type);
+            }
+        });
+    }
 
 
     getKind() {

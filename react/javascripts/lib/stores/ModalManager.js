@@ -18,6 +18,7 @@ class ModalManager extends EventEmitter {
   }
 
   showModal(modal) {
+    console.log("Modal props", modal.props);
     debug('showModal', modal.element, modal.props);
 
     this.emit('modal', modal);

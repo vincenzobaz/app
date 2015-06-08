@@ -12,9 +12,15 @@ const SortableList = React.createClass({
     },
 
     getInitialState() {
+        console.log("this is the inital sort state", this.props);
+
         return {
             items: this.props.items
         };
+    },
+
+    componentWillReceiveProps(props) {
+        this.state.items = props.items;
     },
 
     handleSort(e) {
@@ -22,7 +28,7 @@ const SortableList = React.createClass({
     },
 
     render() {
-      return (
+        return (
         <ul className="sortable">
           {this.state.items.map(item => <li key={item.id}>{item.text}</li>)}
         </ul>

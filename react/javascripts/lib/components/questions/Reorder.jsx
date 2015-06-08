@@ -4,7 +4,9 @@
 var React = require('react'),
     Button = require('react-bootstrap').Button,
     SortableList = require('../SortableList'),
-    shapes = require('../shapes');
+    shapes = require('../shapes'),
+    getQuestionTitleByType = require('./getQuestionTitleByType');
+
 
 var Reorder = React.createClass({
 
@@ -20,9 +22,11 @@ var Reorder = React.createClass({
   },
 
   render() {
-    return (
+      console.log("this is the props of order", this.props);
+
+      return (
       <div className="question question-reorder">
-        <h4>What is the correct order?</h4>
+        <h4>{getQuestionTitleByType(this.props.type)}</h4>
         <p>Click and drag the items in the correct order.</p>
         <SortableList items={this.props.items} onSort={this.onSort} />
         <Button onClick={this.onDone}>Done</Button>
@@ -38,7 +42,7 @@ var Reorder = React.createClass({
 
   onDone() {
     this.props.onDone({
-      items: this.state.items
+      items: this.props.items
     });
   }
 
