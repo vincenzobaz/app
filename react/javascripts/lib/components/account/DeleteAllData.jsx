@@ -55,7 +55,7 @@ const DeleteAllData = React.createClass({
   onDeleteData(e) {
     e.preventDefault();
 
-    Promise.resolve({status: 'error'})
+    AccountStore.deleteAllData()
       .then(res => {
         console.log(res);
         this.setState({
