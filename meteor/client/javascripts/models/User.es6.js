@@ -51,8 +51,16 @@ Reminisce.Model.User = class User {
     return this.firstTime || true;
   }
 
+  isBot() {
+    return this.username && (this.username === 'bot1' || this.username === 'bot2');
+  }
+
   getAvatarUrl() {
     var Routes = Reminisce.Routes;
+
+    if (this.isBot()) {
+        return Routes.Assets.at('images/bot-avatar.png');
+    }
 
     if (this.getFacebookId() != null) {
       return Routes.Facebook.avatar(this.getFacebookId());
