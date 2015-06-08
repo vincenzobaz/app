@@ -26,7 +26,6 @@ AnswerService = {
 
             GamestatsService.updateStatsForQuestions(tile.getQuestions(), currentUser, result);
             const correctAnswersNum = scores.reduce((acc, s) => acc + s.score, 0);
-            const oldScore = boardState[row][col].player === currentTurn? boardState[row][col].score : 0;
             const newScore = _.reduce(_.map(scores, s => s.score), (add, x) => add + x);
             const otherScore = boardState[row][col].player !== currentTurn? boardState[row][col].score : 0;
             game.incrementCurrentPlayerScore(newScore);
@@ -43,7 +42,7 @@ AnswerService = {
                 }
             }
 
-            if (newScore > oldScore || oldScore === 0){
+            if (newScore > otherScore || otherScore === 0){
                 game[currentScoreId][tile._id] = scores;
                 boardState[row][col].player = currentTurn;
                 boardState[row][col].score = newScore;

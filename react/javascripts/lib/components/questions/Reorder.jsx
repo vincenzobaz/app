@@ -45,7 +45,7 @@ var Reorder = React.createClass({
   },
 
   onSort(items) {
-      this.state.items = items;
+      //this.state.items = items;
   },
 
   onDone() {
