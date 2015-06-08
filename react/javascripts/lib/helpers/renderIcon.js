@@ -23,7 +23,7 @@ function renderIcon(icon, maxWidth, maxHeight) {
   icon.width = Math.max(icon.width || 0, maxWidth || 0);
   icon.height = Math.max(icon.height || 0, maxHeight || 0);
 
-  return <img className="media-object -img-circle"
+  return <img className="media-object img-circle"
               width={icon.width}
               height={icon.height}
               src={icon.url}
