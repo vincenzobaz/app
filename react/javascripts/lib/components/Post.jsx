@@ -128,6 +128,33 @@ const Link = React.createClass({
 
 });
 
+var Page = React.createClass({
+
+  propTypes: {
+    name: React.PropTypes.string.isRequired,
+    pageId: React.PropTypes.string,
+    photoUrl: React.PropTypes.string
+  },
+
+  render() {
+    return (
+      <div className="post post-page">
+        {this.renderThumbnail()}
+        <span>{this.props.name}</span>
+      </div>
+    );
+  },
+
+  renderThumbnail() {
+    if (!this.props.photoUrl) {
+      return null;
+    }
+
+    return <img src={this.props.photoUrl} />;
+  }
+
+});
+
 var Post = React.createClass({
 
   propTypes: {
@@ -144,7 +171,9 @@ var Post = React.createClass({
     VideoPost   : Video,
     Video       : Video,
     LinkPost    : Link,
-    Link        : Link
+    Link        : Link,
+    Page        : Page,
+    PagePost    : Page,
   },
 
   render() {
