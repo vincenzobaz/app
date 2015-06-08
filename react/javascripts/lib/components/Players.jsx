@@ -29,12 +29,17 @@ var Players = React.createClass({
       return <Players.None />;
     }
 
-    var game = this.props.game;
+    const game = this.props.game;
+    const opponent = game.getOpponent();
+
+    if (opponent == null) {
+      return <Players.None />;
+    }
 
     return (
       <div>
         <Player player={this.props.user} isTurn={game.isMyTurnToPlay()} score={game.getScore().me} waiting={game.isWaiting()} />
-        <Player player={game.getOpponent()} isTurn={!game.isMyTurnToPlay()} isOpponent={true} score={game.getScore().them} waiting={game.isWaiting()} />
+        <Player player={opponent} isTurn={!game.isMyTurnToPlay()} isOpponent={true} score={game.getScore().them} waiting={game.isWaiting()} />
       </div>
     );
   }

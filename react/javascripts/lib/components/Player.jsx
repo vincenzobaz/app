@@ -16,6 +16,7 @@ var Player = React.createClass({
 
   render() {
     var classNames = this.getClassNames();
+
     return (
       <div className={classNames.prefix}>
         <div className={classNames.player}>
