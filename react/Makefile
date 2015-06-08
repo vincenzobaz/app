@@ -10,8 +10,6 @@ BROWSERIFY := $(BIN_DIR)/browserify
 SASS := $(BIN_DIR)/node-sass
 CLEAN_CSS := $(BIN_DIR)/cleancss
 
-NOTIFY := $(shell { type terminal-notifier || echo >/dev/null 2>&1; } 2>/dev/null)
-
 BROWSERIFY_OPTIONS = -t babelify --extension=.jsx
 
 js_dir := javascripts
@@ -51,13 +49,11 @@ $(build_js_prod): $(app_js) $(js_files)
 	@echo -n "Building $@... "
 	@NODE_ENV=production $(BROWSERIFY) $(BROWSERIFY_OPTIONS) -o $@ $(app_js)
 	@echo "Done."
-	@$(NOTIFY) -title 'Build done.' -message 'Successful build of $@.'
 
 $(build_js_dev): $(app_js) $(js_files)
 	@echo -n "Building $@... "
 	@NODE_ENV=development $(BROWSERIFY) --debug $(BROWSERIFY_OPTIONS) -o $@ $(app_js)
 	@echo "Done."
-	@$(NOTIFY) -title 'Build done.' -message 'Successful build of $@.'
 
 $(css_dir)/%.css: $(css_dir)/%.scss $(every_sass_files)
 	@echo "Building $@... "
@@ -65,12 +61,10 @@ $(css_dir)/%.css: $(css_dir)/%.scss $(every_sass_files)
 	@echo -n "Compressing $@... "
 	@$(CLEAN_CSS) -o $(@:.css=.min.css) $@
 	@echo "Done."
-	@$(NOTIFY) -title 'Build done.' -message 'Successful build of $@.'
 
 lint: $(app_js) $(js_files)
 	@$(LINT) $^; \
 	if [ $$? -ne 0 ]; then \
-	$(NOTIFY) -title 'Linting failed!' -message 'make lint was unsuccessful'; \
 	exit 1; \
 	fi
 
