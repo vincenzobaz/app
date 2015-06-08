@@ -93,6 +93,6 @@ OrderVerificationService = {
             }, 0);
 
         console.log(`Correctly ordered ${correct} number of thingys`);
-        return correct === 4? 1 : 0;
+        return correct === answerNumber.length ? 1 : 0;
     }
 };
