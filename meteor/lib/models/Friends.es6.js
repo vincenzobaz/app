@@ -27,14 +27,14 @@ Friend = class Friend {
         return this.friendOf;
     }
 
-    isBot() {
+    isABot() {
         return !!this.isBot;
     }
 
     getAvatarUrl() {
         var Routes = Reminisce.Routes;
 
-        if (this.isBot()) {
+        if (this.isABot()) {
             return Routes.Assets.at('images/bot-avatar.png');
         }
 
