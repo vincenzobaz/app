@@ -292,6 +292,7 @@
       float: left;
       width: 45%;
       margin-right: 5%;
+      clear: left;
 
 
       button {
@@ -312,6 +313,7 @@
       &:nth-child(even) {
         margin-right: 0;
         margin-left: 5%;
+        clear: right;
       }
 
 
