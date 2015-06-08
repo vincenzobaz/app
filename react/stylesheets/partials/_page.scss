@@ -231,20 +231,16 @@
         li {
             cursor: ns-resize;
             padding : $buttonpadding;
-            *margin-left : .3em;
-            font : {
-              weight : normal;
-              family : $buttonfontfamily;
-            }
+            margin-bottom: 10px;
+            list-style: none;
             @include font-size($buttonfontsize);
             line-height : $baselineheight;
-            color : $white;
+            // color : $white;
             text-align : center;
             vertical-align : middle;
-            background-color : $secondarycolor;
+            // background-color : $secondarycolor;
 
-            border : $buttonborderwidth $buttonborderstyle $buttonbordercolor;
-            border-bottom-color : $buttonbottombordercolor;
+            border : $buttonborderwidth $buttonborderstyle $secondarycolor;
             border-radius : $buttonborderradius;
 
             &.item-success {
