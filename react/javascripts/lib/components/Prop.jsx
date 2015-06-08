@@ -56,8 +56,7 @@ Props.Default = React.createClass({
 Props.FacebookId = React.createClass({
   propTypes: {
     fbId: React.PropTypes.string.isRequired,
-    text: React.PropTypes.string.isRequired,
-    value: React.PropTypes.string.isRequired
+    text: React.PropTypes.string.isRequired
   },
 
   render() {
@@ -70,10 +69,6 @@ Props.FacebookId = React.createClass({
   },
 
   renderIcon() {
-    if (!this.props.value) {
-      return <noscript />;
-    }
-
     return <FacebookPicture facebookId={this.props.fbId}
                             altText={this.props.text} />;
   }
