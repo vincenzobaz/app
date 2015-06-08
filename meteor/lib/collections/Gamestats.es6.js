@@ -13,7 +13,8 @@ GamestatProps = ['_id', 'userId', 'gamesPlayed', 'gamesWon', 'gamesLost',
     'GeoWhatCoordinatesWereYouAtQuestionsTried', 'GeoWhatCoordinatesWereYouAtCorrect',
     'MCTried', 'MCCorrect',
     'TLTried', 'TLCorrect',
-    'GeoTried', 'GeoCorrect'
+    'GeoTried', 'GeoCorrect',
+    'OrderTried', 'OrderCorrect'
 ];
 
 QuestionTypes = {
@@ -197,5 +198,21 @@ Gamestat = class Gamestat {
 
     setGeoCorrect(value) {
         this.GeoCorrect = value;
+    }
+
+    getOrderTried() {
+        return this.OrderTried;
+    }
+
+    setOrderTried(value) {
+        this.OrderTried = value;
+    }
+
+    getOrderCorrect() {
+        return this.OrderCorrect;
+    }
+
+    setOrderCorrect(value) {
+        this.OrderCorrect = value;
     }
 };

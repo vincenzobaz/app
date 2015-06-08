@@ -63,14 +63,48 @@ GamestatsService = {
                     break;
                 case QuestionTypes.GeoWhatCoordinatesWereYouAt:
                     stat.setGeoWhatCoordinatesWereYouAtQuestionsTried(stat.getGeoWhatCoordinatesWereYouAtQuestionsTried() + 1);
-                    stat.setTLTried(stat.getGeoTried() + 1);
+                    stat.setGeoTried(stat.getGeoTried() + 1);
 
                     if (qr[1]) {
                         stat.setGeoWhatCoordinatesWereYouAtCorrect(stat.getGeoWhatCoordinatesWereYouAtCorrect() + 1);
-                        stat.setTLCorrect(stat.getTLCorrect() + 1);
+                        stat.setGeoCorrect(stat.getGeoCorrect() + 1);
                     }
                     break;
-                case QuestionTypes.
+                case QuestionTypes.ORDPostLikesNumber:
+                    stat.setOrderTried(stat.getOrderTried() + 1);
+
+                    if (qr[1]) {
+                        stat.setOrderCorrect(stat.getGeoCorrect() + 1);
+                    }
+                    break;
+
+                case QuestionTypes.ORDPageLike:
+                    stat.setOrderTried(stat.getOrderTried() + 1);
+
+                    if (qr[1]) {
+                        stat.setOrderCorrect(stat.getGeoCorrect() + 1);
+                    }
+                    break;
+
+                case QuestionTypes.ORDPageLikeTime:
+
+                    break;
+
+                case QuestionTypes.ORDPostCommentsNumber:
+                    stat.setOrderTried(stat.getOrderTried() + 1);
+
+                    if (qr[1]) {
+                        stat.setOrderCorrect(stat.getGeoCorrect() + 1);
+                    }
+                    break;
+
+                case QuestionTypes.ORDPostTime:
+                    stat.setOrderTried(stat.getOrderTried() + 1);
+
+                    if (qr[1]) {
+                        stat.setOrderCorrect(stat.getGeoCorrect() + 1);
+                    }
+                    break;
                 default:
                     Meteor.Error(500, `Unkown Question type for stats for user: ${userId}, type: ${question.getType()}`);
             }
@@ -80,9 +114,10 @@ GamestatsService = {
 
     getStats(userId) {
         var stat = Gamestats.findOne({userId: userId});
-        if (!stat){
+        if (!stat) {
             stat = new Gamestat({userId: userId});
         }
         return stat;
     }
 };
+

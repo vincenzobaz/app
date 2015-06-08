@@ -20,14 +20,17 @@ var GamesStatQuestions = React.createClass({
     getMeteorState: function() {
         var gameStat = this.props.gameStats;
         var mcStat = gameStat.getMCTried() === 0 ? 0: gameStat.getMCCorrect() / gameStat.getMCTried();
-        var tlStat = gameStat.getTLTried() === 0 ? 0: gameStat.getTLCorrect() / gameStat.getTLTried()
-        var geoStat = gameStat.getGeoTried() === 0 ? 0: gameStat.getGeoCorrect() / gameStat.getGeoTried()
+        var tlStat = gameStat.getTLTried() === 0 ? 0: gameStat.getTLCorrect() / gameStat.getTLTried();
+        var geoStat = gameStat.getGeoTried() === 0 ? 0: gameStat.getGeoCorrect() / gameStat.getGeoTried();
+        var orderStat = gameStat.getOrderTried() === 0 ? 0: gameStat.getOrderCorrect() / gameStat.getOrderTried();
+
         var data = {
             label: 'Game Stats',
             values: [
                 {x: 'Multiple Choice', y: mcStat},
                 {x: 'Timeline', y: tlStat},
-                {x: 'Geo', y: geoStat}
+                {x: 'Geo', y: geoStat},
+                {x: 'Ordering', y:orderStat}
             ]
         };
 
@@ -38,7 +41,7 @@ var GamesStatQuestions = React.createClass({
 
     render() {
         var height = 400;
-        var width = 400;
+        var width = 600;
         var margins = {top: 10, bottom: 50, left: 50, right: 10};
         var color = d3.scale.ordinal()
             .domain([
