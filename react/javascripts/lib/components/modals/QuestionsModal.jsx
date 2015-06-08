@@ -162,7 +162,7 @@ var QuestionsModal = React.createClass({
 
   renderBody() {
     if (this.isTimeUp()) {
-      return <TimeUp tile={this.props.tile} />;
+      return <TimeUp game={this.props.game} tile={this.props.tile} />;
     }
 
     if (this.isDone()) {
@@ -284,6 +284,7 @@ var Done = React.createClass({
 var TimeUp = React.createClass({
 
   propTypes: {
+    game: shapes.Game.isRequired,
     tile: shapes.Tile.isRequired,
     onSent: React.PropTypes.func,
     onSendError: React.PropTypes.func
