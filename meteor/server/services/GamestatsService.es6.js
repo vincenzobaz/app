@@ -106,7 +106,8 @@ GamestatsService = {
                     }
                     break;
                 default:
-                    Meteor.Error(500, `Unkown Question type for stats for user: ${userId}, type: ${question.getType()}`);
+                    console.error(`Unkown Question type for stats for user: ${userId}, type: ${qr[0].getType()}`);
+                    Meteor.Error(500, `Unkown Question type for stats for user: ${userId}, type: ${qr[0].getType()}`);
             }
             GamestatRepository.save(stat);
         });
