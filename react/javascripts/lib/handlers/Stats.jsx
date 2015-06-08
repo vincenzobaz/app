@@ -13,30 +13,34 @@ var React = require('react'),
 
 var Stats = React.createClass({
 
-    startMeteorSubscriptions: function () {
+    mixins: [ReactMeteor.Mixin],
+
+    startMeteorSubscriptions() {
         Meteor.subscribe('gameStats');
     },
 
     getInitialState() {
-        return {loaded: false}
+        return {
+          loaded: false
+        };
     },
 
-    getMeteorState: function () {
+    getMeteorState() {
         var gameStat = Gamestats.findOne({userId: Meteor.userId()});
 
         console.log("Gamestats loaded? ", gameStat);
 
-        if (gameStat) {
-            return {
-                userId: Meteor.userId,
-                gameStats: gameStat,
-                loaded: true
-            }
-        } else {
+        if (!gameStat) {
             return {
                 loaded: false
-            }
+            };
         }
+
+        return {
+            userId: Meteor.userId(),
+            gameStats: gameStat,
+            loaded: true
+        };
     },
 
     render() {
@@ -44,18 +48,11 @@ var Stats = React.createClass({
             return <div>Loading...</div>;
         }
 
-        const subject = new Subject({
-            type: 'Text',
-            text: 'Chilling at my favorite restaurant'
-        });
-
         return (
             <div>
-                <h1>Welcome To Your Stats</h1>
+                <h1>Statistics</h1>
                 <GameStatChart gameStats={this.state.gameStats}/>
-
                 <GameStatQuestions gameStats={this.state.gameStats}/>
-
             </div>
         );
 
