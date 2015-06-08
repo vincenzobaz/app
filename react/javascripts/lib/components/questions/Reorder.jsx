@@ -38,7 +38,7 @@ var Reorder = React.createClass({
 
   renderItem(item) {
     if (item.subject) {
-      return <Post post={item.subject} />;
+      return <Post post={item.subject} interactive={false} />;
     }
 
     return item.text;

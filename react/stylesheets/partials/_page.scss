@@ -202,6 +202,10 @@
 
 .post-picture {
 
+  img {
+    max-height: 200px;
+  }
+
   figure {
     img {
       display: block;
@@ -214,7 +218,12 @@
       cursor: move;
   }
 
+}
 
+.post-text {
+  blockquote {
+    margin-bottom: 10px;
+  }
 }
 
 .question-reorder {
@@ -254,10 +263,15 @@
               opacity: 0;
             }
 
-            img {
+            .post-page img {
                 height: 50px;
                 margin-right: 10px;
                 max-width: 100px;
+            }
+
+            .post-picture img, .post-video img {
+                max-height: 100px !important;
+                max-width: 100px !important;
             }
 
             span {

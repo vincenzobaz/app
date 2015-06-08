@@ -31,14 +31,17 @@ var Picture = React.createClass({
 
   propTypes: {
     imageUrl: React.PropTypes.string.isRequired,
-    text: React.PropTypes.string
+    text: React.PropTypes.string,
+    interactive: React.PropTypes.bool
+  },
+
+  getDefaultProps() {
+    return {
+      interactive: true
+    };
   },
 
   render() {
-    var imgStyle = {
-      maxHeight: 200
-    };
-
     return (
       <div className="post post-picture">
         <Zoomable url={this.props.imageUrl}>
@@ -51,6 +54,20 @@ var Picture = React.createClass({
         {this.renderPictureCaption(this.props.text)}
       </div>
     );
+  },
+
+  renderPicture() {
+    if (this.props.interactive) {
+      return (
+        <Zoomable url={this.props.imageUrl}>
+          <figure className="zoomable">
+            <img src={this.props.imageUrl} alt="" />
+          </figure>
+        </Zoomable>
+      );
+    }
+
+    return <img src={this.props.imageUrl} alt="" />;
   },
 
   renderPictureCaption(caption) {
@@ -158,7 +175,8 @@ var Page = React.createClass({
 var Post = React.createClass({
 
   propTypes: {
-    post: shapes.subject.isRequired
+    post: shapes.subject.isRequired,
+    interactive: React.PropTypes.bool
   },
 
   types: {
@@ -176,6 +194,12 @@ var Post = React.createClass({
     PagePost    : Page,
   },
 
+  getDefaultProps() {
+    return {
+      interactive: true
+    };
+  },
+
   render() {
     if (!this.props.post || !this.props.post.type) {
       return <noscript />;
@@ -191,6 +215,8 @@ var Post = React.createClass({
       console.error(`Unknown post type "${post.type}"`);
       return <None />;
     }
+
+    post.interactive = this.props.interactive;
 
     return React.createElement(this.types[post.type], post);
   }
