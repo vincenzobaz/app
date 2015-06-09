@@ -41,7 +41,7 @@
     "react-bootstrap": "^0.21.2",
     "react-d3-components": "^0.4.8",
     "react-localstorage": "^0.2.2",
-    "sortablejs": "^1.2.0",
+    "sortablejs": "romac/Sortable",
     "timer-machine": "^1.0.1"
   },
   "browserify": {
