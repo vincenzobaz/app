@@ -1,4 +1,19 @@
 
+function createPredicateIndexFinder(dir) {
+  return function(array, predicate, context) {
+    var length = array.length;
+    var index = dir > 0 ? 0 : length - 1;
+    for (; index >= 0 && index < length; index += dir) {
+      if (predicate(array[index], index, array)) {
+          return index;
+      }
+    }
+    return -1;
+  };
+}
+
+_.findIndex = createPredicateIndexFinder(1);
+
 AnswerService = {
     post(currentUser, gameId, tileId, answers) {
         const game = Games.findOne(gameId);
