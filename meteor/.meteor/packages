@@ -6,7 +6,6 @@
 
 service-configuration
 accounts-facebook
-grigio:babel
 http
 jparker:crypto-sha256
 jparker:crypto-hmac
@@ -17,7 +16,6 @@ standard-minifiers
 meteor-base
 mobile-experience
 mongo
-blaze-html-templates
 session
 jquery
 tracker
@@ -27,3 +25,4 @@ random
 ejson
 spacebars
 check
+react
