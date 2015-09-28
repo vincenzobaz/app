@@ -11,7 +11,7 @@ TimelineData = class TimelineData {
      * the number chosen as answer
      * @type {String}
      */
-    date = new Date();
+    date;
 
     /**
      * Gives the date as answer given by the user
