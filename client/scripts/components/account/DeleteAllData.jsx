@@ -2,8 +2,6 @@
 const React = require('react'),
       Button = require('react-bootstrap').Button,
       Panel = require('react-bootstrap').Panel,
-      DismissableAlert = require('../bootstrap/DismissableAlert'),
-      AccountStore = require('../../stores/AccountStore'),
       debug = require('debug')('DeleteAllData');
 
 const DeleteAllData = React.createClass({
@@ -32,30 +30,30 @@ const DeleteAllData = React.createClass({
 
     if (this.state.result === 'success') {
       return (
-        <DismissableAlert bsStyle='warning' style={{marginTop: 20}}>
+        <R.DismissableAlert bsStyle='warning' style={{marginTop: 20}}>
           <h4>Success!</h4>
           <p style={{marginTop: 10, marginBottom: 10}}>
             Your data has been successfully deleted.
           </p>
-        </DismissableAlert>
+        </R.DismissableAlert>
       );
     }
 
     return (
-      <DismissableAlert bsStyle='warning' style={{marginTop: 20}}>
+      <R.DismissableAlert bsStyle='warning' style={{marginTop: 20}}>
         <h4>An error occured.</h4>
         <p style={{marginTop: 10, marginBottom: 10}}>
           We couldn't delete your data.<br />
           Please try again or contact us if the problem persists.
         </p>
-      </DismissableAlert>
+      </R.DismissableAlert>
     );
   },
 
   onDeleteData(e) {
     e.preventDefault();
 
-    AccountStore.deleteAllData()
+    R.AccountStore.deleteAllData()
       .then(res => {
         console.log(res);
         this.setState({
@@ -74,4 +72,5 @@ const DeleteAllData = React.createClass({
 
 });
 
-module.exports = DeleteAllData;
+Reminisce.DeleteAllData = DeleteAllData;
+

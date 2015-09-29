@@ -1,8 +1,6 @@
 
 const React = require('react');
-const ModalManager = require('../stores/ModalManager');
 const OverlayMixin = require('react-bootstrap').OverlayMixin;
-const shapes = require('./shapes');
 const debug = require('debug')('ModalHandler');
 
 const ModalHandler = React.createClass({
@@ -10,7 +8,7 @@ const ModalHandler = React.createClass({
   mixins: [OverlayMixin],
 
   propTypes: {
-    manager: shapes.EventEmitter
+    manager: R.Shapes.EventEmitter
   },
 
   getInitialState() {
@@ -67,4 +65,4 @@ const ModalHandler = React.createClass({
 
 });
 
-module.exports = ModalHandler;
+Reminisce.ModalHandler = ModalHandler;

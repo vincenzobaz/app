@@ -1,15 +1,9 @@
 'use strict';
 
 var React = require('react'),
-    shapes = require('../components/shapes'),
     ReactMeteor = require('../third-party/react-meteor'),
-    GameStatChart = require('../components/stats/GamesStatChart.jsx'),
-    GameStatQuestions = require('../components/stats/GamesStatQuestions.jsx'),
-    GameStatQuestionsDetail = require('../components/stats/GamesStatQuestionsDetail.jsx'),
     debug = require('debug')('Stats'),
-    Modal = require('react-bootstrap').Modal,
-    Geo = require('../components/questions/Geo.jsx');
-
+    Modal = require('react-bootstrap').Modal;
 
 var Stats = React.createClass({
 
@@ -51,8 +45,8 @@ var Stats = React.createClass({
         return (
             <div>
                 <h1>Statistics</h1>
-                <GameStatChart gameStats={this.state.gameStats}/>
-                <GameStatQuestions gameStats={this.state.gameStats}/>
+                <R.GameStatChart gameStats={this.state.gameStats}/>
+                <R.GameStatQuestions gameStats={this.state.gameStats}/>
             </div>
         );
 
@@ -61,4 +55,4 @@ var Stats = React.createClass({
 
 });
 
-module.exports = Stats;
+Reminisce.Stats = Stats;

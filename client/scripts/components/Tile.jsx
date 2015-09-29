@@ -1,12 +1,7 @@
 
 'use strict';
 
-var React = require('react'),
-    Tooltip = require('./bootstrap/Tooltip'),
-    ModalManager = require('../stores/ModalManager'),
-    Routes = require('../Routes'),
-    shapes = require('./shapes'),
-    progressImage = require('../helpers/progressImage');
+var React = require('react');
 
 const icons = {
   Order: 'sort', // 'sort-up'
@@ -24,20 +19,20 @@ var Tile = React.createClass({
   propTypes: {
     title: React.PropTypes.string.isRequired,
     placement: React.PropTypes.string.isRequired,
-    questionModal: shapes.modalDesc.isRequired,
+    questionModal: R.Shapes.modalDesc.isRequired,
     number: React.PropTypes.number.isRequired,
     type: React.PropTypes.string.isRequired,
     opponentId: React.PropTypes.string,
-    score: shapes.score.isRequired,
+    score: R.Shapes.score.isRequired,
     disabled: React.PropTypes.bool.isRequired
   },
 
   render() {
     return (
       <div className={this.getCellClassNames()}>
-        <Tooltip title={this.props.title} placement={this.props.placement}>
+        <R.Tooltip title={this.props.title} placement={this.props.placement}>
           {this.renderTrigger()}
-        </Tooltip>
+        </R.Tooltip>
       </div>
     );
   },
@@ -58,7 +53,7 @@ var Tile = React.createClass({
       return;
     }
 
-    ModalManager.showModal(this.props.questionModal);
+    R.ModalManager.showModal(this.props.questionModal);
   },
 
   isDisabled() {
@@ -85,7 +80,7 @@ var Tile = React.createClass({
   getImageStyle() {
     if (this.props.opponentId) {
       return {
-        backgroundImage: `url(${Routes.Facebook.avatar(this.props.opponentId)})`,
+        backgroundImage: `url(${R.Routes.Facebook.avatar(this.props.opponentId)})`,
         backgroundSize: '76px 76px'
       };
     }
@@ -99,9 +94,9 @@ var Tile = React.createClass({
         color = (max === 'me') ? 'red' : 'blue',
         score = parseInt(sub[max], 10);
 
-    return progressImage(score, color);
+    return R.progressImage(score, color);
   }
 
 });
 
-module.exports = Tile;
+Reminisce.Tile = Tile;

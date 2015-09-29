@@ -7,5 +7,5 @@ function timerStyle(t) {
   };
 }
 
-module.exports = timerStyle;
+Reminisce.timerStyle = timerStyle;
 

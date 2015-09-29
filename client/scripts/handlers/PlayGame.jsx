@@ -2,16 +2,12 @@
 'use strict';
 
 var React = require('react'),
-    Board = require('../components/Board'),
-    GameStore = require('../stores/GameStore'),
-    EndGame = require('../components/EndGame'),
-    shapes = require('../components/shapes'),
     debug = require('debug')('PlayGame');
 
 var PlayGame = React.createClass({
 
   propTypes: {
-    currentGame: shapes.Game.isRequired
+    currentGame: R.Shapes.Game.isRequired
   },
 
   render() {
@@ -22,8 +18,8 @@ var PlayGame = React.createClass({
       const lsKey = `game-${gameId}-EndGame`;
       return (
         <div>
-          <EndGame game={game} localStorageKey={lsKey} />
-          <Board gameId={gameId} game={game} />
+          <R.EndGame game={game} localStorageKey={lsKey} />
+          <R.Board gameId={gameId} game={game} />
         </div>
       );
     }
@@ -32,7 +28,7 @@ var PlayGame = React.createClass({
       debug('Rendering isPlaying game', game);
       return (
         <div>
-          <Board gameId={gameId} game={game} />
+          <R.Board gameId={gameId} game={game} />
         </div>
       );
     }
@@ -122,4 +118,4 @@ var PlayGame = React.createClass({
 
 });
 
-module.exports = PlayGame;
+Reminisce.PlayGame = PlayGame;

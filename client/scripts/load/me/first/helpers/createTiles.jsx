@@ -1,9 +1,7 @@
 
 'use strict';
 
-const React = require('react'),
-      QuestionsModal = require('../components/modals/QuestionsModal'),
-      Tile = require('../components/Tile');
+const React = require('react');
 
 const createTiles = (game) =>
   game.getBoard().getTiles().map((tile, n) =>
@@ -28,7 +26,7 @@ const createTile = (game, tile, tileNum) => {
   };
 
   return (
-    <Tile key={'tile-' + tile.getId()}
+    <R.Tile key={'tile-' + tile.getId()}
           title={''}
           type={type}
           placement={placement}
@@ -41,7 +39,7 @@ const createTile = (game, tile, tileNum) => {
 
 const getModalDesc = (game, tile) => {
   return {
-    element: QuestionsModal,
+    element: R.QuestionsModal,
     props: {
       game: game,
       tile: tile,
@@ -55,5 +53,5 @@ const p = ['left', 'top', 'right'];
 const placementForTileAt = (n) =>
   p[(n - 1) % p.length];
 
-module.exports = createTiles;
+Reminisce.createTiles = createTiles;
 

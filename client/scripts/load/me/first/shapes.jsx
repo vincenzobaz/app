@@ -2,20 +2,14 @@
 'use strict';
 
 var React = require('react');
-var objWithAllKeysAt = require('../helpers/objWithAllKeysAt');
-var Game = require('../models/Game');
-var User = require('../models/User');
-var Tile = require('../models/Tile');
-var Question = require('../models/Question');
-var JoinRequest = require('../models/JoinRequest');
 var EventEmitter = require('events').EventEmitter;
 
-var tile   = React.PropTypes.instanceOf(Tile);
-var game   = React.PropTypes.instanceOf(Game);
-var user   = React.PropTypes.instanceOf(User);
-var friend = React.PropTypes.instanceOf(Friend);
-var joinRequest = React.PropTypes.instanceOf(JoinRequest);
-var question = React.PropTypes.instanceOf(Question);
+var tile   = React.PropTypes.instanceOf(R.Tile);
+var game   = React.PropTypes.instanceOf(R.Game);
+var user   = React.PropTypes.instanceOf(R.User);
+var friend = React.PropTypes.instanceOf(R.Friend);
+var joinRequest = React.PropTypes.instanceOf(R.JoinRequest);
+var question = React.PropTypes.instanceOf(R.Question);
 
 var score = React.PropTypes.shape({
   me: React.PropTypes.number.isRequired,
@@ -59,7 +53,7 @@ var answer = React.PropTypes.shape({
   timeSpent: React.PropTypes.number.isRequired
 });
 
-var eventEmitter = React.PropTypes.shape(objWithAllKeysAt([
+var eventEmitter = React.PropTypes.shape(R.objWithAllKeysAt([
   'addListener', 'on', 'once', 'removeListener',
   'removeAllListeners', 'listeners', 'emit'
 ], React.PropTypes.func.isRequired));
@@ -76,7 +70,7 @@ var item = React.PropTypes.shape({
   subject: subject.isRequired
 });
 
-module.exports = {
+Reminisce.Shapes = {
   Tile: tile,
   Game: game,
   User: user,

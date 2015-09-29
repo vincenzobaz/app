@@ -1,6 +1,5 @@
 const React = require('react'),
-      SortableMixin = require('sortablejs/react-sortable-mixin'),
-      shapes = require('./shapes');
+      SortableMixin = require('sortablejs/react-sortable-mixin');
 
 const SortableList = React.createClass({
 
@@ -39,5 +38,5 @@ const SortableList = React.createClass({
     }
 });
 
-module.exports = SortableList;
+Reminisce.SortableList = SortableList;
 

@@ -1,9 +1,9 @@
 
 'use strict';
 
-module.exports = {
-  MultipleChoice: require('./MultipleChoice'),
-  Order: require('./Reorder'),
-  Timeline: require('./Timeline'),
-  Geolocation: require('./Geo')
+Reminisce.QuestionKinds = {
+  MultipleChoice: R.MultipleChoice,
+  Order: R.Order,
+  Timeline: R.Timeline,
+  Geolocation: R.Geo
 };

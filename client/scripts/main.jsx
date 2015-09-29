@@ -1,28 +1,21 @@
 'use strict';
 
-require('./rock-hammer');
-
 // Expose React to enable the React Dev Tools.
 var React = window.React = require('react'),
-    Main = require('./lib/handlers/Main'),
-    ErrorStore = require('./lib/stores/ErrorStore'),
-    ModalManager = require('./lib/stores/ModalManager'),
-    ErrorHandler = require('./lib/components/ErrorHandler'),
-    ModalHandler = require('./lib/components/ModalHandler'),
     debug = window.debug = require('debug');
 
 var $$ = document.getElementById.bind(document);
 
 var App = {
   run() {
-    ErrorStore.register();
+    R.ErrorStore.register();
 
     this.subscribe();
     this.loadGoogleCharts();
 
-    React.render(<ErrorHandler store={ErrorStore} />, $$('error'));
-    React.render(<Main />, $$('app'));
-    React.render(<ModalHandler manager={ModalManager} />, $$('modal'));
+    React.render(<R.ErrorHandler store={R.ErrorStore} />, $$('error'));
+    React.render(<R.Main />, $$('app'));
+    React.render(<R.ModalHandler manager={R.ModalManager} />, $$('modal'));
   },
 
   subscribe() {

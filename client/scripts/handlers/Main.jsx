@@ -3,15 +3,6 @@
 
 var React = require('react'),
     ReactMeteor = require('../third-party/react-meteor'),
-    PlayGame = require('./PlayGame'),
-    Home = require('./Home'),
-    Dashboard = require('./Dashboard'),
-    Welcome = require('./Welcome'),
-    Stats = require('./Stats'),
-    About = require('./About'),
-    Account = require('./Account'),
-    FacebookStore = require('../stores/FacebookStore'),
-    getAppState = require('../appState'),
     debug = require('debug')('Main');
 
 var Main = React.createClass({
@@ -19,7 +10,7 @@ var Main = React.createClass({
   mixins: [ReactMeteor.Mixin],
 
   getMeteorState() {
-    return getAppState();
+    return R.getAppState();
   },
 
   render() {
@@ -32,23 +23,23 @@ var Main = React.createClass({
   },
 
   renderHome() {
-    return <Home />;
+    return <R.Home />;
   },
 
   renderDashboard() {
     return (
-      <Dashboard {...this.state}>
+      <R.Dashboard {...this.state}>
         {this.renderInner()}
-      </Dashboard>
+      </R.Dashboard>
     );
   },
 
   pages: {
-    stats: Stats,
-    welcome: Welcome,
-    about: About,
-    account: Account,
-    game: PlayGame
+    stats: R.Stats,
+    welcome: R.Welcome,
+    about: R.About,
+    account: R.Account,
+    game: R.PlayGame
   },
 
   renderInner() {
@@ -65,4 +56,4 @@ var Main = React.createClass({
 
 });
 
-module.exports = Main;
+Reminisce.Main = Main;

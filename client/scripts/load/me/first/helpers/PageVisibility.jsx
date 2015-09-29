@@ -48,5 +48,5 @@ PageVisibility.prototype.onVisibilityChange = function onVisibilityChange() {
   this.emit('change');
 };
 
-module.exports = PageVisibility;
+Reminisce.PageVisibility = PageVisibility;
 

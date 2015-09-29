@@ -4,15 +4,14 @@
 var React = require('react'),
     Bootstrap = require('react-bootstrap'),
     Modal = Bootstrap.Modal,
-    Button = Bootstrap.Button,
-    shapes = require('../shapes');
+    Button = Bootstrap.Button;
 
 var StartGameModal = React.createClass({
 
   propTypes: {
     onOk: React.PropTypes.func.isRequired,
     onCancel: React.PropTypes.func.isRequired,
-    friend: shapes.Friend.isRequired
+    friend: R.Shapes.Friend.isRequired
   },
 
   render() {
@@ -46,4 +45,4 @@ var StartGameModal = React.createClass({
 
 });
 
-module.exports = StartGameModal;
+Reminisce.StartGameModal = StartGameModal;

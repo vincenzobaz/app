@@ -9,4 +9,4 @@ function randomStr(len = 10)
              .substr(0, len);
 }
 
-module.exports = randomStr;
+Reminisce.randomStr = randomStr;

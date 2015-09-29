@@ -4,17 +4,14 @@
 var React = require('react'),
     Button = require('react-bootstrap').Button,
     pluralize = require('pluralize'),
-    getQuestionTitleByType = require('./getQuestionTitleByType'),
-    shapes = require('../shapes'),
-    Post = require('../Post'),
-    { agoToDate, dateToAgo } = require('../../helpers/timeAgo');
+    { agoToDate, dateToAgo } = require('Time');
     // debug = require('debug')('Timeline');
 
 var Timeline = React.createClass({
 
   propTypes: {
     type: React.PropTypes.string.isRequired,
-    subject: shapes.post.isRequired,
+    subject: R.Shapes.post.isRequired,
     max: React.PropTypes.string.isRequired,
     min: React.PropTypes.string.isRequired,
     step: React.PropTypes.number.isRequired,
@@ -52,9 +49,9 @@ var Timeline = React.createClass({
 
     return (
       <div className="question question-time">
-        <h4>{getQuestionTitleByType(this.props.type)}</h4>
+        <h4>{R.getQuestionTitleByType(this.props.type)}</h4>
         <div className="question-subject">
-          <Post post={this.props.subject} />
+          <R.Post post={this.props.subject} />
         </div>
         <div className="question-input">
           <input
@@ -89,4 +86,4 @@ var Timeline = React.createClass({
 
 });
 
-module.exports = Timeline;
+Reminisce.Timeline = Timeline;

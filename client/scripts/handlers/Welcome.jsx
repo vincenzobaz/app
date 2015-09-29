@@ -2,15 +2,14 @@
 'use strict';
 
 var React = require('react'),
-    shapes = require('../components/shapes'),
     debug = require('debug')('Welcome');
 
 var Welcome = React.createClass({
 
   propTypes: {
-    user: shapes.User.isRequired,
-    joinRequests: React.PropTypes.arrayOf(shapes.JoinRequest),
-    games: React.PropTypes.arrayOf(shapes.Game)
+    user: R.Shapes.User.isRequired,
+    joinRequests: React.PropTypes.arrayOf(R.Shapes.JoinRequest),
+    games: React.PropTypes.arrayOf(R.Shapes.Game)
   },
 
   switchToTraining(e) {
@@ -84,4 +83,4 @@ var Welcome = React.createClass({
 
 });
 
-module.exports = Welcome;
+Reminisce.Welcome = Welcome;

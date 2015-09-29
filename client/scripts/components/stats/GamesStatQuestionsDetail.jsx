@@ -1,5 +1,4 @@
 var React = require('react'),
-    shapes = require('../shapes'),
     ReactMeteor = require('../../third-party/react-meteor'),
     ReactD3Components = require('react-d3-components'),
     debug = require('debug')('Stats');
@@ -96,4 +95,4 @@ var GamesStatQuestionsDetail = React.createClass({
 
 });
 
-module.exports = GamesStatQuestionsDetail;
+Reminisce.GamesStatQuestionsDetail = GamesStatQuestionsDetail;

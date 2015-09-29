@@ -4,14 +4,13 @@
 var React = require('react'),
     Bootstrap = require('react-bootstrap'),
     Modal = Bootstrap.Modal,
-    Button = Bootstrap.Button,
-    shapes = require('../shapes');
+    Button = Bootstrap.Button;
 
 // FIXME: Write proper QuitGame modal body.
 var QuitGameModal = React.createClass({
 
   propTypes: {
-    game: shapes.Game.isRequired,
+    game: R.Shapes.Game.isRequired,
     onResume: React.PropTypes.func.isRequired,
     onQuit: React.PropTypes.func.isRequired,
     onRequestHide: React.PropTypes.func.isRequired
@@ -51,4 +50,4 @@ var QuitGameModal = React.createClass({
 
 });
 
-module.exports = QuitGameModal;
+Reminisce.QuitGameModal = QuitGameModal;

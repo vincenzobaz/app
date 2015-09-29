@@ -1,14 +1,12 @@
 
 'use strict';
 
-var React = require('react'),
-    JoinRequest = require('./JoinRequest'),
-    shapes = require('./shapes');
+var React = require('react');
 
 var JoinRequests = React.createClass({
 
   propTypes: {
-    requests: React.PropTypes.arrayOf(shapes.JoinRequest)
+    requests: React.PropTypes.arrayOf(R.Shapes.JoinRequest)
   },
 
   render() {
@@ -29,13 +27,13 @@ var JoinRequests = React.createClass({
 
     if (this.props.requests) {
       return this.props.requests.map(req =>
-        <JoinRequest key={'joinrequest-' + req.getId()} request={req} />
+        <R.JoinRequest key={'joinrequest-' + req.getId()} request={req} />
       );
     }
 
-    return <JoinRequest.None />;
+    return <R.JoinRequest.None />;
   }
 
 });
 
-module.exports = JoinRequests;
+Reminisce.JoinRequests = JoinRequests;

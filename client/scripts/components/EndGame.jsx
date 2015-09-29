@@ -3,15 +3,14 @@
 
 var React = require('react'),
     Modal = require('react-bootstrap').Modal,
-    LocalStorageMixin = require('react-localstorage'),
-    shapes = require('./shapes');
+    LocalStorageMixin = require('react-localstorage');
 
 var EndGame = React.createClass({
 
   mixins: [LocalStorageMixin],
 
   propTypes: {
-    currentGame: shapes.Game
+    currentGame: R.Shapes.Game
   },
 
   getInitialState() {
@@ -86,4 +85,4 @@ var EndGame = React.createClass({
 
 });
 
-module.exports = EndGame;
+Reminisce.EndGame = EndGame;

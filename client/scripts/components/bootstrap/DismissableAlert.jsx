@@ -47,4 +47,4 @@ const DismissableAlert = React.createClass({
 
 });
 
-module.exports = DismissableAlert;
+Reminisce.DismissableAlert = DismissableAlert;

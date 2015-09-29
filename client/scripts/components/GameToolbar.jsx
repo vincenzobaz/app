@@ -2,13 +2,8 @@
 'use strict';
 
 var React = require('react'),
-    FriendsAutocomplete = require('./FriendsAutocomplete'),
-    GameStore = require('../stores/GameStore'),
-    UserStore = require('../stores/UserStore'),
     Bootstrap = require('react-bootstrap'),
     ModalTrigger = Bootstrap.ModalTrigger,
-    QuitGameModal = require('./modals/QuitGameModal'),
-    StartGameModal = require('./modals/StartGameModal'),
     debug = require('debug')('GameToolbar');
 
 var GameToolbar = React.createClass({
@@ -30,7 +25,7 @@ var GameToolbar = React.createClass({
 
   /* eslint no-underscore-dangle: 0 */
   startGame(friend) {
-    GameStore.start(friend._id)
+    R.GameStore.start(friend._id)
       .then(res => {
         debug('after starGame:', res);
         Session.set('page', 'game');
@@ -54,7 +49,7 @@ var GameToolbar = React.createClass({
 
   onQuit() {
     debug('quit game');
-    GameStore.quit(this.props.game);
+    R.GameStore.quit(this.props.game);
     Session.set('page', 'home');
   },
 
@@ -66,7 +61,7 @@ var GameToolbar = React.createClass({
     var startModal = '';
 
     if (this.state.showStartModal && this.state.friend) {
-      startModal = <StartGameModal friend={this.state.friend}
+      startModal = <R.StartGameModal friend={this.state.friend}
                                    onOk={this.onStart}
                                    onCancel={this.onAbortStart} />;
     }
@@ -76,7 +71,7 @@ var GameToolbar = React.createClass({
         <span className='start-game'>
           Start new game with
           &nbsp;
-          <FriendsAutocomplete onSelect={this.onFriendSelect} />
+          <R.FriendsAutocomplete onSelect={this.onFriendSelect} />
           &nbsp;
           <i className='icon-check-sign'></i>
         </span>
@@ -93,7 +88,7 @@ var GameToolbar = React.createClass({
     }
 
     return (
-      <ModalTrigger modal={<QuitGameModal game={this.props.game} onQuit={this.onQuit} onResume={this.onResume} />}>
+      <ModalTrigger modal={<R.QuitGameModal game={this.props.game} onQuit={this.onQuit} onResume={this.onResume} />}>
         <a role='button' data-toggle='modal' href='#modal-confirm'>
           <i className='icon-signout'></i>
           Quit this game
@@ -104,4 +99,4 @@ var GameToolbar = React.createClass({
 
 });
 
-module.exports = GameToolbar;
+Reminisce.GameToolbar = GameToolbar;

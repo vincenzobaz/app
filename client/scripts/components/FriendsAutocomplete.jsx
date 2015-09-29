@@ -3,8 +3,7 @@
 
 var React = require('react'),
     throttle = _.throttle,
-    FacebookStore = require('../stores/FacebookStore'),
-    Autocomplete = require('../third-party/react-autocomplete'),
+    Autocomplete = require('react-autocomplete'),
     Combobox = Autocomplete.Combobox,
     Item = Autocomplete.Option,
     fuzzy = require('fuzzy');
@@ -53,7 +52,7 @@ var FriendsAutocomplete = React.createClass({
     // if (this.pendingRequest && this.pendingRequest.abort) {
     //   this.pendingRequest.abort();
     // }
-    // this.pendingRequest = FacebookStore.getFriends();
+    // this.pendingRequest = R.FacebookStore.getFriends();
     // this.pendingRequest.done(friends => {
     //   this.setState({
     //     loading: false,
@@ -140,4 +139,4 @@ var FriendsAutocomplete = React.createClass({
 });
 
 
-module.exports = FriendsAutocomplete;
+Reminisce.FriendsAutocomplete = FriendsAutocomplete;

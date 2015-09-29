@@ -30,4 +30,4 @@ function renderIcon(icon, maxWidth, maxHeight) {
               alt="" />;
 }
 
-module.exports = renderIcon;
+Reminisce.renderIcon = renderIcon;

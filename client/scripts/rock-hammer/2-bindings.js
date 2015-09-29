@@ -5,19 +5,7 @@
 
 'use strict';
 
-var config = require('./config'),
-    bindings;
-
-exports.bindAll = function() {
-  for (var i = 0; i < config.bindings.length; i += 1) {
-    var bind = bindings[config.bindings[i]];
-    if (bind != null) {
-      bind();
-    }
-  }
-};
-
-bindings = exports.bindings = {
+Reminisce.RockHammerBindings = {
 
   startGamePopover: function() {
     $('.start-game input').focus(function(e) {
@@ -66,4 +54,13 @@ bindings = exports.bindings = {
     }
   }
 
+};
+
+Reminisce.RockHammerBindings.bindAll = function() {
+  for (var i = 0; i < Reminisce.RockHammerConfig.bindings.length; i += 1) {
+    var bind = Reminisce.RockHammerBindings[Reminisce.RockHammerConfig.bindings[i]];
+    if (bind != null) {
+      bind();
+    }
+  }
 };

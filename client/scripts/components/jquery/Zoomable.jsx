@@ -53,4 +53,4 @@ var Zoomable = React.createClass({
   }
 });
 
-module.exports = Zoomable;
+Reminisce.Zoomable = Zoomable;

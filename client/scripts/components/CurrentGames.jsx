@@ -2,14 +2,12 @@
 'use strict';
 
 var React = require('react'),
-    CurrentGame = require('./CurrentGame'),
-    shapes = require('./shapes'),
     sortBy = _.sortBy;
 
 var CurrentGames = React.createClass({
 
   propTypes: {
-    games: React.PropTypes.arrayOf(shapes.Game).isRequired
+    games: React.PropTypes.arrayOf(R.Shapes.Game).isRequired
   },
 
   render() {
@@ -25,14 +23,14 @@ var CurrentGames = React.createClass({
 
   renderGames() {
     if (this.props.games.length <= 0) {
-      return <CurrentGame.None />;
+      return <R.CurrentGame.None />;
     }
 
     const filteredGames = this.props.games.filter(game => !game.hasEnded());
     const sortedGames   = this.sortGamesByIdDesc(filteredGames);
 
     return sortedGames.map(game =>
-      <CurrentGame key={game.getId()} game={game} />
+      <R.CurrentGame key={game.getId()} game={game} />
     );
   },
 
@@ -41,4 +39,4 @@ var CurrentGames = React.createClass({
   }
 });
 
-module.exports = CurrentGames;
+Reminisce.CurrentGames = CurrentGames;

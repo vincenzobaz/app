@@ -2,10 +2,7 @@
 'use strict';
 
 var React = require('react');
-var NetworkErrorModal = require('./modals/NetworkErrorModal');
-var GenericErrorModal = require('./modals/GenericErrorModal');
 var OverlayMixin = require('react-bootstrap').OverlayMixin;
-var shapes = require('./shapes');
 var debug = require('debug')('ErrorHandler');
 
 var ErrorHandler = React.createClass({
@@ -13,14 +10,14 @@ var ErrorHandler = React.createClass({
   mixins: [OverlayMixin],
 
   propTypes: {
-    store: shapes.EventEmitter
+    store: R.Shapes.EventEmitter
   },
 
   interval: null,
 
   modals: {
-    Generic: GenericErrorModal,
-    Network: NetworkErrorModal
+    Generic: R.GenericErrorModal,
+    Network: R.NetworkErrorModal
   },
 
   getInitialState() {
@@ -88,4 +85,4 @@ var ErrorHandler = React.createClass({
 
 });
 
-module.exports = ErrorHandler;
+Reminisce.ErrorHandler = ErrorHandler;

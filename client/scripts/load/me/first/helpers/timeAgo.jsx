@@ -11,7 +11,7 @@ const dateToAgo = (date, unit) => {
   return moment().diff(date, unit);
 };
 
-module.exports = {
+Reminisce.Time = {
   agoToDate,
   dateToAgo
 };

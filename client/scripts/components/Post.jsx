@@ -1,9 +1,7 @@
 
 'use strict';
 
-var React = require('react'),
-    shapes = require('./shapes'),
-    Zoomable = require('./jquery/Zoomable');
+var React = require('react');
 
 var None = React.createClass({
   render() {
@@ -53,11 +51,11 @@ var Picture = React.createClass({
   renderPicture() {
     if (this.props.interactive) {
       return (
-        <Zoomable url={this.props.imageUrl}>
+        <R.Zoomable url={this.props.imageUrl}>
           <figure className="zoomable">
             <img src={this.props.imageUrl} alt="" />
           </figure>
-        </Zoomable>
+        </R.Zoomable>
       );
     }
 
@@ -102,7 +100,7 @@ const Video = React.createClass({
 var Comment = React.createClass({
 
   propTypes: {
-    post: shapes.subject.isRequired,
+    post: R.Shapes.subject.isRequired,
     comment: React.PropTypes.string.isRequired
   },
 
@@ -169,7 +167,7 @@ var Page = React.createClass({
 var Post = React.createClass({
 
   propTypes: {
-    post: shapes.subject.isRequired,
+    post: R.Shapes.subject.isRequired,
     interactive: React.PropTypes.bool
   },
 
@@ -217,4 +215,4 @@ var Post = React.createClass({
 
 });
 
-module.exports = Post;
+Reminisce.Post = Post;

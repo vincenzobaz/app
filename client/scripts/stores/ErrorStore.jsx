@@ -37,4 +37,4 @@ var ErrorStore = merge(EventEmitter.prototype, {
 
 });
 
-module.exports = ErrorStore;
+Reminisce.ErrorStore = ErrorStore;

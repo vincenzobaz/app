@@ -4,14 +4,7 @@
 var React = require('react'),
     Modal = require('react-bootstrap').Modal,
     Button = require('react-bootstrap').Button,
-    QuestionTimer = require('timer-machine'),
-    Questions = require('../questions'),
-    TimeLeft = require('../TimeLeft'),
-    AnswerStore = require('../../stores/AnswerStore'),
-    ErrorStore = require('../../stores/ErrorStore'),
-    MultiStepMixin = require('../../mixins/MultiStepMixin'),
-    progressImage = require('../../helpers/progressImage'),
-    shapes = require('../shapes');
+    QuestionTimer = require('timer-machine');
 
 var debug = require('debug')('QuestionsModal');
 
@@ -19,13 +12,13 @@ var nop = () => {};
 
 var QuestionsModal = React.createClass({
 
-  mixins: [MultiStepMixin],
+  mixins: [R.MultiStepMixin],
 
   propTypes: {
-    game: shapes.Game.isRequired,
+    game: R.Shapes.Game.isRequired,
     maxTime: React.PropTypes.number, /* in seconds */
-    tile: shapes.Tile,
-    questions: React.PropTypes.arrayOf(shapes.Question).isRequired,
+    tile: R.Shapes.Tile,
+    questions: React.PropTypes.arrayOf(R.Shapes.Question).isRequired,
     onRequestHide: React.PropTypes.func
   },
 
@@ -56,15 +49,15 @@ var QuestionsModal = React.createClass({
       console.log("Question modal question", question);
     const kind = question.getKind();
 
-    if (!Questions[kind]) {
-      ErrorStore.emitError(new Error(`Unknown question kind: ${kind}`));
+    if (!R.QuestionsKinds[kind]) {
+      R.ErrorStore.emitError(new Error(`Unknown question kind: ${kind}`));
       return null;
     }
 
     question.onDone = this.onAnswer;
       //debug('question', question);
 
-    return React.createElement(Questions[kind], question);
+    return React.createElement(R.QuestionsKinds[kind], question);
   },
 
   getTimers() {
@@ -180,7 +173,7 @@ var QuestionsModal = React.createClass({
   renderFooter() {
     var timeLeftComponent = (this.isDone()) ?
       <span></span> :
-      <TimeLeft maxTime={this.props.maxTime} onTimeUp={this.onTimeUp} />;
+      <R.TimeLeft maxTime={this.props.maxTime} onTimeUp={this.onTimeUp} />;
 
     return (
       <div className='grid-container'>
@@ -189,7 +182,7 @@ var QuestionsModal = React.createClass({
         </div>
         <div className='grid-25 prefix-50'>
           <div className='progress'>
-            <img src={progressImage(this.state.step, 'red')} alt='' width='22' height='22' />
+            <img src={R.progressImage(this.state.step, 'red')} alt='' width='22' height='22' />
           </div>
         </div>
       </div>
@@ -201,9 +194,9 @@ var QuestionsModal = React.createClass({
 var Done = React.createClass({
 
   propTypes: {
-    game: shapes.Game.isRequired,
-    tile: shapes.Tile.isRequired,
-    answers: React.PropTypes.arrayOf(shapes.answer).isRequired,
+    game: R.Shapes.Game.isRequired,
+    tile: R.Shapes.Tile.isRequired,
+    answers: React.PropTypes.arrayOf(R.Shapes.answer).isRequired,
     onSent: React.PropTypes.func,
     onSendError: React.PropTypes.func,
     onClose: React.PropTypes.func
@@ -229,7 +222,7 @@ var Done = React.createClass({
 
   sendAnswers() {
     console.log(this.props.tile, this.props.answers);
-    AnswerStore
+    R.AnswerStore
       .send(this.props.game, this.props.tile, this.props.answers)
       .then(res => {
         if (!res || res.status !== "success") {
@@ -284,8 +277,8 @@ var Done = React.createClass({
 var TimeUp = React.createClass({
 
   propTypes: {
-    game: shapes.Game.isRequired,
-    tile: shapes.Tile.isRequired,
+    game: R.Shapes.Game.isRequired,
+    tile: R.Shapes.Tile.isRequired,
     onSent: React.PropTypes.func,
     onSendError: React.PropTypes.func
   },
@@ -309,7 +302,7 @@ var TimeUp = React.createClass({
   },
 
   sendTimeUp() {
-    AnswerStore
+    R.AnswerStore
       .timeOut(this.props.game, this.props.tile)
       .then(res => {
         if (!res || res.status !== "success") {
@@ -340,5 +333,5 @@ var TimeUp = React.createClass({
 
 });
 
-module.exports = QuestionsModal;
+Reminisce.QuestionsModal = QuestionsModal;
 

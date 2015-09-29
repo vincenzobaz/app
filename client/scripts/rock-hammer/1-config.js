@@ -10,7 +10,7 @@
 
 // Below are the settings to make Rock Hammer work.
 // Change these as needed for your own projects.
-module.exports = {
+Reminisce.RockHammer = {
 
   // Decide which navigation patterns you wish to use
   navpatterns : {

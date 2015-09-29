@@ -1,15 +1,12 @@
 
 'use strict';
 
-var React = require('react'),
-    GameToolbar = require('./GameToolbar'),
-    Routes = require('../Routes'),
-    shapes = require('./shapes');
+var React = require('react');
 
 var Footer = React.createClass({
 
   propTypes: {
-    currentGame: shapes.Game
+    currentGame: R.Shapes.Game
   },
 
   render() {
@@ -17,7 +14,7 @@ var Footer = React.createClass({
       <ul className='menu'>
         <li className='branding'>
             <a href="#" onClick={this.showPage('home')}>
-              <img src={Routes.Assets.at('images/reminisce-logo-ios.png').url} alt='Reminisce' width='48' height='48' />
+              <img src={R.Routes.Assets.at('images/reminisce-logo-ios.png').url} alt='Reminisce' width='48' height='48' />
             </a>
         </li>
         <li className=''>
@@ -30,7 +27,7 @@ var Footer = React.createClass({
           <a href="#" onClick={this.showPage('account')}>Account</a>
         </li>
         <li className='manage-game right'>
-          <GameToolbar game={this.props.currentGame} />
+          <R.GameToolbar game={this.props.currentGame} />
         </li>
       </ul>
     );
@@ -45,4 +42,4 @@ var Footer = React.createClass({
 
 });
 
-module.exports = Footer;
+Reminisce.Footer = Footer;

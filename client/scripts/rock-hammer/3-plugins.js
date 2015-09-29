@@ -1,5 +1,6 @@
 
-module.exports = function() {
+Reminisce.RockHammerPlugins = {};
+Reminisce.RockHammerPlugins.loadPlugins = function() {
 
 // Avoid `console` errors in browsers that lack a console.
 (function() {

@@ -34,5 +34,5 @@ var MultiStep = {
 
 };
 
-module.exports = MultiStep;
+Reminisce.MultiStep = MultiStep;
 

@@ -42,4 +42,4 @@ var GenericErrorModal = React.createClass({
 
 });
 
-module.exports = GenericErrorModal;
+Reminisce.GenericErrorModal = GenericErrorModal;

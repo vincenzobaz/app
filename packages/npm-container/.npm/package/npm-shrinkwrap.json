@@ -27,6 +27,9 @@
         }
       }
     },
+    "events": {
+      "version": "1.0.2"
+    },
     "externalify": {
       "version": "0.1.0",
       "dependencies": {

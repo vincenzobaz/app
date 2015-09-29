@@ -1,7 +1,7 @@
 
 'use strict';
 
-module.exports = {
+Reminisce.Meteor = {
   call: Promise.promisify(Meteor.call, Meteor)
 };
 

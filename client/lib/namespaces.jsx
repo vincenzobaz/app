@@ -5,5 +5,7 @@ if (typeof Reminisce !== 'object') {
     Model: {},
     Store: {}
   };
+
+  R = Reminisce;
 }
 

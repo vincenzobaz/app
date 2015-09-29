@@ -38,4 +38,4 @@ var TurnErrorModal = React.createClass({
 
 });
 
-module.exports = TurnErrorModal;
+Reminisce.TurnErrorModal = TurnErrorModal;

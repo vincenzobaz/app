@@ -17,5 +17,5 @@ function postJSON(url, data)
 }
 
 
-module.exports = postJSON;
+Reminisce.postJSON = postJSON;
 

@@ -1,15 +1,13 @@
 
 'use strict';
 
-var React = require('react'),
-    Player = require('./Player'),
-    shapes = require('./shapes');
+var React = require('react');
 
 var Players = React.createClass({
 
   propTypes: {
-    game: shapes.Game,
-    user: shapes.User.isRequired
+    game: R.Shapes.Game,
+    user: R.Shapes.User.isRequired
   },
 
   render() {
@@ -38,8 +36,8 @@ var Players = React.createClass({
 
     return (
       <div>
-        <Player player={this.props.user} isTurn={game.isMyTurnToPlay()} score={game.getScore().me} waiting={game.isWaiting()} />
-        <Player player={opponent} isTurn={!game.isMyTurnToPlay()} isOpponent={true} score={game.getScore().them} waiting={game.isWaiting()} />
+        <R.Player player={this.props.user} isTurn={game.isMyTurnToPlay()} score={game.getScore().me} waiting={game.isWaiting()} />
+        <R.Player player={opponent} isTurn={!game.isMyTurnToPlay()} isOpponent={true} score={game.getScore().them} waiting={game.isWaiting()} />
       </div>
     );
   }
@@ -52,4 +50,4 @@ Players.None = React.createClass({
   }
 });
 
-module.exports = Players;
+Reminisce.Players = Players;

@@ -1,14 +1,12 @@
 
 'use strict';
 
-var Timeout = require('../helpers/Timeout');
-
 var TimeoutMixin = {
 
   timeout: null,
 
   componentWillMount() {
-    this.timeout = new Timeout(
+    this.timeout = new R.Timeout(
       this.props.maxTime * 1000,
       this.onTimeUp, 1000, this.tick, true
     );
@@ -49,5 +47,5 @@ var TimeoutMixin = {
 
 };
 
-module.exports = TimeoutMixin;
+Reminisce.TimeoutMixin = TimeoutMixin;
 

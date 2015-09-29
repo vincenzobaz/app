@@ -19,5 +19,5 @@ const titles = {
   en
 };
 
-module.exports = (type, lang = 'en') => titles[lang][type]
+Reminisce.getQuestionTitleByType = (type, lang = 'en') => titles[lang][type]
 

@@ -1,5 +1,5 @@
 
-const MeteorCall = Promise.promisify(Meteor.call, Meteor);
+const MeteorCall = Promise.promisify(R.Meteor.call, R.Meteor);
 
 Reminisce.Store.AnswerStore = {
 

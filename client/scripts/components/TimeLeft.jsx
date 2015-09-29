@@ -1,9 +1,7 @@
 
 'use strict';
 
-var React = require('react'),
-    TimeoutMixin = require('../mixins/TimeoutMixin'),
-    timerStyle = require('../helpers/timerStyle');
+var React = require('react');
 
 var TimeLeft = React.createClass({
 
@@ -12,7 +10,7 @@ var TimeLeft = React.createClass({
     onTimeUp: React.PropTypes.func.isRequired
   },
 
-  mixins: [TimeoutMixin],
+  mixins: [R.TimeoutMixin],
 
   getInitialState() {
     return {
@@ -26,12 +24,12 @@ var TimeLeft = React.createClass({
     return (
       <div className='timer'>
           <i className='icon-time'></i>
-          <span style={timerStyle(timeLeftRatio)}>{' '}</span>
+          <span style={R.timerStyle(timeLeftRatio)}>{' '}</span>
       </div>
     );
   }
 
 });
 
-module.exports = TimeLeft;
+Reminisce.TimeLeft = TimeLeft;
 

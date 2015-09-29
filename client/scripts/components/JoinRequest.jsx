@@ -1,14 +1,12 @@
 
 'use strict';
 
-var React = require('react'),
-    shapes = require('./shapes'),
-    JoinRequestStore = require('../stores/JoinRequestStore');
+var React = require('react');
 
 var JoinRequest = React.createClass({
 
   propTypes: {
-    request: shapes.JoinRequest
+    request: R.Shapes.JoinRequest
   },
 
   render() {
@@ -38,12 +36,12 @@ var JoinRequest = React.createClass({
 
   accept(e) {
     e.preventDefault();
-    JoinRequestStore.accept(this.props.request.getId());
+    R.JoinRequestStore.accept(this.props.request.getId());
   },
 
   decline(e) {
     e.preventDefault();
-    JoinRequestStore.decline(this.props.request.getId());
+    R.JoinRequestStore.decline(this.props.request.getId());
   }
 
 });
@@ -61,4 +59,4 @@ JoinRequest.None = React.createClass({
   }
 });
 
-module.exports = JoinRequest;
+Reminisce.JoinRequest = JoinRequest;

@@ -1,14 +1,12 @@
 
 'use strict';
 
-var React = require('react'),
-    shapes = require('./shapes'),
-    GameStore = require('../stores/GameStore');
+var React = require('react');
 
 var CurrentGame = React.createClass({
 
   propTypes: {
-    game: shapes.Game
+    game: R.Shapes.Game
   },
 
   render() {
@@ -83,7 +81,7 @@ var CurrentGame = React.createClass({
   switchToGame(game) {
     return (e) => {
       e.preventDefault();
-      GameStore.switchTo(game.getId());
+      R.GameStore.switchTo(game.getId());
     };
   },
 
@@ -109,4 +107,4 @@ CurrentGame.None = React.createClass({
   }
 });
 
-module.exports = CurrentGame;
+Reminisce.CurrentGame = CurrentGame;

@@ -1,13 +1,10 @@
 
 'use strict';
 
-var call = require('../helpers/meteor').call,
-    getConfig = require('../helpers/getConfig');
-
-module.exports = {
+var FacebookStore = {
 
   login(cb = () => {}) {
-    var conf = getConfig('facebook');
+    var conf = R.getConfig('facebook');
 
     console.log("FAcebook config is", conf);
 
@@ -17,20 +14,21 @@ module.exports = {
   },
 
   getUserInfo(fbUserId) {
-    return call('Facebook.getUserInfo', fbUserId);
+    return R.Meteor.call('Facebook.getUserInfo', fbUserId);
   },
 
   getFriends() {
-    return call('Facebook.getFriends');
+    return R.Meteor.call('Facebook.getFriends');
   },
 
   getAvatar(fbUserId) {
-    return call('Facebook.getAvatar', fbUserId);
+    return R.Meteor.call('Facebook.getAvatar', fbUserId);
   },
 
   getPermissions() {
-    return call('Facebook.getPermissions');
+    return R.Meteor.call('Facebook.getPermissions');
   }
 
 };
 
+Reminisce.FacebookStore = FacebookStore;

@@ -1,11 +1,10 @@
 
-var React = require('react'),
-    FacebookStore = require('../stores/FacebookStore');
+var React = require('react');
 
 var Home = React.createClass({
 
   login() {
-    FacebookStore.login();
+    R.FacebookStore.login();
   },
 
   render() {
@@ -76,4 +75,4 @@ var Home = React.createClass({
   }
 });
 
-module.exports = Home;
+Reminisce.Home = Home;

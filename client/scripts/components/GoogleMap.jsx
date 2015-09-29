@@ -7,8 +7,7 @@
 'use strict';
 
 var React = require('react'),
-    queryString = require('querystring'),
-    randomStr = require('../helpers/randomStr');
+    queryString = require('querystring');
 
 var GoogleMap = React.createClass({
 
@@ -102,7 +101,7 @@ var GoogleMap = React.createClass({
       return;
     }
 
-    var callbackName = `gmap_cb_${randomStr(10)}`;
+    var callbackName = `gmap_cb_${R.randomStr(10)}`;
     window[callbackName] = this.showMap;
 
     var params = {
@@ -123,4 +122,4 @@ var GoogleMap = React.createClass({
 
 });
 
-module.exports = GoogleMap;
+Reminisce.GoogleMap = GoogleMap;

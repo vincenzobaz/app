@@ -1,8 +1,6 @@
 
 'use strict';
 
-var Routes = require('../Routes');
-
 function image(s, c) {
   s = Math.max(0, Math.min(s, 3));
   if (s === 0) { return 'check-none.png'; }
@@ -11,7 +9,7 @@ function image(s, c) {
 }
 
 function progressImage(score, color) {
-  return Routes.Assets.at('images/' + image(score, color)).url;
+  return R.Routes.Assets.at('images/' + image(score, color)).url;
 }
 
-module.exports = progressImage;
+Reminisce.progressImage = progressImage;

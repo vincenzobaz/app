@@ -25,5 +25,5 @@ class ModalManager extends EventEmitter {
 
 }
 
-module.exports = new ModalManager();
+Reminisce.ModalManager = new ModalManager();
 

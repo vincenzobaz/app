@@ -42,5 +42,5 @@ var NetworkErrorModal = React.createClass({
 
 });
 
-module.exports = NetworkErrorModal;
+Reminisce.NetworkErrorModal = NetworkErrorModal;
 

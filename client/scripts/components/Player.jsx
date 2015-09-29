@@ -1,13 +1,12 @@
 
 'use strict';
 
-var React = require('react'),
-    shapes = require('./shapes');
+var React = require('react');
 
 var Player = React.createClass({
 
   propTypes: {
-    player: React.PropTypes.oneOfType([shapes.User, shapes.Friend]).isRequired,
+    player: React.PropTypes.oneOfType([R.Shapes.User, R.Shapes.Friend]).isRequired,
     isOpponent: React.PropTypes.bool,
     isTurn: React.PropTypes.bool.isRequired,
     waiting: React.PropTypes.bool.isRequired,
@@ -55,4 +54,4 @@ var Player = React.createClass({
 
 });
 
-module.exports = Player;
+Reminisce.Player = Player;

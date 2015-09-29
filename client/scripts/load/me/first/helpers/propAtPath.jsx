@@ -17,5 +17,5 @@ function propAtPath(obj, path, defValue) {
   return defValue;
 }
 
-module.exports = propAtPath;
+Reminisce.propAtPath = propAtPath;
 

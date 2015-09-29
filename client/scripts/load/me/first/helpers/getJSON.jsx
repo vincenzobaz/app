@@ -7,4 +7,4 @@ function getJSON(url, data)
   return Promise.cast(promise);
 }
 
-module.exports = getJSON;
+Reminisce.getJSON = getJSON;

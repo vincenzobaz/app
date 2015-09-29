@@ -40,4 +40,4 @@ Timeout.prototype = {
 
 };
 
-module.exports = Timeout;
+Reminisce.Timeout = Timeout;

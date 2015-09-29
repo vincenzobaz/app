@@ -2,9 +2,6 @@
 'use strict';
 
 var React = require('react'),
-    Routes = require('../Routes'),
-    renderIcon = require('../helpers/renderIcon'),
-    FacebookStore = require('../stores/FacebookStore'),
     debug = require('debug');
 
 var FacebookPicture = React.createClass({
@@ -15,12 +12,12 @@ var FacebookPicture = React.createClass({
 
   getInitialState() {
     return {
-      imageUrl: Routes.Facebook.avatar(this.props.value, { type: 'square' }).url
+      imageUrl: R.Routes.Facebook.avatar(this.props.value, { type: 'square' }).url
     };
   },
 
   componentDidMount() {
-    FacebookStore.getAvatar(this.props.facebookId).then(imageUrl => {
+    R.FacebookStore.getAvatar(this.props.facebookId).then(imageUrl => {
       this.setState({
         imageUrl: imageUrl
       });
@@ -35,7 +32,7 @@ var FacebookPicture = React.createClass({
 
   render() {
     // return <img url={this.state.imageUrl} alt={this.props.altText} />;
-    return renderIcon(this.state.imageUrl, 40, 40);
+    return R.renderIcon(this.state.imageUrl, 40, 40);
   }
 });
 
@@ -111,4 +108,4 @@ var Prop = React.createClass({
 
 Prop.Props = Props;
 
-module.exports = Prop;
+Reminisce.Prop = Prop;

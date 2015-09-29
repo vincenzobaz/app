@@ -33,4 +33,4 @@ var ErrorModal = React.createClass({
 
 });
 
-module.exports = ErrorModal;
+Reminisce.ErrorModal = ErrorModal;

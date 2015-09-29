@@ -2,14 +2,12 @@
 'use strict';
 
 var React = require('react'),
-    createTiles = require('../helpers/createTiles'),
-    shapes = require('./shapes'),
     debug = require('debug')('Board');
 
 var Board = React.createClass({
 
   propTypes: {
-    game: shapes.Game.isRequired
+    game: R.Shapes.Game.isRequired
   },
 
   render() {
@@ -22,10 +20,10 @@ var Board = React.createClass({
   },
 
   renderTiles() {
-    return createTiles(this.props.game);
+    return R.createTiles(this.props.game);
   }
 
 });
 
-module.exports = Board;
+Reminisce.Board = Board;
 

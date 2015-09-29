@@ -51,4 +51,4 @@ Tooltip = React.createClass({
   }
 });
 
-module.exports = Tooltip;
+Reminisce.Tooltip = Tooltip;
