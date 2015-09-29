@@ -1,25 +1,18 @@
 'use strict';
 
 var React = require('react'),
-    ReactMeteor = require('../third-party/react-meteor'),
     debug = require('debug')('Stats'),
     Modal = require('react-bootstrap').Modal;
 
 var Stats = React.createClass({
 
-    mixins: [ReactMeteor.Mixin],
+    mixins: [ReactMeteorData],
 
     startMeteorSubscriptions() {
         Meteor.subscribe('gameStats');
     },
 
-    getInitialState() {
-        return {
-          loaded: false
-        };
-    },
-
-    getMeteorState() {
+    getMeteorData() {
         var gameStat = Gamestats.findOne({userId: Meteor.userId()});
 
         console.log("Gamestats loaded? ", gameStat);
@@ -38,7 +31,7 @@ var Stats = React.createClass({
     },
 
     render() {
-        if (!this.state.loaded) {
+        if (!this.data.loaded) {
             return <div>Loading...</div>;
         }
 

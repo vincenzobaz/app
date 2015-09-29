@@ -2,20 +2,19 @@
 'use strict';
 
 var React = require('react'),
-    ReactMeteor = require('../third-party/react-meteor'),
     debug = require('debug')('Main');
 
 var Main = React.createClass({
 
-  mixins: [ReactMeteor.Mixin],
+  mixins: [ReactMeteorData],
 
-  getMeteorState() {
+  getMeteorData() {
     return R.getAppState();
   },
 
   render() {
-    debug(this.state);
-    if (this.state.isLoggedIn) {
+    debug(this.data);
+    if (this.data.isLoggedIn) {
       return this.renderDashboard();
     }
 
@@ -28,7 +27,7 @@ var Main = React.createClass({
 
   renderDashboard() {
     return (
-      <R.Dashboard {...this.state}>
+      <R.Dashboard {...this.data}>
         {this.renderInner()}
       </R.Dashboard>
     );
@@ -43,15 +42,15 @@ var Main = React.createClass({
   },
 
   renderInner() {
-    var page = (this.pages[this.state.page]) ? this.state.page : 'welcome';
+    var page = (this.pages[this.data.page]) ? this.data.page : 'welcome';
 
-    if (page === 'game' && this.state.currentGame == null) {
+    if (page === 'game' && this.data.currentGame == null) {
       page = 'welcome';
     }
 
     const Page = this.pages[page];
 
-    return <Page {...this.state} />;
+    return <Page {...this.data} />;
   }
 
 });

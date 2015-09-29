@@ -1,5 +1,4 @@
 var React = require('react'),
-    ReactMeteor = require('../../third-party/react-meteor'),
     ReactD3Components = require('react-d3-components'),
     debug = require('debug')('Stats');
 
@@ -8,15 +7,13 @@ var BarChart = ReactD3Components.BarChart;
 
 var GamesStatQuestions = React.createClass({
 
-    mixins: [ReactMeteor.Mixin],
-
-
+    mixins: [ReactMeteorData],
 
     startMeteorSubscriptions: function() {
         Meteor.subscribe('gameStats');
     },
 
-    getMeteorState: function() {
+    getMeteorData: function() {
         var gameStat = this.props.gameStats;
         var mcStat = gameStat.getMCTried() === 0 ? 0: gameStat.getMCCorrect() / gameStat.getMCTried();
         var tlStat = gameStat.getTLTried() === 0 ? 0: gameStat.getTLCorrect() / gameStat.getTLTried();
@@ -51,12 +48,12 @@ var GamesStatQuestions = React.createClass({
             .range(["#1E5C82", "#271533" , "#BE2032"]);
         var colorScale = d3.scale.category20();
         var y = d3.scale.linear().domain([0, 1]).range([height - margins.top - margins.bottom, 0]);
-        if (this.state.barData == null) { return <div>Loading...</div>; }
+        if (this.data.barData == null) { return <div>Loading...</div>; }
         return (
             <div>
                 <h2>Success Per Question Type</h2>
                 <BarChart
-                    data = {this.state.barData}
+                    data = {this.data.barData}
                     width = {width}
                     height = {height}
                     margin = {{top: margins.top, bottom: margins.bottom, left: margins.left, right: margins.right}}

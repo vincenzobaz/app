@@ -1,5 +1,4 @@
 var React = require('react'),
-    ReactMeteor = require('../../third-party/react-meteor'),
     ReactD3Components = require('react-d3-components'),
     debug = require('debug')('Stats');
 
@@ -8,15 +7,13 @@ var PieChart = ReactD3Components.PieChart;
 
 var GamesStatChart = React.createClass({
 
-    mixins: [ReactMeteor.Mixin],
-
-
+    mixins: [ReactMeteorData],
 
     startMeteorSubscriptions: function() {
         Meteor.subscribe('gameStats');
     },
 
-    getMeteorState: function() {
+    getMeteorData: function() {
         var gameStat = this.props.gameStats;
 
         if (gameStat){
@@ -55,7 +52,7 @@ var GamesStatChart = React.createClass({
     render() {
         var color = d3.scale.ordinal()
             .domain([
-                `Games Won ${this.state.gamesWon/this.state.gamesPlayed}5%`,
+                `Games Won ${this.data.gamesWon/this.data.gamesPlayed}5%`,
                 "Draw",
                 "Games Lost"
             ])
@@ -63,9 +60,9 @@ var GamesStatChart = React.createClass({
 
         return (
             <div>
-                <h2>Total Games Played: {this.state.gamesPlayed}</h2>
+                <h2>Total Games Played: {this.data.gamesPlayed}</h2>
                 <PieChart
-                    data={this.state.pieData}
+                    data={this.data.pieData}
                     colorScale={color}
                     width={600}
                     height={400}
