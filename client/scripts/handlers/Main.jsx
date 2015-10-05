@@ -8,6 +8,18 @@ var Main = React.createClass({
 
   mixins: [ReactMeteorData],
 
+  getInitialState() {
+    return {
+      pages: {
+        stats: R.Stats,
+        welcome: R.Welcome,
+        about: R.About,
+        account: R.Account,
+        game: R.PlayGame
+      },
+    }
+  },
+
   getMeteorData() {
     return R.getAppState();
   },
@@ -33,22 +45,14 @@ var Main = React.createClass({
     );
   },
 
-  pages: {
-    stats: R.Stats,
-    welcome: R.Welcome,
-    about: R.About,
-    account: R.Account,
-    game: R.PlayGame
-  },
-
   renderInner() {
-    var page = (this.pages[this.data.page]) ? this.data.page : 'welcome';
+    var page = (this.state.pages[this.data.page]) ? this.data.page : 'welcome';
 
     if (page === 'game' && this.data.currentGame == null) {
       page = 'welcome';
     }
 
-    const Page = this.pages[page];
+    const Page = this.state.pages[page];
 
     return <Page {...this.data} />;
   }
