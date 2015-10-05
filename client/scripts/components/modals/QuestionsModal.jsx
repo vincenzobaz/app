@@ -222,7 +222,7 @@ var Done = React.createClass({
 
   sendAnswers() {
     debug('sendAnswers', this.props.tile, this.props.answers);
-    R.AnswerStore
+    R.Store.AnswerStore
       .send(this.props.game, this.props.tile, this.props.answers)
       .then(res => {
         if (!res || res.status !== "success") {
@@ -302,7 +302,7 @@ var TimeUp = React.createClass({
   },
 
   sendTimeUp() {
-    R.AnswerStore
+    R.Store.AnswerStore
       .timeOut(this.props.game, this.props.tile)
       .then(res => {
         if (!res || res.status !== "success") {
