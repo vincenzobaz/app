@@ -18,19 +18,21 @@ const mapping = {
   'timer-machine'       : 'TimerMachine'
 };
 
+const debug = window.debug('require');
+
 require = (package) => {
   if (mapping[package] !== undefined) {
-    console.log('Loading module "%s" from window.%s', package, mapping[package]);
+    debug('Loading module "%s" from window.%s', package, mapping[package]);
     return window[mapping[package]];
   }
 
   if (window.Reminisce[package] !== undefined) {
-    console.log('Loading module "%s" from window.Reminisce.%s', package, package);
+    debug('Loading module "%s" from window.Reminisce.%s', package, package);
     return window.Reminisce[package];
   }
 
   if (window[package] !== undefined) {
-    console.log('Loading module "%s" from window.%s', package, package);
+    debug('Loading module "%s" from window.%s', package, package);
     return window[package];
   }
 
