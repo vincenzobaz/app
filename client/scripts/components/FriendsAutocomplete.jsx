@@ -1,6 +1,7 @@
 
 'use strict';
 
+/*
 var React = require('react'),
     throttle = _.throttle,
     Autocomplete = require('react-autocomplete'),
@@ -137,6 +138,15 @@ var FriendsAutocomplete = React.createClass({
   }
 
 });
+*/
 
+const FriendsAutocomplete = React.createClass({
+  render() {
+    return (
+      <div className="friends-autocomplete">
+      </div>
+    );
+  }
+});
 
 Reminisce.FriendsAutocomplete = FriendsAutocomplete;
