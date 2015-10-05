@@ -1,3 +1,4 @@
 env.sh
 settings*.json
 packages/tests-proxy
+env/
