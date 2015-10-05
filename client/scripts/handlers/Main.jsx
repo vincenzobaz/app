@@ -25,7 +25,6 @@ var Main = React.createClass({
   },
 
   render() {
-    debug(this.data);
     if (this.data.isLoggedIn) {
       return this.renderDashboard();
     }
