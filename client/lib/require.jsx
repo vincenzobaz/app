@@ -14,6 +14,7 @@ const mapping = {
   'react-bootstrap'     : 'ReactBootstrap',
   'react-d3-components' : 'ReactD3Components',
   'react-localstorage'  : 'ReactLocalStorage',
+  'react-typeahead'     : 'ReactTypeahead',
   'sortablejs'          : 'Sortable',
   'timer-machine'       : 'TimerMachine'
 };

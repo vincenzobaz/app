@@ -11,7 +11,6 @@ queryString       = require('querystring');
 ReactBootstrap    = require('react-bootstrap');
 ReactD3Components = require('react-d3-components');
 ReactLocalstorage = require('react-localstorage');
+ReactTypeahead    = require('react-typeahead');
 Sortable          = require('sortablejs');
 TimerMachine      = require('timer-machine');
-
-// ReactAutocomplete = require('react-autocomplete');

@@ -683,7 +683,7 @@ section {
 }
 
 .rf-combobox-list {
-  display: none;
+  display: block;
   position: absolute;
   z-index: 1;
   border: 2px solid #e8e8e8;
@@ -700,10 +700,6 @@ section {
   -moz-box-sizing: border-box;
   -ms-box-sizing: border-box;
   box-sizing: border-box;
-}
-
-.rf-combobox-is-open .rf-combobox-list {
-  display: block;
 }
 
 .rf-combobox-input {
@@ -748,10 +744,8 @@ section {
   }
 }
 
-.rf-combobox-selected:before {
-  content: '✓';
-  position: absolute;
-  left: 4px;
+.rf-combobox-option:hover, .rf-combobox-selected {
+  background-color: #BFC9CA;
 }
 
 .modal {
