@@ -17,7 +17,7 @@ Server.fetchGameBoard = function(userId) {
         access_token: accessToken
     };
 
-    const url = `${Meteor.settings.gameCreatorUrl}/gameboard?${Querystring.encode(params)}`;
+    const url = `${process.env.GAME_CREATOR_URL}/gameboard?${Querystring.encode(params)}`;
 
     console.log(`Server.fetchGameBoard(${userId}) - Fetching URL ${url}`);
 
@@ -44,7 +44,7 @@ Server.fetchData = function(userId) {
         access_token: accessToken
     };
 
-    const url = `${Meteor.settings.gameCreatorUrl}/fetchData?${Querystring.encode(params)}`;
+    const url = `${process.env.GAME_CREATOR_URL}/fetchData?${Querystring.encode(params)}`;
 
     console.log(`Server.fetchGameBoard(${userId}) - Fetching URL ${url}`);
 

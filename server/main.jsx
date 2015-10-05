@@ -4,11 +4,11 @@ Meteor.startup(() => {
     BotService.createBots();
     BotService.observeGameCreation();
 
-    if (Meteor.settings.timeOutBetweenFetches == null) {
-        throw new Error("Missing configuration entry: timeOutBetweenFetches");
+    if (process.env.TIMEOUT_BETWEEN_FETCHES == null) {
+        throw new Error("Missing environment variable: TIMEOUT_BETWEEN_FETCHES");
     }
 
-    Meteor.setInterval(Server.fetchAllBoards, Meteor.settings.timeOutBetweenFetches);
+    Meteor.setInterval(Server.fetchAllBoards, process.env.TIMEOUT_BETWEEN_FETCHES);
 
     if (process.env.BOTGAME === '1') {
         BotService.createBotGame("Random");

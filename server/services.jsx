@@ -1,13 +1,27 @@
 
 (function() {
 
-if (Meteor.settings.facebook == null || Meteor.settings.gMaps == null) {
-    throw new Meteor.Error(500, "Please provide settings with the --settings flag when launching Meteor.");
+var abort = false;
+
+  [ 'FACEBOOK_APPID',
+    'FACEBOOK_SECRET',
+    'GMAPS_KEY',
+    'TIMEOUT_BETWEEN_FETCHES',
+    'GAME_CREATOR_URL'
+  ].forEach(key => {
+  if (process.env[key] == null) {
+    console.error('ERROR: Missing environement variable %s', key);
+    abort = true;
+  }
+});
+
+if (abort) {
+  process.exit(1);
 }
 
-var appId = Meteor.settings.facebook.appId;
-var secret = Meteor.settings.facebook.secret;
-var gmapsKey = Meteor.settings.gMaps.key;
+var appId = process.env.FACEBOOK_APPID;
+var secret = process.env.FACEBOOK_SECRET;
+var gmapsKey = process.env.GMAPS_KEY;
 
 ServiceConfiguration.configurations.upsert(
   { service: 'facebook' },

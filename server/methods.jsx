@@ -13,7 +13,7 @@ Meteor.methods({
         console.error(`Deleting Data for user: ${Meteor.userId()}`);
         const user = Meteor.users.findOne(Meteor.userId());
         const fbUserId = user.services.facebook.id;
-        const url = `${Meteor.settings.gameCreatorUrl}/removeUser?user_id=${fbUserId}`;
+        const url = `${process.env.GAME_CREATOR_URL}/removeUser?user_id=${fbUserId}`;
         const del = Meteor.wrapAsync(Meteor.http.del);
         const result = del(url);
 
