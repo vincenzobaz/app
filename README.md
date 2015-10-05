@@ -2,7 +2,9 @@
 
 ## Installation
 
-First clone the repository somewhere:
+First, start the [game creator](https://github.com/reminisceme/game-creator).
+
+Then clone the repository somewhere:
 
     $ git clone git@github.com:reminisceme/app.git
     $ cd app
