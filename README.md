@@ -5,22 +5,23 @@
 First clone the repository somewhere:
 
     $ git clone git@github.com:reminisceme/app.git
+    $ cd app
 
-Open two or more panes/tabs/windows.
+Define the following environment variables in `env/dev.sh`:
 
-In the first pane:
+```
+export MONGO_URL=mongodb://localhost/reminisceme
+export ROOT_URL=http://local.reminisce.me
+export PORT=3000
+export GAME_CREATOR_URL=http://localhost:9900
+export TIMEOUT_BETWEEN_FETCHES=1000
+export FACEBOOK_APPID=...
+export FACEBOOK_SECRET=..
+export GMAPS_KEY=...
+```
 
-    $ cd app/react
-    $ npm install
-    $ make watch
-
-In the second pane:
-
-    $ cd app/meteor
-    $ cp path/to/settings.json ./
-    $ meteor --settings settings.json
-
-In a third pane:
+    $ source env/dev.sh
+    $ meteor
 
     open http://local.reminisce.me
 
