@@ -1,7 +1,7 @@
 
 'use strict';
 
-Reminisce.QuestionKinds = {
+Reminisce.QuestionsKinds = {
   MultipleChoice: R.MultipleChoice,
   Order: R.Order,
   Timeline: R.Timeline,

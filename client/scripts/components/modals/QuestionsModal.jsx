@@ -46,7 +46,7 @@ var QuestionsModal = React.createClass({
   },
 
   questionToStep(question) {
-      console.log("Question modal question", question);
+    debug("Question modal question", question);
     const kind = question.getKind();
 
     if (!R.QuestionsKinds[kind]) {
@@ -221,7 +221,7 @@ var Done = React.createClass({
   },
 
   sendAnswers() {
-    console.log(this.props.tile, this.props.answers);
+    debug('sendAnswers', this.props.tile, this.props.answers);
     R.AnswerStore
       .send(this.props.game, this.props.tile, this.props.answers)
       .then(res => {
