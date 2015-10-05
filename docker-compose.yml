@@ -11,6 +11,8 @@ mongo:
   image: mongo:3.0.6
   ports:
    - "27017:27017"
+  volumes:
+    - ./data/db:/data/db
 
 game-creator:
   image: reminisceme/game-creator
