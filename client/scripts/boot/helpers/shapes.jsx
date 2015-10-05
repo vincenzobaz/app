@@ -4,12 +4,19 @@
 var React = require('react');
 var EventEmitter = require('events').EventEmitter;
 
-var tile   = React.PropTypes.instanceOf(R.Tile);
-var game   = React.PropTypes.instanceOf(R.Game);
-var user   = React.PropTypes.instanceOf(R.User);
-var friend = React.PropTypes.instanceOf(R.Friend);
-var joinRequest = React.PropTypes.instanceOf(R.JoinRequest);
-var question = React.PropTypes.instanceOf(R.Question);
+// var tile   = React.PropTypes.instanceOf(R.Tile);
+// var game   = React.PropTypes.instanceOf(R.Game);
+// var user   = React.PropTypes.instanceOf(R.User);
+// var friend = React.PropTypes.instanceOf(R.Friend);
+// var joinRequest = React.PropTypes.instanceOf(R.JoinRequest);
+// var question = React.PropTypes.instanceOf(R.Question);
+
+var tile        = React.PropTypes.shape({});
+var game        = React.PropTypes.shape({});
+var user        = React.PropTypes.shape({});
+var friend      = React.PropTypes.shape({});
+var joinRequest = React.PropTypes.shape({});
+var question    = React.PropTypes.shape({});
 
 var score = React.PropTypes.shape({
   me: React.PropTypes.number.isRequired,
