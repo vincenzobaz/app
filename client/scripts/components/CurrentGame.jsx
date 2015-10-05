@@ -81,7 +81,7 @@ var CurrentGame = React.createClass({
   switchToGame(game) {
     return (e) => {
       e.preventDefault();
-      R.GameStore.switchTo(game.getId());
+      R.Store.GameStore.switchTo(game.getId());
     };
   },
 
