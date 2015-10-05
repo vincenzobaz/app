@@ -13,8 +13,6 @@ Meteor.startup(() => {
     if (process.env.BOTGAME === '1') {
         BotService.createBotGame("Random");
     }
-
-    console.error("moment ", moment().year());
 });
 
 Accounts.onLogin(attempt => {
