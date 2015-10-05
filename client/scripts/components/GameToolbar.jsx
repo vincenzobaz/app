@@ -72,8 +72,7 @@ var GameToolbar = React.createClass({
           Start new game with
           &nbsp;
           <R.FriendsAutocomplete onSelect={this.onFriendSelect} />
-          &nbsp;
-          <i className='icon-check-sign'></i>
+          {/* &nbsp; <i className='icon-check-sign'></i> */}
         </span>
         &nbsp;
         {this.renderQuitGameButton()}
