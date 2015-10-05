@@ -41,7 +41,7 @@ Reminisce.Collection.Games = new Mongo.Collection('games', {
 Reminisce.Model.Game = class Game {
 
   constructor(props) {
-    Object.assign(this, props);
+    _.extend(this, props);
   }
 
   getId() {

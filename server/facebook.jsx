@@ -33,7 +33,7 @@ Facebook = {
     }
 
     /* eslint camelcase:0 */
-    var params = Object.assign(options, {
+    var params = _.extend(options, {
       access_token: accessToken,
       appsecret_proof: this.computeProof(accessToken)
     });

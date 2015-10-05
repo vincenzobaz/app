@@ -11,7 +11,7 @@ const defaults = {
 
 /* eslint curly:0 */
 resetDB = (override = {}) => {
-    const toDelete = Object.assign({}, defaults, override);
+    const toDelete = _.extend({}, defaults, override);
     const collections = [];
     if (toDelete.Games)         collections.push(Games);
     if (toDelete.JoinRequests)  collections.push(JoinRequests);

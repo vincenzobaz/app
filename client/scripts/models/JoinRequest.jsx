@@ -2,7 +2,7 @@
 Reminisce.Model.JoinRequest = class JoinRequest {
 
   constructor(props) {
-    Object.assign(this, props);
+    _.extend(this, props);
   }
 
   getId() {
