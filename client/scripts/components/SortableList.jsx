@@ -1,5 +1,4 @@
-const React = require('react'),
-      SortableMixin = require('sortablejs/react-sortable-mixin');
+const React = require('react');
 
 const SortableList = React.createClass({
 
