@@ -1,8 +1,7 @@
 
 'use strict';
 
-// TODO: Make this a component
-var MultiStep = {
+var MultiStepMixin = {
 
   steps: [],
 
@@ -34,5 +33,5 @@ var MultiStep = {
 
 };
 
-Reminisce.MultiStep = MultiStep;
+Reminisce.MultiStepMixin = MultiStepMixin;
 
