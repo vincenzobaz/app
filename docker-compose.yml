@@ -1,5 +1,5 @@
 app:
-  image: reminisceme/app
+  build: .
   ports:
    - "80:3000"
   links:
@@ -7,16 +7,23 @@ app:
    - game-creator:game-creator
   env_file: ./env/prod.sh
 
-mongo:
-  image: mongo:3.0.6
-  ports:
-   - "27017:27017"
-  volumes:
-    - ./data/db:/data/db
-
 game-creator:
-  image: reminisceme/game-creator
+  build: ../game-creator/deployment
   ports:
     - "9900:9900"
   links:
     - mongo:mongo
+
+mongo:
+  image: mongo:3.0.6
+  ports:
+   - "27017:27017"
+  links:
+    - dbdata
+  volumes_from:
+    - dbdata
+
+dbdata:
+  image: cogniteev/echo
+  volumes:
+    - /var/lib/mongo/data/db:/data/db
