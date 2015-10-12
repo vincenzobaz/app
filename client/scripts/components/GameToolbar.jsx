@@ -25,7 +25,7 @@ var GameToolbar = React.createClass({
 
   /* eslint no-underscore-dangle: 0 */
   startGame(friend) {
-    R.GameStore.start(friend._id)
+    R.Store.GameStore.start(friend._id)
       .then(res => {
         debug('after starGame:', res);
         Session.set('page', 'game');
@@ -49,7 +49,7 @@ var GameToolbar = React.createClass({
 
   onQuit() {
     debug('quit game');
-    R.GameStore.quit(this.props.game);
+    R.Store.GameStore.quit(this.props.game);
     Session.set('page', 'home');
   },
 

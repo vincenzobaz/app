@@ -36,12 +36,12 @@ var JoinRequest = React.createClass({
 
   accept(e) {
     e.preventDefault();
-    R.JoinRequestStore.accept(this.props.request.getId());
+    R.Store.JoinRequestStore.accept(this.props.request.getId());
   },
 
   decline(e) {
     e.preventDefault();
-    R.JoinRequestStore.decline(this.props.request.getId());
+    R.Store.JoinRequestStore.decline(this.props.request.getId());
   }
 
 });
