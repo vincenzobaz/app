@@ -1,8 +1,8 @@
 var React = require('react'),
-    ReactD3Components = require('react-d3-components'),
+    // ReactD3Components = require('react-d3-components'),
     debug = require('debug')('Stats');
 
-var BarChart = ReactD3Components.BarChart;
+// var BarChart = ReactD3Components.BarChart;
 
 var GamesStatQuestionsDetail = React.createClass({
 
@@ -63,6 +63,7 @@ var GamesStatQuestionsDetail = React.createClass({
     },
 
     render() {
+        return <span>Disabled</span>;
         var height = 300;
         var width = 600;
         var margins = {top: 10, bottom: 50, left: 50, right: 10};

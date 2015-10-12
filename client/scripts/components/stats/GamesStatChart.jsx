@@ -1,8 +1,8 @@
 var React = require('react'),
-    ReactD3Components = require('react-d3-components'),
+    // ReactD3Components = require('react-d3-components'),
     debug = require('debug')('Stats');
 
-var PieChart = ReactD3Components.PieChart;
+// var PieChart = ReactD3Components.PieChart;
 
 
 var GamesStatChart = React.createClass({
@@ -50,6 +50,8 @@ var GamesStatChart = React.createClass({
     },
 
     render() {
+        return <span>Disabled</span>;
+
         var color = d3.scale.ordinal()
             .domain([
                 `Games Won ${this.data.gamesWon/this.data.gamesPlayed}5%`,
