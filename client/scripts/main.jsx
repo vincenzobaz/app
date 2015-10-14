@@ -11,6 +11,7 @@ var App = {
     R.ErrorStore.register();
 
     this.subscribe();
+    this.loadGMaps();
     this.loadGoogleCharts();
 
     React.render(<R.ErrorHandler store={R.ErrorStore} />, $$('error'));
@@ -27,6 +28,14 @@ var App = {
     Meteor.subscribe('userServices');
     Meteor.subscribe('friends');
     Meteor.subscribe('gameStats');
+  },
+
+  loadGMaps() {
+    const conf    = ServiceConfiguration.configurations.findOne({service: 'gmaps'});
+    const url     = `//maps.googleapis.com/maps/api/js?key=${conf.apiKey}`;
+    const $script = $(`<script async src="${url}"></script>`);
+
+    $('body').append($script);
   },
 
   loadGoogleCharts() {
