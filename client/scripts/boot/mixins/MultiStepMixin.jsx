@@ -15,7 +15,7 @@ var MultiStepMixin = {
 
   renderStep() {
     if (this.state.step >= this.steps.length) {
-      throw new Error(`Invalid step ${this.state.step}`);
+      throw new Error(`Invalid step ${this.state.step}. There are only ${this.steps.length} steps.`);
     }
 
     return this.steps[this.state.step];

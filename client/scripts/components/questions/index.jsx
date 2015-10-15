@@ -3,7 +3,8 @@
 
 Reminisce.QuestionsKinds = {
   MultipleChoice: R.MultipleChoice,
-  Order: R.Order,
+  Order: R.Reorder,
+  Reorder: R.Reorder,
   Timeline: R.Timeline,
   Geolocation: R.Geo
 };

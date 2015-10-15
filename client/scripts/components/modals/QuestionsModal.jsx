@@ -46,16 +46,15 @@ var QuestionsModal = React.createClass({
   },
 
   questionToStep(question) {
-    debug("Question modal question", question);
     const kind = question.getKind();
 
     if (!R.QuestionsKinds[kind]) {
+      debug(`Unknown question kind: ${kind}. Available kinds:`, R.QuestionsKinds);
       R.ErrorStore.emitError(new Error(`Unknown question kind: ${kind}`));
       return null;
     }
 
     question.onDone = this.onAnswer;
-      //debug('question', question);
 
     return React.createElement(R.QuestionsKinds[kind], question);
   },
