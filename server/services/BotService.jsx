@@ -279,8 +279,7 @@ BotService = {
                     return " "
                 }
             });
-            console.log(line.join('|'));
-
+            console.log('|' + line.join('|') + '|');
         }
     }
 
