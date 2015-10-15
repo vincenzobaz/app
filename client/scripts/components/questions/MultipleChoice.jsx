@@ -38,7 +38,7 @@ var MultipleChoice = React.createClass({
 
   renderChoice(choice, index) {
     return (
-      <li key={`${Math.round(Math.random() * 1000) + '-' + choice.value}`}>
+      <li key={`${Math.round(Math.random() * 100000)}`}>
         <Button onClick={this.onChoice(choice, index)}>
           <R.Prop {...choice} />
         </Button>
