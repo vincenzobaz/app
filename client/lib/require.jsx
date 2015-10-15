@@ -19,7 +19,9 @@ const mapping = {
   'timer-machine'       : 'TimerMachine'
 };
 
-const debug = window.debug('require');
+const DEBUG_ENABLED = false;
+
+const debug = DEBUG_ENABLED ? window.debug('require') : () => {};
 
 require = (package) => {
   if (mapping[package] !== undefined) {
