@@ -1,17 +1,24 @@
 
 BotService = {
 
-    // TODO: Move elsewhere
     bots() {
+        return BotService.getBots();
+    },
+
+    getBots() {
         return Meteor.users.find({username: {$in: ["bot1", "bot2"]}}).fetch();
     },
 
+    getBot() {
+      return BotService.getBots()[0];
+    },
+
     botsAsFriends() {
-        return this.bots().slice(0, 1).map(bot => { return {
+        return [this.getBot()].map(bot => ({
             name: bot.profile.name,
             id: bot._id,
             isBot: true
-        }});
+        }));
     },
 
     botsCreated() {
@@ -43,52 +50,42 @@ BotService = {
     },
 
     observeGameCreation() {
-        var [bot1, bot2] = BotService.bots();
-        var query1 = Games.find(
+        const bot = BotService.getBot();
+
+        const query = Games.find(
             {$and:
                 [{$or:
-                    [{player1: bot1._id}, {player2: bot1._id}]},
+                    [{player1: bot._id}, {player2: bot._id}]},
                     {status:
                     {$in: [GameStatus.Playing, GameStatus.Creating, GameStatus.Waiting]}}]
             });
 
-        var handle1 = query1.observe({
-            added: function (game) {
+        const handle = query.observe({
+            added(game) {
                 console.log(`Starting to observe game ${game._id}`);
-                BotService.observeGame(game._id, bot1._id);
+
+                BotService.observeGame(game._id, bot._id);
+
                 const request = JoinRequests.findOne({gameId: game._id});
                 if (request) {
                     JoinRequestService.accept(request._id);
                     console.log(`Bot #1 accepted join request ${request._id}.`);
                 }
             },
-            removed: function (id) {
+
+            removed(id) {
                 console.log(`Game ${id} that bot #1 was playing has been removed.`);
-            }
-        });
-
-        var query2 = Games.find(
-            {$and:
-                [{$or:
-                    [{player1: bot2._id}, {player2: bot2._id}]},
-                    {status: {$in: [GameStatus.Playing, GameStatus.Creating, GameStatus.Waiting]}}]
-            });
-
-        var handle2 = query2.observe({
-            added: function(game) {
-                BotService.observeGame(game._id, bot2._id);
-            },
-            removed: function(id) {
-                console.log(`it removed`);
             }
         });
     },
 
     createBotGame(strategy) {
         console.log("Creating bot game");
-        var [bot1, bot2] = BotService.bots();
-        var result = JoinRequestService.send(bot1._id, bot2._id);
-        var game = JoinRequestService.accept(result.requestId);
+
+        const [bot1, bot2] = BotService.getBots();
+        const result       = JoinRequestService.send(bot1._id, bot2._id);
+        const game         = JoinRequestService.accept(result.requestId);
+
         GameService.start(game._id);
     },
 
@@ -98,14 +95,13 @@ BotService = {
         const query   = Games.find(gameId);
         const game    = Games.findOne(gameId);
         const botTurn = game.player1 === botId ? 1 : 2;
-        const handle1 = query.observe({
+        const handle  = query.observe({
           changed(newGame, oldGame) {
             if (newGame.playerTurn === botTurn) {
               setTimeout(Meteor.bindEnvironment(() => {
-                BotService.onGameChanged(newGame, handle1);
+                BotService.onGameChanged(newGame, handle);
               }), TIMEOUT);
             }
-
           }
         });
     },
@@ -273,7 +269,6 @@ BotService = {
             return game.getPlayer2AvailableMoves();
         }
     },
-
 
     drawBoardState(game) {
         const bs = game.boardState;
