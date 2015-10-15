@@ -62,7 +62,6 @@ AnswerVerificationService = class AnswerVerificationService {
     static isVerifier(verifier) {
       return (
         verifier != null &&
-        typeof verifier === 'object' &&
         typeof verifier.verifyAnswer === 'function'
       );
     }
