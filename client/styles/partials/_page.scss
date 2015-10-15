@@ -772,7 +772,7 @@ section {
   left: $margin;
 }
 
-$modal-fullscreen-margin: 5%;
+$modal-fullscreen-margin: 10%;
 $modal-fullscreen-radius: 8px;
 
 .modal.fullscreen {
@@ -782,6 +782,10 @@ $modal-fullscreen-radius: 8px;
   width: auto;
   margin: 0;
   border-radius: 4px;
+
+  &.fade.in {
+    top: $modal-fullscreen-margin;
+  }
 
   .modal-dialog {
     position: fixed;
