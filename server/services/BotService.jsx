@@ -7,7 +7,7 @@ BotService = {
     },
 
     botsAsFriends() {
-        return this.bots().map(bot => { return {
+        return this.bots().slice(0, 1).map(bot => { return {
             name: bot.profile.name,
             id: bot._id,
             isBot: true
@@ -62,7 +62,7 @@ BotService = {
                 }
             },
             removed: function (id) {
-                console.log("it removed");
+                console.log(`Game ${id} that bot #1 was playing has been removed.`);
             }
         });
 
