@@ -33,7 +33,7 @@ var App = {
   loadGMaps() {
     const conf    = ServiceConfiguration.configurations.findOne({service: 'gmaps'});
     const url     = `//maps.googleapis.com/maps/api/js?key=${conf.apiKey}`;
-    const $script = $(`<script async src="${url}"></script>`);
+    const $script = $(`<script src="${url}"></script>`);
 
     $('body').append($script);
   },
