@@ -59,6 +59,7 @@ BotService = {
                 const request = JoinRequests.findOne({gameId: game._id});
                 if (request) {
                     JoinRequestService.accept(request._id);
+                    console.log(`Bot #1 accepted join request ${request._id}.`);
                 }
             },
             removed: function (id) {
@@ -92,30 +93,37 @@ BotService = {
     },
 
     observeGame(gameId, botId) {
-        var query = Games.find(gameId);
-        var game = Games.findOne(gameId);
-        var botTurn = game.player1 === botId ? 1 : 2;
-        var handle1 = query.observe({
-            changed: function (newGame, oldGame) {
-                if (newGame.playerTurn === botTurn) {
-                    setTimeout(Meteor.bindEnvironment(function () {
-                        if (newGame.status !== GameStatus.Ended && newGame.status !== GameStatus.Waiting) {
-                            const result = BotService.playTurn(newGame);
-                            console.log("results for bot turn");
-                            console.log(result);
-                            BotService.drawBoardState(Games.findOne(newGame._id));
+        const TIMEOUT = 3 * 1000;
 
-                            if (result.win || result.draw) {
-                                handle1.stop();
-                                console.log(`Game ended: Player${botTurn} won:${result.win}, Draw: ${result.draw}`);
-                            }
-                        }
-
-                    }), 100);
-                }
-
+        const query   = Games.find(gameId);
+        const game    = Games.findOne(gameId);
+        const botTurn = game.player1 === botId ? 1 : 2;
+        const handle1 = query.observe({
+          changed(newGame, oldGame) {
+            if (newGame.playerTurn === botTurn) {
+              setTimeout(Meteor.bindEnvironment(() => {
+                BotService.onGameChanged(newGame, handle1);
+              }), TIMEOUT);
             }
+
+          }
         });
+    },
+
+    onGameChanged(game, handle) {
+      if (game.status === GameStatus.Ended || game.status === GameStatus.Waiting) {
+        return;
+      }
+
+      const result = BotService.playTurn(game);
+      console.log("Results for bot turn:", result);
+
+      BotService.drawBoardState(Games.findOne(game._id));
+
+      if (result.win || result.draw) {
+        handle.stop();
+        console.log(`Game ended. Player: ${botTurn}. Won: ${result.win}. Draw: ${result.draw}.`);
+      }
     },
 
     playTurn(game) {
