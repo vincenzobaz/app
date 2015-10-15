@@ -3,6 +3,7 @@ const en = {
 
   TLWhenDidYouShareThisPost: 'When did you share this post?',
   TLWhenDidYouLikeThisPage: 'When did you like this page?',
+  ORDPageLike: 'Order these pages in descending order of likes',
   ORDPageLikes: 'Order these pages in descending order of likes',
   ORDPageLikeTime: 'Order these pages after the time you liked them, earliest first',
   ORDPostCommentsNumber: 'Order these posts according to the number of comments they got',

@@ -79,6 +79,7 @@ GamestatsService = {
                     break;
 
                 case QuestionTypes.ORDPageLike:
+                case QuestionTypes.ORDPageLikes:
                     stat.setOrderTried(stat.getOrderTried() + 1);
 
                     if (qr[1]) {

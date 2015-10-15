@@ -25,6 +25,7 @@ QuestionTypes = {
     GeoWhatCoordinatesWereYouAt: 'GeoWhatCoordinatesWereYouAt',
     ORDPostLikesNumber: 'ORDPostLikesNumber',
     ORDPageLike: 'ORDPageLike',
+    ORDPageLikes: 'ORDPageLikes',
     ORDPageLikeTime: 'ORDPageLikeTime',
     ORDPostCommentsNumber: 'ORDPostCommentsNumber',
     ORDPostTime: 'ORDPostTime'
