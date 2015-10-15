@@ -84,7 +84,7 @@ BotService = {
     },
 
     createBotGame(strategy) {
-        console.log("creating bot game");
+        console.log("Creating bot game");
         var [bot1, bot2] = BotService.bots();
         var result = JoinRequestService.send(bot1._id, bot2._id);
         var game = JoinRequestService.accept(result.requestId);

@@ -10,7 +10,7 @@ Meteor.startup(() => {
 
     Meteor.setInterval(Server.fetchAllBoards, process.env.TIMEOUT_BETWEEN_FETCHES);
 
-    if (process.env.BOTGAME === '1') {
+    if (process.env.BOTS_GAME === '1') {
         BotService.createBotGame("Random");
     }
 });
