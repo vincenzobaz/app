@@ -1,7 +1,7 @@
 
-Server = {
+Server = class Server {
 
-  fetchGameBoard(userId) {
+  static fetchGameBoard(userId) {
     console.log(`Fetching game board for user: ${userId}`);
 
     const [bot1, bot2] = BotService.bots();
@@ -26,23 +26,22 @@ Server = {
     } catch (e) {
       console.error(`ERROR: Can't create gameboard from gamecreator result ${e}`)
     }
-  },
+  }
 
-  /*eslint camelcase:0*/
-  fetchData(userId) {
+  static fetchData(userId) {
     const user        = Meteor.users.findOne(userId);
     const fbUserId    = user.services.facebook.id;
     const accessToken = user.services.facebook.accessToken;
 
     GameCreatorService.fetchData(fbUserId, accessToken);
-  },
+  }
 
-  fetchAllBoards() {
+  static fetchAllBoards() {
     const fetches = GameFetches.find().fetch();
     fetches.forEach(Server.processFetch.bind(Server));
-  },
+  }
 
-  processFetch(fetch) {
+  static processFetch(fetch) {
     try {
       const game = Games.findOne(fetch.getGameId());
 
@@ -57,9 +56,9 @@ Server = {
     catch(e) {
       Server._fetchFailed(fetch);
     }
-  },
+  }
 
-  _fetchFailed(fetch) {
+  static _fetchFailed(fetch) {
       fetch.incrementTries();
 
       if (fetch.getTries() >= 10) {
