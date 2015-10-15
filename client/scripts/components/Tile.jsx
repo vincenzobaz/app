@@ -70,7 +70,6 @@ var Tile = React.createClass({
   },
 
   getIconClassNames() {
-    console.log(this.props.type, typeToIcon(this.props.type));
     return [
       `icon-${typeToIcon(this.props.type)}`,
       'icon-2x'
