@@ -13,6 +13,10 @@ BotService = {
       return BotService.getBots()[0];
     },
 
+    isBot(userId) {
+      return BotService.getBots().map(bot => bot._id).indexOf(userId) > -1;
+    },
+
     botsAsFriends() {
         return [this.getBot()].map(bot => ({
             name: bot.profile.name,

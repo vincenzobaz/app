@@ -24,8 +24,6 @@ class GameCreator {
 
     const url = this.url('fetchData', params);
 
-    console.log(`Server.fetchData(${fbUserId}) - Fetching URL ${url}`);
-
     return HTTPHelper.get(url, callback);
   }
 
@@ -37,12 +35,10 @@ class GameCreator {
 
     const url = this.url('gameboard', params);
 
-    console.log(`Server.fetchGameBoard(${fbUserId}) - Fetching URL ${url}`);
-
     return HTTPHelper.get(url, callback);
   }
 
 };
 
-GameCreatorService = new GameCreator(process.env.GAME_CREATOR_URL);
+global.GameCreatorService = new GameCreator(process.env.GAME_CREATOR_URL);
 

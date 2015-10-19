@@ -66,27 +66,18 @@ JoinRequestService = {
                 };
             }
 
-            if (friend.isBot){
+            if (friend.isBot) {
                 opponent = Meteor.users.findOne(friend.userId);
-
             } else {
-                opponent = Meteor.users.findOne({"services.facebook.id": friend.facebookId});
+                opponent = Meteor.users.findOne({'services.facebook.id': friend.facebookId});
             }
-            console.log('checking if user ' + currentUserId + ' is friend with ', friend);
 
-            console.log("we found opponent ", opponent);
-            // if (friend.friendOf !== currentUserId) {
-            //     const msg = `Friend with id ${friendId} is not a friend of the logged-in user.`;
-            //     console.error(msg);
-            //     return {
-            //         status: 'error',
-            //         msg: msg
-            //     };
-            // }
+            console.log(`Checking if user ${currentUserId} is friend with ${friend.userId}`);
 
             if (!friend.isBot && friend.facebookId == null) {
                 const msg = `Friend with id ${friendId} has no associated Facebook id.`;
                 console.error(msg);
+
                 return {
                     status: 'error',
                     msg: msg
@@ -117,11 +108,12 @@ JoinRequestService = {
         const join      = JoinRequest.fromRaw({ from: currentUserId, to: opponent._id, gameId: gameId });
         const requestId = JoinRequestRepository.save(join);
 
-        //console.log(`Created join request ${requestId} from ${currentUserId} to ${friend.userId} for game ${gameId}`);
+        console.log(`Created join request ${requestId} from ${currentUserId} to ${opponent._id} for game ${gameId}`);
 
-        console.log(`Created join request ${requestId} from ${currentUserId} to ${ opponent._id} for game ${gameId}`);
-
-        return { status: "success", requestId: requestId };
+        return {
+          status: 'success',
+          requestId: requestId
+        };
     }
 
 };

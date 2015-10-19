@@ -19,9 +19,9 @@ if (abort) {
   process.exit(1);
 }
 
-var appId = process.env.FACEBOOK_APPID;
-var secret = process.env.FACEBOOK_SECRET;
-var gmapsKey = process.env.GMAPS_KEY;
+const appId = process.env.FACEBOOK_APPID;
+const secret = process.env.FACEBOOK_SECRET;
+const gmapsKey = process.env.GMAPS_KEY;
 
 ServiceConfiguration.configurations.upsert(
   { service: 'facebook' },

@@ -12,10 +12,7 @@ GameProps = ['_id', 'player1', 'player2', 'player1Board', 'player2Board',
     'wonBy'
 ];
 
-
 Game = class Game {
-
-
 
     constructor(props) {
         const diff = _.difference(Object.keys(props), GameProps);
@@ -49,14 +46,10 @@ Game = class Game {
         return this.player2Board;
     }
 
-    /**
-     *
-     * @returns {GameBoard}
-     */
     getCurrentBoard() {
-        console.log("current player " + this.getPlayerTurn());
-        console.log("player" + this.getPlayerTurn() + "Board");
-        return GameBoards.findOne(this["player" + this.getPlayerTurn() + "Board"])
+        const key = `player${this.getPlayerTurn()}Board`;
+
+        return GameBoards.findOne(this[key]);
     }
 
     setPlayer2Board(value) {

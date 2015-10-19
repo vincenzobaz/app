@@ -1,15 +1,16 @@
 
-Server = class Server {
+class Server {
 
-  static fetchGameBoard(userId) {
-    console.log(`Fetching game board for user: ${userId}`);
+  fetchGameBoard(userId) {
+    console.log(`Fetching game board for user ${userId}...`);
 
     const [bot1, bot2] = BotService.bots();
 
-    if (userId === bot1._id || userId === bot2._id) {
-      console.log(`User ${userId} is a bot. Creating bot board`);
+    if (BotService.isBot(userId)) {
+      console.log(`User ${userId} is a bot. Creating bot board...`);
 
-      const botBoard = JSON.parse(Assets.getText("json/gameboards/gameboard1.json"))
+      const botBoard = JSON.parse(Assets.getText('json/gameboards/gameboard1.json'));
+
       return GameBoard.fromRaw(userId, botBoard);
     }
 
@@ -21,14 +22,17 @@ Server = class Server {
 
     try {
       const gameBoard = GameBoard.fromRaw(userId, result.data);
-      console.log("managed to fetch gameboard " + gameBoard + " for user" + userId);
+      console.log(`Fetched game board for user ${userId}`);
       return gameBoard;
-    } catch (e) {
-      console.error(`ERROR: Can't create gameboard from gamecreator result ${e}`)
+    }
+    catch (e) {
+      console.error(`ERROR: Can't create game board from game creator result: ${e}`);
     }
   }
 
-  static fetchData(userId) {
+  fetchData(userId) {
+    console.log(`Fetching data for user ${userId}...`);
+
     const user        = Meteor.users.findOne(userId);
     const fbUserId    = user.services.facebook.id;
     const accessToken = user.services.facebook.accessToken;
@@ -36,16 +40,16 @@ Server = class Server {
     GameCreatorService.fetchData(fbUserId, accessToken);
   }
 
-  static fetchAllBoards() {
+  fetchAllBoards() {
     const fetches = GameFetches.find().fetch();
-    fetches.forEach(Server.processFetch.bind(Server));
+    fetches.forEach(this.processFetch.bind(this));
   }
 
-  static processFetch(fetch) {
+  processFetch(fetch) {
     try {
       const game = Games.findOne(fetch.getGameId());
 
-      Server.fetchGameBoard(fetch.getPlayerId());
+      this.fetchGameBoard(fetch.getPlayerId());
       GameFetches.remove(fetch.getId());
 
       if (game.getPlayer1Board() && game.getPlayer2Board()) {
@@ -54,27 +58,30 @@ Server = class Server {
       }
     }
     catch(e) {
-      Server._fetchFailed(fetch);
+      console.error(`Server: could fetch board for game ${game.getId()}. Reasons is: ${e.message}`);
+      this.fetchFailed(fetch);
     }
   }
 
-  static _fetchFailed(fetch) {
-      fetch.incrementTries();
+  fetchFailed(fetch) {
+    fetch.incrementTries();
 
-      if (fetch.getTries() >= 10) {
-        const fetchId = fetch.getId();
-        GameFetches.remove(fetchId);
+    if (fetch.getTries() >= 10) {
+      const failedGame = Games.findOne(fetch.getGameId());
+      failedGame.setStatus(GameStatus.Failed);
+      GameRepository.save(failedGame);
 
-        const failedGame = Games.findOne(fetchId);
-        console.log(`Server: Maximum number of tries for game ${failedGame.getId()} reached`);
+      console.log(`Server: Maximum number of tries for game ${failedGame.getId()} reached`);
 
-        failedGame.setStatus(GameStatus.Failed);
-        GameRepository.save(failedGame);
-      }
-      else {
-        GameFetchRepository.save(fetch);
-      }
+      const fetchId = fetch.getId();
+      GameFetches.remove(fetchId);
+    }
+    else {
+      GameFetchRepository.save(fetch);
+    }
   }
 
 };
+
+global.Server = new Server();
 

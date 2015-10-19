@@ -74,25 +74,26 @@ OrderAnswer = class OrderAnswer {
 };
 
 OrderVerificationService = {
-    /**
-     * verifies if the answer provided is at the correct location
-     *
-     * @param {OrderQuestion} question
-     * @param {OrderAnswer} answer
-     *
-     * @return {number} 1 for correct answer 0 for incorrect
-     */
 
-        verifyAnswer(question, answer)  {
+  /**
+   * Verifies if the answer provided is at the correct location
+   *
+   * @param {OrderQuestion} question
+   * @param {OrderAnswer} answer
+   *
+   * @return {boolean}
+   */
+  verifyAnswer(question, answer)
+  {
+        const givenIds   = answer.data.items.map(i => i.id);
+        const answerIds  = question.getAnswer();
+        const right      = _.zip(answerIds, givenIds).map(([answer, given]) => answer === given ? 1 : 0);
+        const correct    = right.reduce((acc, cur) => acc + cur, 0);
+        const numAnswers = answerIds.length;
 
-        const answerNumber = _.map(answer.data.items, (i) => i.id);
-        const correct = _.reduce(
-            _.zip(question.getAnswer(), answerNumber), (memo, qa) => {
-                console.log(`the answer is ${qa[0]}, chosen ${qa[1]}`);
-                return memo + (qa[0] === qa[1]? 1 : 0);
-            }, 0);
+        console.log(`OrderVerificationService: got ${correct} correct answers over ${numAnswers}`);
 
-        console.log(`Correctly ordered ${correct} number of thingys`);
-        return correct === answerNumber.length ? 1 : 0;
+        return correct === numAnswers;
     }
+
 };
