@@ -66,6 +66,15 @@ class AnswerService {
 
         this.updateStats(game, wins, draw, currentUser, currentPlayer);
 
+        if (wins) {
+          game.setWonBy(currentPlayer);
+          game.setStatus(GameStatus.Ended);
+        }
+        else if (draw) {
+          game.setWonBy(0);
+          game.setStatus(GameStatus.Ended);
+        }
+
         game.nextTurn();
 
         GameRepository.save(game);
