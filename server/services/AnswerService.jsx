@@ -69,13 +69,17 @@ class AnswerService {
         GameRepository.save(game);
         GameBoardRepository.save(board);
 
-        return {
+        const returnValue = {
             status  : 'success',
             win     : wins,
             draw    : draw,
             correct : correctAnswersNum,
             wrong   : wrongAnswersNum
         };
+
+        console.log(`Result of player ${currentPlayer} turn:`, returnValue);
+
+        return returnValue;
     }
 
     typeAnswers(tile, answers)

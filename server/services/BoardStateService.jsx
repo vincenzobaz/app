@@ -8,14 +8,14 @@ BoardStateService = class BoardStateService
     this.player = playerNum;
   }
 
-  playerWins()
+  playerWins(player = this.player)
   {
-    if (this.verifyWonDiagonal() || this.verifyWonAntiDiagonal()) {
+    if (this.verifyWonDiagonal(player) || this.verifyWonAntiDiagonal(player)) {
       return true;
     }
 
     for (let i = 0; i < 3; i += 1) {
-      if (this.verifyWonRow(i) || this.verifyWonColumn(i)) {
+      if (this.verifyWonRow(i, player) || this.verifyWonColumn(i, player)) {
         return true;
       }
     }
