@@ -2,18 +2,10 @@
 const reduceScore = (scores) =>
     scores.reduce((acc, x) => acc + x.score, 0);
 
-const computeScoreForPlayer = (boardState, player) => {
-    var score = 0;
-    for (let i = 0; i < 3; i += 1) {
-        for (let j = 0; i < 3; i += 1) {
-            const state = boardState[i][j];
-            if (state.player === player) {
-                score += state.score|0;
-            }
-        }
-    }
-    return score;
-};
+const computeScoreForPlayer = (board, player) =>
+  board.reduce((acc, row) => acc.concat(row), [])
+  .filter(s => s.player === player)
+  .reduce((acc, s) => acc + s.score, 0);
 
 Reminisce.Collection.Games = new Mongo.Collection('games', {
     transform(doc) {

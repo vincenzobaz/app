@@ -31,7 +31,7 @@ const createTile = (game, tile, tileNum) => {
           type={type}
           placement={placement}
           number={tileNum}
-          score={score || tile.getScore()}
+          score={score}
           questionModal={modal}
           disabled={disabled} />
   );
