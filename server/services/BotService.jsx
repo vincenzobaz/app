@@ -77,8 +77,8 @@ BotService = {
                 }
             },
 
-            removed(id) {
-                console.log(`Game ${id} that bot #1 was playing has been removed.`);
+            removed(game) {
+                console.log(`Game ${game._id} that bot #1 was playing has been removed.`);
             }
         });
     },
@@ -132,14 +132,12 @@ BotService = {
         var player;
         var firstTurn = false;
         if (game.getPlayerTurn() == 1) {
-            console.log("Bot1 playing");
             boardId = "player1Board";
             player = game.player1;
             if (game.getPlayer1AvailableMoves().length === 9) {
                 firstTurn = true;
             }
         } else {
-            console.log("Bot2 playing");
             boardId = "player2Board";
             player = game.player2;
             if (game.getPlayer2AvailableMoves().length === 9) {
@@ -148,10 +146,13 @@ BotService = {
         }
 
         const gameBoard = GameBoards.findOne(game[boardId]);
-        const tile = firstTurn? BotService.pickRandom(game, gameBoard) : BotService.pickTile(game, gameBoard);
-
-        //const tile = BotService.pickTile(game, gameBoard);
+        const method = (firstTurn) ? 'pickRandom' : 'pickTile';
+        const tile = BotService[method](game, gameBoard);
         const successrate = 66;
+
+        if (!tile) {
+          throw new Meteor.Error(500, "Bot could't find a tile to play on.");
+        }
 
         answers = _.map(tile.getQuestions(), q => {
             switch (q.kind) {
@@ -191,15 +192,19 @@ BotService = {
                     throw new Meteor.Error(500, `Unknown Question Kind ${q.kind} for Bot`);
             }
         });
-        return AnswerService.post(player, game._id, tile._id, answers);
 
+        return AnswerService.post(player, game._id, tile._id, answers);
     },
 
     pickTile(game, gameBoard) {
         const tiles = gameBoard.getTiles();
         const result = BotService.minmax(game, game.getPlayerTurn(), 0);
-        return tiles[result.move.row * 3 + result.move.column];
 
+        if (result.move == null) {
+          return null;
+        }
+
+        return tiles[result.move.row * 3 + result.move.column];
     },
 
     pickRandom(game, gameBoard) {
@@ -227,7 +232,6 @@ BotService = {
         var moves = [];
 
         const possibilities = BotService.getAvailableMoves(game, game.getPlayerTurn());
-        //console.log("possibilities: ", possibilities);
         if (_.isEmpty(possibilities)){
             return {move: null, score: 0};
         }
@@ -257,13 +261,17 @@ BotService = {
     },
 
     score(boardState, currentPlayer, depth) {
-        if (AnswerService.playerWins(boardState, currentPlayer)){
+        const boardStateService = new BoardStateService(boardState, currentPlayer);
+
+        if (boardStateService.playerWins()) {
             return 10 - depth;
-        } else if (AnswerService.playerWins(boardState, (currentPlayer  % 2) + 1)){
-            return depth - 10;
-        } else {
-            return 0;
         }
+
+        if (boardStateService.playerWins((currentPlayer % 2) + 1)) {
+            return depth - 10;
+        }
+
+        return 0;
     },
 
     getAvailableMoves(game, currentPlayer) {
