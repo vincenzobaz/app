@@ -59,7 +59,7 @@ class AnswerService {
 
         this.updateMoves(game, newScore, currentPlayer, filterMoves);
 
-        const wins = boardService.playerWinsForRowAndColumn(boardState, currentPlayer, row, col);
+        const wins = boardService.playerWinsForRowAndColumn(currentPlayer, row, col);
         const draw = boardService.isDraw(game);
 
         this.updateStats(game, wins, draw, currentUser, currentPlayer);
