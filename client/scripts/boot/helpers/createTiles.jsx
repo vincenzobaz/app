@@ -13,7 +13,6 @@ const createTile = (game, tile, tileNum) => {
   const modal     = getModalDesc(game, tile);
   const placement = placementForTileAt(tileNum);
   const type      = tile.getType();
-  const disabled  = tile.disabled || game.hasEnded() || !game.isMyTurnToPlay();
 
   const row       = Math.floor((tileNum - 1) / 3);
   const col       = tileNum - 1 - (row * 3);
@@ -24,6 +23,11 @@ const createTile = (game, tile, tileNum) => {
     me:   playerNum === tileState.player ? tileState.score : 0,
     them: playerNum !== tileState.player ? tileState.score : 0
   };
+
+  const disabled = tile.disabled ||
+                   score.me >= 3 || score.them >= 3 ||
+                   game.hasEnded() ||
+                   !game.isMyTurnToPlay();
 
   return (
     <R.Tile key={'tile-' + tile.getId()}

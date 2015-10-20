@@ -18,8 +18,6 @@ class AnswerService {
             throw Meteor.Error(404, `Cannot find tile with id ${tileId}`);
         }
 
-        tile.setDisabled(true);
-
         const boardState    = game.getBoardState();
         const currentPlayer = game.getPlayerTurn();
         const boardService  = new BoardStateService(boardState, currentPlayer);
@@ -53,6 +51,10 @@ class AnswerService {
 
             boardState[row][col].player = currentPlayer;
             boardState[row][col].score  = newScore;
+        }
+
+        if (newScore === 3) {
+          tile.setDisabled(true);
         }
 
         const filterMoves = m => m.row !== row || m.column !== col;
