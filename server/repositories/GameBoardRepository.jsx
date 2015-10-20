@@ -2,10 +2,12 @@
 GameBoardRepository = {
 
   save(gameBoard) {
-    if (gameBoard._id) {
-      GameBoards.update(gameBoard._id, {$set: gameBoard});
+    const doc = _.pick(gameBoard, GameBoardProps);
+
+    if (doc._id) {
+      GameBoards.update(gameBoard._id, doc);
     } else {
-      gameBoard._id = GameBoards.insert(gameBoard);
+      gameBoard._id = GameBoards.insert(doc);
     }
 
     return gameBoard._id;
