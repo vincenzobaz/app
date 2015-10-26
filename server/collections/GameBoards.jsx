@@ -1,7 +1,7 @@
 
 GameBoards = new Mongo.Collection('gameBoards', {
     transform(doc) {
-        return new GameBoard(doc);
+        return GameBoard.fromRaw(doc);
     }
 });
 

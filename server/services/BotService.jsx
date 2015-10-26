@@ -122,11 +122,15 @@ BotService = {
 
       if (result.win || result.draw) {
         handle.stop();
-        console.log(`Game ended. Player: ${botTurn}. Won: ${result.win}. Draw: ${result.draw}.`);
+        console.log(`Game ended. Won: ${result.win}. Draw: ${result.draw}.`);
       }
     },
 
     playTurn(game) {
+        if (game.getStatus() !== GameStatus.Playing) {
+          return;
+        }
+
         var boardId;
         var answers;
         var player;
@@ -145,9 +149,9 @@ BotService = {
             }
         }
 
-        const gameBoard = GameBoards.findOne(game[boardId]);
-        const method = (firstTurn) ? 'pickRandom' : 'pickTile';
-        const tile = BotService[method](game, gameBoard);
+        const gameBoard   = GameBoards.findOne(game[boardId]);
+        const method      = (firstTurn) ? 'pickRandom' : 'pickTile';
+        const tile        = BotService[method](game, gameBoard);
         const successrate = 66;
 
         if (!tile) {

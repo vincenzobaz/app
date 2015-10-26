@@ -169,15 +169,22 @@ var QuestionsModal = React.createClass({
     return this.renderStep();
   },
 
-  renderFooter() {
-    var timeLeftComponent = (this.isDone()) ?
-      <span></span> :
-      <R.TimeLeft maxTime={this.props.maxTime} onTimeUp={this.onTimeUp} />;
+  renderTimeLeft(isDone) {
+    if (isDone) {
+      return <span></span>;
+    }
 
+    return (
+      <R.TimeLeft maxTime={this.props.maxTime}
+                  onTimeUp={this.onTimeUp} />
+    );
+  },
+
+  renderFooter() {
     return (
       <div className='grid-container'>
         <div className='grid-25'>
-          {timeLeftComponent}
+          {this.renderTimeLeft(this.isDone())}
         </div>
         <div className='grid-25 prefix-50'>
           <div className='progress'>

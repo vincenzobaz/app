@@ -1,12 +1,75 @@
 
 class AnswerService {
 
+    timeOut(currentUser, gameId, tileId) {
+      if (gameId == null || tileId == null) {
+        return {
+          status: 'error',
+          message: `Missing arguments for AnswerService.timeOut`
+        };
+      }
+
+      const game = Games.findOne(gameId);
+
+      if (!game) {
+        return {
+          status: 'error',
+          message: `Cannot find game with id ${gameId}`
+        };
+      }
+
+      const board = game.getCurrentBoard();
+
+      if (!board) {
+        return {
+          status: 'error',
+          message: `Cannot find board for current player`
+        };
+      }
+
+      const tile  = board.getTileById(tileId);
+
+      if (!tile) {
+        return {
+          status: 'error',
+          message: `Cannot find tile with id ${tileId}`
+        };
+      }
+
+      tile.setDisabled(true);
+      GameBoardRepository.save(board);
+
+      const currentPlayer = game.getPlayerTurn();
+      const boardState    = game.getBoardState();
+      const boardService  = new BoardStateService(boardState, currentPlayer);
+      const wins          = boardService.playerWins();
+      const draw          = boardService.isDraw(game);
+
+      this.updateStats(game, wins, draw, currentUser, currentPlayer);
+
+      if (wins) {
+        game.setWonBy(currentPlayer);
+        game.setStatus(GameStatus.Ended);
+      }
+      else if (draw) {
+        game.setWonBy(0);
+        game.setStatus(GameStatus.Ended);
+      }
+
+      game.nextTurn();
+      GameRepository.save(game);
+
+      return {
+        status: 'success'
+      };
+    }
+
     post(currentUser, gameId, tileId, answers)
     {
         const game = Games.findOne(gameId);
 
         if (!game) {
-          throw new Meteor.Error(404, `Cannot find game with id ${gameId}`);
+          throw new Meteor.Error(500, `Cannot find game with id ${gameId}`);
         }
 
         const board = game.getCurrentBoard();
@@ -15,7 +78,7 @@ class AnswerService {
         const tile  = board.getTileById(tileId);
 
         if (!tile) {
-            throw Meteor.Error(404, `Cannot find tile with id ${tileId}`);
+            throw new Meteor.Error(500, `Cannot find tile with id ${tileId}`);
         }
 
         const boardState    = game.getBoardState();

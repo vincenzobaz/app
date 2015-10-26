@@ -8,7 +8,7 @@ const lazy = (key, obj, prop, compute) => {
   return cache[key];
 };
 
-const GameBoardProps = ['_id', 'userId', 'tiles'];
+GameBoardProps = ['_id', 'userId', 'tiles'];
 
 GameBoard = class GameBoard {
 
@@ -25,20 +25,9 @@ GameBoard = class GameBoard {
     }
 
     getTiles() {
-        return lazy(this.getId(), this, 'tiles', tiles => tiles.map(tile => {
-            if (tile instanceof Tile) {
-                return tile;
-            }
-
-            return Tile.fromRaw(tile);
-        }));
+      return this.tiles;
     }
 
-    /**
-     *
-     * @param {string} tileId
-     * @returns {Tile}
-     */
     getTileById(tileId) {
         return _.find(this.getTiles(), tile => tile._id === tileId);
     }
@@ -51,7 +40,8 @@ GameBoard.fromRaw = function(userId, data) {
         userId = data.userId;
     }
 
-    const tiles = _.map(data.tiles, Tile.fromRaw);
+    const tiles = _.map(data.tiles, Tile.fromRaw.bind(Tile));
+
     return new GameBoard({ userId, tiles });
 };
 

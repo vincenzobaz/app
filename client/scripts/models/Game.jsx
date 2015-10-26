@@ -10,6 +10,9 @@ const computeScoreForPlayer = (board, player) =>
 Reminisce.Collection.Games = new Mongo.Collection('games', {
     transform(doc) {
         const isPlayer1 = doc.player1 === Meteor.userId();
+        const boardId = (isPlayer1) ? doc.player1Board : doc.player2Board;
+        const board = Reminisce.Collection.GameBoards.findOne(boardId);
+
         const game = {
             _id     : doc._id,
             player1 : doc.player1,
@@ -21,7 +24,7 @@ Reminisce.Collection.Games = new Mongo.Collection('games', {
                 them : computeScoreForPlayer(doc.boardState, isPlayer1 ? 2 : 1)
             },
             boardState : doc.boardState,
-            board      : (isPlayer1) ? doc.player1Board : doc.player2Board,
+            board      : board,
             opponentId : (isPlayer1) ? doc.player2      : doc.player1,
             playerTurn : doc.playerTurn
         };
@@ -115,9 +118,7 @@ Reminisce.Model.Game = class Game {
   }
 
   getBoard() {
-    return lazy(this.getId(), this, 'board', boardId => {
-      return Reminisce.Collection.GameBoards.findOne(boardId);
-    });
+    return this.board;
   }
 
   getBoardState() {

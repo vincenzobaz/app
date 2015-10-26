@@ -24,7 +24,7 @@ const createTile = (game, tile, tileNum) => {
     them: playerNum !== tileState.player ? tileState.score : 0
   };
 
-  const disabled = tile.disabled ||
+  const disabled = tile.isDisabled() ||
                    score.me >= 3 || score.them >= 3 ||
                    game.hasEnded() ||
                    !game.isMyTurnToPlay();

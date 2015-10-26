@@ -64,10 +64,7 @@ Meteor.methods({
   },
 
   'Answer.timeOut'(gameId, tileId) {
-    console.error('Method Answer.timeOut is not implemented yet.');
-    return {
-      status: 'success'
-    };
+    return AnswerService.timeOut(this.userId, gameId, tileId);
   },
 
   'Answer.post'(gameId, tileId, answers) {

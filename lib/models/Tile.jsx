@@ -50,8 +50,20 @@ Tile = class Tile {
         return this.disabled;
     }
 
+    isDisabled() {
+        return this.disabled;
+    }
+
+    getIsAnswered() {
+        return this.answered;
+    }
+
     isAnswered() {
-        return false;
+        return this.answered;
+    }
+
+    setAnswered(value) {
+        this.answered = value;
     }
 
     static fromRaw(tile) {
@@ -66,8 +78,8 @@ Tile = class Tile {
             question2: question2,
             question3: question3,
             score: 0,
-            answered: false,
-            disabled: false
+            answered: !!tile.answered,
+            disabled: !!tile.disabled
         });
     }
 };
