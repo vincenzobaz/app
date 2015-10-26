@@ -10,15 +10,30 @@ var PlayGame = React.createClass({
     currentGame: R.Shapes.Game.isRequired
   },
 
+  componentDidUpdate() {
+    if (this.hasGameEnded()) {
+      this.showEndModal();
+    }
+  },
+
+  componentDidMount() {
+    if (this.hasGameEnded()) {
+      this.showEndModal();
+    }
+  },
+
+  showEndModal() {
+    const endGame = R.getEndGameDesc(this.props.currentGame);
+    R.ModalManager.showModal(endGame);
+  },
+
   render() {
     const game = this.props.currentGame;
     const gameId = game.getId();
 
     if (this.hasGameEnded()) {
-      const lsKey = `game-${gameId}-EndGame`;
       return (
         <div>
-          <R.EndGame game={game} localStorageKey={lsKey} />
           <R.Board gameId={gameId} game={game} />
         </div>
       );

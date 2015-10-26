@@ -59,7 +59,9 @@ const ModalHandler = React.createClass({
         isOpen: false
       });
 
-      callback();
+      if (typeof callback === 'function') {
+        callback();
+      }
     };
   }
 
