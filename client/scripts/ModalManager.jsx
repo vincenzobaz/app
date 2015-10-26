@@ -8,8 +8,6 @@ const nop = () => {};
 class ModalManager extends EventEmitter {
 
   showElement(element, props = {}, onDismiss = nop) {
-    debug('showElement', element, props);
-
     this.emit('modal', {
       element,
       props,
@@ -18,8 +16,6 @@ class ModalManager extends EventEmitter {
   }
 
   showModal(modal) {
-    debug('showModal', modal.element, modal.props);
-
     this.emit('modal', modal);
   }
 
