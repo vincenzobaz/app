@@ -15,7 +15,7 @@ const DeleteAllData = React.createClass({
 
   render() {
     return (
-      <Panel header="Manage your data" bsStyle='danger'>
+      <Panel header={<h3>Manage your data</h3>} bsStyle='danger'>
         <p>You can delete all the data we fetched from Facebook regarding your account by clicking the button below.</p>
         <Button bsStyle='danger' onClick={this.onDeleteData}>Delete all my data</Button>
         {this.renderResult()}
