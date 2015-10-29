@@ -2,6 +2,8 @@
 Meteor.methods({
 
   fetchData(userId) {
+    check(userId, String);
+
     Server.fetchData(userId);
 
     return {
@@ -10,6 +12,8 @@ Meteor.methods({
   },
 
   fetchGameBoard(userId) {
+    check(userId, String);
+
     const data = Server.fetchGameBoard(userId);
 
     return {
@@ -32,7 +36,7 @@ Meteor.methods({
       Meteor.users.remove(userId);
     }
 
-    console.error(`Data deleted with following result:`, result.data.message);
+    console.log('Data deleted with following result:', result.data.message);
 
     return {
       status: result.statusCode === 200 ? 'success' : 'error',
@@ -41,22 +45,32 @@ Meteor.methods({
   },
 
   'JoinRequest.decline'(requestId) {
+    check(requestId, String);
+
     return JoinRequestService.decline(requestId);
   },
 
   'JoinRequest.accept'(requestId) {
+    check(requestId, String);
+
     return JoinRequestService.accept(requestId);
   },
 
   'JoinRequest.send'(friendId) {
+    check(friendId, String);
+
     return JoinRequestService.send(this.userId, friendId);
   },
 
   'Game.start'(gameId) {
+    check(gameId, String);
+
     return GameService.start(gameId);
   },
 
   'Game.quit'(gameId) {
+    check(gameId, String);
+
     console.error('Method Game.quit is not implemented yet.');
     return {
       status: 'success'
@@ -64,10 +78,16 @@ Meteor.methods({
   },
 
   'Answer.timeOut'(gameId, tileId) {
+    check(gameId, String);
+    check(tileId, String);
+
     return AnswerService.timeOut(this.userId, gameId, tileId);
   },
 
   'Answer.post'(gameId, tileId, answers) {
+    check(gameId, String);
+    check(tileId, String);
+
     return AnswerService.post(this.userId, gameId, tileId, answers);
   }
 
