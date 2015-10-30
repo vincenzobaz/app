@@ -1,5 +1,5 @@
 
-Gamestats = new Mongo.Collection("gamestats", {
+Gamestats = new Mongo.Collection('gamestats', {
     transform: function(doc){
         return new Gamestat(doc);
     }
@@ -18,17 +18,17 @@ GamestatProps = ['_id', 'userId', 'gamesPlayed', 'gamesWon', 'gamesLost',
 ];
 
 QuestionTypes = {
-    MCWhoLikedYourPost: 'MCWhoLikedYourPost',
-    MCWhoMadeThisCommentOnYourPost: 'MCWhoMadeThisCommentOnYourPost',
-    MCWhichPageDidYouLike: 'MCWhichPageDidYouLike',
-    TLWhenDidYouShareThisPost: 'TLWhenDidYouShareThisPost',
-    GeoWhatCoordinatesWereYouAt: 'GeoWhatCoordinatesWereYouAt',
-    ORDPostLikesNumber: 'ORDPostLikesNumber',
-    ORDPageLike: 'ORDPageLike',
-    ORDPageLikes: 'ORDPageLikes',
-    ORDPageLikeTime: 'ORDPageLikeTime',
-    ORDPostCommentsNumber: 'ORDPostCommentsNumber',
-    ORDPostTime: 'ORDPostTime'
+    MCWhoLikedYourPost             : 'MCWhoLikedYourPost',
+    MCWhoMadeThisCommentOnYourPost : 'MCWhoMadeThisCommentOnYourPost',
+    MCWhichPageDidYouLike          : 'MCWhichPageDidYouLike',
+    TLWhenDidYouShareThisPost      : 'TLWhenDidYouShareThisPost',
+    GeoWhatCoordinatesWereYouAt    : 'GeoWhatCoordinatesWereYouAt',
+    ORDPostLikesNumber             : 'ORDPostLikesNumber',
+    ORDPageLike                    : 'ORDPageLike',
+    ORDPageLikes                   : 'ORDPageLikes',
+    ORDPageLikeTime                : 'ORDPageLikeTime',
+    ORDPostCommentsNumber          : 'ORDPostCommentsNumber',
+    ORDPostTime                    : 'ORDPostTime'
 };
 
 
@@ -71,7 +71,9 @@ Gamestat = class Gamestat {
         this.gamesLost = value;
     }
 
-
+    getGamesDrawn() {
+      return this.getGamesPlayed() - this.getGamesWon() - this.getGamesLost();
+    }
 
     getMCWhoLikedYourPostQuestionsTried() {
         return this.MCWhoLikedYourPostQuestionsTried;
@@ -217,3 +219,4 @@ Gamestat = class Gamestat {
         this.OrderCorrect = value;
     }
 };
+

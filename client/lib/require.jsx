@@ -12,7 +12,7 @@ const mapping = {
   'pluralize'           : 'pluralize',
   'querystring'         : 'queryString',
   'react-bootstrap'     : 'ReactBootstrap',
-  'react-d3-components' : 'ReactD3Components',
+  'react-chartjs'       : 'ReactChart',
   'react-localstorage'  : 'ReactLocalStorage',
   'react-typeahead'     : 'ReactTypeahead',
   'sortablejs'          : 'Sortable',

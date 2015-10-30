@@ -6,46 +6,47 @@ var React = require('react'),
 
 var Stats = React.createClass({
 
-    mixins: [ReactMeteorData],
+  mixins: [ ReactMeteorData ],
 
-    startMeteorSubscriptions() {
-        Meteor.subscribe('gameStats');
-    },
+  startMeteorSubscriptions() {
+    Meteor.subscribe('gameStats');
+  },
 
-    getMeteorData() {
-        var gameStat = Gamestats.findOne({userId: Meteor.userId()});
+  getMeteorData() {
+    const gameStats = Gamestats.findOne({userId: Meteor.userId()});
 
-        console.log("Gamestats loaded? ", gameStat);
+    debug('Game stats', gameStats);
 
-        if (!gameStat) {
-            return {
-                loaded: false
-            };
-        }
-
-        return {
-            userId: Meteor.userId(),
-            gameStats: gameStat,
-            loaded: true
-        };
-    },
-
-    render() {
-        if (!this.data.loaded) {
-            return <div>Loading...</div>;
-        }
-
-        return (
-            <div>
-                <h1>Statistics</h1>
-                <R.GameStatChart gameStats={this.state.gameStats}/>
-                <R.GameStatQuestions gameStats={this.state.gameStats}/>
-            </div>
-        );
-
+    if (!gameStats) {
+      return {
+        loaded: false
+      };
     }
 
+    return {
+      userId: Meteor.userId(),
+      gameStats: gameStats,
+      loaded: true
+    };
+  },
+
+  render() {
+    if (!this.data.loaded) {
+      return <div>Loading...</div>;
+    }
+
+    return (
+      <div>
+        <h1>Statistics</h1>
+        <R.GameStats     gameStats={this.data.gameStats} />
+        <R.TileStats     gameStats={this.data.gameStats} />
+        <R.QuestionStats gameStats={this.data.gameStats} />
+      </div>
+    );
+
+  }
 
 });
 
 Reminisce.Stats = Stats;
+
