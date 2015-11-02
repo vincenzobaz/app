@@ -17,11 +17,16 @@ var Welcome = React.createClass({
     debug('TODO: Switch to training');
   },
 
+  startBotGame(e) {
+    e.preventDefault();
+    R.Store.GameStore.startBotGame();
+  },
+
   render() {
     return (
       <div className='welcome'>
         {this.renderWelcomeText()}
-        {this.renderTrainingText()}
+        {/* this.renderTrainingText() */}
         {this.renderJoinRequestsText()}
         {this.renderCurrentGamesText()}
       </div>
@@ -33,7 +38,8 @@ var Welcome = React.createClass({
     var user = this.props.user;
     return (
       <p>
-        Welcome{!user.isFirstTime() && ' back'}, {user.getFirstName()}!
+        Welcome{!user.isFirstTime() ? ' back' : ''}, {user.getFirstName()}!<br /><br />
+        How about <a href="#" onClick={this.startBotGame}>playing a game with one of our bot?</a>
       </p>
     );
   },

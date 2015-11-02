@@ -28,6 +28,11 @@ Reminisce.Store.GameStore = {
     return Reminisce.Store.JoinRequestStore.send(friendId);
   },
 
+  startBotGame() {
+    const bot = Reminisce.Store.FriendStore.bot();
+    return Reminisce.Store.JoinRequestStore.send(bot.getId());
+  },
+
   load(gameId) {
     const game = Games.findOne(gameId);
     return hydrate(game);

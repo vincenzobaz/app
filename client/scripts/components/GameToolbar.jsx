@@ -25,14 +25,7 @@ var GameToolbar = React.createClass({
 
   /* eslint no-underscore-dangle: 0 */
   startGame(friend) {
-    R.Store.GameStore.start(friend._id)
-      .then(res => {
-        debug('after starGame:', res);
-        Session.set('page', 'game');
-        if (res.status !== 'success') {
-          // TODO: Show error modal.
-        }
-      });
+    R.Store.GameStore.start(friend._id);
   },
 
   onStart() {

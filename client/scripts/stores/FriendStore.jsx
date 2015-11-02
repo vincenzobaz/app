@@ -31,6 +31,10 @@ Reminisce.Store.FriendStore = {
 
     friendsWithUserId() {
       return Friends.find({userId: {$ne: null}}).fetch().map(hydrate);
+    },
+
+    bot() {
+      return Friends.findOne({isBot: true});
     }
 
 };
