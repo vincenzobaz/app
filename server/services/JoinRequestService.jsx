@@ -41,6 +41,17 @@ JoinRequestService = {
     },
 
     decline(requestId) {
+        const request = JoinRequests.findOne(requestId);
+
+        if (request == null) {
+          const msg = `No request with id ${requestId} found.`;
+          console.error(msg);
+          return {
+            status: 'error',
+            msg: msg
+          };
+        }
+
         JoinRequests.remove(requestId);
         var game = Games.findOne(request.gameId);
         game.setStatus(GameStatus.Declined);
