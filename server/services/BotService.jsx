@@ -1,60 +1,50 @@
 
+const BOT_USERNAME = 'bot';
+
 BotService = {
 
-    bots() {
-        return BotService.getBots();
-    },
-
-    getBots() {
-        return Meteor.users.find({username: {$in: ["bot1"]}}).fetch();
+    bot() {
+      return BotService.getBot();
     },
 
     getBot() {
-      return BotService.getBots()[0];
+        return Meteor.users.findOne({username: BOT_USERNAME});
     },
 
     isBot(userId) {
-      return BotService.getBots().map(bot => bot._id).indexOf(userId) > -1;
+      return BotService.getBot()._id == userId;
     },
 
-    botsAsFriends() {
-        return [this.getBot()].map(bot => ({
-            name: bot.profile.name,
-            id: bot._id,
-            isBot: true
-        }));
+    botAsFriend() {
+      const bot = this.getBot();
+      return {
+          id: bot._id,
+          name: bot.profile.name,
+          isBot: true
+      };
     },
 
-    botsCreated() {
-        return BotService.bots().length >= 1;
+    botCreated() {
+        return BotService.bot() != null;
     },
 
-    createBots(force = false) {
-        if (force || !BotService.botsCreated()) {
-            console.log("Creating Bot users");
+    createBot(force = false) {
+        if (force || !BotService.botCreated()) {
+            console.log("Creating bot...");
 
             Accounts.createUser({
-                username: "bot1",
-                email: "bot1@reminisceme.com",
-                password: "bot1password",
+                username: BOT_USERNAME,
+                email: "bot@reminisceme.com",
+                password: "123456",
                 profile: {
-                    name: "Bot #1"
-                }
-            });
-
-            Accounts.createUser({
-                username: "bot2",
-                email: "bot2@reminisceme.com",
-                password: "bot2password",
-                profile: {
-                    name: "Bot #2"
+                    name: "Anne Droid"
                 }
             });
         }
     },
 
     observeGameCreation() {
-        const bot = BotService.getBot();
+        const bot = BotService.bot();
 
         const query = Games.find(
             {$and:
@@ -81,16 +71,6 @@ BotService = {
                 console.log(`Game ${game._id} that bot #1 was playing has been removed.`);
             }
         });
-    },
-
-    createBotGame(strategy) {
-        console.log("Creating bot game");
-
-        const [bot1, bot2] = BotService.getBots();
-        const result       = JoinRequestService.send(bot1._id, bot2._id);
-        const game         = JoinRequestService.accept(result.requestId);
-
-        GameService.start(game._id);
     },
 
     observeGame(gameId, botId) {

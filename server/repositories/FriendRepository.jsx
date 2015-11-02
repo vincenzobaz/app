@@ -62,24 +62,22 @@ FriendRepository = {
         });
     },
 
-    addBots(userId, bots) {
-        bots.forEach(bot => {
-            var friend = FriendRepository.byUserId(bot.id, userId);
+    addBot(userId, bot) {
+        var friend = FriendRepository.byUserId(bot.id, userId);
 
-            if (friend != null) {
-                return;
-            }
+        if (friend != null) {
+            return;
+        }
 
-            friend = {
-                facebookId: bot.id,
-                userId: bot.id,
-                friendOf: userId,
-                name: bot.name,
-                isBot: true
-            };
+        friend = {
+            facebookId: bot.id,
+            userId: bot.id,
+            friendOf: userId,
+            name: bot.name,
+            isBot: true
+        };
 
-            FriendRepository.save(friend);
-        });
+        FriendRepository.save(friend);
     }
 
 };

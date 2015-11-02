@@ -1,7 +1,7 @@
 
 Meteor.startup(() => {
 
-    BotService.createBots();
+    BotService.createBot();
     BotService.observeGameCreation();
 
     if (process.env.TIMEOUT_BETWEEN_FETCHES == null) {
@@ -9,10 +9,6 @@ Meteor.startup(() => {
     }
 
     Meteor.setInterval(Server.fetchAllBoards.bind(Server), process.env.TIMEOUT_BETWEEN_FETCHES);
-
-    if (process.env.BOTS_GAME === '1') {
-        BotService.createBotGame("Random");
-    }
 });
 
 Accounts.onLogin(attempt => {
@@ -30,6 +26,6 @@ Accounts.onLogin(attempt => {
 
     const fbFriends = Facebook.getFriends(user);
     FriendRepository.updateFriends(user._id, fbFriends);
-    FriendRepository.addBots(user._id, BotService.botsAsFriends());
+    FriendRepository.addBot(user._id, BotService.botAsFriend());
 });
 

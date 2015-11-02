@@ -4,7 +4,7 @@ class Server {
   fetchGameBoard(userId) {
     console.log(`Fetching game board for user ${userId}...`);
 
-    const [bot1, bot2] = BotService.bots();
+    const bot = BotService.bot();
 
     if (BotService.isBot(userId)) {
       console.log(`User ${userId} is a bot. Creating bot board...`);
