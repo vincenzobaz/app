@@ -58,7 +58,7 @@ class Server {
       }
     }
     catch(e) {
-      console.error(`Server: could fetch board for game ${game.getId()}. Reasons is: ${e.message}`);
+      console.error(`Server: could not fetch board for game ${fetch.getGameId()}. Reasons is: ${e.message}`);
       this.fetchFailed(fetch);
     }
   }
