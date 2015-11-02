@@ -30,7 +30,7 @@ const FriendsAutocomplete = React.createClass({
       <div className="friends-autocomplete">
         <Typeahead
           options={R.Store.FriendStore.friendsWithUserId()}
-          placeholder="Pick a friend…"
+          placeholder="Type a friend's name…"
           maxVisible={10}
           onOptionSelected={this.handleSelect}
           filterOption={this.friendMatchingQuery}
@@ -51,7 +51,17 @@ const FriendsAutocomplete = React.createClass({
 
 const FriendsList = React.createClass({
 
+  propTypes: {
+    options: React.PropTypes.arrayOf(React.PropTypes.instanceOf(Friend)).isRequired,
+    selectionIndex: React.PropTypes.number,
+    onOptionSelected: React.PropTypes.func.isRequired,
+  },
+
   render() {
+    if (this.props.options.length === 0) {
+      return this.renderEmpty();
+    }
+
     return (
       <ul className="rf-combobox-list rf-combobox-is-open">
         {this.props.options.map(this.renderFriend)}
@@ -59,8 +69,20 @@ const FriendsList = React.createClass({
     );
   },
 
+  renderEmpty() {
+    return (
+      <ul className="rf-combobox-list rf-combobox-is-open">
+        <li className="rf-combobox-option rf-combobox-disabled">
+          No friend matching query found.
+        </li>
+      </ul>
+    );
+
+  },
+
   renderFriend(friend, idx) {
     const selectedClassName = idx === this.props.selectionIndex ? 'rf-combobox-selected' : '';
+
     return (
       <li className={"rf-combobox-option " + selectedClassName} key={`friend-${idx}`}>
         <div onClick={() => this.props.onOptionSelected(friend)}>

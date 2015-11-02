@@ -564,11 +564,6 @@ background-color : $navigationbackgroundcolor;
             text-align: right;
         }
 
-        input {
-            width: auto;
-            vertical-align: baseline;
-        }
-
         .start-game {
             margin-right: $gutterwidth;
 
@@ -677,6 +672,10 @@ section {
 .friends-autocomplete {
   display: inline-block;
   text-align: left;
+
+  .rf-combobox {
+    width: 260px;
+  }
 }
 
 .rf-combobox {
@@ -704,12 +703,13 @@ section {
   box-sizing: border-box;
 }
 
-.rf-combobox-input {
+.rf-combobox > input {
   padding-right: 20px;
   width: 100%;
   -moz-box-sizing: border-box;
   -ms-box-sizing: border-box;
   box-sizing: border-box;
+  vertical-align: baseline;
 }
 
 .rf-combobox-button {
@@ -748,6 +748,14 @@ section {
 
 .rf-combobox-option:hover, .rf-combobox-selected {
   background-color: #BFC9CA;
+}
+
+.rf-combobox-disabled, .rf-combobox-disabled:hover {
+  background-color: #FFF;
+  padding-left: 10px;
+  height: 36px;
+  line-height: 36px;
+  color: #666;
 }
 
 .modal {
