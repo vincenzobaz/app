@@ -80,6 +80,15 @@ JoinRequestService = {
           FriendRepository.save(friend);
         }
 
+        const currentUser = Meteor.users.findOne(currentUserId);
+        const asFriend    = {
+          id: currentUser.services.facebook.id,
+          name: currentUser.services.facebook.name,
+          isBot: false
+        };
+
+        FriendRepository.updateFriends(friend.userId, [asFriend]);
+
         return Meteor.users.findOne(friend.userId);
     },
 
