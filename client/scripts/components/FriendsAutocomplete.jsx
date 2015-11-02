@@ -29,7 +29,7 @@ const FriendsAutocomplete = React.createClass({
     return (
       <div className="friends-autocomplete">
         <Typeahead
-          options={Friends.find().fetch()}
+          options={R.Store.FriendStore.friendsWithUserId()}
           placeholder="Pick a friend…"
           maxVisible={10}
           onOptionSelected={this.handleSelect}
@@ -44,7 +44,7 @@ const FriendsAutocomplete = React.createClass({
   },
 
   friendMatchingQuery(query, friend) {
-    return fuzzy.test(query, friend.name);
+    return fuzzy.test(query, friend.getName());
   }
 
 });
@@ -62,7 +62,7 @@ const FriendsList = React.createClass({
   renderFriend(friend, idx) {
     const selectedClassName = idx === this.props.selectionIndex ? 'rf-combobox-selected' : '';
     return (
-      <li className={"rf-combobox-option " + selectedClassName}>
+      <li className={"rf-combobox-option " + selectedClassName} key={`friend-${idx}`}>
         <div onClick={() => this.props.onOptionSelected(friend)}>
           <img className="img-circle" width="32" height="32" src={this.getProfilePictureUrl(friend)} alt="" />
           {friend.name}

@@ -27,6 +27,10 @@ Reminisce.Store.FriendStore = {
 
     list() {
         return Friends.find().fetch().map(hydrate);
+    },
+
+    friendsWithUserId() {
+      return Friends.find({userId: {$ne: null}}).fetch().map(hydrate);
     }
 
 };
