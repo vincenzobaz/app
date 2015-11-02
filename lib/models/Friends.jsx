@@ -15,6 +15,10 @@ Friend = class Friend {
         return this.userId;
     }
 
+    hasUserId() {
+      return this.getUserId() != null;
+    }
+
     getFacebookId() {
         return this.facebookId;
     }

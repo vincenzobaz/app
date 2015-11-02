@@ -1,15 +1,16 @@
 
 FriendRepository = {
 
-    updateUserId(friend) {
-        const user = UserRepository.byFacebookId(friend.facebookId);
+    friendsOf(userId) {
+        return Friends.find({ friendOf: userId }).fetch();
+    },
 
-        if (user != null) {
-            friend.userId = user._id;
-            return true;
-        }
+    byFacebookId(facebookId, userId) {
+        return Friends.findOne({ facebookId: facebookId, friendOf: userId });
+    },
 
-        return false;
+    byUserId(friendUserId, userId) {
+        return Friends.findOne({ userId: friendUserId, friendOf: userId });
     },
 
     save(friend) {
@@ -29,33 +30,35 @@ FriendRepository = {
         return friend;
     },
 
-    friendsOf(userId) {
-        Friends.find({ friendOf: userId });
-    },
+    updateUserId(friend) {
+        const user = UserRepository.byFacebookId(friend.facebookId);
 
-    byFacebookId(facebookId, userId) {
-        return Friends.findOne({ facebookId: facebookId, friendOf: userId });
-    },
+        if (user == null) {
+          return false;
+        }
 
-    byUserId(friendUserId, userId) {
-        return Friends.findOne({ userId: friendUserId, friendOf: userId });
+        friend.userId = user._id;
+        return true;
     },
 
     updateFriends(userId, friends) {
         return friends.map(f => {
             var friend = FriendRepository.byFacebookId(f.id, userId);
+
             if (friend == null) {
-                friend = FriendRepository.save({
+                friend = {
                     facebookId: f.id,
                     friendOf: userId,
                     name: f.name,
-                    isBot: !!f.isBot
-                });
-            } else {
-                FriendRepository.updateUserId(friend);
-                FriendRepository.save(friend);
+                    isBot: !!f.isBot,
+                    userId: null
+                };
             }
-            return friend;
+            else {
+                FriendRepository.updateUserId(friend);
+            }
+
+            return FriendRepository.save(friend);
         });
     },
 

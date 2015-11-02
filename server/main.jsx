@@ -27,7 +27,9 @@ Accounts.onLogin(attempt => {
     Server.fetchData(user._id);
 
     console.log(`Fetching friends for user ${user._id}...`);
+
     const fbFriends = Facebook.getFriends(user);
     FriendRepository.updateFriends(user._id, fbFriends);
     FriendRepository.addBots(user._id, BotService.botsAsFriends());
 });
+
