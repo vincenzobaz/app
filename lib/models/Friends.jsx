@@ -35,14 +35,14 @@ Friend = class Friend {
         var Routes = Reminisce.Routes;
 
         if (this.isABot()) {
-            return Routes.Assets.at('images/bot-avatar.png');
+            return Routes.Assets.avatars.bot();
         }
 
         if (this.getFacebookId() != null) {
-          return Routes.Facebook.avatar(this.getFacebookId());
+          return Routes.Assets.avatars.facebook(this.getFacebookId());
         }
 
-        return Routes.Assets.at('images/avatar-default.png').url;
+        return Routes.Assets.avatars.default();
     }
 
 };

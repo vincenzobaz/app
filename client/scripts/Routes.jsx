@@ -3,7 +3,7 @@
 function url(path) {
   return {
     url: path,
-    toString: function() {
+    toString() {
       return this.url;
     }
   };
@@ -11,14 +11,25 @@ function url(path) {
 
 Reminisce.Routes = {
   Assets: {
-    at: function(path) {
+    at(path) {
       return url('/' + (path + '').trim('/'));
+    },
+    avatars: {
+      default() {
+        return url('images/avatar-default.png');
+      },
+      bot() {
+        return url('images/bot-avatar.png');
+      },
+      facebook(facebookId, query = '') {
+        var qstr = query ? '?' + Querystring.encode(query) : '';
+        return url(`https://graph.facebook.com/${facebookId}/picture${qstr}`);
+      }
     }
   },
   Facebook: {
-    avatar: function(facebookId, query) {
-      var qstr = query ? '?' + Querystring.encode(query) : '';
-      return url(`https://graph.facebook.com/${facebookId}/picture${qstr}`);
+    avatar(facebookId, query) {
+      return Reminisce.Routes.Assets.avatars.facebook(facebookId, query);
     }
   }
 };
