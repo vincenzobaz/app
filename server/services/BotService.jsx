@@ -6,7 +6,7 @@ BotService = {
     },
 
     getBots() {
-        return Meteor.users.find({username: {$in: ["bot1", "bot2"]}}).fetch();
+        return Meteor.users.find({username: {$in: ["bot1"]}}).fetch();
     },
 
     getBot() {
@@ -26,7 +26,7 @@ BotService = {
     },
 
     botsCreated() {
-        return BotService.bots().length >= 2;
+        return BotService.bots().length >= 1;
     },
 
     createBots(force = false) {
