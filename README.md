@@ -1,5 +1,7 @@
 # Reminisce.me
 
+[![Codacy Badge](https://api.codacy.com/project/badge/grade/dd447f353c054650bbaf3060ca1cd9d4)](https://www.codacy.com/app/reminisceme/app)
+
 ## Installation
 
 First, start the [game creator](https://github.com/reminisceme/game-creator).
