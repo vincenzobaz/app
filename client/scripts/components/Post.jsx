@@ -1,15 +1,15 @@
 
 'use strict';
 
-var React = require('react');
+const React = require('react');
 
-var None = React.createClass({
+const None = React.createClass({
   render() {
     return <noscript />;
   }
 });
 
-var Text = React.createClass({
+const Text = React.createClass({
 
   propTypes: {
     text: React.PropTypes.string.isRequired
@@ -25,12 +25,12 @@ var Text = React.createClass({
 
 });
 
-var Picture = React.createClass({
+const Picture = React.createClass({
 
   propTypes: {
-    imageUrl: React.PropTypes.string.isRequired,
-    text: React.PropTypes.string,
-    interactive: React.PropTypes.bool
+    imageUrl    : React.PropTypes.string.isRequired,
+    text        : React.PropTypes.string,
+    interactive : React.PropTypes.bool
   },
 
   getDefaultProps() {
@@ -79,9 +79,9 @@ var Picture = React.createClass({
 const Video = React.createClass({
 
   propTypes: {
-    text: React.PropTypes.string,
-    thumbnailUrl: React.PropTypes.string.isRequired,
-    url: React.PropTypes.string.isRequired
+    text         : React.PropTypes.string,
+    thumbnailUrl : React.PropTypes.string.isRequired,
+    url          : React.PropTypes.string.isRequired
   },
 
   render() {
@@ -97,11 +97,11 @@ const Video = React.createClass({
 
 });
 
-var Comment = React.createClass({
+const Comment = React.createClass({
 
   propTypes: {
-    post: R.Shapes.subject.isRequired,
-    comment: React.PropTypes.string.isRequired
+    post    : R.Shapes.subject.isRequired,
+    comment : React.PropTypes.string.isRequired
   },
 
   render() {
@@ -137,12 +137,12 @@ const Link = React.createClass({
 
 });
 
-var Page = React.createClass({
+const Page = React.createClass({
 
   propTypes: {
-    name: React.PropTypes.string.isRequired,
-    pageId: React.PropTypes.string,
-    photoUrl: React.PropTypes.string
+    name     : React.PropTypes.string.isRequired,
+    pageId   : React.PropTypes.string,
+    photoUrl : React.PropTypes.string
   },
 
   render() {
@@ -164,11 +164,11 @@ var Page = React.createClass({
 
 });
 
-var Post = React.createClass({
+const Post = React.createClass({
 
   propTypes: {
-    post: R.Shapes.subject.isRequired,
-    interactive: React.PropTypes.bool
+    post        : R.Shapes.subject.isRequired,
+    interactive : React.PropTypes.bool
   },
 
   types: {
@@ -197,7 +197,7 @@ var Post = React.createClass({
       return <noscript />;
     }
 
-    var post = this.props.post;
+    const post = this.props.post;
 
     if (!post) {
       return <None />;
@@ -216,3 +216,4 @@ var Post = React.createClass({
 });
 
 Reminisce.Post = Post;
+
