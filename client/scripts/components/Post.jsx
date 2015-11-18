@@ -63,7 +63,7 @@ var Picture = React.createClass({
   },
 
   renderPictureCaption(caption) {
-    if (caption) {
+    if (!caption) {
       return null;
     }
 
