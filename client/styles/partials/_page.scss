@@ -202,7 +202,10 @@
 
 .post-picture {
 
-  & > img {
+  .picture-caption {
+    font-style: italic;
+    color: #666;
+    margin-bottom: 15px; 
   }
 
   figure {
@@ -215,7 +218,7 @@
 
   .zoomable img {
       cursor: move;
-      max-height: 400px;
+      max-height: 350px;
       &.zoomImg {
         max-height: none;
       }
