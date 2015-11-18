@@ -202,8 +202,7 @@
 
 .post-picture {
 
-  img {
-    max-height: 200px;
+  & > img {
   }
 
   figure {
@@ -216,6 +215,10 @@
 
   .zoomable img {
       cursor: move;
+      max-height: 400px;
+      &.zoomImg {
+        max-height: none;
+      }
   }
 
 }
