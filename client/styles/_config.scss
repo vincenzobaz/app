@@ -129,7 +129,7 @@ $white 							: rgb(255,255,255);
 // Choose a colour for your hyperlinks. Often this will be the $primarycolor
 $linkcolor 		    			: $secondarycolor;
 $linkcolorhover 				: darken($linkcolor, 10);
-$linkcolorvisited   			: darken($linkcolorhover, 10);
+$linkcolorvisited   			: $linkcolor;
 $linkcolorfocus 				: darken($linkcolorvisited, 10);
 
 // Now define another set of colours. These will be used to style alerts and buttons
