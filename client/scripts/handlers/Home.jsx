@@ -18,7 +18,8 @@ var Home = React.createClass({
                       </div>
                   </div>
                   <div className='grid-70'>
-                      <h1>Who did like what? When did you posted that interesting link? Who did comment that weird picture?<br />Test you memory and win the game.
+                      <h1>Who liked your post?<br>When did you post that interesting link?<br> 
+                          Who commented on that weird picture?<br> Test you memory and win the game.
                       </h1>
                       <div className='call-to-action'>
                           <a href='#start' className='btn'>Start Playing</a>
@@ -32,7 +33,12 @@ var Home = React.createClass({
               <div className='grid-80 prefix-10'>
                 <h2>How to Play</h2>
                 <div className='copy'>
-                     Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+                  Ever played <a href"https://en.wikipedia.org/wiki/Tic-tac-toe">Tic-Tac-Toe?</a>?
+                  Then you are already a master of reminisce.me! There is only one catch. If you
+                  want to conquer a tile, you have to remember as much as you can of your Facebook
+                  profile. Who liked your post? When did you post that interesting link?  Who
+                  commented on that weird picture? Test you memory and win the game against a
+                  random opponent, or your own friends!
                 </div>
               </div>
               <div className='grid-40 prefix-10'>
@@ -52,18 +58,23 @@ var Home = React.createClass({
               <div className='grid-80 prefix-10'>
                   <h2>About Your Profile Data</h2>
                   <div className='copy'>
-                     <i style={{float: 'left', marginRight: '10px'}} className='icon-lock icon-4x'></i>Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-                     </div>
+                    <i style={{float: 'left', marginRight: '10px'}} className='icon-lock icon-4x'></i>
+                  We develop reminisce.me to make you have a lot of fun, and ultimately with the
+                  scientific purpose of understanding how the human memory works. As such, we don&#8217;t
+                  store permanently any of your personal data. We are so transparent about it that we
+                  decided to release the whole game platform (client and server) as 
+                  <a href="https://github.com/reminisceme/">open-source</a>! 
+                  </div>
               </div>
           </div>
       </section>
       <section className='home-4' id='start'>
           <div className='grid-container'>
               <div className='grid-80 prefix-10'>
-                  <h2>OK, Enough Chit-Chat</h2>
+                  <h2>OK, time to play!</h2>
                   <div className='connect-facebook'>
                       <p><i className='icon-facebook-sign icon-2x'></i>&ensp;
-                      You'll be asked to connect your Facebook profile first.</p>
+                      You&#8217;ll be asked to connect your Facebook profile first.</p>
                   </div>
                   <div className='call-to-action'>
                       <a onClick={this.login} className='btn btn-primary' type='submit'>Start Playing</a>
