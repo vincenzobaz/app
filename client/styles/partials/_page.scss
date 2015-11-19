@@ -648,7 +648,16 @@ section {
 }
 
 .copy {
-    @include columns($colwidth: 50%, $colcount: 2, $colgap: $gutterwidth, $columnRuleWidth: 0);
+    // @include columns($colwidth: 50%, $colcount: 2, $colgap: $gutterwidth, $columnRuleWidth: 0);
+}
+
+.copy {
+
+  .privacy {
+    margin-bottom: 0px;
+    text-align: center;
+  }
+
 }
 
 .connect-facebook {

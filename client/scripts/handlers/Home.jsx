@@ -7,6 +7,10 @@ var Home = React.createClass({
     R.FacebookStore.login();
   },
 
+  componentDidMount() {
+    jQuery.getScript("//cdn.iubenda.com/iubenda.js");
+  },
+
   render() {
     return <div>
       <section className='home-1'>
@@ -58,11 +62,16 @@ var Home = React.createClass({
               <div className='grid-80 prefix-10'>
                   <h2>About Your Profile Data</h2>
                   <div className='copy'>
+                    <p>
                     <i style={{float: 'left', marginRight: '10px'}} className='icon-lock icon-4x'></i>
-                  We develop reminisce.me to make you have a lot of fun, and ultimately with the
-                  scientific purpose of understanding how the human memory works. As such, we don&#8217;t
-                  store permanently any of your personal data. We are so transparent about it that we
-                  decided to release the whole game platform (client and server) as <a href="https://github.com/reminisceme/">open-source</a>!
+                    We develop reminisce.me to make you have a lot of fun, and ultimately with the
+                    scientific purpose of understanding how the human memory works. As such, we don&#8217;t
+                    store permanently any of your personal data. We are so transparent about it that we
+                    decided to release the whole game platform (client and server) as <a href="https://github.com/reminisceme/">open-source</a>!
+                  </p>
+                  <p className="privacy">
+                    <a className="iubenda-nostyle no-brand iubenda-embed" title="Privacy Policy" href="//www.iubenda.com/privacy-policy/348136">Privacy Policy</a>
+                  </p>
                   </div>
               </div>
           </div>
