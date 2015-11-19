@@ -8,7 +8,7 @@ var Home = React.createClass({
   },
 
   componentDidMount() {
-    jQuery.getScript("//cdn.iubenda.com/iubenda.js");
+    // jQuery.getScript("//cdn.iubenda.com/iubenda.js");
   },
 
   render() {
@@ -34,7 +34,7 @@ var Home = React.createClass({
       </section>
       <section className='home-2'>
           <div className='grid-container'>
-              <div className='grid-80 prefix-10'>
+              <div className='grid-60 prefix-20'>
                 <h2>How to Play</h2>
                 <div className='copy'>
                   Ever played <a href="https://en.wikipedia.org/wiki/Tic-tac-toe">Tic-Tac-Toe</a>?
@@ -59,7 +59,7 @@ var Home = React.createClass({
       </section>
       <section className='home-3'>
           <div className='grid-container'>
-              <div className='grid-80 prefix-10'>
+              <div className='grid-60 prefix-20'>
                   <h2>About Your Profile Data</h2>
                   <div className='copy'>
                     <p>
@@ -78,7 +78,7 @@ var Home = React.createClass({
       </section>
       <section className='home-4' id='start'>
           <div className='grid-container'>
-              <div className='grid-80 prefix-10'>
+              <div className='grid-60 prefix-20'>
                   <h2>OK, time to play!</h2>
                   <div className='connect-facebook'>
                       <p><i className='icon-facebook-sign icon-2x'></i>&ensp;
