@@ -89,6 +89,24 @@ Meteor.methods({
     check(tileId, String);
 
     return AnswerService.post(this.userId, gameId, tileId, answers);
+  },
+
+  'Build.info'() {
+    try {
+      const result = GameCreatorService.fetchBuildInfo();
+      const data = (result.data != null) ? result.data : JSON.parse(result.content);
+
+      return {
+        status: 'success',
+        data: data
+      };
+    } catch (e) {
+      console.error(`ERROR: Couldn't get build informations: ${e}`);
+      return {
+        status: 'error',
+        error: e
+      };
+    }
   }
 
 });

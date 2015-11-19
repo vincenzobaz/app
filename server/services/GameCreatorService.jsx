@@ -45,6 +45,12 @@ class GameCreator {
     return HTTPHelper.get(url, callback);
   }
 
+  fetchBuildInfo(callback) {
+    const url = this.url('info');
+
+    return HTTPHelper.get(url, callback);
+  }
+
 };
 
 global.GameCreatorService = new GameCreator(process.env.GAME_CREATOR_URL);
