@@ -11,17 +11,6 @@ Meteor.methods({
     };
   },
 
-  fetchGameBoard(userId) {
-    check(userId, String);
-
-    const data = Server.fetchGameBoard(userId);
-
-    return {
-      status: 'success',
-      gameBoard: data
-    };
-  },
-
   'Account.deleteAllData'() {
     const userId   = Meteor.userId();
 
