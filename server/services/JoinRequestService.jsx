@@ -8,36 +8,16 @@ JoinRequestService = {
             throw Meteor.Error("404", "Request does not exist with id" + requestId);
         }
 
-        var game = Games.findOne(request.gameId);
+        const game = Games.findOne(request.gameId);
 
         try {
-            var board1 = Server.fetchGameBoard(request.from);
-            var board1Id = GameBoardRepository.save(board1);
-            game.player1Board = board1Id;
-        } catch (e) {
-            console.error("we didn't fetched board 1" + e);
-            const fetch1 = new GameFetch({gameId: game.getId(), player: 1, playerId:game.getPlayer1(), tries: 1});
-            GameFetchRepository.save(fetch1);
-        }
+            Server.fetchGameBoard(request.from, game.getId(), 1);
+            Server.fetchGameBoard(request.to,   game.getId(), 2);
+        } catch (e) {}
 
-        try {
-            var board2 = Server.fetchGameBoard(request.to);
-            var board2Id = GameBoardRepository.save(board2);
-            game.player2Board = board2Id;
-        }
-        catch (e) {
-            console.error("we didn't fetched board 2 " + e);
-            const fetch2 = new GameFetch({gameId: game.getId(), player: 2, playerId:game.getPlayer2(), tries: 1});
-            GameFetchRepository.save(fetch2);
-        }
-
-        const status = (game.player1Board && game.player2Board) ? GameStatus.Playing : GameStatus.Creating;
-        game.setStatus(status);
-
-        GameRepository.save(game);
         JoinRequests.remove(requestId);
 
-        return game;
+        return Games.findOne(game.getId());
     },
 
     decline(requestId) {

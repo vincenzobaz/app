@@ -8,6 +8,10 @@ BotService = {
     },
 
     getBot() {
+        if (!BotService.botCreated()) {
+          this.createBot();
+        }
+
         return Meteor.users.findOne({username: BOT_USERNAME});
     },
 
@@ -25,7 +29,7 @@ BotService = {
     },
 
     botCreated() {
-        return BotService.bot() != null;
+      return Meteor.users.find({username: BOT_USERNAME}).count() > 0;
     },
 
     createBot(force = false) {

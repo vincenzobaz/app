@@ -1,31 +1,54 @@
 
 class Server {
 
-  fetchGameBoard(userId) {
+  fetchGameBoard(userId, gameId, playerNum) {
     console.log(`Fetching game board for user ${userId}...`);
+
+    const game = Games.findOne(gameId);
 
     const bot = BotService.bot();
 
-    if (BotService.isBot(userId)) {
-      console.log(`User ${userId} is a bot. Creating bot board...`);
-
-      const botBoard = JSON.parse(Assets.getText('json/gameboards/gameboard1.json'));
-
-      return GameBoard.fromRaw(userId, botBoard);
-    }
-
-    const user        = Meteor.users.findOne(userId);
-    const fbUserId    = user.services.facebook.id;
-    const accessToken = user.services.facebook.accessToken;
+    let gameBoard;
 
     try {
-      const result = GameCreatorService.fetchGameboard(fbUserId, accessToken);
-      const gameBoard = GameBoard.fromRaw(userId, result.data);
-      console.log(`Fetched game board for user ${userId}`);
+      if (BotService.isBot(userId)) {
+        console.log(`User ${userId} is a bot. Creating bot board...`);
+        const botBoard = JSON.parse(Assets.getText('json/gameboards/gameboard1.json'));
+        gameBoard = GameBoard.fromRaw(userId, botBoard);
+      }
+      else {
+        const user        = Meteor.users.findOne(userId);
+        const fbUserId    = user.services.facebook.id;
+        const accessToken = user.services.facebook.accessToken;
+
+        const result = GameCreatorService.fetchGameboard(fbUserId, accessToken);
+        gameBoard = GameBoard.fromRaw(userId, result.data);
+        console.log(`Fetched game board for user ${userId}`);
+      }
+
+      console.log(`Saving board for player ${playerNum}`);
+      GameBoardRepository.save(gameBoard);
+      game[`setPlayer${playerNum}Board`](gameBoard);
+
+      const status = (game.player1Board && game.player2Board) ? GameStatus.Playing : GameStatus.Creating;
+      console.log(status);
+      game.setStatus(status);
+
+      GameRepository.save(game);
+
       return gameBoard;
     }
     catch (e) {
       console.error(`ERROR: Can't create game board from game creator result: ${e}`);
+
+      const fetch = new GameFetch({
+        gameId: game.getId(),
+        player: playerNum,
+        playerId: game[`getPlayer${playerNum}`](),
+        tries: 1
+      });
+
+      GameFetchRepository.save(fetch);
     }
   }
 
@@ -46,20 +69,21 @@ class Server {
 
   fetchAllBoards() {
     const fetches = GameFetches.find().fetch();
+
+    console.log(`Processing ${fetches.length} fetches...`);
     fetches.forEach(this.processFetch.bind(this));
   }
 
   processFetch(fetch) {
+    console.log(`Processing fetch ${fetch.getId()}...`);
+    console.log(` - Game: ${fetch.getGameId()}`);
+    console.log(` - Player Id: ${fetch.getPlayerId()}`);
+    console.log(` - Player Num: ${fetch.getPlayer()}`);
+    console.log(` - Tries: ${fetch.getTries()}`);
+
     try {
-      const game = Games.findOne(fetch.getGameId());
-
-      this.fetchGameBoard(fetch.getPlayerId());
+      this.fetchGameBoard(fetch.getPlayerId(), fetch.getGameId(), fetch.getPlayer());
       GameFetches.remove(fetch.getId());
-
-      if (game.getPlayer1Board() && game.getPlayer2Board()) {
-        game.status = GameStatus.Playing;
-        GameRepository.save(game);
-      }
     }
     catch(e) {
       console.error(`Server: could not fetch board for game ${fetch.getGameId()}. Reasons is: ${e.message}`);
