@@ -10,9 +10,16 @@ class GameCreator {
   }
 
   url(method, params) {
-    const query = Querystring.encode(params);
-    const url   = `${this._baseUrl}/${method}?${query}`;
+    let query;
 
+    if (params != null) {
+      query = '?' + Querystring.encode(params);
+    }
+    else {
+      query = '';
+    }
+
+    const url = `${this._baseUrl}/${method}${query}`;
     return url;
   }
 
