@@ -1,7 +1,7 @@
 
 class Server {
 
-  fetchGameBoard(userId, gameId, playerNum) {
+  fetchGameBoard(userId, gameId, playerNum, createFetch = true) {
     console.log(`Fetching game board for user ${userId}...`);
 
     const game = Games.findOne(gameId);
@@ -41,14 +41,16 @@ class Server {
     catch (e) {
       console.error(`ERROR: Can't create game board from game creator result: ${e}`);
 
-      const fetch = new GameFetch({
-        gameId: game.getId(),
-        player: playerNum,
-        playerId: game[`getPlayer${playerNum}`](),
-        tries: 1
-      });
+      if (createFetch) {
+        const fetch = new GameFetch({
+          gameId: game.getId(),
+          player: playerNum,
+          playerId: game[`getPlayer${playerNum}`](),
+          tries: 1
+        });
 
-      GameFetchRepository.save(fetch);
+        GameFetchRepository.save(fetch);
+      }
     }
   }
 
@@ -71,7 +73,11 @@ class Server {
     const fetches = GameFetches.find().fetch();
 
     console.log(`Processing ${fetches.length} fetches...`);
-    fetches.forEach(this.processFetch.bind(this));
+    fetches.forEach(fetch => {
+      Meteor.setTimeout(() => {
+        this.processFetch(fetch);
+      } , 0);
+    });
   }
 
   processFetch(fetch) {
@@ -82,11 +88,15 @@ class Server {
     console.log(` - Tries: ${fetch.getTries()}`);
 
     try {
-      this.fetchGameBoard(fetch.getPlayerId(), fetch.getGameId(), fetch.getPlayer());
+      const board = this.fetchGameBoard(fetch.getPlayerId(), fetch.getGameId(), fetch.getPlayer(), false);
+
+      if (board == null) {
+        throw new Exception("Fetch failed");
+      }
+
       GameFetches.remove(fetch.getId());
     }
     catch(e) {
-      console.error(`Server: could not fetch board for game ${fetch.getGameId()}. Reasons is: ${e.message}`);
       this.fetchFailed(fetch);
     }
   }
@@ -99,10 +109,9 @@ class Server {
       failedGame.setStatus(GameStatus.Failed);
       GameRepository.save(failedGame);
 
-      console.log(`Server: Maximum number of tries for game ${failedGame.getId()} reached`);
+      GameFetches.remove(fetch.getId());
 
-      const fetchId = fetch.getId();
-      GameFetches.remove(fetchId);
+      console.log(`Server: Maximum number of tries for game ${failedGame.getId()} reached`);
     }
     else {
       GameFetchRepository.save(fetch);
