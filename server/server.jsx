@@ -18,9 +18,8 @@ class Server {
     const fbUserId    = user.services.facebook.id;
     const accessToken = user.services.facebook.accessToken;
 
-    const result = GameCreatorService.fetchGameboard(fbUserId, accessToken);
-
     try {
+      const result = GameCreatorService.fetchGameboard(fbUserId, accessToken);
       const gameBoard = GameBoard.fromRaw(userId, result.data);
       console.log(`Fetched game board for user ${userId}`);
       return gameBoard;
@@ -37,7 +36,12 @@ class Server {
     const fbUserId    = user.services.facebook.id;
     const accessToken = user.services.facebook.accessToken;
 
-    GameCreatorService.fetchData(fbUserId, accessToken);
+    try {
+      GameCreatorService.fetchData(fbUserId, accessToken);
+    }
+    catch (e) {
+      console.log(`INFO: Non 200 reply from Game creator to 'fetchData' request ${e}`);
+    }
   }
 
   fetchAllBoards() {
