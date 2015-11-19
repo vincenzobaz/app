@@ -1,12 +1,15 @@
 
 'use strict';
 
-var FacebookStore = {
+const FacebookStore = {
 
   login(cb = () => {}) {
-    var conf = R.getConfig('facebook');
+    const conf = R.getConfig('facebook');
 
-    console.log("FAcebook config is", conf);
+    if (conf == null) {
+      console.error("Facebook config is", conf);
+      return;
+    }
 
     Meteor.loginWithFacebook({
       requestPermissions: conf.scope
