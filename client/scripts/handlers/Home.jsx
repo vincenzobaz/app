@@ -18,8 +18,8 @@ var Home = React.createClass({
                       </div>
                   </div>
                   <div className='grid-70'>
-                      <h1>Who liked your post?<br>When did you post that interesting link?<br> 
-                          Who commented on that weird picture?<br> Test you memory and win the game.
+                      <h1>Who liked your post?<br />When did you post that interesting link?<br /> 
+                          Who commented on that weird picture?<br /> Test you memory and win the game.
                       </h1>
                       <div className='call-to-action'>
                           <a href='#start' className='btn'>Start Playing</a>
@@ -33,7 +33,7 @@ var Home = React.createClass({
               <div className='grid-80 prefix-10'>
                 <h2>How to Play</h2>
                 <div className='copy'>
-                  Ever played <a href"https://en.wikipedia.org/wiki/Tic-tac-toe">Tic-Tac-Toe?</a>?
+                  Ever played <a href="https://en.wikipedia.org/wiki/Tic-tac-toe">Tic-Tac-Toe</a>?
                   Then you are already a master of reminisce.me! There is only one catch. If you
                   want to conquer a tile, you have to remember as much as you can of your Facebook
                   profile. Who liked your post? When did you post that interesting link?  Who
@@ -62,8 +62,7 @@ var Home = React.createClass({
                   We develop reminisce.me to make you have a lot of fun, and ultimately with the
                   scientific purpose of understanding how the human memory works. As such, we don&#8217;t
                   store permanently any of your personal data. We are so transparent about it that we
-                  decided to release the whole game platform (client and server) as 
-                  <a href="https://github.com/reminisceme/">open-source</a>! 
+                  decided to release the whole game platform (client and server) as <a href="https://github.com/reminisceme/">open-source</a>!
                   </div>
               </div>
           </div>
