@@ -35,7 +35,17 @@ Game = class Game {
     }
 
     getPlayer1Board() {
-        return this.player1Board;
+        if (typeof this.player1Board === 'string') {
+          this.player1Board = GameBoards.findOne(this.player1Board);
+        }
+
+        const board = this.player1Board;
+
+        if (!(board instanceof GameBoard)) {
+          return GameBoard.fromRaw(board);
+        }
+
+        return board;
     }
 
     setPlayer1Board(value) {
@@ -43,13 +53,21 @@ Game = class Game {
     }
 
     getPlayer2Board() {
-        return this.player2Board;
+        if (typeof this.player2Board === 'string') {
+          this.player2Board = GameBoards.findOne(this.player2Board);
+        }
+
+        const board = this.player2Board;
+
+        if (!(board instanceof GameBoard)) {
+          return GameBoard.fromRaw(board);
+        }
+
+        return board;
     }
 
     getCurrentBoard() {
-        const key = `player${this.getPlayerTurn()}Board`;
-
-        return GameBoards.findOne(this[key]);
+        return this[`getPlayer${this.getPlayerTurn()}Board`]();
     }
 
     setPlayer2Board(value) {

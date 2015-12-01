@@ -74,6 +74,8 @@ class AnswerService {
 
         const board = game.getCurrentBoard();
 
+        console.log('board', board);
+
         const tiles = board.getTiles();
         const tile  = board.getTileById(tileId);
 

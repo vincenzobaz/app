@@ -115,25 +115,10 @@ BotService = {
           return;
         }
 
-        var boardId;
-        var answers;
-        var player;
-        var firstTurn = false;
-        if (game.getPlayerTurn() == 1) {
-            boardId = "player1Board";
-            player = game.player1;
-            if (game.getPlayer1AvailableMoves().length === 9) {
-                firstTurn = true;
-            }
-        } else {
-            boardId = "player2Board";
-            player = game.player2;
-            if (game.getPlayer2AvailableMoves().length === 9) {
-                firstTurn = true;
-            }
-        }
+        const player    = game.getCurrentPlayer()
+        const gameBoard = game.getCurrentBoard();
+        const firstTurn = game.getCurrentPlayerAvailableMoves().length == 9;
 
-        const gameBoard   = GameBoards.findOne(game[boardId]);
         const method      = (firstTurn) ? 'pickRandom' : 'pickTile';
         const tile        = BotService[method](game, gameBoard);
         const successrate = 66;
@@ -142,7 +127,7 @@ BotService = {
           throw new Meteor.Error(500, "Bot could't find a tile to play on.");
         }
 
-        answers = _.map(tile.getQuestions(), q => {
+        const answers = _.map(tile.getQuestions(), q => {
             switch (q.kind) {
                 case Question.Kind.Timeline:
                     return new TimelineAnswer(

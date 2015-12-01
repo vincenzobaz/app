@@ -85,11 +85,15 @@ const Video = React.createClass({
   },
 
   render() {
+    const text = (this.props.text && this.props.text != this.props.url) ? this.props.url : '';
+
     return (
       <div className="post post-video">
-        <Text text={this.props.text || ''} />
+        <Text text={text} />
         <a href={this.props.url} target="_blank">
           <img src={this.props.thumbnailUrl} />
+          <br />
+          {this.props.url}
         </a>
       </div>
     );

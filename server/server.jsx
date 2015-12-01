@@ -5,7 +5,6 @@ class Server {
     console.log(`Fetching game board for user ${userId}...`);
 
     const game = Games.findOne(gameId);
-
     const bot = BotService.bot();
 
     let gameBoard;
@@ -72,7 +71,6 @@ class Server {
   fetchAllBoards() {
     const fetches = GameFetches.find().fetch();
 
-    console.log(`Processing ${fetches.length} fetches...`);
     fetches.forEach(fetch => {
       Meteor.setTimeout(() => {
         this.processFetch(fetch);
