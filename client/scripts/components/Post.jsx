@@ -197,6 +197,8 @@ const Post = React.createClass({
   },
 
   render() {
+    console.log("Post", this.props);
+
     if (!this.props.post || !this.props.post.type) {
       return <noscript />;
     }
