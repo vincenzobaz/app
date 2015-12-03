@@ -10,14 +10,14 @@ var React = require('react'),
 var Timeline = React.createClass({
 
   propTypes: {
-    type: React.PropTypes.string.isRequired,
-    subject: R.Shapes.post.isRequired,
-    max: React.PropTypes.string.isRequired,
-    min: React.PropTypes.string.isRequired,
-    step: React.PropTypes.number.isRequired,
-    default: React.PropTypes.string.isRequired,
-    unit: React.PropTypes.string.isRequired,
-    onDone: React.PropTypes.func.isRequired
+    type    : React.PropTypes.string.isRequired,
+    subject : R.Shapes.post.isRequired,
+    max     : React.PropTypes.string.isRequired,
+    min     : React.PropTypes.string.isRequired,
+    step    : React.PropTypes.number.isRequired,
+    default : React.PropTypes.string.isRequired,
+    unit    : React.PropTypes.string.isRequired,
+    onDone  : React.PropTypes.func.isRequired
   },
 
   getInitialState() {
@@ -38,9 +38,9 @@ var Timeline = React.createClass({
 
   propsToRelative() {
     return {
-      min: this.toRelative(this.props.min),
-      max: this.toRelative(this.props.max),
-      default: this.toRelative(this.props.default),
+      min     : this.toRelative(this.props.min),
+      max     : this.toRelative(this.props.max),
+      default : this.toRelative(this.props.default),
     };
   },
 
@@ -68,8 +68,10 @@ var Timeline = React.createClass({
   },
 
   getButtonText() {
-    return pluralize(this.props.unit.toLowerCase(), this.state.ago, true) + ' ago ' +
-           '(' + agoToDate(this.state.ago, this.props.unit) + ')';
+    const agoStr  = pluralize(this.props.unit.toLowerCase(), this.state.ago, true);
+    const dateStr = agoToDate(this.props.default, this.state.ago, this.props.unit);
+
+    return `${agoStr} ago (${dateStr})`;
   },
 
   onChange(e) {
@@ -80,7 +82,7 @@ var Timeline = React.createClass({
 
   onSubmit() {
     this.props.onDone({
-      date: agoToDate(this.state.ago, this.props.unit, null)
+      date: agoToDate(this.props.default, this.state.ago, this.props.unit, null)
     });
   }
 

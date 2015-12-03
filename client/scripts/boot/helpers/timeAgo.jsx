@@ -3,8 +3,8 @@
 
 const moment = require('moment');
 
-const agoToDate = (time, unit, format = 'ddd Do MMMM YYYY') => {
-  return moment().subtract(time, unit).format(format);
+const agoToDate = (from, ago, unit, format = 'ddd Do MMMM YYYY') => {
+  return moment(from).subtract(ago, unit).format(format);
 };
 
 const dateToAgo = (date, unit) => {
