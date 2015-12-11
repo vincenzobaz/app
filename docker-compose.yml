@@ -8,6 +8,7 @@ app:
   env_file: ./env/prod.sh
   cap_drop:
     - CHOWN
+    - MKNOD
     - DAC_OVERRIDE
     - FSETID
     - FOWNER
@@ -22,6 +23,7 @@ game-creator:
     - mongo:mongo
   cap_drop:
     - CHOWN
+    - MKNOD
     - DAC_OVERRIDE
     - FSETID
     - FOWNER
