@@ -1,40 +1,8 @@
 
-const SubjectProps = [ 'type', 'text', 'imageUrl', 'thumbnailUrl', 'url', 'post', 'comment' ];
-
-Subject = class Subject {
-
-    constructor(props) {
-        assignProps(this, SubjectProps, props);
-    }
-
-    getText() {
-        return this.text;
-    }
-
-    getType() {
-        return this.type;
-    }
-
-    getImageUrl() {
-        return this.imageUrl;
-    }
-
-    getThumbnailUrl() {
-        return this.thumbnailUrl;
-    }
-
-    getComment() {
-        return this.comment;
-    }
-
-    getPost() {
-        return Subject.fromRaw(this.post);
-    }
-};
-
-
-Subject.fromRaw = function(data) {
-  return new Subject(data);
+Subject = {
+  fromRaw(doc) {
+    return doc;
+  }
 };
 
 const ChoiceProps = [ 'text', 'imageUrl', 'fbId', 'pageId' ];
@@ -183,6 +151,7 @@ TimelineQuestion = class TimelineQuestion {
 };
 
 TimelineQuestion.fromRaw = function(data){
+    console.log('TimelineQuestion: ', data);
     data.subject = Subject.fromRaw(data.subject);
     return new TimelineQuestion(data);
 };

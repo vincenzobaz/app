@@ -369,6 +369,23 @@
       }
     }
 
+    .question-subject {
+      margin-bottom: 20px;
+    }
+
+    .post-page {
+      img {
+        height:       100px;
+        margin-right: 10px;
+        max-width:    200px;
+      }
+
+      span {
+        display: block;
+        margin-top: 20px;
+      }
+    }
+
     .btn {
       width: 100%;
     }
