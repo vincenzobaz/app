@@ -118,9 +118,7 @@ class AnswerService {
             boardState[row][col].score  = newScore;
         }
 
-        if (newScore === 3) {
-          tile.setDisabled(true);
-        }
+        tile.setDisabled(true);
 
         const filterMoves = m => m.row !== row || m.column !== col;
 
