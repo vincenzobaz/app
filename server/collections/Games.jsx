@@ -5,11 +5,11 @@ Games = new Mongo.Collection("games", {
     }
 });
 
-GameProps = ['_id', 'player1', 'player2', 'player1Board', 'player2Board',
-    'status', 'playerTurn', 'player1Scores', 'player2Scores', 'boardState',
-    'player1AvailableMoves',
-    'player2AvailableMoves',
-    'wonBy'
+GameProps = [
+  '_id', 'player1', 'player2', 'player1Board', 'player2Board',
+  'status', 'playerTurn', 'player1Scores', 'player2Scores', 'boardState',
+  'player1AvailableMoves', 'player2AvailableMoves',
+  'wonBy', 'creationTime'
 ];
 
 Game = class Game {
@@ -175,6 +175,14 @@ Game = class Game {
         this.wonBy = value;
     }
 
+    getCreationTime() {
+        return this.creationTime;
+    }
+
+    setCreationTime(time) {
+        this.creationTime = time;
+    }
+
     createCopy() {
         var newBoardState = GameBoardClone(this.getBoardState());
         //for (var i = 0; i < this.getBoardState().length; i++){
@@ -195,11 +203,10 @@ Game = class Game {
             player2Scores: this.getPlayer2Scores(),
             boardState: newBoardState,
             player1AvailableMoves: this.getPlayer1AvailableMoves(),
-            player2AvailableMoves: this.getPlayer2AvailableMoves()
+            player2AvailableMoves: this.getPlayer2AvailableMoves(),
+            creationTime: this.getCreationTime()
         });
     }
-
-
 
 };
 

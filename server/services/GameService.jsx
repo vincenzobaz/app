@@ -24,7 +24,8 @@ GameService = {
             boardState: boardState,
             player1AvailableMoves: GameService.createAvailableMoves(),
             player2AvailableMoves: GameService.createAvailableMoves(),
-            wonBy: null
+            wonBy: null,
+            creationTime: +new Date()
         });
     },
 

@@ -27,15 +27,15 @@ var CurrentGames = React.createClass({
     }
 
     const filteredGames = this.props.games.filter(game => !game.hasEnded());
-    const sortedGames   = this.sortGamesByIdDesc(filteredGames);
+    const sortedGames   = this.sortGames(filteredGames);
 
     return sortedGames.map(game =>
       <R.CurrentGame key={game.getId()} game={game} />
     );
   },
 
-  sortGamesByIdDesc(games) {
-    return sortBy(games, (g) => g.getId()).reverse();
+  sortGames(games) {
+    return sortBy(games, g => g.getCreationTime()).reverse();
   }
 });
 
