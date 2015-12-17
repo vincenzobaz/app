@@ -91,9 +91,8 @@ const Video = React.createClass({
       <div className="post post-video">
         <Text text={text} />
         <a href={this.props.url} target="_blank">
-          <img src={this.props.thumbnailUrl} />
-          <br />
-          {this.props.url}
+          <img src={this.props.thumbnailUrl} className="post-video-thumbnail" />
+          <div>{this.props.url}</div>
         </a>
       </div>
     );
@@ -134,9 +133,20 @@ const Link = React.createClass({
     return (
       <div className="post post-link">
         <blockquote>{this.props.text}</blockquote>
-        <a href={this.props.url} target="_blank">{this.props.url}</a>
+        {this.renderThumbnail(this.props.thumbnailUrl)}
+        <div>
+          <a href={this.props.url} target="_blank">{this.props.url}</a>
+        </div>
       </div>
     );
+  },
+
+  renderThumbnail(url) {
+    if (!url) {
+      return null;
+    }
+
+    return <img src={url} className="post-link-thumbnail" />;
   }
 
 });
@@ -163,7 +173,7 @@ const Page = React.createClass({
       return null;
     }
 
-    return <img src={this.props.photoUrl} />;
+    return <img src={this.props.photoUrl} className="post-page-thumbnail"/>;
   }
 
 });

@@ -235,6 +235,10 @@
   }
 }
 
+.post-link-thumbnail, .post-video-thumbnail {
+  margin-bottom: 20px;
+}
+
 .question-reorder {
 
     .btn {
@@ -278,9 +282,9 @@
                 max-width: 100px;
             }
 
-            .post-picture img, .post-video img {
-                max-height: 100px !important;
-                max-width: 100px !important;
+            .post-picture img, .post-video img, .post-link img, .post-text img {
+              height: 100px;
+              max-width: 100px;
             }
 
             span {
