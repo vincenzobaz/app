@@ -21,11 +21,10 @@ Reminisce.Store.GameStore = {
   },
 
   list() {
-    return
-    Games
-      .find({}, { sort: { creationTime: -1 } })
-      .fetch()
-      .map(hydrate);
+    return Games
+            .find({}, { sort: { creationTime: -1 } })
+            .fetch()
+            .map(hydrate);
   },
 
   start(friendId) {

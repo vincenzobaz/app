@@ -18,8 +18,17 @@ var Dashboard = React.createClass({
         <R.Players game={this.props.currentGame} user={this.props.user} />
         <div id="dashboard" className="grid-container">
           <div className="grid-20">
-            <div className="notifications">
-              <R.CurrentGames games={this.props.games} />
+            <div id="sidebar" className="notifications">
+              <R.GamesList
+                title="Current games"
+                games={this.props.games.filter(g => !g.hasEnded())}
+                className="current-games"
+              />
+              <R.GamesList
+                title="Past games"
+                games={this.props.games.filter(g => g.hasEnded())}
+                className="past-games"
+              />
             </div>
           </div>
           <div className='grid-50 prefix-5'>

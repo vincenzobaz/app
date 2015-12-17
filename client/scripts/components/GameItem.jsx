@@ -1,9 +1,9 @@
 
 'use strict';
 
-var React = require('react');
+const React = require('react');
 
-var CurrentGame = React.createClass({
+const GameItem = React.createClass({
 
   propTypes: {
     game: R.Shapes.Game
@@ -92,7 +92,7 @@ var CurrentGame = React.createClass({
   }
 });
 
-CurrentGame.None = React.createClass({
+GameItem.None = React.createClass({
   render() {
     var center = {textAlign: 'center'};
     return (
@@ -107,4 +107,5 @@ CurrentGame.None = React.createClass({
   }
 });
 
-Reminisce.CurrentGame = CurrentGame;
+Reminisce.GameItem = GameItem;
+
