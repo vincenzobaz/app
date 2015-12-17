@@ -99,7 +99,7 @@ GameItem.None = React.createClass({
       <li>
         <div className='media'>
           <div className='media-body'>
-            <p style={center}>No current games</p>
+            <p style={center}>No games</p>
           </div>
         </div>
       </li>
