@@ -469,7 +469,7 @@
     }
 }
 
-#sidebar ul.games {
+ul.join-requests, ul.games {
     @include zero;
     list-style: none;
 

@@ -52,7 +52,9 @@ JoinRequest.None = React.createClass({
     return (
       <li>
         <div className='media'>
-          <p style={center}>You have no join requests</p>
+          <div className='media-body'>
+            <p style={center}>No join requests</p>
+          </div>
         </div>
       </li>
     );
