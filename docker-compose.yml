@@ -9,15 +9,11 @@ app:
 
 game-creator:
   build: ../game-creator/deployment
-  ports:
-    - "9900:9900"
   links:
     - mongo:mongo
 
 mongo:
   image: mongo:3.0.6
-  ports:
-   - "27017:27017"
   links:
     - dbdata
   volumes_from:
