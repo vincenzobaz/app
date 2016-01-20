@@ -6,11 +6,28 @@ app:
    - mongo:mongo
    - game-creator:game-creator
   env_file: ./env/prod.sh
+  cap_drop:
+    - CHOWN
+    - MKNOD
+    - DAC_OVERRIDE
+    - FSETID
+    - FOWNER
+    - SYS_CHROOT
+  restart: on-failure:5
 
 game-creator:
   build: ../game-creator/deployment
   links:
     - mongo:mongo
+  cap_drop:
+    - CHOWN
+    - MKNOD
+    - DAC_OVERRIDE
+    - FSETID
+    - FOWNER
+    - SYS_CHROOT
+  restart: on-failure:5
+
 
 mongo:
   image: mongo:3.0.6
@@ -18,8 +35,22 @@ mongo:
     - dbdata
   volumes_from:
     - dbdata
+  cap_drop:
+    - DAC_OVERRIDE
+    - FSETID
+    - FOWNER
+    - SYS_CHROOT
+  restart: on-failure:5
 
 dbdata:
   image: cogniteev/echo
   volumes:
     - /var/lib/mongo/data/db:/data/db
+  cap_drop:
+    - CHOWN
+    - DAC_OVERRIDE
+    - FSETID
+    - FOWNER
+    - SYS_CHROOT
+  restart: on-failure:5
+
