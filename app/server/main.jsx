@@ -6,12 +6,12 @@ import {Facebook} from './facebook.jsx';
 import {FriendRepository} from './repositories/FriendRepository.jsx';
 import {publishCollections} from './publish.jsx';
 import {setupMeteorMethods} from './methods.jsx';
+import {Marker} from '../common/models/questions/Marker';
 
 console.log("we start the server", process.env.GAME_CREATOR_URL);
 
 
 Meteor.startup(() => {
-
     debugger;
     setup();
     publishCollections();

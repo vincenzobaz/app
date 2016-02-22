@@ -757,10 +757,11 @@ var require = Npm.require;
 	
 	var _methods = __webpack_require__(/*! ./methods.jsx */ 46);
 	
+	var _Marker = __webpack_require__(/*! ../common/models/questions/Marker */ 12);
+	
 	console.log("we start the server", process.env.GAME_CREATOR_URL);
 	
 	Meteor.startup(function () {
-	
 	    debugger;
 	    (0, _services.setup)();
 	    (0, _publish.publishCollections)();
@@ -841,7 +842,7 @@ var require = Npm.require;
 	
 	var _AnswerService = __webpack_require__(/*! ./AnswerService.jsx */ 40);
 	
-	var _Marker = __webpack_require__(/*! ./../../common/models/questions/Marker.jsx */ 12);
+	var _Marker = __webpack_require__(/*! ./../../common/models/questions/Marker */ 12);
 	
 	var BOT_USERNAME = 'bot';
 	
@@ -1696,9 +1697,9 @@ var require = Npm.require;
 	
 	var _assignProps = __webpack_require__(/*! ./../../common/helpers/assignProps.jsx */ 5);
 	
-	var _OrderQuestion = __webpack_require__(/*! ./questions/OrderQuestion.jsx */ 11);
+	var _OrderQuestion = __webpack_require__(/*! ./questions/OrderQuestion */ 11);
 	
-	var _Marker = __webpack_require__(/*! ./questions/Marker.jsx */ 12);
+	var _Marker = __webpack_require__(/*! ./questions/Marker */ 12);
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -2032,89 +2033,40 @@ var require = Npm.require;
 
 /***/ },
 /* 11 */
-/*!********************************************************!*\
-  !*** ../app/common/models/questions/OrderQuestion.jsx ***!
-  \********************************************************/
-/***/ function(module, exports, __webpack_require__) {
+/*!*******************************************************!*\
+  !*** ../app/common/models/questions/OrderQuestion.ts ***!
+  \*******************************************************/
+/***/ function(module, exports) {
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.OrderQuestion = exports.SubjectWithId = undefined;
+	//import {assignProps} from './../../../common/helpers/assignProps.jsx';
+	/// <reference path="../../../../typings/main.d.ts" />
+	"use strict";
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _assignProps = __webpack_require__(/*! ./../../../common/helpers/assignProps.jsx */ 5);
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	var OrderQuestionProps = ['_id', 'subject', 'choices', 'answer', 'type', 'kind', 'items'];
 	
-	var SubjectWithId = exports.SubjectWithId = function () {
-	    /**
-	     *
-	     * @param {QuestionSubject} subject
-	     * @param {string} uId
-	     */
-	
-	    function SubjectWithId(subject, uId) {
-	        _classCallCheck(this, SubjectWithId);
-	
-	        this._subject = subject;
-	        this._uId = uId;
-	    }
-	
-	    /**
-	     *
-	     * @returns {QuestionSubject}
-	     */
-	
-	    _createClass(SubjectWithId, [{
-	        key: 'subject',
-	        get: function get() {
-	            return this._subject;
-	        }
-	
-	        /**
-	         *
-	         * @returns {string}
-	         */
-	
-	    }, {
-	        key: 'uId',
-	        get: function get() {
-	            return this._uId;
-	        }
-	    }]);
-	
-	    return SubjectWithId;
-	}();
-	
-	;
-	
-	var SubjectTypes = {
-	    TextPost: 'TextPost',
-	    ImagePost: 'ImagePost',
-	    VideoPost: 'VideoPost',
-	    LinkPost: 'LinkPost',
-	    Comment: 'Comment',
-	    Page: 'Page'
-	
-	};
-	
-	var OrderQuestion = exports.OrderQuestion = function () {
-	    function OrderQuestion(props) {
+	var OrderQuestion = function () {
+	    function OrderQuestion(id, subject, choices, answer, type, kind, items) {
 	        _classCallCheck(this, OrderQuestion);
 	
-	        var diff = _.difference(_.without(Object.keys(props), 'userId'), OrderQuestionProps);
-	        if (!_.isEmpty(diff)) {
-	            throw new Meteor.Error(500, "OrderQuestion constructor with unusable parameters " + diff);
-	        }
-	        (0, _assignProps.assignProps)(this, OrderQuestionProps, props);
+	        this.id = id;
+	        this.subject = subject;
+	        this.choices = choices;
+	        this.answer = answer;
+	        this.type = type;
+	        this.kind = kind;
+	        this.items = items;
+	        this._id = id;
+	        this._subject = subject;
+	        this._choices = choices;
+	        this._answer = answer;
+	        this._type = type;
+	        this._kind = kind;
+	        this._items = items;
 	    }
-	
 	    /**
 	     * retunrs the Question id
 	     * @returns {string}
@@ -2126,7 +2078,6 @@ var require = Npm.require;
 	        value: function getId() {
 	            return this._id;
 	        }
-	
 	        /**
 	         *
 	         * @returns {Subject}
@@ -2147,7 +2098,6 @@ var require = Npm.require;
 	        value: function getItems() {
 	            return this.items;
 	        }
-	
 	        /**
 	         * returns an array of SubjectWithIds
 	         * @returns {[SubjectWithId]}
@@ -2161,30 +2111,24 @@ var require = Npm.require;
 	    }, {
 	        key: 'setChoices',
 	        value: function setChoices(value) {
-	            this.choices = value;
+	            this._choices = value;
 	            this.items = _.map(value, function (c) {
 	                switch (c.subject.type) {
-	                    case SubjectTypes.Page:
+	                    case SubjectType.Page:
 	                        return { id: c.uId, text: c.subject.name, subject: c.subject };
-	                        break;
-	                    case SubjectTypes.TextPost:
+	                    case SubjectType.TextPost:
 	                        return { id: c.uId, text: c.subject.text, subject: c.subject };
-	                        break;
-	                    case SubjectTypes.ImagePost:
+	                    case SubjectType.ImagePost:
 	                        return { id: c.uId, text: c.subject.text, subject: c.subject };
-	                        break;
-	                    case SubjectTypes.VideoPost:
+	                    case SubjectType.VideoPost:
 	                        return { id: c.uId, text: c.subject.text, subject: c.subject };
-	                        break;
-	                    case SubjectTypes.LinkPost:
+	                    case SubjectType.LinkPost:
 	                        return { id: c.uId, text: c.subject.text, subject: c.subject };
-	                        break;
-	                    case SubjectTypes.Comment:
+	                    case SubjectType.Comment:
 	                        return { id: c.uId, text: c.subject.comment, subject: c.subject };
-	                        break;
 	                    default:
 	                        console.error("Ordering subject type not defined: " + c.type);
-	                        Meteor.Error(500, "Ordering subject type not defined: " + c.type);
+	                        throw new Meteor.Error(500, "Ordering subject type not defined: " + c.type);
 	                }
 	            });
 	        }
@@ -2193,7 +2137,6 @@ var require = Npm.require;
 	        value: function getKind() {
 	            return this.kind;
 	        }
-	
 	        /**
 	         * returns the correct id of the answers
 	         * @returns {[number]}
@@ -2205,80 +2148,76 @@ var require = Npm.require;
 	            if (!Meteor.isServer) {
 	                throw new Error('Well tried, there\'s nothing to see here. See for yourself: ' + this.answer);
 	            }
-	
 	            return this.answer;
 	        }
 	    }], [{
 	        key: 'fromRaw',
 	        value: function fromRaw(raw) {
-	            return new OrderQuestion(raw);
+	            return new OrderQuestion(raw._id, raw.subject, raw.choices, raw.answer, raw.type, raw.kind, raw.items);
 	        }
 	    }]);
 	
 	    return OrderQuestion;
 	}();
 	
+	exports.OrderQuestion = OrderQuestion;
 	;
 
 /***/ },
 /* 12 */
-/*!*************************************************!*\
-  !*** ../app/common/models/questions/Marker.jsx ***!
-  \*************************************************/
+/*!************************************************!*\
+  !*** ../app/common/models/questions/Marker.ts ***!
+  \************************************************/
 /***/ function(module, exports) {
 
 	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var Marker = exports.Marker = function () {
-	
-	  /**
-	   *
-	   * @param {number} latitude
-	   * @param {number} longitude
-	   */
-	
-	  function Marker(latitude, longitude) {
-	    _classCallCheck(this, Marker);
-	
-	    this.latitude = latitude;
-	    this.longitude = longitude;
-	  }
-	
-	  /**
-	   * Returns the latitude
-	   * @return {number}
-	   */
-	
-	
-	  _createClass(Marker, [{
-	    key: "getLatitude",
-	    value: function getLatitude() {
-	      return this.latitude;
-	    }
-	
+	var Marker = function () {
 	    /**
-	     * Returns the longitude
+	     *
+	     * @param {number} latitude
+	     * @param {number} longitude
+	     */
+	
+	    function Marker(latitude, longitude) {
+	        _classCallCheck(this, Marker);
+	
+	        this.latitude = latitude;
+	        this.longitude = longitude;
+	        this.latitude = latitude;
+	        this.longitude = longitude;
+	    }
+	    /**
+	     * Returns the latitude
 	     * @return {number}
 	     */
 	
-	  }, {
-	    key: "getLongitude",
-	    value: function getLongitude() {
-	      return this.longitude;
-	    }
-	  }]);
 	
-	  return Marker;
+	    _createClass(Marker, [{
+	        key: "getLatitude",
+	        value: function getLatitude() {
+	            return this.latitude;
+	        }
+	        /**
+	         * Returns the longitude
+	         * @return {number}
+	         */
+	
+	    }, {
+	        key: "getLongitude",
+	        value: function getLongitude() {
+	            return this.longitude;
+	        }
+	    }]);
+	
+	    return Marker;
 	}();
 	
+	exports.Marker = Marker;
 	;
 
 /***/ },
@@ -4559,7 +4498,7 @@ var require = Npm.require;
 	
 	var _Games = __webpack_require__(/*! ./../collections/Games.jsx */ 4);
 	
-	var _Marker = __webpack_require__(/*! ./../../common/models/questions/Marker.jsx */ 12);
+	var _Marker = __webpack_require__(/*! ./../../common/models/questions/Marker */ 12);
 	
 	var _GameStatus = __webpack_require__(/*! ./../../common/models/GameStatus.jsx */ 14);
 	

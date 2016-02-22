@@ -1,6 +1,6 @@
 import {Kind} from './../../common/models/Questions.jsx';
 import {Games} from './../collections/Games.jsx';
-import {Marker} from './../../common/models/questions/Marker.jsx';
+import {Marker} from './../../common/models/questions/Marker';
 import {GameStatus} from './../../common/models/GameStatus.jsx';
 import {GameBoardRepository} from './../repositories/GameBoardRepository.jsx';
 import {GameRepository} from './../repositories/GameRepository.jsx';

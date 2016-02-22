@@ -1,6 +1,6 @@
 import {assignProps} from './../../common/helpers/assignProps.jsx';
-import {OrderQuestion} from './questions/OrderQuestion.jsx';
-import {Marker} from './questions/Marker.jsx'
+import {OrderQuestion} from './questions/OrderQuestion';
+import {Marker} from './questions/Marker'
 
 
 const Subject = {

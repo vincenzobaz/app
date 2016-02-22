@@ -2,13 +2,16 @@
   "compilerOptions": {
     "jsx": "preserve",
     "target": "ES6",
+    "declaration": false,
     "module": "commonjs",
     "experimentalDecorators": true,
-    "noEmit": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "noLib": false
   },
   "exclude": [
     "node_modules",
-    "meteor_core"
+    "meteor_core",
+    "typings/browser",
+    "typings/browser.d.ts"
   ]
 }

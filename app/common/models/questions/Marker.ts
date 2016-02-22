@@ -5,7 +5,7 @@ export class Marker {
    * @param {number} latitude
    * @param {number} longitude
    */
-  constructor (latitude, longitude) {
+  constructor (private latitude: number, private longitude: number) {
     this.latitude = latitude;
     this.longitude = longitude;
   }
@@ -14,7 +14,7 @@ export class Marker {
    * Returns the latitude
    * @return {number}
    */
-  getLatitude() {
+  getLatitude(): number {
     return this.latitude;
   }
 
@@ -22,7 +22,7 @@ export class Marker {
    * Returns the longitude
    * @return {number}
    */
-  getLongitude() {
+  getLongitude(): number {
     return this.longitude;
   }
 };

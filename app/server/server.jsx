@@ -8,7 +8,6 @@ import {GameBoard} from './../common/models/GameBoard.jsx';
 import {GameBoardRepository} from './repositories/GameBoardRepository.jsx';
 import {GameStatus} from './../common/models/GameStatus.jsx';
 
-
 export const Server = {
 
   fetchGameBoard(userId, gameId, playerNum, createFetch = true) {

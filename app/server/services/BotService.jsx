@@ -15,7 +15,7 @@ import {TimelineAnswer, TimelineData, TimelineVerificationService} from './verif
 import {GeoAnswer, GeoData, GeoVerificationService} from './verification/GeoVerificationService.jsx';
 import {OrderAnswer, OrderItem, OrderData} from './verification/ReorderVerificationService.jsx';
 import {AnswerService} from './AnswerService.jsx';
-import {Marker} from './../../common/models/questions/Marker.jsx';
+import {Marker} from './../../common/models/questions/Marker';
 
 
 const BOT_USERNAME = 'bot';
