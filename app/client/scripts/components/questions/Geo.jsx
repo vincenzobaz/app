@@ -1,11 +1,11 @@
 
 'use strict';
 
-import {Shapes} from './../../boot/helpers/shapes.jsx';
-import {getConfig} from './../../boot/helpers/getConfig.jsx';
-import {getQuestionTitleByType} from './../../boot/helpers/getQuestionTitleByType.jsx';
-import {Post} from './../Post.jsx';
-import {GoogleMap} from './../GoogleMap.jsx';
+import {Shapes} from './../../boot/helpers/shapes';
+import {getConfig} from './../../boot/helpers/getConfig';
+import {getQuestionTitleByType} from './../../boot/helpers/getQuestionTitleByType';
+import {Post} from './../Post';
+import {GoogleMap} from './../GoogleMap';
 
 var React = require('react'),
     Button = require('react-bootstrap').Button,

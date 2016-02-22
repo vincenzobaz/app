@@ -1,5 +1,5 @@
-import {Shapes} from './../boot/helpers/shapes.jsx';
-import {GameItem, None} from './GameItem.jsx';
+import {Shapes} from './../boot/helpers/shapes';
+import {GameItem, None} from './GameItem';
 
 
 export const GamesList = React.createClass({

@@ -1,10 +1,10 @@
 
 'use strict';
 
-import {GameStore} from './../stores/GameStore.jsx';
-import {StartGameModal} from './modals/StartGameModal.jsx';
-import {FriendsAutocomplete} from './FriendsAutocomplete.jsx';
-import {QuitGameModal} from './modals/QuitGameModal.jsx';
+import {GameStore} from './../stores/GameStore';
+import {StartGameModal} from './modals/StartGameModal';
+import {FriendsAutocomplete} from './FriendsAutocomplete';
+import {QuitGameModal} from './modals/QuitGameModal';
 
 var React = require('react'),
     Bootstrap = require('react-bootstrap'),

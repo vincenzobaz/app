@@ -1,4 +1,4 @@
-import {GameStore} from './../stores/GameStore.jsx';
+import {GameStore} from './../stores/GameStore';
 
 
 export class JoinRequest {

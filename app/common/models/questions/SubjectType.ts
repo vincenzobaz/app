@@ -1,6 +1,6 @@
-type SubjectType = "TextPost" | "ImagePost" | "VideoPost" | "LinkPost" | "Comment" | "Page"
+export type SubjectType = "TextPost" | "ImagePost" | "VideoPost" | "LinkPost" | "Comment" | "Page"
     
-const SubjectType = {
+export const SubjectType = {
     TextPost: 'TextPost' as SubjectType,
     ImagePost: 'ImagePost' as SubjectType,
     VideoPost: 'VideoPost' as SubjectType,

@@ -1,5 +1,5 @@
 
-import {DeleteAllData} from "./../components/account/DeleteAllData.jsx";
+import {DeleteAllData} from "./../components/account/DeleteAllData";
 
 const React = require('react'),
       Button = require('react-bootstrap').Button,

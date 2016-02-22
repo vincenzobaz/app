@@ -6,7 +6,7 @@
 
 'use strict';
 
-import {randomStr} from './../boot/helpers/randomStr.jsx';
+import {randomStr} from './../boot/helpers/randomStr';
 
 var React = require('react'),
     queryString = require('querystring');

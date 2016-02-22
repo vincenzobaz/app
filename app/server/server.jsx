@@ -1,17 +1,18 @@
-import {GameFetches} from "./collections/GameFetches.jsx";
-import {GameCreatorService} from "./services/GameCreatorService.jsx";
-import {GameRepository} from './repositories/GameRepository.jsx';
-import {GameFetchRepository} from './repositories/GameFetchRepository.jsx';
-import {BotService} from './services/BotService.jsx';
-import {Games} from './collections/Games.jsx';
-import {GameBoard} from './../common/models/GameBoard.jsx';
-import {GameBoardRepository} from './repositories/GameBoardRepository.jsx';
-import {GameStatus} from './../common/models/GameStatus.jsx';
+import {GameFetches} from "./collections/GameFetches";
+import {GameCreatorService} from "./services/GameCreatorService";
+import {GameRepository} from './repositories/GameRepository';
+import {GameFetchRepository} from './repositories/GameFetchRepository';
+import {BotService} from './services/BotService';
+import {Games} from './collections/Games';
+import {GameBoard} from './../common/models/GameBoard';
+import {GameBoardRepository} from './repositories/GameBoardRepository';
+import {GameStatus} from './../common/models/GameStatus';
 
 export const Server = {
 
   fetchGameBoard(userId, gameId, playerNum, createFetch = true) {
     console.log(`Fetching game board for user ${userId}...`);
+      
 
     const game = Games.findOne(gameId);
     const bot = BotService.bot();

@@ -1,5 +1,5 @@
 
-import {FriendRepository} from './repositories/FriendRepository.jsx'
+import {FriendRepository} from './repositories/FriendRepository'
 
 // FIXME: Awful design...
 // TODO: Handle paging.

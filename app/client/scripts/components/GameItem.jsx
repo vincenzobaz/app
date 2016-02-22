@@ -1,9 +1,9 @@
 
 'use strict';
 
-import {Shapes} from './../boot/helpers/shapes.jsx';
-import {GameStore} from './../stores/GameStore.jsx';
-import {GameStatus} from './../../../common/models/GameStatus.jsx';
+import {Shapes} from './../boot/helpers/shapes';
+import {GameStore} from './../stores/GameStore';
+import {GameStatus} from './../../../common/models/GameStatus';
 
 const React = require('react');
 

@@ -1,7 +1,7 @@
 
 'use strict';
 
-import {Routes} from './../../Routes.jsx';
+import {Routes} from './../../../../common/Routes.ts';
 
 export function image(s, c) {
   s = Math.max(0, Math.min(s, 3));

@@ -1,6 +1,5 @@
-import {Friends} from './../../common/collections/Friends.jsx';
-import {FriendProps} from './../../common/models/Friend.jsx';
-import {UserRepository} from './UserRepository.jsx';
+import {Friends} from './../../common/collections/Friends';
+import {UserRepository} from './UserRepository';
 
 export const FriendRepository = {
 
@@ -17,17 +16,16 @@ export const FriendRepository = {
     },
 
     save(friend) {
-        const doc = _.pick(friend, ...FriendProps);
 
-        if (!doc.userId) {
-            FriendRepository.updateUserId(doc);
+        if (!friend.userId) {
+            FriendRepository.updateUserId(friend);
         }
 
         if (friend._id) {
-            Friends.update(friend._id, doc);
+            Friends.update(friend._id, friend);
         }
         else {
-            friend._id = Friends.insert(doc);
+            friend._id = Friends.insert(friend);
         }
 
         return friend;
@@ -53,7 +51,7 @@ export const FriendRepository = {
                     facebookId: f.id,
                     friendOf: userId,
                     name: f.name,
-                    isBot: !!f.isBot,
+                    isBot: f.isBot,
                     userId: null
                 };
             }
@@ -80,7 +78,7 @@ export const FriendRepository = {
             isBot: true
         };
 
-        FriendRepository.save(friend);
+        FriendRepository.save(friend);sidebar
     }
 
 };

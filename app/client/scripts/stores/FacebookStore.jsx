@@ -1,8 +1,8 @@
 
 'use strict';
 
-import {MeteorPromise} from './../boot/helpers/meteor.jsx';
-import {getConfig} from './../boot/helpers/getConfig.jsx'
+import {MeteorPromise} from './../boot/helpers/meteor';
+import {getConfig} from './../boot/helpers/getConfig'
 
 export const FacebookStore = {
 

@@ -1,5 +1,5 @@
-import {Gamestats, Gamestat, QuestionTypes} from './../../common/collections/Gamestats.jsx';
-import {GamestatRepository} from './../repositories/GamestatsRepository.jsx';
+import {Gamestats, Gamestat, QuestionTypes} from './../../common/collections/Gamestats';
+import {GamestatRepository} from './../repositories/GamestatsRepository';
 
 export const GamestatsService = {
   updateStatsGameWon(userId){

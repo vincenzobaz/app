@@ -1,17 +1,23 @@
 
-import {BotService} from './services/BotService.jsx';
-import {Server} from './server.jsx';
-import {setup} from './services.jsx';
-import {Facebook} from './facebook.jsx';
-import {FriendRepository} from './repositories/FriendRepository.jsx';
-import {publishCollections} from './publish.jsx';
-import {setupMeteorMethods} from './methods.jsx';
+import {BotService} from './services/BotService';
+import {Server} from './server';
+import {setup} from './services';
+import {Facebook} from './facebook';
+import {FriendRepository} from './repositories/FriendRepository';
+import {publishCollections} from './publish';
+import {setupMeteorMethods} from './methods';
 import {Marker} from '../common/models/questions/Marker';
+import Question from './../common/models/Question';
+import {MultipleChoiceQuestion} from './../common/models/questions/MultipleChoiceQuestion';
+import {questionFromRaw} from './../common/models/questions/QuestionFactory';
+import {Subject} from "./../common/models/questions/Subject";
+
 
 console.log("we start the server", process.env.GAME_CREATOR_URL);
 
 
 Meteor.startup(() => {
+    let q = new Question(null, null, "bla", "cats");
     debugger;
     setup();
     publishCollections();
@@ -30,8 +36,6 @@ Accounts.onLogin(attempt => {
     if (!attempt.allowed) {
         return;
     }
-
-    // if (attempt.type === 'resume') {}
 
     const user = attempt.user;
 

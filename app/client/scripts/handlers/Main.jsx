@@ -1,14 +1,14 @@
 
 'use strict';
 
-import {getAppState} from './../appState.jsx';
-import {Stats} from './Stats.jsx';
-import {Welcome} from './Welcome.jsx';
-import {About} from './About.jsx';
-import {Account} from './Account.jsx';
-import {PlayGame} from './PlayGame.jsx';
-import {Home} from './Home.jsx';
-import {Dashboard} from './Dashboard.jsx';
+import {getAppState} from './../appState';
+import {Stats} from './Stats';
+import {Welcome} from './Welcome';
+import {About} from './About';
+import {Account} from './Account';
+import {PlayGame} from './PlayGame';
+import {Home} from './Home';
+import {Dashboard} from './Dashboard';
 
 var React = require('react'),
     debug = require('debug')('Main');
@@ -37,7 +37,7 @@ var Main = React.createClass({
     if (this.data.isLoggedIn) {
       return this.renderDashboard();
     }
-
+    
     return this.renderHome();
   },
 

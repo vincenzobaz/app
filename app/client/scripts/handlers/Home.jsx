@@ -1,4 +1,4 @@
-import {FacebookStore} from '../stores/FacebookStore.jsx';
+import {FacebookStore} from '../stores/FacebookStore';
 
 var React = require('react');
 

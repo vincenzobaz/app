@@ -1,21 +1,16 @@
-import {Games} from "./../collections/Games.jsx";
-import {GameStatus} from "./../../common/models/GameStatus.jsx"
-import {JoinRequests} from './../collections/JoinRequests.jsx';
-import {JoinRequestService} from './../services/JoinRequestService.jsx';
-import {Kind} from './../../common/models/Questions.jsx';
-import {GameBoard} from './../../common/models/GameBoard.jsx';
-import {GameBoardRepository} from './../repositories/GameBoardRepository.jsx';
-import {GameRepository} from './../repositories/GameRepository.jsx';
-import {AnswerVerificationService} from './verification/AnswerVerificationService.jsx';
-import {BoardStateService} from './BoardStateService.jsx';
-import {GamestatsService} from './GamestatsService.jsx';
-import {findIndex} from './../../common/helpers/findIndex.jsx';
-import {MultipleChoiceAnswer, MultipleChoiceData, MultipleChoiceVerificationService} from './verification/MultipleChoiceVerificationService.jsx';
-import {TimelineAnswer, TimelineData, TimelineVerificationService} from './verification/TimelineVerificationService.jsx';
-import {GeoAnswer, GeoData, GeoVerificationService} from './verification/GeoVerificationService.jsx';
-import {OrderAnswer, OrderItem, OrderData} from './verification/ReorderVerificationService.jsx';
-import {AnswerService} from './AnswerService.jsx';
-import {Marker} from './../../common/models/questions/Marker';
+import {Games} from "./../collections/Games";
+import {GameStatus} from "./../../common/models/GameStatus";
+import {JoinRequests} from "./../collections/JoinRequests";
+import {JoinRequestService} from "./../services/JoinRequestService";
+import {Kind} from "./../../common/models/questions/Kind";
+import {GameBoard} from "./../../common/models/GameBoard";
+import {BoardStateService} from "./BoardStateService";
+import {MultipleChoiceAnswer, MultipleChoiceData} from "./verification/MultipleChoiceVerificationService";
+import {TimelineAnswer, TimelineData} from "./verification/TimelineVerificationService";
+import {GeoAnswer, GeoData} from "./verification/GeoVerificationService";
+import {OrderAnswer, OrderItem, OrderData} from "./verification/ReorderVerificationService";
+import {AnswerService} from "./AnswerService";
+import {Marker} from "./../../common/models/questions/Marker";
 
 
 const BOT_USERNAME = 'bot';

@@ -1,7 +1,7 @@
 
 'use strict';
 
-import {Shapes} from './../../boot/helpers/shapes.jsx';
+import {Shapes} from './../../boot/helpers/shapes';
 
 var React = require('react'),
     Bootstrap = require('react-bootstrap'),

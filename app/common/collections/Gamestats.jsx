@@ -1,4 +1,4 @@
-import {assignProps} from './../helpers/assignProps.jsx';
+import {assignProps} from './../helpers/assignProps';
 
 export const Gamestats = new Mongo.Collection('gamestats', {
     transform: function(doc){
@@ -18,20 +18,9 @@ export const GamestatProps = ['_id', 'userId', 'gamesPlayed', 'gamesWon', 'games
     'OrderTried', 'OrderCorrect'
 ];
 
-export const QuestionTypes = {
-    MCWhoLikedYourPost             : 'MCWhoLikedYourPost',
-    MCWhoMadeThisCommentOnYourPost : 'MCWhoMadeThisCommentOnYourPost',
-    MCWhichPageDidYouLike          : 'MCWhichPageDidYouLike',
-    TLWhenDidYouShareThisPost      : 'TLWhenDidYouShareThisPost',
-    TLWhenDidYouLikeThisPage       : 'TLWhenDidYouLikeThisPage',
-    GeoWhatCoordinatesWereYouAt    : 'GeoWhatCoordinatesWereYouAt',
-    ORDPostLikesNumber             : 'ORDPostLikesNumber',
-    ORDPageLike                    : 'ORDPageLike',
-    ORDPageLikes                   : 'ORDPageLikes',
-    ORDPageLikeTime                : 'ORDPageLikeTime',
-    ORDPostCommentsNumber          : 'ORDPostCommentsNumber',
-    ORDPostTime                    : 'ORDPostTime'
-};
+
+
+
 
 
 export class Gamestat {

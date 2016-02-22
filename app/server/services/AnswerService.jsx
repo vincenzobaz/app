@@ -1,17 +1,17 @@
-import {Kind} from './../../common/models/Questions.jsx';
-import {Games} from './../collections/Games.jsx';
+import {Kind} from './../../common/models/questions/Kind';
+import {Games} from './../collections/Games';
 import {Marker} from './../../common/models/questions/Marker';
-import {GameStatus} from './../../common/models/GameStatus.jsx';
-import {GameBoardRepository} from './../repositories/GameBoardRepository.jsx';
-import {GameRepository} from './../repositories/GameRepository.jsx';
-import {AnswerVerificationService} from './verification/AnswerVerificationService.jsx';
-import {BoardStateService} from './BoardStateService.jsx';
-import {GamestatsService} from './GamestatsService.jsx';
-import {findIndex} from './../../common/helpers/findIndex.jsx';
-import {MultipleChoiceAnswer, MultipleChoiceData, MultipleChoiceVerificationService} from './verification/MultipleChoiceVerificationService.jsx';
-import {TimelineAnswer, TimelineData, TimelineVerificationService} from './verification/TimelineVerificationService.jsx';
-import {GeoAnswer, GeoData, GeoVerificationService} from './verification/GeoVerificationService.jsx';
-import {OrderAnswer, OrderItem, OrderData} from './verification/ReorderVerificationService.jsx';
+import {GameStatus} from './../../common/models/GameStatus';
+import {GameBoardRepository} from './../repositories/GameBoardRepository';
+import {GameRepository} from './../repositories/GameRepository';
+import {AnswerVerificationService} from './verification/AnswerVerificationService';
+import {BoardStateService} from './BoardStateService';
+import {GamestatsService} from './GamestatsService';
+import {findIndex} from './../../common/helpers/findIndex';
+import {MultipleChoiceAnswer, MultipleChoiceData, MultipleChoiceVerificationService} from './verification/MultipleChoiceVerificationService';
+import {TimelineAnswer, TimelineData, TimelineVerificationService} from './verification/TimelineVerificationService';
+import {GeoAnswer, GeoData, GeoVerificationService} from './verification/GeoVerificationService';
+import {OrderAnswer, OrderItem, OrderData} from './verification/ReorderVerificationService';
 
 
 class AnswerService {

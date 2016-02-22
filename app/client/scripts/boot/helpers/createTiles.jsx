@@ -1,8 +1,8 @@
 
 'use strict';
 
-import {QuestionsModal} from './../../components/modals/QuestionsModal.jsx';
-import {Tile} from './../../components/Tile.jsx';
+import {QuestionsModal} from './../../components/modals/QuestionsModal';
+import {Tile} from './../../components/Tile';
 
 const React = require('react');
 

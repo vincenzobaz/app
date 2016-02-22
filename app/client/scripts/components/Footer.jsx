@@ -1,9 +1,9 @@
 
 'use strict';
 
-import {Shapes} from '../boot/helpers/shapes.jsx';
-import {GameToolbar} from './GameToolbar.jsx';
-import {Routes} from './../Routes.jsx';
+import {Shapes} from '../boot/helpers/shapes';
+import {GameToolbar} from './GameToolbar';
+import {Routes} from './../../../common/Routes';
 var React = require('react');
 
 export const Footer = React.createClass({
@@ -17,7 +17,7 @@ export const Footer = React.createClass({
       <ul className='menu'>
         <li className='branding'>
             <a href="#" onClick={this.showPage('home')}>
-              <img src={Routes.Assets.at('images/reminisce-logo-ios.png').url} alt='Reminisce' width='48' height='48' />
+              <img src={Routes.Assets.at('images/reminisce-logo-ios.png')} alt='Reminisce' width='48' height='48' />
             </a>
         </li>
         <li className=''>

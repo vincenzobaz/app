@@ -1,8 +1,8 @@
 
-import {GameBoards} from './GameBoards.jsx';
-import {UserStore} from './../stores/UserStore.jsx';
-import {GameStatus} from './../../../common/models/GameStatus.jsx';
-import {FriendStore} from './../stores/FriendStore.jsx';
+import {GameBoards} from './GameBoards';
+import {UserStore} from './../stores/UserStore';
+import {GameStatus} from './../../../common/models/GameStatus';
+import {FriendStore} from './../stores/FriendStore';
 
 const reduceScore = (scores) =>
     scores.reduce((acc, x) => acc + x.score, 0);

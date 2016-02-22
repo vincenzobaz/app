@@ -1,11 +1,11 @@
 
 'use strict';
 
-import {Shapes} from './../boot/helpers/shapes.jsx';
-import {Tooltip} from './bootstrap/Tooltip.jsx';
-import {ModalManager} from './../ModalManager.jsx';
-import {Routes} from './../Routes.jsx';
-import {progressImage} from './../boot/helpers/progressImage.jsx';
+import {Shapes} from './../boot/helpers/shapes';
+import {Tooltip} from './bootstrap/Tooltip';
+import {ModalManager} from './../ModalManager';
+import {Routes} from './../../../common/Routes';
+import {progressImage} from './../boot/helpers/progressImage';
 
 var React = require('react');
 

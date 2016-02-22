@@ -1,6 +1,6 @@
-import {Games, Game} from './../collections/Games.jsx';
-import {GameRepository} from './../repositories/GameRepository.jsx';
-import {GameStatus} from  './../../common/models/GameStatus.jsx';
+import {Games, Game} from './../collections/Games';
+import {GameRepository} from './../repositories/GameRepository';
+import {GameStatus} from  './../../common/models/GameStatus';
 
 export const GameService = {
     start(gameId) {

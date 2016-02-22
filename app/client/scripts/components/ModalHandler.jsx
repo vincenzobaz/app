@@ -1,5 +1,5 @@
 
-import {Shapes} from './../boot/helpers/shapes.jsx';
+import {Shapes} from './../boot/helpers/shapes';
 
 const React = require('react');
 const OverlayMixin = require('react-bootstrap').OverlayMixin;

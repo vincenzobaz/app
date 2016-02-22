@@ -1,5 +1,5 @@
 
-import {Routes} from './../Routes.jsx';
+import {Routes} from './../../../common/Routes.ts';
 
 export class User {
 

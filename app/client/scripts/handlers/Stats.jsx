@@ -1,9 +1,9 @@
 'use strict';
 
-import {Gamestats} from './../../../common/collections/Gamestats.jsx';
-import {GameStats} from './../components/stats/GameStats.jsx';
-import {TileStats} from './../components/stats/TileStats.jsx';
-import {QuestionStats} from './../components/stats/QuestionStats.jsx';
+import {Gamestats} from './../../../common/collections/Gamestats';
+import {GameStats} from './../components/stats/GameStats';
+import {TileStats} from './../components/stats/TileStats';
+import {QuestionStats} from './../components/stats/QuestionStats';
 
 
 var React = require('react'),

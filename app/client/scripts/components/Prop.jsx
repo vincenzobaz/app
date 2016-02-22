@@ -1,10 +1,10 @@
 
 'use strict';
 
-import {Routes} from './../Routes.jsx';
-import {FacebookStore} from './../stores/FacebookStore.jsx';
-import {renderIcon} from './../boot/helpers/renderIcon.jsx';
-import {Page} from './Post.jsx';
+import {Routes} from './../../../common/Routes';
+import {FacebookStore} from './../stores/FacebookStore';
+import {renderIcon} from './../boot/helpers/renderIcon';
+import {Page} from './Post';
 
 var React = require('react'),
     debug = require('debug');

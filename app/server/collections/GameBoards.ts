@@ -1,7 +1,8 @@
-import {GameBoard} from './../../common/models/GameBoard.jsx';
+
+import {GameBoard, RawGameBoard} from "./../../common/models/GameBoard";
 
 export const GameBoards = new Mongo.Collection('gameBoards', {
-    transform(doc) {
+    transform(doc: RawGameBoard) {
         return GameBoard.fromRaw(doc);
     }
 });

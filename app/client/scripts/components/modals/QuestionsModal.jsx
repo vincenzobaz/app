@@ -1,16 +1,17 @@
 'use strict';
 
-import {MultiStepMixin} from './../../boot/mixins/MultiStepMixin.jsx';
-import {Shapes} from './../../boot/helpers/shapes.jsx';
-import {Question, Kind} from './../../../../common/models/Questions.jsx';
-import {ErrorStore} from './../../stores/ErrorStore.jsx';
-import {progressImage} from './../../boot/helpers/progressImage.jsx';
-import {TimeLeft} from './../TimeLeft.jsx';
-import {AnswerStore} from './../../stores/AnswerStore.jsx';
-import {MultipleChoice} from './../questions/MultipleChoice.jsx';
-import {Timeline} from './../questions/Timeline.jsx';
-import {Geo} from './../questions/Geo.jsx';
-import {Reorder} from './../questions/Reorder.jsx';
+import {MultiStepMixin} from './../../boot/mixins/MultiStepMixin';
+import {Shapes} from './../../boot/helpers/shapes';
+import {Question} from './../../../../common/models/Question';
+import {Kind} from './../../../../common/models/questions/Kind';
+import {ErrorStore} from './../../stores/ErrorStore';
+import {progressImage} from './../../boot/helpers/progressImage';
+import {TimeLeft} from './../TimeLeft';
+import {AnswerStore} from './../../stores/AnswerStore';
+import {MultipleChoice} from './../questions/MultipleChoice';
+import {Timeline} from './../questions/Timeline';
+import {Geo} from './../questions/Geo';
+import {Reorder} from './../questions/Reorder';
 
 var React = require('react'),
     Modal = require('react-bootstrap').Modal,

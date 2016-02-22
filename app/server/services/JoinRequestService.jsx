@@ -1,11 +1,11 @@
-import {Server} from './../server.jsx';
-import {Games} from './../collections/Games.jsx';
-import {JoinRequests, JoinRequest} from './../collections/JoinRequests.jsx';
-import {Friends} from './../../common/collections/Friends.jsx';
-import {BotService} from './BotService.jsx';
-import {GameService} from './GameService.jsx';
-import {GameRepository} from './../repositories/GameRepository.jsx';
-import {JoinRequestRepository} from './../repositories/JoinRequestRepository.jsx';
+import {Server} from './../server';
+import {Games} from './../collections/Games';
+import {JoinRequests, JoinRequest} from './../collections/JoinRequests';
+import {Friends} from './../../common/collections/Friends';
+import {BotService} from './BotService';
+import {GameService} from './GameService';
+import {GameRepository} from './../repositories/GameRepository';
+import {JoinRequestRepository} from './../repositories/JoinRequestRepository';
 
 export const JoinRequestService = {
 

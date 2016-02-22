@@ -1,6 +1,6 @@
 
-import {NamespacedSession} from './../boot/helpers/NamespacedSession.jsx';
-import {JoinRequest, JoinRequests} from './../models/JoinRequest.jsx';
+import {NamespacedSession} from './../boot/helpers/NamespacedSession';
+import {JoinRequest, JoinRequests} from './../models/JoinRequest';
 
 
 const JoinRequestSession = NamespacedSession('JoinRequestStore');

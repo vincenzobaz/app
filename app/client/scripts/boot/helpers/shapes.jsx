@@ -1,7 +1,7 @@
 
 'use strict';
 
-import {objWithAllKeysAt} from './objWithAllKeysAt.jsx';
+import {objWithAllKeysAt} from './objWithAllKeysAt';
 
 var React = require('react');
 var EventEmitter = require('events').EventEmitter;

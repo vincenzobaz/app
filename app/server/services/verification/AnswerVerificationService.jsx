@@ -1,9 +1,9 @@
-import {Kind} from './../../../common/models/Questions.jsx';
-import {TimelineVerificationService} from './TimelineVerificationService.jsx';
-import {MultipleChoiceVerificationService} from './MultipleChoiceVerificationService.jsx';
-import {OrderVerificationService} from './ReorderVerificationService.jsx';
+import {Kind} from './../../../common/models/questions/Kind';
+import {TimelineVerificationService} from './TimelineVerificationService';
+import {MultipleChoiceVerificationService} from './MultipleChoiceVerificationService';
+import {OrderVerificationService} from './ReorderVerificationService';
 
-import {GeoVerificationService} from './GeoVerificationService.jsx';
+import {GeoVerificationService} from './GeoVerificationService';
 
 export class Answer {
   

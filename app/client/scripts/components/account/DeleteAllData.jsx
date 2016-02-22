@@ -1,7 +1,7 @@
 
 
-import {DismissableAlert} from './../bootstrap/DismissableAlert.jsx';
-import {AccountStore} from './../../stores/AccountStore.jsx';
+import {DismissableAlert} from './../bootstrap/DismissableAlert';
+import {AccountStore} from './../../stores/AccountStore';
 
 const React = require('react'),
       Button = require('react-bootstrap').Button,

@@ -1,6 +1,6 @@
 
-import {Friend} from './../../../common/models/Friend.jsx';
-import {Friends} from './../../../common/collections/Friends.jsx';
+import {Friend} from './../../../common/models/Friend';
+import {Friends} from './../../../common/collections/Friends';
 
 function hydrate(friend) {
     if (friend == null) {

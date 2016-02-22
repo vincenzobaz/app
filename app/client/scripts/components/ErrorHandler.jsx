@@ -1,9 +1,9 @@
 
 'use strict';
 
-import {Shapes} from './../boot/helpers/shapes.jsx';
-import {GenericErrorModal} from './modals/GenericErrorModal.jsx';
-import {NetworkErrorModal} from './modals/NetworkErrorModal.jsx';
+import {Shapes} from './../boot/helpers/shapes';
+import {GenericErrorModal} from './modals/GenericErrorModal';
+import {NetworkErrorModal} from './modals/NetworkErrorModal';
 
 var React = require('react');
 var OverlayMixin = require('react-bootstrap').OverlayMixin;

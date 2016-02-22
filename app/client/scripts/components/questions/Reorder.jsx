@@ -1,10 +1,10 @@
 
 'use strict';
 
-import {Shapes} from './../../boot/helpers/shapes.jsx';
-import {getQuestionTitleByType} from './../../boot/helpers/getQuestionTitleByType.jsx'
-import {Post} from './../Post.jsx';
-import {SortableList} from './../SortableList.jsx';
+import {Shapes} from './../../boot/helpers/shapes';
+import {getQuestionTitleByType} from './../../boot/helpers/getQuestionTitleByType'
+import {Post} from './../Post';
+import {SortableList} from './../SortableList';
 
 var React = require('react'),
     Button = require('react-bootstrap').Button,

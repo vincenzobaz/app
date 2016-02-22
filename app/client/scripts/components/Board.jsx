@@ -1,8 +1,8 @@
 
 'use strict';
 
-import {Shapes} from './../boot/helpers/shapes.jsx';
-import {createTiles} from './../boot/helpers/createTiles.jsx';
+import {Shapes} from './../boot/helpers/shapes';
+import {createTiles} from './../boot/helpers/createTiles';
 
 var React = require('react'),
     debug = require('debug')('Board');

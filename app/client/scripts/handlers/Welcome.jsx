@@ -1,8 +1,8 @@
 
 'use strict';
 
-import {Shapes} from './../boot/helpers/shapes.jsx';
-import {GameStore} from './../stores/GameStore.jsx';
+import {Shapes} from './../boot/helpers/shapes';
+import {GameStore} from './../stores/GameStore';
 
 var React = require('react'),
     debug = require('debug')('Welcome');

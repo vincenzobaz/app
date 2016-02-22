@@ -1,10 +1,10 @@
 
 
-import {NamespacedSession} from './../boot/helpers/NamespacedSession.jsx';
+import {NamespacedSession} from './../boot/helpers/NamespacedSession';
 
-import {Game, Games} from './../models/Game.jsx'
-import {JoinRequestStore} from './JoinRequestStore.jsx';
-import {FriendStore} from './FriendStore.jsx';
+import {Game, Games} from './../models/Game'
+import {JoinRequestStore} from './JoinRequestStore';
+import {FriendStore} from './FriendStore';
 
 var GameSession = NamespacedSession('GameStore');
 

@@ -1,7 +1,7 @@
-type Options = "hello" | "world";
 
 
-interface OrderChoice {
+import {Subject} from "./Subject";
+export interface OrderChoice {
     uId: string;
     subject: Subject;
     type: String;

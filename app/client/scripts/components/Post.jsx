@@ -1,8 +1,8 @@
 
 'use strict';
 
-import {Zoomable} from './../components/jquery/Zoomable.jsx';
-import {Shapes} from './../boot/helpers/shapes.jsx';
+import {Zoomable} from './../components/jquery/Zoomable';
+import {Shapes} from './../boot/helpers/shapes';
 
 
 const React = require('react');

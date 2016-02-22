@@ -1,5 +1,5 @@
 
-import {MeteorPromise} from './../boot/helpers/meteor.jsx';
+import {MeteorPromise} from './../boot/helpers/meteor';
 
 export const AccountStore = {
 

@@ -1,4 +1,4 @@
-import {GameFetches} from './../collections/GameFetches.jsx';
+import {GameFetches} from './../collections/GameFetches';
 
 export const GameFetchRepository = {
 

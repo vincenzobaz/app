@@ -1,8 +1,8 @@
 
 'use strict';
 
-import {Shapes} from './../boot/helpers/shapes.jsx';
-import {Player} from './Player.jsx';
+import {Shapes} from './../boot/helpers/shapes';
+import {Player} from './Player';
 var React = require('react');
 
 export const Players = React.createClass({

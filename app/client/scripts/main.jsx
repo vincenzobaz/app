@@ -1,10 +1,10 @@
 'use strict';
 
-import {ErrorStore} from './stores/ErrorStore.jsx';
-import {ErrorHandler} from './components/ErrorHandler.jsx';
-import {Main} from './handlers/Main.jsx';
-import {ModalHandler} from './components/ModalHandler.jsx';
-import {ModalManager} from './ModalManager.jsx';
+import {ErrorStore} from './stores/ErrorStore';
+import {ErrorHandler} from './components/ErrorHandler';
+import {Main} from './handlers/Main';
+import {ModalHandler} from './components/ModalHandler';
+import {ModalManager} from './ModalManager';
 
 // Expose React to enable the React Dev Tools.
 //
@@ -19,10 +19,10 @@ var App = {
 
     this.subscribe();
     this.loadGoogleCharts();
-      
+     
     React.render(<ErrorHandler store={ErrorStore} />, $$('error'));
     React.render(<Main />, $$('app'));
-    React.render(<ModalHandler manager={ModalManager} />, $$('modal'));
+    // React.render(<ModalHandler manager={ModalManager} />, $$('modal'));
   },
 
   subscribe() {

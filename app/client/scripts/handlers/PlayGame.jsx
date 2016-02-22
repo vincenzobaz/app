@@ -1,10 +1,10 @@
 
 'use strict';
 
-import {Shapes} from './../boot/helpers/shapes.jsx';
-import {getEndGameDesc} from './../components/EndGame.jsx';
-import {ModalManager} from './../ModalManager.jsx';
-import {Board} from './../components/Board.jsx';
+import {Shapes} from './../boot/helpers/shapes';
+import {getEndGameDesc} from './../components/EndGame';
+import {ModalManager} from './../ModalManager';
+import {Board} from './../components/Board';
 
 
 var React = require('react'),

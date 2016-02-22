@@ -1,10 +1,10 @@
 
 'use strict';
 
-import {UserStore} from './stores/UserStore.jsx';
-import {GameStore} from './stores/GameStore.jsx';
-import {JoinRequestStore} from './stores/JoinRequestStore.jsx';
-import {FriendStore} from './stores/FriendStore.jsx';
+import {UserStore} from './stores/UserStore';
+import {GameStore} from './stores/GameStore';
+import {JoinRequestStore} from './stores/JoinRequestStore';
+import {FriendStore} from './stores/FriendStore';
 
 var debug = require('debug')('AppState');
 

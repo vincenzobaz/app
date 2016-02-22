@@ -1,5 +1,6 @@
-import {Querystring} from './../../common/helpers/querystring.jsx';
-import {HTTPHelper} from './../helpers/http.jsx';
+import {HTTPHelper} from './../helpers/http';
+import {encode} from 'querystring'
+
 
 export class GameCreator {
 
@@ -15,7 +16,7 @@ export class GameCreator {
     let query;
     
     if (params != null) {
-      query = '?' + Querystring.encode(params);
+      query = '?' + encode(params);
     }
     else {
       query = '';

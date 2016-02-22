@@ -1,5 +1,5 @@
 
-import {User} from './../models/User.jsx';
+import {User} from './../models/User';
 
 function hydrate(user) {
   return new User(user);

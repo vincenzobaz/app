@@ -1,8 +1,8 @@
 
 'use strict';
 
-import {Shapes} from './../boot/helpers/shapes.jsx';
-import {JoinRequest, None} from './JoinRequest.jsx';
+import {Shapes} from './../boot/helpers/shapes';
+import {JoinRequest, None} from './JoinRequest';
 
 var React = require('react');
 

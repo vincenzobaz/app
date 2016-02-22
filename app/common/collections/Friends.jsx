@@ -1,5 +1,5 @@
 
-import {Friend} from './../models/Friend.jsx';
+import {Friend} from './../models/Friend';
 
 export const Friends = new Mongo.Collection('friends', {
     transform(doc) {

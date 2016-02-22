@@ -1,4 +1,4 @@
-import {Gamestats, GamestatProps} from './../../common/collections/Gamestats.jsx';
+import {Gamestats, GamestatProps} from './../../common/collections/Gamestats';
 
 export const GamestatRepository = {
 

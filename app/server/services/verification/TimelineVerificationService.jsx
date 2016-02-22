@@ -1,4 +1,4 @@
-import {TimelineUnit} from './../../../common/models/Questions.jsx';
+import {TimelineUnit} from './../../../common/models/questions/TimeLineQuestion';
 
 export class TimelineData {
 

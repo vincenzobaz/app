@@ -1,6 +1,6 @@
 
 
-import {Gamestat} from './../../../../common/collections/Gamestats.jsx';
+import {Gamestat} from './../../../../common/collections/Gamestats';
 
 const React = require('react'),
       Chart = require('react-chartjs'),

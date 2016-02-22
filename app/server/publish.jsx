@@ -1,11 +1,11 @@
 
 const LOG_PUBLISH = true;
 
-import {Games} from './collections/Games.jsx';
-import {GameBoards} from './collections/GameBoards.jsx';
-import {Friends} from './../common/collections/Friends.jsx';
-import {JoinRequests} from './collections/JoinRequests.jsx';
-import {Gamestats} from './../common/collections/Gamestats.jsx';
+import {Games} from './collections/Games';
+import {GameBoards} from './collections/GameBoards';
+import {Friends} from './../common/collections/Friends';
+import {JoinRequests} from './collections/JoinRequests';
+import {Gamestats} from './../common/collections/Gamestats';
 
 export function publishCollections() {
     "use strict";

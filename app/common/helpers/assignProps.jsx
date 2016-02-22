@@ -1,4 +1,4 @@
-import {capitalize} from './capitalize.jsx';
+import {capitalize} from './capitalize';
 
 
 export const assignProps = (obj, propNames, props) => {

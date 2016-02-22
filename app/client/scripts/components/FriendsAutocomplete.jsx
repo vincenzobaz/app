@@ -1,8 +1,8 @@
 
 'use strict';
 
-import {FriendStore} from './../stores/FriendStore.jsx';
-import {Friend} from './../../../common/models/Friend.jsx';
+import {FriendStore} from './../stores/FriendStore';
+import {Friend} from './../../../common/models/Friend';
 
 const fuzzy = require('fuzzy');
 const Typeahead = require('react-typeahead').Typeahead;
@@ -46,7 +46,7 @@ export const FriendsAutocomplete = React.createClass({
   },
 
   friendMatchingQuery(query, friend) {
-    return fuzzy.test(query, friend.getName());
+    return fuzzy.test(query, friend.name);
   }
 
 });

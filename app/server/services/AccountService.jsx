@@ -1,3 +1,4 @@
+import {encode} from 'querystring';
 
 class AccountService {
 
@@ -10,7 +11,7 @@ class AccountService {
   }
 
   url(method, params) {
-    const query = Querystring.encode(params);
+    const query = encode(params);
     const url   = `${this._baseUrl}/${method}?${query}`;
 
     return url;

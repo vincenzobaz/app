@@ -1,5 +1,5 @@
-import {GameBoardProps} from './../../common/models/GameBoard.jsx';
-import {GameBoards} from './../collections/GameBoards.jsx';
+import {GameBoardProps} from './../../common/models/GameBoard';
+import {GameBoards} from './../collections/GameBoards';
 
 export const GameBoardRepository = {
 

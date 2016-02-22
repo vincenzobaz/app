@@ -1,5 +1,5 @@
 
-import {Games, GameProps} from './../collections/Games.jsx';
+import {Games, GameProps} from './../collections/Games';
 
 
 export const GameRepository = {

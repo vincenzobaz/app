@@ -1,8 +1,8 @@
 
 'use strict';
 
-import {TimeoutMixin} from './../boot/mixins/TimeoutMixin.jsx';
-import {timerStyle} from './../boot/helpers/timerStyle.jsx';
+import {TimeoutMixin} from './../boot/mixins/TimeoutMixin';
+import {timerStyle} from './../boot/helpers/timerStyle';
 
 var React = require('react');
 
