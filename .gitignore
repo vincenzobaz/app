@@ -3,3 +3,6 @@ settings*.json
 packages/tests-proxy
 env/
 data/
+*.iml
+.idea
+npm-debug.log
