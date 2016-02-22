@@ -1,3 +1,0 @@
-
-Reminisce.Model.Tile = Tile;
-
