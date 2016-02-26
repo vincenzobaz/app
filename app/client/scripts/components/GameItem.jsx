@@ -16,8 +16,8 @@ export const GameItem = React.createClass({
   render() {
     const game         = this.props.game;
     const opponent     = game.getOpponent();
-    const opponentName = opponent != null ? opponent.getName() : 'Loading...';
-    const avatarUrl    = opponent != null ? opponent.getAvatarUrl() : '';
+    const opponentName = opponent != null ? opponent.name : 'Loading...';
+    const avatarUrl    = opponent != null ? opponent.avatarUrl : '';
     const classNames   = this.getClassNames();
 
     return (

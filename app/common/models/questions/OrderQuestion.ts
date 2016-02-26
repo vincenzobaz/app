@@ -1,5 +1,10 @@
-//import {assignProps} from './../../../common/helpers/assignProps.jsx';
-/// <reference path="../../../../typings/main.d.ts" />
+import { RawSubject, Subject } from "./Subject";
+import { OrderChoice } from "./OrderChoice";
+import { QuestionType } from "./QuestionType";
+import { Kind } from "./Kind";
+import { Item } from "./Item";
+import { RawQuestion, default as Question } from "../Question";
+import { SubjectType } from "./SubjectType";
 
 
 import {SubjectWithId} from './SubjectWithId';
@@ -18,15 +23,16 @@ interface RawOrderQuestion {
 
 
 
+  private _answer: number[];
 export class OrderQuestion {
 
-    private _id:string;
-    private _subject: string;
-    private _choices: any;
-    private _answer: any;
-    private _type: string;
-    private _kind: string;
-    private _items: any;
+  constructor(_id: string,
+              subject: Subject,
+              choices: OrderChoice[],
+              answer: number[],
+              public items: Item[],
+              type: QuestionType,
+              kind: Kind) {
 
     constructor(private id:string, 
                 private subject: string,
@@ -117,7 +123,9 @@ export class OrderQuestion {
         return this.answer;
     }
 
-    static fromRaw(raw: RawOrderQuestion) {
-        return new OrderQuestion(raw._id, raw.subject, raw.choices, raw.answer, raw.type, raw.kind, raw.items);
+
+  static orderQustionFromRaw(raw: RawOrderQuestion) {
+    return new OrderQuestion(raw._id, Subject.fromRaw(raw.subject), raw.choices, raw.answer, raw.items, raw.type, raw.kind);
+  }
     }
 };

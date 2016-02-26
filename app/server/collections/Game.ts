@@ -1,13 +1,14 @@
-import ObjectID = Mongo.ObjectID;
 import { GameBoard } from "../../common/models/GameBoard";
 import { GameStatus } from "../../common/models/GameStatus";
 import { RawTileState } from "./TileState";
+import { Games } from "./Games";
+
 
 
 export interface RawGame {
-  _id: ObjectID;
-  player1: string;
-  player2: string;
+  _id: string | Mongo.ObjectID;
+  player1: string | Mongo.ObjectID;
+  player2: string | Mongo.ObjectID;
   player1Board: GameBoard;
   player2Board: GameBoard;
   status: GameStatus;
@@ -21,13 +22,13 @@ export interface RawGame {
   creationTime: Date;
 }
 
-export class Game {
+export class Game implements RawGame{
 
   private _playerTurn: number;
 
-  constructor(public _id: ObjectID,
-              public player1: string,
-              public player2: string,
+  constructor(public _id: string |  Mongo.ObjectID,
+              public player1: string | Mongo.ObjectID,
+              public player2: string | Mongo.ObjectID,
               public player1Board: GameBoard,
               public player2Board: GameBoard,
               public status: GameStatus,
@@ -134,6 +135,15 @@ export class Game {
         raw.creationTime
     );
   }
+  
+  static save(game: Game): string | Mongo.ObjectID {
+      if (game._id) {
+        Games.upsert(game._id, game);
+      } else {
+        game._id = Games.insert(game);
+      }
+      return game._id;
+    }
 
 
 }

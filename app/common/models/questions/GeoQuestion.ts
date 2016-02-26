@@ -1,4 +1,3 @@
-import ObjectID = Mongo.ObjectID;
 import {RawSubject, Subject} from "./Subject";
 import {QuestionType} from "./QuestionType";
 import {Kind} from "./Kind";
@@ -16,7 +15,7 @@ export interface RawGeoQuestion extends RawQuestion {
 export class GeoQuestion {
   private _answer: Location;
   constructor(
-      _id: ObjectID, 
+      _id: string, 
       subject: Subject, 
       public range: number, 
       public defaultLocation: Location,

@@ -1,8 +1,8 @@
 
 
 export interface RawTileState {
-  player: string;
+  player: number;
   score: number;
-  player1Tried: boolean;
-  player2Tried: boolean;
+  player1Tried?: boolean;
+  player2Tried?: boolean;
 }

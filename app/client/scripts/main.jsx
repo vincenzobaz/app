@@ -33,7 +33,6 @@ var App = {
     Meteor.subscribe('joinRequests');
     Meteor.subscribe('userServices');
     Meteor.subscribe('friends');
-    Meteor.subscribe('gameStats');
   },
 
   loadGoogleCharts() {

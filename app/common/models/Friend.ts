@@ -4,7 +4,7 @@ import user = Accounts.user;
 import {Routes} from "../Routes";
 
 interface  RawFriend {
-    _id: string;
+    _id?: string | Mongo.ObjectID;
     userId: string;
     facebookId: string;
     name: string;
@@ -13,49 +13,14 @@ interface  RawFriend {
 }
 
 export class Friend {
-    
-    private _id: string;
-    private _userId: string;
-    private _facebookId: string;
-    private _name;
-    private _friendOf: string;
-    private _isBot: boolean;
-
-    constructor(_id: string, userId: string, facebookId: string, name: string, friendOf: string, isBot: boolean) {
-        this._id = _id;
-        this._userId = userId;
-        this._facebookId = facebookId;
-        this._name = name;
-        this._friendOf = friendOf;
-        this._isBot = isBot;
-    }
-
-    get id() {
-        return this._id;
-    }
   
-    get userId() {
-        return this._userId;
-    }
-  
-    hasUserId() {
-      return this.userId != null;
-    }
-  
-    get facebookId() {
-        return this._facebookId;
-    }
-  
-    get name() {
-        return this._name;
-    }
-  
-    get friendOf() {
-        return this._friendOf;
-    }
-  
-    get isBot() {
-        return !!this._isBot;
+    constructor(public _id: string | Mongo.ObjectID,
+                public userId: string | Mongo.ObjectID,
+                public facebookId: string,
+                public name: string,
+                public friendOf: string,
+                public isBot: boolean) {
+Mongo.ObjectID
     }
   
     get avatarUrl() {

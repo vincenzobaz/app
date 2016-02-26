@@ -1,4 +1,3 @@
-import ObjectID = Mongo.ObjectID;
 import {RawSubject, Subject} from "./Subject";
 import {QuestionType} from "./QuestionType";
 import {Kind} from "./Kind";
@@ -29,7 +28,7 @@ export interface RawTimelineQuestion extends RawQuestion {
 export class TimelineQuestion extends Question {
   private _answer:Date;
 
-  constructor(public _id:ObjectID,
+  constructor(public _id: string,
               public subject:Subject,
               public min:Date,
               public max:Date,

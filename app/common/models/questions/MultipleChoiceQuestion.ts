@@ -1,4 +1,3 @@
-import ObjectID = Mongo.ObjectID;
 import {RawSubject, Subject} from "./Subject";
 import {RawChoice, Choice} from "./Choice";
 import {QuestionType} from "./QuestionType";
@@ -15,7 +14,7 @@ export class MultipleChoiceQuestion extends Question {
   private _answer: number;
     
   constructor(
-      public _id: ObjectID,
+      public _id: string,
       public subject: Subject,
       public choices: Choice[],
       answer: number,

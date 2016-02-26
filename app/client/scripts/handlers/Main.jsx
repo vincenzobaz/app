@@ -20,7 +20,6 @@ var Main = React.createClass({
   getInitialState() {
     return {
       pages: {
-        stats: Stats,
         welcome: Welcome,
         about: About,
         account: Account,

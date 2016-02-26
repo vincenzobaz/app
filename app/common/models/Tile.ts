@@ -1,11 +1,9 @@
-
-import ObjectID = Mongo.ObjectID;
-import {ScoreInterface, Score} from "./Score";
-import {questionFromRaw} from "./questions/QuestionFactory";
+import { ScoreInterface, Score } from "./Score";
+import { questionFromRaw } from "./questions/QuestionFactory";
 import Question from "./Question";
 
 export interface RawTile {
-  _id: ObjectID;
+  _id: string;
   type: string;
   question1: Question;
   question2: Question;
@@ -17,7 +15,7 @@ export interface RawTile {
 
 export class Tile implements RawTile {
 
-  public _id: ObjectID;
+  public _id: string;
   public type: string;
   public question1: Question;
   public question2: Question;
@@ -26,14 +24,14 @@ export class Tile implements RawTile {
   public answered: boolean;
   public disabled: boolean;
 
-  constructor(_id:ObjectID,
-              type:string,
-              question1:Question,
-              question2:Question,
-              question3:Question,
-              score:ScoreInterface = new Score(0, 0),
-              answered:boolean = false,
-              disabled:boolean = false) {
+  constructor(_id: string,
+              type: string,
+              question1: Question,
+              question2: Question,
+              question3: Question,
+              score: ScoreInterface = new Score(0, 0),
+              answered: boolean = false,
+              disabled: boolean = false) {
     this._id = _id;
     this.type = type;
     this.question1 = question1;
@@ -49,7 +47,7 @@ export class Tile implements RawTile {
    * return the array of questions for the tile
    * @return {[Question]}
    */
-  get questions():Question[] {
+  get questions(): Question[] {
     return [this.question1, this.question2, this.question3];
   }
 

@@ -1,9 +1,8 @@
 'use strict';
 
-import {Gamestats} from './../../../common/collections/Gamestats';
-import {GameStats} from './../components/stats/GameStats';
-import {TileStats} from './../components/stats/TileStats';
-import {QuestionStats} from './../components/stats/QuestionStats';
+// import {GameStats} from './../components/stats/GameStats';
+// import {TileStats} from './../components/stats/TileStats';
+// import {QuestionStats} from './../components/stats/QuestionStats';
 
 
 var React = require('react'),
@@ -42,12 +41,13 @@ export const Stats = React.createClass({
     }
 
     return (
-      <div>
-        <h1>Statistics</h1>
-        <GameStats     gameStats={this.data.gameStats} />
-        <TileStats     gameStats={this.data.gameStats} />
-        <QuestionStats gameStats={this.data.gameStats} />
-      </div>
+        <div></div>
+      // <div>
+      //   <h1>Statistics</h1>
+      //   <GameStats     gameStats={this.data.gameStats} />
+      //   <TileStats     gameStats={this.data.gameStats} />
+      //   // <QuestionStats gameStats={this.data.gameStats} />
+      // </div>
     );
 
   }

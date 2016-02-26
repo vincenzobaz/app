@@ -6,7 +6,8 @@
     "module": "es2015",
     "experimentalDecorators": true,
     "sourceMap": true,
-    "noLib": false
+    "noLib": false,
+    "outDir": "../../stuff"
   },
   "exclude": [
     "node_modules",

@@ -1,4 +1,3 @@
-import ObjectID = Mongo.ObjectID;
 import { QuestionType } from "./questions/QuestionType";
 import { Subject } from "./questions/Subject";
 import { questionFromRaw } from "./questions/QuestionFactory";
@@ -6,17 +5,19 @@ import { Kind } from "app/common/models/questions/Kind";
 
 
 export interface RawQuestion {
-  _id: ObjectID,
+  _id: string,
   subject: Subject,
   type: QuestionType,
-  kind: Kind
+  kind: Kind,
+  answer?: any,
 }
 
 export default class Question {
-  constructor(public _id: ObjectID,
+  constructor(public _id: string,
               public subject: Subject,
               public type: QuestionType,
-              public kind: Kind) {
+              public kind: Kind,
+              public answer?: any) {
   }
 
   // public static getQuestionFromType(kind, data): Question {
