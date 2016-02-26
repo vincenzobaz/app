@@ -14,7 +14,7 @@ export class MultipleChoiceQuestion extends Question {
   private _answer: number;
     
   constructor(
-      public _id: string,
+      public _id: string | Mongo.ObjectID,
       public subject: Subject,
       public choices: Choice[],
       answer: number,

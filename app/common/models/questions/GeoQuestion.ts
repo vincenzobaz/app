@@ -15,7 +15,7 @@ export interface RawGeoQuestion extends RawQuestion {
 export class GeoQuestion {
   private _answer: Location;
   constructor(
-      _id: string, 
+      _id: string | Mongo.ObjectID, 
       subject: Subject, 
       public range: number, 
       public defaultLocation: Location,

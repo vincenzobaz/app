@@ -3,87 +3,39 @@ import { OrderChoice } from "./OrderChoice";
 import { QuestionType } from "./QuestionType";
 import { Kind } from "./Kind";
 import { Item } from "./Item";
-import { RawQuestion, default as Question } from "../Question";
 import { SubjectType } from "./SubjectType";
-
-
 import {SubjectWithId} from './SubjectWithId';
+import Question from "../Question";
+import {OrderAnswer} from "../../../server/services/verification/OrderAnswer";
 
-const OrderQuestionProps = ['_id', 'subject', 'choices', 'answer', 'type', 'kind', 'items'];
-
-interface RawOrderQuestion {
-    _id: string;
-    subject: string;
+export interface RawOrderQuestion {
+    _id: string | Mongo.ObjectID;
+    subject: Subject;
     choices: any;
-    answer: any;
-    type: string;
-    kind: string;
+    answer: number[];
+    type: QuestionType;
+    kind: Kind;
     items: any;
 }
 
 
 
-  private _answer: number[];
-export class OrderQuestion {
-
-  constructor(_id: string,
+export class OrderQuestion extends Question{
+private _choices;
+  
+  constructor(_id: string | Mongo.ObjectID,
               subject: Subject,
               choices: OrderChoice[],
               answer: number[],
               public items: Item[],
               type: QuestionType,
               kind: Kind) {
-
-    constructor(private id:string, 
-                private subject: string,
-                private choices: any,
-                private answer: any,
-                private type: string,
-                private kind: string,
-                private items: any) {
-        this._id = id;
-        this._subject = subject;
-        this._choices = choices;
-        this._answer = answer;
-        this._type = type;
-        this._kind = kind;
-        this._items = items;
+    super(_id, subject, type, kind, answer);
+    this._choices = choices;
     }
 
-    /**
-     * retunrs the Question id
-     * @returns {string}
-     */
-    getId() {
-        return this._id;
-    }
 
-    /**
-     *
-     * @returns {Subject}
-     */
-
-    getSubject() {
-        return this.subject;
-    }
-
-    getType() {
-        return this.type;
-    }
-
-    getItems() {
-        return this.items;
-    }
-
-    /**
-     * returns an array of SubjectWithIds
-     * @returns {[SubjectWithId]}
-     */
-    getChoices() {
-        return this.choices;
-    }
-
-    setChoices(value: any) {
+    set choices(value: any) {
         this._choices = value;
         this.items = _.map(value, (c: OrderChoice) => {
             switch (c.subject.type) {
@@ -127,5 +79,5 @@ export class OrderQuestion {
   static orderQustionFromRaw(raw: RawOrderQuestion) {
     return new OrderQuestion(raw._id, Subject.fromRaw(raw.subject), raw.choices, raw.answer, raw.items, raw.type, raw.kind);
   }
-    }
+  
 };

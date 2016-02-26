@@ -8,3 +8,4 @@ data/
 npm-debug.log
 node_modules/*
 typings/*
+webpack/assets/*
