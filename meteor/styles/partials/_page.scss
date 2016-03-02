@@ -834,21 +834,21 @@ section {
 $modal-fullscreen-margin: 10%;
 $modal-fullscreen-radius: 8px;
 
-.modal.fullscreen {
+@mixin modal-fullscreen($margin) {
   position: fixed;
-  @include fullscreen($modal-fullscreen-margin);
+  @include fullscreen($margin);
   overflow: hidden;
   width: auto;
   margin: 0;
   border-radius: 4px;
 
   &.fade.in {
-    top: $modal-fullscreen-margin;
+    top: $margin;
   }
 
   .modal-dialog {
     position: fixed;
-    @include fullscreen($modal-fullscreen-margin);
+    @include fullscreen($margin);
     padding: 0;
     background: white;
   }
@@ -895,4 +895,137 @@ $modal-fullscreen-radius: 8px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
   }
+}
+
+.modal.fullscreen {
+  @include modal-fullscreen($modal-fullscreen-margin);
+}
+
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 568px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+
+  p, .p {
+    font-size: 1.4rem;
+    line-height: 1.3em;
+  }
+
+  h4, .h4 {
+   font-size: 1.5rem;
+  }
+
+  h5, .h5 {
+   font-size: 1.4rem;
+  }
+
+  h6, .h6{
+   font-size: 1.2rem;
+  }
+
+  input.search-query {
+    padding: 0;
+  }
+
+  .board .cell i {
+    top: 36%;
+    left: 39%;
+    width: 20px;
+    height: 20px;
+    font-size: 28px;
+  }
+
+  .board .cell img {
+
+  }
+
+  .well p, .players p {
+    font-size: 1.4rem;
+  }
+
+  .players {
+    padding: 1em 0 0 0;
+
+    .player {
+      padding: 0 0 0.8em 0;
+    }
+
+    .player.turn {
+      background: none;
+    }
+
+    img {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  ul.join-requests li, ul.games li {
+    padding: 5px 0 0 0;
+    margin: 5px 0 0 0;
+  }
+
+  .notifications {
+    margin: 1em 0 0 0;
+  }
+
+  #navigation-toggle ul.menu > li {
+    display: none;
+    float: none;
+  }
+
+  #navigation-toggle ul.menu > li.manage-game {
+    float: none;
+    display: block;
+    text-align: left;
+    margin-right: 0;
+  }
+
+  #navigation-toggle ul.menu > li span.start-game {
+    display: block;
+    text-align: left;
+    margin-right: 0;
+  }
+
+  .manage-game > span > span {
+    display: none;
+    &.start-game {
+      display: block;
+    }
+  }
+
+  .start-game > span {
+    display: none;
+  }
+
+  .friends-autocomplete {
+    display: block;
+  }
+
+  .friends-autocomplete .rf-combobox {
+    width: 100%;
+  }
+
+  .modal.fullscreen,
+  .modal.fullscreen.fade.in,
+  .modal.fullscreen .modal-dialog {
+    @include fullscreen(1%);
+  }
+
+  .modal.end-game, .modal.error {
+    @include modal-fullscreen(1%);
+  }
+
+  ul.answers li, ul.avatar-answers li {
+    float: none;
+    width: 100%;
+    margin-right: 0;
+    clear: all;
+
+    &:nth-child(even) {
+      margin-left: 0;
+    }
+  }
+
+
 }
