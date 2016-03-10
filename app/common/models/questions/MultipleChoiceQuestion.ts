@@ -1,8 +1,9 @@
 import {RawSubject, Subject} from "./Subject";
 import {RawChoice, Choice} from "./Choice";
 import {QuestionType} from "./QuestionType";
-import {Kind} from "./Kind";
+import {KIND, Kind} from "./Kind";
 import {RawQuestion, default as Question} from "../Question";
+import {SubjectFactory} from "./SubjectFactory";
 
 
 export interface RawMultipleChoiceQuestion extends RawQuestion{
@@ -11,35 +12,33 @@ export interface RawMultipleChoiceQuestion extends RawQuestion{
 }
 
 export class MultipleChoiceQuestion extends Question {
-  private _answer: number;
     
   constructor(
       public _id: string | Mongo.ObjectID,
       public subject: Subject,
       public choices: Choice[],
-      answer: number,
+      public answer: number,
       public type: QuestionType,
       public kind: Kind
   ) {
     super(_id, subject, type, kind);
-    this._answer = answer;
   }
   
   getAnswer() {
     if (!Meteor.isServer) {
-      throw new Error(`Well tried, there\'s nothing to see here. See for yourself: ${this._answer}`);
+      throw new Error(`Well tried, there\'s nothing to see here. See for yourself: ${this.answer}`);
     }
 
-    return this._answer;
+    return this.answer;
   }
 
   static multipleChoiceFromRaw(data: RawMultipleChoiceQuestion) {
-    console.log("we call the static method of multiple choice");
+
     let choices: Choice[] = _.map(data.choices, c =>
         Choice.fromRaw(c)
     );
    
-    let subject: Subject = Subject.fromRaw(data.subject);
+    let subject: Subject = SubjectFactory.fromRaw(data.subject);
     return new MultipleChoiceQuestion(
         data._id,
         subject,

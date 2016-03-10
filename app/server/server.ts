@@ -1,14 +1,13 @@
-import { GameFetches } from "./collections/GameFetches";
-import { GameFetchRepository } from './repositories/GameFetchRepository';
-import { BotService } from './services/BotService';
-import { Games } from './collections/Games';
-import { Game } from './collections/Game';
-import { GameBoard, RawGameBoard } from './../common/models/GameBoard';
-import { GameBoardRepository } from './repositories/GameBoardRepository';
-import { GameStatus } from './../common/models/GameStatus';
-import { GameFetch } from "./collections/GameFetch";
-import { GameCreatorService } from './services/GameCreatorService';
-
+import {GameFetches} from "./collections/GameFetches";
+import {GameFetchRepository} from './repositories/GameFetchRepository';
+import {BotService} from './services/BotService';
+import {Games} from './collections/Games';
+import {Game} from './collections/Game';
+import {GameBoard, RawGameBoard} from './../common/models/GameBoard';
+import {GameBoardRepository} from './repositories/GameBoardRepository';
+import {GameStatus, GAME_STATUS} from './../common/models/GameStatus';
+import {GameFetch} from "./collections/GameFetch";
+import {GameCreatorService} from './services/GameCreatorService';
 
 export const Server = {
 
@@ -16,7 +15,7 @@ export const Server = {
     console.log(`Fetching game board for user ${userId}...`);
 
 
-    const game = Games.findOne(gameId);
+    const game: Game = Games.findOne(gameId);
     const bot = BotService.bot();
 
     let gameBoard;
@@ -32,38 +31,45 @@ export const Server = {
         const user = Meteor.users.findOne(userId);
         const fbUserId = user.services.facebook.id;
         const accessToken = user.services.facebook.accessToken;
-        const rawBoard: RawGameBoard = GameCreatorService.fetchGameboard(fbUserId, accessToken).data;
+        const data: any = GameCreatorService.fetchGameboard(fbUserId, accessToken).data;
+        const rawBoard: RawGameBoard = data;//GameCreatorService.fetchGameboard(fbUserId, accessToken).data;
         rawBoard.userId = userId;
 
         gameBoard = GameBoard.fromRaw(rawBoard);
 
-        console.log(`Fetched game board for user ${userId}`);
       }
 
-      console.log(`Saving board for player ${playerNum}`);
       GameBoardRepository.save(gameBoard);
-      game[`setPlayer${playerNum}Board`](gameBoard);
+      switch (playerNum) {
+        case 1:
+          game.player1Board = gameBoard;
+          break;
+        case 2:
+          game.player2Board = gameBoard;
+          break;
+        default:
+          throw new Meteor.Error(`Playern Number ${playerNum} is not authorized [1, 2] only`)
+      }
 
-      const status = (game.player1Board && game.player2Board) ? GameStatus.Playing : GameStatus.Creating;
-      console.log(status);
+      const status = (game.player1Board && game.player2Board) ? GAME_STATUS.Playing : GAME_STATUS.Creating;
       game.status = status;
 
-      Game.save(game);
+      Games.update(game._id, game);
 
       return gameBoard;
     }
     catch (e) {
       console.error(`ERROR: Can't create game board from game creator result: ${e}`);
-
-      if (createFetch) {
+    
+      if (createFetch && !BotService.isBot(userId)) {
         const fetch = new GameFetch(
             new Mongo.ObjectID(),
             game._id,
-            game[`getPlayer${playerNum}`](),
+            game.getPlayerBoard(playerNum),
             playerNum,
             1
         );
-
+    
         GameFetchRepository.save(fetch);
       }
     }
@@ -77,7 +83,6 @@ export const Server = {
     const accessToken = user.services.facebook.accessToken;
 
     try {
-      console.log("we try to fetch data from gamecreator");
       GameCreatorService.fetchData(fbUserId, accessToken);
     }
     catch (e) {
@@ -117,8 +122,8 @@ export const Server = {
 
     if (fetch.tries >= 10) {
       const failedGame: Game = Games.findOne(fetch._id);
-      failedGame.status = GameStatus.Failed;
-      Game.save(failedGame);
+      failedGame.status = GAME_STATUS.Failed;
+      Games.update(failedGame._id, failedGame);
 
       GameFetches.remove(fetch._id);
 

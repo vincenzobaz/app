@@ -1,26 +1,39 @@
-import {RawQuestion} from "../Question";
-import {Subject} from "./Subject";
-import {QuestionType} from "./QuestionType";
-import {Kind} from "./Kind";
+import {RawQuestion, default as Question} from "../Question";
 import {MultipleChoiceQuestion, RawMultipleChoiceQuestion} from "./MultipleChoiceQuestion";
 import {TimelineQuestion, RawTimelineQuestion} from "./TimeLineQuestion";
 import {OrderQuestion, RawOrderQuestion} from "./OrderQuestion";
 import {GeoQuestion, RawGeoQuestion} from "./GeoQuestion";
+import {KIND, Kind} from "./Kind";
+import {SUBJECT_TYPE} from "./SubjectType";
 
-export function questionFromRaw(raw: RawQuestion): any {
-  console.log("we call the static method of Question");
-  const kind = raw.kind;
 
-  switch (kind) {
-    case Kind.MultipleChoice:
-      return MultipleChoiceQuestion.multipleChoiceFromRaw(<RawMultipleChoiceQuestion>raw);
-    case Kind.Timeline:
-      return TimelineQuestion.timelineFromRaw(<RawTimelineQuestion>raw);
-    case Kind.Order:
-      return OrderQuestion.orderQustionFromRaw(<RawOrderQuestion>raw);
-    case Kind.Geolocation:
-      return GeoQuestion.geoQuestionFromRaw(<RawGeoQuestion>raw);
-    default:
-          throw new Meteor.Error(404, `Unknown question kind: ${kind}`);
+export module QuestionFactory {
+  
+  export function questionFromRaw(raw: RawQuestion): Question {
+    const kind = raw.kind;
+    switch (kind) {
+      case KIND.MultipleChoice:
+        return MultipleChoiceQuestion.multipleChoiceFromRaw(<RawMultipleChoiceQuestion>raw);
+      case KIND.Timeline:
+        return TimelineQuestion.timelineFromRaw(<RawTimelineQuestion>raw);
+      case KIND.Order:
+        return OrderQuestion.orderQustionFromRaw(<RawOrderQuestion>raw);
+      case KIND.Geolocation:
+        return GeoQuestion.geoQuestionFromRaw(<RawGeoQuestion>raw);
+    }
+    throw new Meteor.Error('404', `Unknown question kind: ${kind}`);
+
+  }
+  
+  export function  doesQuestionExist(kind: Kind): boolean {
+    switch (kind) {
+      case KIND.MultipleChoice:
+      case KIND.Timeline:
+      case KIND.Order:
+      case KIND.Geolocation:
+        return true;
+    }
+    return false;
   }
 }
+

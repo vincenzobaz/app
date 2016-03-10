@@ -23,10 +23,10 @@ export const FriendRepository = {
         }
 
         if (friend._id) {
-            Friends.upsert(friend._id, friend);
+          Friends.upsert(friend._id, friend);
         }
         else {
-            friend._id = Friends.insert(friend);
+          friend._id = Friends.insert(friend);
         }
 
         return friend;
@@ -59,13 +59,12 @@ export const FriendRepository = {
     },
 
     addBot(userId, bot) {
-        var friend: Friend = FriendRepository.byUserId(bot.id, userId);
-
+        var friend: Friend = FriendRepository.byUserId(bot._id, userId);
         if (friend != null) {
             return;
         }
 
-        friend = new Friend(null, bot._id, bot._id, userId, bot.name, true); 
+        friend = new Friend(new Mongo.ObjectID(), bot._id, bot._id, bot.name, userId, true); 
 
         FriendRepository.save(friend);
     }

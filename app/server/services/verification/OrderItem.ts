@@ -1,6 +1,6 @@
 export class OrderItem {
 
-  constructor(public _id: number, public title: string) {
+  constructor(public id: number, public title: string) {
 
   }
 }

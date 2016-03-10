@@ -1,67 +1,62 @@
 import { RawSubject, Subject } from "./Subject";
 import { OrderChoice } from "./OrderChoice";
 import { QuestionType } from "./QuestionType";
-import { Kind } from "./Kind";
+import {KIND, Kind} from "./Kind";
 import { Item } from "./Item";
-import { SubjectType } from "./SubjectType";
+import {SubjectType, SUBJECT_TYPE} from "./SubjectType";
 import {SubjectWithId} from './SubjectWithId';
 import Question from "../Question";
 import {OrderAnswer} from "../../../server/services/verification/OrderAnswer";
+import {SubjectFactory} from "./SubjectFactory";
+import {RawQuestion} from "../Question";
 
-export interface RawOrderQuestion {
+export interface RawOrderQuestion extends RawQuestion{
     _id: string | Mongo.ObjectID;
-    subject: Subject;
-    choices: any;
+    choices?: any;
+    items: Item[];
     answer: number[];
     type: QuestionType;
     kind: Kind;
-    items: any;
 }
 
 
 
-export class OrderQuestion extends Question{
-private _choices;
+export class OrderQuestion extends Question {
   
+  public items: Item[];
   constructor(_id: string | Mongo.ObjectID,
-              subject: Subject,
-              choices: OrderChoice[],
+              items: Item[],
               answer: number[],
-              public items: Item[],
               type: QuestionType,
               kind: Kind) {
-    super(_id, subject, type, kind, answer);
-    this._choices = choices;
+    super(_id, null, type, kind, answer);
+    this.items = items;
     }
 
 
-    set choices(value: any) {
-        this._choices = value;
-        this.items = _.map(value, (c: OrderChoice) => {
+    static convertChoices(value: OrderChoice[]): Item[] {
+         return _.map(value, (c: OrderChoice) => {
             switch (c.subject.type) {
-                case SubjectType.Page:
+                case SUBJECT_TYPE.Page:
                     return {id: c.uId, text: c.subject.name, subject:c.subject};
-                case SubjectType.TextPost:
+                case SUBJECT_TYPE.TextPost:
                     return {id: c.uId, text: c.subject.text, subject:c.subject};
-                case SubjectType.ImagePost:
+                case SUBJECT_TYPE.ImagePost:
                     return {id: c.uId, text: c.subject.text, subject:c.subject};
-                case SubjectType.VideoPost:
+                case SUBJECT_TYPE.VideoPost:
                     return {id: c.uId, text: c.subject.text, subject:c.subject};
-                case SubjectType.LinkPost:
+                case SUBJECT_TYPE.LinkPost:
                     return {id: c.uId, text: c.subject.text, subject:c.subject};
-                case SubjectType.Comment:
+                case SUBJECT_TYPE.Comment:
                     return {id: c.uId, text: c.subject.comment, subject:c.subject};
                 default:
                     console.error("Ordering subject type not defined: " + c.type);
-                    throw new Meteor.Error(500, "Ordering subject type not defined: " + c.type);
+                    throw new Meteor.Error('500', "Ordering subject type not defined: " + c.type);
             }
         });
     }
 
-
-    getKind() {
-        return this.kind;
-    }
+  
 
     /**
      * returns the correct id of the answers
@@ -77,7 +72,8 @@ private _choices;
 
 
   static orderQustionFromRaw(raw: RawOrderQuestion) {
-    return new OrderQuestion(raw._id, Subject.fromRaw(raw.subject), raw.choices, raw.answer, raw.items, raw.type, raw.kind);
+    let items = raw.items || OrderQuestion.convertChoices(raw.choices);
+    return new OrderQuestion(raw._id, items, raw.answer, raw.type, raw.kind);
   }
   
-};
+}

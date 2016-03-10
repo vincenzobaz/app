@@ -34,7 +34,7 @@ export const MultipleChoiceVerificationService = {
      * @returns {number}
      */
     verifyAnswer(question: MultipleChoiceQuestion, answer: MultipleChoiceAnswer) {
-        return question.getAnswer() === answer.data.choice ? 1 : 0;
+        return question.getAnswer() == answer.data.choice ? 1 : 0;
     }
 
 };

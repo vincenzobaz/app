@@ -1,12 +1,26 @@
 {
+  "name": "reminisceme",
   "ambientDependencies": {
+    "bluebird": "github:DefinitelyTyped/DefinitelyTyped/bluebird/bluebird.d.ts#dd328830dddffbe19e9addd7cf8532cbd3600816",
+    "classnames": "github:DefinitelyTyped/DefinitelyTyped/classnames/classnames.d.ts#dc9dabe74a5be62613b17a3605309783a12ff28a",
     "cryptojs": "github:DefinitelyTyped/DefinitelyTyped/cryptojs/cryptojs.d.ts#b730a7309e947a59d2d192bf8fef60cf778a6480",
-    "jquery": "github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#470954c4f427e0805a2d633636a7c6aa7170def8",
-    "lodash": "github:DefinitelyTyped/DefinitelyTyped/lodash/lodash.d.ts#7b7aa2027a8fb6219a8bcf1b6bb12bcd0ff9539d",
-    "meteor": "github:DefinitelyTyped/DefinitelyTyped/meteor/meteor.d.ts#794ad5905b0862195d8a2193ae0cb00f128d889a",
-    "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#20e1eb9616922d382d918cc5a21870a9dbe255f5",
-    "react": "github:DefinitelyTyped/DefinitelyTyped/react/react.d.ts#f407264835650f5f38d4bb2c515a79e7a835916b",
-    "react-mixin": "github:DefinitelyTyped/DefinitelyTyped/react-mixin/react-mixin.d.ts#d71194556474e33b60620e539c6ad5a890d4f660"
+    "jquery": "github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#dc9dabe74a5be62613b17a3605309783a12ff28a",
+    "lodash": "github:DefinitelyTyped/DefinitelyTyped/lodash/lodash.d.ts#dc9dabe74a5be62613b17a3605309783a12ff28a",
+    "meteor": "github:DefinitelyTyped/DefinitelyTyped/meteor/meteor.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
+    "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#dc9dabe74a5be62613b17a3605309783a12ff28a",
+    "react": "github:DefinitelyTyped/DefinitelyTyped/react/react.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
+    "react-addons-create-fragment": "github:DefinitelyTyped/DefinitelyTyped/react/react-addons-create-fragment.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
+    "react-addons-css-transition-group": "github:DefinitelyTyped/DefinitelyTyped/react/react-addons-css-transition-group.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
+    "react-addons-linked-state-mixin": "github:DefinitelyTyped/DefinitelyTyped/react/react-addons-linked-state-mixin.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
+    "react-addons-perf": "github:DefinitelyTyped/DefinitelyTyped/react/react-addons-perf.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
+    "react-addons-pure-render-mixin": "github:DefinitelyTyped/DefinitelyTyped/react/react-addons-pure-render-mixin.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
+    "react-addons-test-utils": "github:DefinitelyTyped/DefinitelyTyped/react/react-addons-test-utils.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
+    "react-addons-transition-group": "github:DefinitelyTyped/DefinitelyTyped/react/react-addons-transition-group.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
+    "react-addons-update": "github:DefinitelyTyped/DefinitelyTyped/react/react-addons-update.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
+    "react-bootstrap": "github:DefinitelyTyped/DefinitelyTyped/react-bootstrap/react-bootstrap.d.ts#5f3b413653e738d5d9bfd1575d075e5334b5e564",
+    "react-dom": "github:DefinitelyTyped/DefinitelyTyped/react/react-dom.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
+    "react-global": "github:DefinitelyTyped/DefinitelyTyped/react/react-global.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
+    "react-mixin": "github:DefinitelyTyped/DefinitelyTyped/react-mixin/react-mixin.d.ts#dc9dabe74a5be62613b17a3605309783a12ff28a"
   },
   "dependencies": {
     "moment": "github:typed-typings/npm-moment#a4075cd50e63efbedd850f654594f293ab81a385"

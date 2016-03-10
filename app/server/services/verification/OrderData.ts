@@ -1,11 +1,8 @@
-import { OrderItem } from "./OrderItem";
+import {Item} from "../../../common/models/questions/Item";
 export class OrderData {
 
-  /**
-   *
-   * @param {[OrderItem]} items
-   */
-  constructor(public items: OrderItem[]) {
+
+  constructor(public items: Item[]) {
   }
 
 }

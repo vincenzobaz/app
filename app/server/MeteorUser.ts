@@ -4,11 +4,11 @@ export interface MeteorUser extends User {
   services: Services;
 }
 
-interface Services {
+export interface Services {
   facebook: FacebookService;
 }
 
-interface FacebookService {
+export interface FacebookService {
   accessToken: string;
   expiresAt: number;
   id: number;

@@ -6,7 +6,10 @@ import { FriendRepository } from "./repositories/FriendRepository";
 import { publishCollections } from "./publish";
 import { setupMeteorMethods } from "./methods";
 import { FacebookService } from "./facebook";
-
+import {RawTileState} from "./collections/TileState";
+import {GAME_STATUS, GameStatus} from "../common/models/GameStatus";
+import {Game} from "./collections/Game";
+import * as _ from "lodash";
 
 console.log("we start the server", process.env.GAME_CREATOR_URL);
 

@@ -1,7 +1,7 @@
-export interface entry<A> {
+export interface Entry<A> {
   index: number;
   element: A;
 }
-export function indexArray<A>(array: A[]): entry<A>[] {
+export function indexArray<A>(array: A[]): Entry<A>[] {
   return _.range(9).map((i: number) => {return {index: i, element: array[i]}});
 }

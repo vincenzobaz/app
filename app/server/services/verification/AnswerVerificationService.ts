@@ -1,15 +1,18 @@
 
 
 
-import { Kind } from "../../../common/models/questions/Kind";
 import { MultipleChoiceVerificationService } from "./MultipleChoiceVerificationService";
 import GeoVerificationService from "./GeoVerificationService";
 import { OrderVerificationService } from "./ReorderVerificationService";
 import Question from "../../../common/models/Question";
 import TimelineVerificationService from "./TimelineVerificationService";
+import {KIND} from "../../../common/models/questions/Kind";
+import {QuestionProps} from "../../../client/scripts/components/questions/QuestionProps";
+import {indexArray} from "../../../common/helpers/indexedArray";
+import {Tile} from "../../../common/models/Tile";
 
 export class Answer {
-  public data;
+  public data: any;
   public timespent: number;
 }
 
@@ -18,10 +21,10 @@ export class AnswerVerificationService {
     static getVerifiers() {
       const verifiers = {};
 
-      verifiers[Kind.Timeline]       = TimelineVerificationService;
-      verifiers[Kind.MultipleChoice] = MultipleChoiceVerificationService;
-      verifiers[Kind.Geolocation]    = GeoVerificationService;
-      verifiers[Kind.Order]          = OrderVerificationService;
+      verifiers[KIND.Timeline]       = TimelineVerificationService;
+      verifiers[KIND.MultipleChoice] = MultipleChoiceVerificationService;
+      verifiers[KIND.Geolocation]    = GeoVerificationService;
+      verifiers[KIND.Order]          = OrderVerificationService;
 
       return verifiers;
     }
@@ -43,7 +46,7 @@ export class AnswerVerificationService {
      *
      * @return {[number]} the array of the results: 0 for incorrect 1 for correct per question
      */
-    static verifyTile(tile, answers) {
+    static verifyTile(tile: Tile, answers) {
         const questionAnswers = _.zip(tile.questions, answers);
 
         return _.map(questionAnswers, (qa) => {
@@ -62,7 +65,7 @@ export class AnswerVerificationService {
     static isVerifier(verifier) {
       return (
         verifier != null &&
-        typeof verifier.verifyAnswer === 'function'
+        typeof verifier.verifyAnswer == 'function'
       );
     }
 }

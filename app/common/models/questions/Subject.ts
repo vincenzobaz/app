@@ -1,10 +1,12 @@
 
-import {SubjectType} from "./SubjectType";
+import {SubjectType, SUBJECT_TYPE} from "./SubjectType";
 
 export interface RawSubject {
     name?: string;
     text?: string;
     comment?: string;
+    thumbnailUrl: string;
+    photoUrl: string
     type: SubjectType;
 }
 
@@ -13,20 +15,13 @@ export class Subject implements RawSubject{
   public text: string;
   public comment: string;
   public type: SubjectType;
-  
+  public interactive: boolean;
+  public thumbnailUrl: string;
+  public photoUrl: string;
+
   constructor() {
     
   }
   
-  static fromRaw(data: RawSubject): Subject {
-    // switch (data.type) {
-    //   case SubjectType.Page:
-    //     return PageSubject.fromRaw(<RawPageSubject>data);
-    // }
-    let subject = new Subject();
-    subject.name = "Hello";
-    subject.text = "Well whatever";
-    subject.type = SubjectType.Page;
-    return subject;
-  }
+
 }

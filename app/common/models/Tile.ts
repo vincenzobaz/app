@@ -1,10 +1,11 @@
 import { ScoreInterface, Score } from "./Score";
-import { questionFromRaw } from "./questions/QuestionFactory";
 import Question from "./Question";
+import {Kind, KIND} from "./questions/Kind";
+import {QuestionFactory} from "./../../common/models/questions/QuestionFactory";
 
 export interface RawTile {
-  _id: string;
-  type: string;
+  _id: string | Mongo.ObjectID;
+  type: Kind;
   question1: Question;
   question2: Question;
   question3: Question;
@@ -15,8 +16,8 @@ export interface RawTile {
 
 export class Tile implements RawTile {
 
-  public _id: string;
-  public type: string;
+  public _id: string | Mongo.ObjectID;
+  public type: Kind;
   public question1: Question;
   public question2: Question;
   public question3: Question;
@@ -24,8 +25,8 @@ export class Tile implements RawTile {
   public answered: boolean;
   public disabled: boolean;
 
-  constructor(_id: string,
-              type: string,
+  constructor(_id: string | Mongo.ObjectID,
+              type: Kind,
               question1: Question,
               question2: Question,
               question3: Question,
@@ -59,10 +60,17 @@ export class Tile implements RawTile {
     return this.answered;
   }
 
-  static fromRaw(tile) {
-    const question1 = Question.fromRaw(tile.question1);
-    const question2 = questionFromRaw(tile.question2);
-    const question3 = questionFromRaw(tile.question3);
+  static fromRaw(tile: RawTile) {
+    if (tile.type == KIND.Timeline && (!tile.question1.subject || !tile.question2.subject || !tile.question3.subject)) {
+      // console.log("******************************* HEUREKA ***************************");
+      // console.log(tile);
+    }
+    if (!tile) {
+      return null;
+    }
+    const question1 = QuestionFactory.questionFromRaw(tile.question1);
+    const question2 = QuestionFactory.questionFromRaw(tile.question2);
+    const question3 = QuestionFactory.questionFromRaw(tile.question3);
     return new Tile(
         tile._id || new Mongo.ObjectID(),
         tile.type,

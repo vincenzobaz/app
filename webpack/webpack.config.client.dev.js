@@ -29,7 +29,7 @@ var babelQuery = {
 };
 
 var config = module.exports = _.assign(_.clone(config), {
-    devtool: 'eval',
+    devtool: 'source-map',
     entry: [
         'webpack-dev-server/client?' + devProps.baseUrl,
         'webpack/hot/only-dev-server',

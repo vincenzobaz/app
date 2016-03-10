@@ -7,12 +7,13 @@ import {JoinRequestRepository} from './../repositories/JoinRequestRepository';
 import {FriendRepository} from "../repositories/FriendRepository";
 import { JoinRequests } from "../collections/JoinRequests";
 import { Game } from "../collections/Game";
-import { GameStatus } from "../../common/models/GameStatus";
+import {GameStatus, GAME_STATUS} from "../../common/models/GameStatus";
 import { UserRepository } from "../repositories/UserRepository";
 import JoinRequest from "../collections/JoinRequest";
 import { RawJoinRequest } from "../collections/JoinRequest";
 import { MeteorUser } from "../MeteorUser";
 import User = Meteor.User;
+import {Friend} from "../../common/models/Friend";
 
 export const JoinRequestService = {
 
@@ -47,13 +48,13 @@ export const JoinRequestService = {
 
         JoinRequests.remove(requestId);
         var game: Game = Games.findOne(request.gameId);
-        game.status = GameStatus.Declined;
-        Game.save(game);
+        game.status = GAME_STATUS.Declined;
+        Games.update(game._id, game);
         return {status: "success", msg: "Success"};
     },
 
     getOpponent(currentUserId, friendId): User {
-        const friend = Friends.findOne(friendId);
+        const friend: Friend = Friends.findOne(friendId);
 
         if (friend == null) {
             const msg = `Couldn't find a friend with id ${friendId}.`;
@@ -99,7 +100,7 @@ export const JoinRequestService = {
       try {
         const opponent: MeteorUser  = this.getOpponent(currentUserId, friendId);
         const game      = GameService.createGame(currentUserId, opponent._id);
-        const gameId    = Game.save(game);
+        const gameId    = Games.insert(game);
         const join      = JoinRequest.fromRaw({_id: new Mongo.ObjectID(), from: currentUserId, to: opponent._id, gameId: gameId});
         const requestId = JoinRequestRepository.save(join);
         console.log(`Created join request ${requestId} from ${currentUserId} to ${opponent._id} for game ${gameId}`);

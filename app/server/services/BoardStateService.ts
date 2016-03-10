@@ -37,7 +37,7 @@ export class BoardStateService
   verifyWonRow(row, player = this.playerNum)
   {
     for (let i = 0; i < 3; i += 1) {
-      if (this.board[row][i].player != player || this.board[row][i].score === 0) {
+      if (this.board[row][i].player != player || this.board[row][i].score == 0) {
         return false;
       }
     }
@@ -48,7 +48,7 @@ export class BoardStateService
   verifyWonColumn(column, player = this.playerNum)
   {
     for (let j = 0; j < 3; j += 1) {
-      if (this.board[j][column].player != player || this.board[j][column].score === 0) {
+      if (this.board[j][column].player != player || this.board[j][column].score == 0) {
         return false;
       }
     }
@@ -61,7 +61,7 @@ export class BoardStateService
     for (let i = 0; i < 3; i += 1) {
       const cell = this.board[i][i];
 
-      if (cell.player != player || cell.score === 0) {
+      if (cell.player != player || cell.score == 0) {
         return false;
       }
     }
@@ -76,7 +76,7 @@ export class BoardStateService
     for (let x = 0; x < 3; x += 1) {
       const cell = this.board[y][x];
 
-      if (cell.player != player || cell.score === 0) {
+      if (cell.player != player || cell.score == 0) {
         return false;
       }
 
@@ -143,7 +143,7 @@ export class BoardStateService
     for (var x = 0; x < 3; x += 1) {
       const cell = this.board[x][x];
 
-      if (player !== 0 && cell.player != player) {
+      if (player == 0 && cell.player != player) {
         impossible += 1;
         break;
       }
@@ -164,7 +164,7 @@ export class BoardStateService
     for (var x = 0; x < 3; x += 1) {
       const cell = this.board[y][x];
 
-      if (player !== 0 && cell.player != player) {
+      if (player == 0 && cell.player != player) {
         impossible += 1;
         break;
       }

@@ -6,7 +6,6 @@ export const Routes = {
   Assets: {
     at(path) {
       //FIXME: Most likely this needs to be fixed
-      console.log('/' + trim(path + '', '/'));
       return '/' + trim(path + '', '/');
     },
     avatars: {
@@ -23,7 +22,7 @@ export const Routes = {
     }
   },
   Facebook: {
-    avatar(facebookId, query) {
+    avatar(facebookId: string | number, query?: any) {
       return Routes.Assets.avatars.facebook(facebookId, query);
     }
   }

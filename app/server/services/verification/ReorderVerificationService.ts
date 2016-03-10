@@ -2,7 +2,7 @@
 
 import { OrderQuestion } from "../../../common/models/questions/OrderQuestion";
 import { OrderAnswer } from "./OrderAnswer";
-import { OrderItem } from "./OrderItem";
+import {Item} from "../../../common/models/questions/Item";
 
 
 
@@ -18,15 +18,13 @@ export const OrderVerificationService = {
    */
   verifyAnswer(question: OrderQuestion, answer: OrderAnswer)
   {
-        const givenIds   = answer.data.items.map((i: OrderItem) => i._id);
-        const answerIds  = question.answer;
-        const right      = _.zip(answerIds, givenIds).map(([answer, given]) => answer === given ? 1 : 0);
+        const right      = _.zip(question.answer, answer.data.items).map(([answer, given]) => {return answer.toString() == (<Item>given).id ? 1 : 0});
         const correct    = right.reduce((acc, cur) => acc + cur, 0);
-        const numAnswers = answerIds.length;
+        const numAnswers = question.answer.length;
 
         console.log(`OrderVerificationService: got ${correct} correct answers over ${numAnswers}`);
 
-        return correct === numAnswers;
+        return correct == numAnswers;
     }
 
 };

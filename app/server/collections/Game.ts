@@ -1,16 +1,14 @@
-import { GameBoard } from "../../common/models/GameBoard";
-import { GameStatus } from "../../common/models/GameStatus";
-import { RawTileState } from "./TileState";
-import { Games } from "./Games";
-
+import {GameBoard, RawGameBoard} from "../../common/models/GameBoard";
+import {GameStatus} from "../../common/models/GameStatus";
+import {RawTileState} from "./TileState";
 
 
 export interface RawGame {
   _id: string | Mongo.ObjectID;
   player1: string | Mongo.ObjectID;
   player2: string | Mongo.ObjectID;
-  player1Board: GameBoard;
-  player2Board: GameBoard;
+  player1Board: RawGameBoard;
+  player2Board: RawGameBoard;
   status: GameStatus;
   playerTurn: number;
   player1Score: number;
@@ -22,9 +20,8 @@ export interface RawGame {
   creationTime: Date;
 }
 
-export class Game implements RawGame{
+export class Game {
 
-  private _playerTurn: number;
 
   constructor(public _id: string |  Mongo.ObjectID,
               public player1: string | Mongo.ObjectID,
@@ -32,7 +29,7 @@ export class Game implements RawGame{
               public player1Board: GameBoard,
               public player2Board: GameBoard,
               public status: GameStatus,
-              playerTurn: number,
+              public playerTurn: number,
               public player1Score: number,
               public player2Score: number,
               public boardState: RawTileState[][],
@@ -40,34 +37,20 @@ export class Game implements RawGame{
               public player2AvailableMoves: RawAvailableMove[],
               public wonBy: number,
               public creationTime: Date) {
-    
-    this._playerTurn = playerTurn;
+
   }
 
 
-  get playerTurn() {
-    return this._playerTurn;
+  getCurrentBoard(): GameBoard {
+    return this.getPlayerBoard(this.playerTurn);
   }
-
-
-  set playerTurn(value) {
-    if (value < 1 || value > 2) {
-      throw new Meteor.Error("There can only be 2 players per game, turn value " + value);
-    }
-    this._playerTurn = value;
-  }
-  
-  getCurrentBoard() {
-    return this[`getPlayer${this.playerTurn}Board`]();
-  }
-
 
 
   nextTurn() {
-    this.playerTurn = this.playerTurn === 1 ? 2 : 1;
+    this.playerTurn = this.playerTurn == 1 ? 2 : 1;
   }
 
-  getCurrentPlayer() {
+  getCurrentPlayer(): string | Mongo.ObjectID {
     if (this.playerTurn === 1) {
       return this.player1;
     }
@@ -116,14 +99,25 @@ export class Game implements RawGame{
     );
   }
 
+  getPlayerBoard(playerNum: number): GameBoard {
+    switch (playerNum) {
+      case 1:
+        return this.player1Board;
+      case 2:
+        return this.player2Board;
+      default:
+        throw new Meteor.Error(`The requested board can't be found as playerNum ${playerNum} is outside of range [1-2]`);
+    }
+  }
+
 
   static fromRaw(raw: RawGame): Game {
     return new Game(
         raw._id,
         raw.player1,
         raw.player2,
-        raw.player1Board,
-        raw.player2Board,
+        GameBoard.fromRaw(raw.player1Board),
+        GameBoard.fromRaw(raw.player2Board),
         raw.status,
         raw.playerTurn,
         raw.player1Score,
@@ -136,14 +130,6 @@ export class Game implements RawGame{
     );
   }
   
-  static save(game: Game): string | Mongo.ObjectID {
-      if (game._id) {
-        Games.upsert(game._id, game);
-      } else {
-        game._id = Games.insert(game);
-      }
-      return game._id;
-    }
 
 
 }

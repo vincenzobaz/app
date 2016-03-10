@@ -25,14 +25,14 @@ class Facebook {
   
   api(user: MeteorUser, url, options = {}) {
     if (!user) {
-      throw new Meteor.Error(500, "You must specify the current user");
+      throw new Meteor.Error('500', "You must specify the current user");
     }
 
     var fullUrl = API_URL + url;
     var accessToken = user.services.facebook.accessToken;
 
     if (!accessToken) {
-      throw new Meteor.Error(401, "User isn't logged in or doesn't have an access token");
+      throw new Meteor.Error('401', "User isn't logged in or doesn't have an access token");
     }
 
     /* eslint camelcase:0 */

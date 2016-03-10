@@ -1,7 +1,7 @@
 import { QuestionType } from "./questions/QuestionType";
 import { Subject } from "./questions/Subject";
-import { questionFromRaw } from "./questions/QuestionFactory";
-import { Kind } from "app/common/models/questions/Kind";
+import {QuestionFactory} from "./questions/QuestionFactory";
+import {KIND, Kind} from "app/common/models/questions/Kind";
 
 
 export interface RawQuestion {
@@ -24,7 +24,7 @@ export default class Question {
 
 
   static fromRaw(data: RawQuestion): Question {
-    return questionFromRaw(data)
+    return QuestionFactory.questionFromRaw(data)
   };
 }
 

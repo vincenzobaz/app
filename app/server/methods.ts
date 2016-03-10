@@ -30,45 +30,36 @@ export function setupMeteorMethods() {
     
       const result = AccountService.deleteUserData(fbUserId);
     
-      if (result.statusCode === 200) {
+      if (result.statusCode == 200) {
         Meteor.users.remove(userId);
       }
     
       console.log('Data deleted with following result:', result.data.message);
     
       return {
-        status: result.statusCode === 200 ? 'success' : 'error',
+        status: result.statusCode == 200 ? 'success' : 'error',
         msg: result.data.message
       };
     },
     
     'JoinRequest.decline'(requestId) {
-      check(requestId, String);
-    
       return JoinRequestService.decline(requestId);
     },
     
     'JoinRequest.accept'(requestId) {
-      check(requestId, String);
     
       return JoinRequestService.accept(requestId);
     },
     
     'JoinRequest.send'(friendId) {
-      check(friendId, String);
-    
       return JoinRequestService.send(this.userId, friendId);
     },
     
     'Game.start'(gameId) {
-      check(gameId, String);
-    
       return GameService.start(gameId);
     },
     
     'Game.quit'(gameId) {
-      check(gameId, String);
-    
       console.error('Method Game.quit is not implemented yet.');
       return {
         status: 'success'
@@ -76,15 +67,15 @@ export function setupMeteorMethods() {
     },
     
     'Answer.timeOut'(gameId, tileId) {
-      check(gameId, String);
-      check(tileId, String);
+      check(gameId, Mongo.ObjectID);
+      check(tileId, Mongo.ObjectID);
     
       return AnswerService.timeOut(gameId, tileId);
     },
     
     'Answer.post'(gameId, tileId, answers) {
-      check(gameId, String);
-      check(tileId, String);
+      check(gameId, Mongo.ObjectID);
+      check(tileId, Mongo.ObjectID);
     
       return AnswerService.post(gameId, tileId, answers);
     },
