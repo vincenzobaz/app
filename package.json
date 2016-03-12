@@ -7,7 +7,7 @@
     "url": "https://github.com/reminisceme/app"
   },
   "scripts": {
-    "start": "node dev.js",
+    "start": "node dev.js"
   },
   "keywords": [
     "meteor",
@@ -89,6 +89,5 @@
     "typescript": "~1.6.2",
     "webpack-config": "~1.0.2",
     "progress-bar-webpack-plugin": "^1.5.0"
-
   }
 }

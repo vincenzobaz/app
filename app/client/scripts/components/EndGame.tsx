@@ -1,14 +1,15 @@
 'use strict';
 import {Game} from "../models/Game";
-import * as reactMixin from "react-mixin";
 import {Modal} from "react-bootstrap";
+import * as reactMixin from "react-mixin";
 var LocalStorageMixin = require('react-localstorage');
 
 
 export const getEndGameDesc = (game) => {
   return {
     props: {
-      game: game
+      game: game,
+      isShown: true,
     },
     onDismiss: () => {
     },
@@ -18,33 +19,39 @@ export const getEndGameDesc = (game) => {
 
 interface EndGameProps {
   game: Game;
+  key?: string;
 }
 
 interface EndGameState {
-  hidden: boolean;
+  isShown: boolean;
 }
 
 @reactMixin.decorate(LocalStorageMixin)
+
 export class EndGame extends React.Component<EndGameProps, EndGameState> {
 
   constructor(props: EndGameProps) {
     super(props);
     this.state = {
-      hidden: true
+      isShown: true
+    }
   }
+
+  componentWillReceiveProps(nextProps: EndGameProps) {
+    this.props = nextProps;
+    this.setState({isShown: true});
   }
 
   render() {
+    const show: boolean = this.state.isShown;
     return (
-        <Modal show={!this.state.hidden} onHide={this.onRequestHide.bind(this)}>
-          <Modal.Title>
-              {this.renderTitle()}
-              </Modal.Title>
-          <Modal.Body>
-              {this.renderBody()}
-              </Modal.Body>
+        <Modal show={show} onHide={this.onRequestHide.bind(this)}>
+          <Modal.Title>{this.renderTitle()}</Modal.Title>
+          <Modal.Body>{this.renderBody()}</Modal.Body>
 
         </Modal>
+        
+        
     );
   }
 
@@ -59,6 +66,7 @@ export class EndGame extends React.Component<EndGameProps, EndGameState> {
 
     return 'Aww, you lost.';
   }
+
 
   renderBody() {
     if (this.props.game.isDraw) {
@@ -83,8 +91,9 @@ export class EndGame extends React.Component<EndGameProps, EndGameState> {
   }
 
   onRequestHide() {
+    console.log("we are requested to hide in End Game")
     this.setState({
-      hidden: true
+      isShown: false
     });
   }
 

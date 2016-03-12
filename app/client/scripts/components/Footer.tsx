@@ -4,6 +4,9 @@
 import {GameToolbar} from './GameToolbar';
 import {Routes} from './../../../common/Routes';
 import {Game} from "../models/Game";
+import {ModalManager} from "../ModalManager";
+import {getEndGameDesc} from "./EndGame";
+import {Games} from "../collections/Games";
 
 interface FooterProps {
   currentGame?: Game;
@@ -23,7 +26,7 @@ export class Footer extends React.Component<FooterProps, {}> {
           <a href="#" onClick={this.showPage('about')}>About</a>
         </li>
         <li className=''>
-          <a href="#" onClick={this.showPage('stats')}>Stats</a>
+          <a href="#" onClick={this.executeTest()}>Test</a>
         </li>
         <li className='right'>
           <a href="#" onClick={this.showPage('account')}>Account</a>
@@ -40,6 +43,15 @@ export class Footer extends React.Component<FooterProps, {}> {
       e.preventDefault();
       Session.set('page', page);
     };
+  }
+  
+  executeTest() {
+    return (e: React.MouseEvent) => {
+      const game = Games.findOne();
+      const endGame = getEndGameDesc(game);
+      ModalManager.showModal(endGame);
+    }
+
   }
 
 }
