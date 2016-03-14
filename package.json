@@ -62,7 +62,7 @@
     "style-loader": "^0.13.0",
     "timer-machine": "1.0.1",
     "ts-loader": "^0.8.1",
-    "typings": "^0.7.3",
+    "typings": "^0.7.8",
     "url-loader": "^0.5.7"
   },
   "devDependencies": {
