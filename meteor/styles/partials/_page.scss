@@ -637,6 +637,28 @@ background-color : $navigationbackgroundcolor;
 
 
 // Home
+.container, #app {
+  height: 99%;
+}
+
+#home {
+  height: 99%;
+
+  .carousel {
+    height: 99%;
+
+    .carousel-inner {
+      height: 99%;
+    }
+
+    .item {
+      height: 99%;
+      padding: 1em;
+      text-align: center;
+      line-height: 1.6;
+    }
+  }
+}
 
 .home-1,
 .home-2,
