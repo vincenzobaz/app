@@ -638,21 +638,35 @@ background-color : $navigationbackgroundcolor;
 
 // Home
 .container, #app {
-  height: 99%;
+  height: 100%;
 }
 
 #home {
-  height: 99%;
+  height: 100%;
+
+  section {
+    max-width: 600px;
+    margin: 0px auto;
+
+    h1, h2 {
+      text-align: center;
+    }
+  }
+
+  .logo {
+    text-align: center;
+    margin-bottom: 2em;
+  }
 
   .carousel {
-    height: 99%;
+    height: 100%;
 
     .carousel-inner {
-      height: 99%;
+      height: 100%;
     }
 
     .item {
-      height: 99%;
+      height: 100%;
       padding: 1em;
       text-align: center;
       line-height: 1.6;
@@ -685,18 +699,6 @@ background-color : $navigationbackgroundcolor;
     .btn {
         text-shadow: none;
     }
-}
-
-section {
-
-    h1,
-    h2 {
-        text-align: center;
-    }
-}
-
-.logo {
-    text-align: center;
 }
 
 .copy {

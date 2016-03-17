@@ -7,7 +7,7 @@
     "url": "https://github.com/reminisceme/app"
   },
   "scripts": {
-    "start": "node dev.js"
+    "start": "source env/dev.sh; node dev.js"
   },
   "keywords": [
     "meteor",

@@ -1,26 +1,58 @@
 import * as React from 'react';
-import {Carousel, CarouselItem} from "react-bootstrap";
+import {Carousel, CarouselItem, Navbar, NavItem, Nav} from "react-bootstrap";
 
-import {FacebookStore} from '../stores/FacebookStore';
+import {FacebookStore} from "../stores/FacebookStore";
 
 export class Home extends React.Component<{}, {}> {
 
   componentDidMount() {
-    // jQuery.getScript("//cdn.iubenda.com/iubenda.js");
+    jQuery.getScript("//cdn.iubenda.com/iubenda.js");
   }
 
   login() {
     FacebookStore.login();
   }
 
+  renderNav() {
+    const sections = [
+      "Intro",
+      "How to play",
+      "Images",
+      "Privacy",
+      "Play"
+    ];
+
+    const items = sections.map((title, index) =>
+      <NavItem key={index}>{title}</NavItem>);
+
+    const brand = (
+      <li key={-1}>
+        <Navbar.Brand>
+          <img src='images/reminisce-logo-ios.png' alt='Reminisce.me' width='48' height='48' />
+        </Navbar.Brand>
+      </li>
+    );
+
+    return (
+      <Navbar fluid={true} fixedTop={true}>
+        <Nav>
+          {[brand, ...items]}
+        </Nav>
+      </Navbar>
+    );
+  }
+
   render() {
     return (
       <div id="home">
+        <header id="main-header">
+          {this.renderNav()}
+        </header>
         <Carousel wrap={false} interval={0}>
           <CarouselItem>
             <section title="Intro">
               <div className='logo'>
-                  <img src='images/reminisce-logo-big.png' alt='Reminisce.me' width='220' height='216' />
+                <img src='images/reminisce-logo-big.png' alt='Reminisce.me' width='220' height='216' />
               </div>
               <h2>
                 Who liked your post?<br />
