@@ -35,7 +35,7 @@ export class Picture extends React.Component<PictureProps, {}>{
       );
     }
 
-    return <img src={this.props.imageUrl} alt="" />;
+    return <img draggable={false} src={this.props.imageUrl} alt="" />;
   }
 
   renderPictureCaption(caption) {

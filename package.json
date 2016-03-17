@@ -49,6 +49,7 @@
     "react-dom": "^0.14.5",
     "react-localstorage": "0.2.9",
     "react-mixin": "^3.0.3",
+    "react-motion": "^0.4.2",
     "react-transform-catch-errors": "^1.0.1",
     "react-transform-hmr": "^1.0.1",
     "react-typeahead": "^1.1.5",

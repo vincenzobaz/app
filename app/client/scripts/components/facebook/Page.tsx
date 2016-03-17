@@ -20,7 +20,7 @@ export class Page extends React.Component<PageProps, {}> {
       return null;
     }
 
-    return <img src={this.props.photoUrl} className="post-page-thumbnail"/>;
+    return <img width="30px" height="40px" src={this.props.photoUrl} className="post-page-thumbnail"/>;
   }
 
 }
