@@ -27,7 +27,7 @@ export class Dashboard extends React.Component<DashboardProps,{}> {
             <div>
                 <Players game={this.props.currentGame} user={this.props.user}/>
                 <div id="dashboard" className="grid-container">
-                    <div className="grid-20">
+                    <div className="grid-25">
                         <div id="sidebar" className="notifications">
                             <GamesList
                                 title="Current games"
@@ -41,12 +41,12 @@ export class Dashboard extends React.Component<DashboardProps,{}> {
                             />
                         </div>
                     </div>
-                    <div className='grid-50 prefix-5'>
+                    <div className='grid-50'>
                         <div className="dashboard-main">
                             {this.props.children}
                         </div>
                     </div>
-                    <div className='grid-20 prefix-5'>
+                    <div className='grid-25'>
                         <div className='notifications'>
                             <JoinRequests requests={this.props.joinRequests}/>
                         </div>

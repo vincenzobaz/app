@@ -2,55 +2,70 @@
 
 import {GameStore} from './../stores/GameStore';
 import {StartGameModal} from './modals/StartGameModal';
+import {QuitGameModal} from './modals/QuitGameModal';
 import {FriendsAutocomplete} from './FriendsAutocomplete';
 import {debug} from "util";
 import {Friend} from "../../../common/models/Friend";
 import {Game} from "../models/Game";
-import {Modal} from "react-bootstrap";
+import {Modal, Button} from "react-bootstrap";
 import {Friends} from "../../../common/collections/Friends";
-
-
 
 interface GameToolbarProps {
   game: Game;
 }
 
 interface GameToolbarState {
-  showStartModal: boolean;
   friend: Friend;
-  
+  showStartGameModal: boolean;
+  showQuitGameModal: boolean;
 }
 
 export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarState> {
 
   constructor(props: GameToolbarProps) {
     super(props);
+
     this.state = {
-      showStartModal: false,
-      friend: null
+      friend: null,
+      showStartGameModal: false,
+      showQuitGameModal: false
     };
   }
 
   onFriendSelect(friend) {
     this.setState({
-      friend,
-      showStartModal: true
+      friend: friend,
+      showStartGameModal: true,
+      showQuitGameModal: false
     });
   }
 
-  /* eslint no-underscore-dangle: 0 */
+  onClickQuitGameButton() {
+    this.setState({
+      friend: this.state.friend,
+      showQuitGameModal: true,
+      showStartGameModal: false
+    });
+  }
+
   startGame(friend) {
     GameStore.start(friend._id);
   }
 
   onStart() {
-    this.setState({friend: this.state.friend, showStartModal: false});
+    this.setState({
+      friend: this.state.friend,
+      showStartGameModal: false,
+      showQuitGameModal: false
+    });
+
     this.startGame(this.state.friend);
   }
 
   onAbortStart() {
     this.setState({
-      showStartModal: false,
+      showStartGameModal: false,
+      showQuitGameModal: false,
       friend: null
     });
   }
@@ -65,15 +80,27 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
     debug('resume game');
   }
 
+  renderModal() {
+    if (this.state.showStartGameModal && this.state.friend) {
+      return (
+        <StartGameModal friend={this.state.friend}
+                        onOk={this.onStart.bind(this)}
+                        onCancel={this.onAbortStart.bind(this)} />
+      );
+    }
+
+    if (this.state.showQuitGameModal && this.props.game) {
+      return (
+        <QuitGameModal game={this.props.game}
+                       onQuit={this.onQuit.bind(this)}
+                       onResume={this.onResume.bind(this)}
+                       onRequestHide={(() => {})}
+                      />
+      );
+    }
+  }
+
   render() {
-    var startModal = null;
-
-    if (this.state.showStartModal && this.state.friend) {
-      startModal = <StartGameModal friend={this.state.friend}
-                                   onOk={this.onStart.bind(this)}
-                                   onCancel={this.onAbortStart.bind(this)} />;
-    } 
-
     return (
       <span>
         <span className='start-game'>
@@ -84,7 +111,7 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
         </span>
         &nbsp;
         {this.renderQuitGameButton()}
-        {startModal}
+        {this.renderModal()}
       </span>
     );
   }
@@ -95,20 +122,10 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
     }
 
     return (
-      //FIXME: We need to rework all modals due to API change
-        <Modal onHide={()=>{console.log("Rework this modal")}}></Modal> 
-      // <ModalDialog modal={<QuitGameModal game={this.props.game} onQuit={this.onQuit} onResume={this.onResume} />}>
-      //   <a role='button' data-toggle='modal' href='#modal-confirm'>
-      //     <i className='icon-signout'></i>
-      //     Quit this game
-      //   </a>
-      // </ModalDialog>
-      // <ModalTrigger modal={<QuitGameModal game={this.props.game} onQuit={this.onQuit} onResume={this.onResume} />}>
-      //   <a role='button' data-toggle='modal' href='#modal-confirm'>
-      //     <i className='icon-signout'></i>
-      //     Quit this game
-      //   </a>
-      // </ModalTrigger>
+      <Button onClick={this.onClickQuitGameButton.bind(this)}>
+        <i className='icon-signout'></i>
+        Quit this game
+      </Button>
     );
   }
 

@@ -27,14 +27,13 @@ interface EndGameState {
 }
 
 @reactMixin.decorate(LocalStorageMixin)
-
 export class EndGame extends React.Component<EndGameProps, EndGameState> {
 
   constructor(props: EndGameProps) {
     super(props);
     this.state = {
       isShown: true
-    }
+    };
   }
 
   componentWillReceiveProps(nextProps: EndGameProps) {
@@ -46,12 +45,11 @@ export class EndGame extends React.Component<EndGameProps, EndGameState> {
     const show: boolean = this.state.isShown;
     return (
         <Modal show={show} onHide={this.onRequestHide.bind(this)}>
-          <Modal.Title>{this.renderTitle()}</Modal.Title>
+          <Modal.Header>
+            <Modal.Title>{this.renderTitle()}</Modal.Title>
+          </Modal.Header>
           <Modal.Body>{this.renderBody()}</Modal.Body>
-
         </Modal>
-        
-        
     );
   }
 

@@ -194,16 +194,14 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
         <Modal show={this.state.showModal} onHide={onHide}>
           <Modal.Header>
               <Modal.Title>{this.renderTitle()}</Modal.Title>
-              </Modal.Header>
+          </Modal.Header>
           <Modal.Body>
               {this.renderBody()}
-              </Modal.Body>
+          </Modal.Body>
           <Modal.Footer>
               {this.renderFooter()}
-              </Modal.Footer>
+          </Modal.Footer>
         </Modal>
-
-
     );
   }
 
