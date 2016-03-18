@@ -1,9 +1,7 @@
 'use strict';
 import {Game} from "../models/Game";
 import {Modal} from "react-bootstrap";
-import * as reactMixin from "react-mixin";
-var LocalStorageMixin = require('react-localstorage');
-
+import * as ReactMixin from "react-mixin";
 
 export const getEndGameDesc = (game) => {
   return {
@@ -26,23 +24,33 @@ interface EndGameState {
   isShown: boolean;
 }
 
-@reactMixin.decorate(LocalStorageMixin)
 export class EndGame extends React.Component<EndGameProps, EndGameState> {
+
+  getLocalStorageKey() {
+    return `Game.${this.props.game._id}.EndGame.hidden`;
+  }
+
+  isHidden() {
+    const hidden = JSON.parse(localStorage.getItem(this.getLocalStorageKey()));
+    return hidden != null && hidden != undefined && hidden;
+  }
 
   constructor(props: EndGameProps) {
     super(props);
+
     this.state = {
-      isShown: true
+      isShown: !this.isHidden()
     };
   }
 
   componentWillReceiveProps(nextProps: EndGameProps) {
     this.props = nextProps;
-    this.setState({isShown: true});
+    this.setState({ isShown: !this.isHidden() });
   }
 
   render() {
     const show: boolean = this.state.isShown;
+
     return (
         <Modal show={show} onHide={this.onRequestHide.bind(this)}>
           <Modal.Header>
@@ -89,7 +97,8 @@ export class EndGame extends React.Component<EndGameProps, EndGameState> {
   }
 
   onRequestHide() {
-    console.log("we are requested to hide in End Game")
+    localStorage.setItem(this.getLocalStorageKey(), JSON.stringify(true));
+
     this.setState({
       isShown: false
     });
