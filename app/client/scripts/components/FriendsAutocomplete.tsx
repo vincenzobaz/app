@@ -47,6 +47,7 @@ export class FriendsAutocomplete extends React.Component<FriendsAutocompleteProp
               displayOption="name"
               customListComponent={FriendsList}
               defaultClassNames={false}
+              customClasses={{input: "form-control"}}
               className="rf-combobox"
               />
         </div>
