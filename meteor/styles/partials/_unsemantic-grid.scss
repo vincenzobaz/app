@@ -1,11 +1,13 @@
 /* ============================================ */
 /* This file has a mobile-to-desktop breakpoint */
 /* ============================================ */
+
 @media screen and (max-width: 400px) {
   @-ms-viewport {
     width: 320px;
+  }
 }
-}
+
 @media screen {
   .clear {
     clear: both;
@@ -550,7 +552,8 @@
     width: 100%;
   }
 }
-@media screen and (min-width: 768px) {
+
+@media screen and (min-width: 1200px) {
   .grid-100:before,
   .grid-100:after {
     content: ".";
