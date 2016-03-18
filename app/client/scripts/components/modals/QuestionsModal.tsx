@@ -209,7 +209,7 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
     if (!this.isDone() && !this.isTimeUp()) {
       return <span></span>;
     }
-    
+
     return (
         <span className='close' role='button' data-dismiss='modal' aria-hidden='true'
             onClick={this.props.onRequestHide}>
@@ -238,12 +238,15 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
       const onClose = this.props.onClose;
       const sendError = this.props.onSendError;
       const onREquestHide = this.onClose.bind(this);
-      return <Done game={this.props.game}
-          tile={this.props.tile}
-          answers={this.state.answers}
-          onSent={this.props.onClose}
-          onSendError={this.props.onSendError}
-          onClose={onREquestHide}/>;
+
+      return (
+        <Done game={this.props.game}
+              tile={this.props.tile}
+              answers={this.state.answers}
+              onSent={this.props.onClose}
+              onSendError={this.props.onSendError}
+              onClose={onREquestHide}/>
+      );
     }
 
     return this.renderStep();
@@ -251,30 +254,28 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
 
   renderTimeLeft(isDone) {
     if (isDone) {
-      return <span></span>;
+      return <span>&nbsp;</span>;
     }
 
     return (
-        <TimeLeft maxTime={this.props.maxTime}
-            onTimeUp={this.onTimeUp}/>
+      <TimeLeft maxTime={this.maxTime}
+                onTimeUp={this.onTimeUp.bind(this)} />
     );
   }
 
   renderFooter() {
     return (
-        <div className='grid-container'>
-          <div className='grid-25'>
-              {this.renderTimeLeft(this.isDone())}
-              </div>
-          <div className='grid-25 prefix-50'>
-              <div className='progress'>
-                <img src={progressImage(this.state.step, 'red')} alt='' width='22' height='22'/>
-              </div>
-              </div>
+      <div className='grid-container'>
+        <div className='grid-50'>
+          {this.renderTimeLeft(this.isDone())}
         </div>
+        <div className='grid-50' style={{textAlign: 'right'}}>
+          <img src={progressImage(this.state.step + 1, 'red')} alt='' width='22' height='22'/>
+        </div>
+      </div>
     );
   }
-  
+
   onClose(event: React.MouseEvent) {
     this.setState({showModal: false});
     if (this.props.onRequestHide) {
