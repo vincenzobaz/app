@@ -1,7 +1,7 @@
-import { QuestionType } from "./questions/QuestionType";
-import { Subject } from "./questions/Subject";
+import { QuestionType } from "./questions/common/QuestionType";
+import { Subject } from "./questions/common/Subject";
 import {QuestionFactory} from "./questions/QuestionFactory";
-import {KIND, Kind} from "app/common/models/questions/Kind";
+import {KIND, Kind} from "questions/common/Kind";
 
 
 export interface RawQuestion {
@@ -10,6 +10,7 @@ export interface RawQuestion {
   type: QuestionType,
   kind: Kind,
   answer?: any,
+  userAnswer?: any;
 }
 
 export default class Question {
@@ -17,8 +18,9 @@ export default class Question {
               public subject: Subject,
               public type: QuestionType,
               public kind: Kind,
-              public answer?: any) {
-  }
+              public answer?: any,
+              public userAnswer?: any) 
+  {}
 
 
 

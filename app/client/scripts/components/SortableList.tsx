@@ -1,4 +1,4 @@
-import {Item} from "../../../common/models/questions/Item";
+import {Item} from "../../../common/models/questions/common/Item";
 import {Motion, spring} from 'react-motion';
 import {SpringHelperConfig} from "react-motion";
 

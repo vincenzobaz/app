@@ -15,7 +15,7 @@ import {Modal} from 'react-bootstrap';
 import {TimeUp} from "./TimeUp";
 import {Done} from "./Done";
 import {Tile} from "../../../../common/models/Tile";
-import {KIND} from "../../../../common/models/questions/Kind";
+import {KIND} from "../../../../common/models/questions/common/Kind";
 import {QuestionTimer} from "../../boot/helpers/QuestionTimer";
 import {QuestionFactory} from "../../../../common/models/questions/QuestionFactory";
 // import {Timer} from "timer-machine";

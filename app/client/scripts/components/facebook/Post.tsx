@@ -1,5 +1,5 @@
 
-import {Subject} from "../../../../common/models/questions/Subject";
+import {Subject} from "../../../../common/models/questions/common/Subject";
 import {Picture} from "./Picture";
 import {Video} from "./Video";
 import {Link} from "./Link";

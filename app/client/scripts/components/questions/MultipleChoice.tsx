@@ -4,21 +4,25 @@
 import {getQuestionTitleByType} from './../../boot/helpers/getQuestionTitleByType'
 import {Post} from './../facebook/Post';
 import {Prop} from './../Prop';
-import {SubjectType} from "../../../../common/models/questions/SubjectType";
-import {Subject} from "../../../../common/models/questions/Subject";
-import {Choice} from "../../../../common/models/questions/Choice";
+import {SubjectType} from "../../../../common/models/questions/common/SubjectType";
+import {Subject} from "../../../../common/models/questions/common/Subject";
+import {Choice} from "../../../../common/models/questions/multiplechoice/Choice";
 import {Button} from 'react-bootstrap';
 import {QuestionProps} from "./QuestionProps";
+import * as _ from 'lodash';
 
 interface MultipleChoiceProps extends QuestionProps{
   choices: Choice[];
+  answered?: boolean;
+  correct: number;
+  selected: number;
 }
 
 interface MultipleChoiceState {
   selected: any;
 }
 
-export class MultipleChoice extends React.Component<MultipleChoiceProps,{}> {
+export class MultipleChoice extends React.Component<MultipleChoiceProps, MultipleChoiceState > {
 
   constructor(props: MultipleChoiceProps) {
     super(props);
@@ -44,8 +48,9 @@ export class MultipleChoice extends React.Component<MultipleChoiceProps,{}> {
   }
 
   renderChoice(choice, index) {
+    
     return (
-      <li key={`${Math.round(Math.random() * 100000)}`}>
+      <li key={_.uniqueId()}>
         <Button onClick={this.onChoice(choice, index).bind(this)}>
           <Prop {...choice} />
         </Button>

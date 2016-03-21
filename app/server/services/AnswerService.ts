@@ -1,7 +1,7 @@
 
 import { findIndex, zip } from "lodash";
 import Question from "../../common/models/Question";
-import { Answer, AnswerVerificationService } from "./verification/AnswerVerificationService";
+import { AnswerVerificationService } from "./verification/AnswerVerificationService";
 import { Game } from "../collections/Game";
 import { Games } from "../collections/Games";
 import { Tile } from "../../common/models/Tile";
@@ -9,17 +9,15 @@ import { GameBoardRepository } from "../repositories/GameBoardRepository";
 import { BoardStateService } from "./BoardStateService";
 import {GameStatus, GAME_STATUS} from "../../common/models/GameStatus";
 import { GameBoard } from "../../common/models/GameBoard";
-import { MultipleChoiceData, MultipleChoiceAnswer } from "./verification/MultipleChoiceVerificationService";
-import { KIND } from "../../common/models/questions/Kind";
-import { Marker } from "../../common/models/questions/Marker";
-import { GeoData } from "./verification/GeoData";
-import { OrderItem } from "./verification/OrderItem";
-import { OrderData } from "./verification/OrderData";
-import { OrderAnswer } from "./verification/OrderAnswer";
-import { GeoAnswer } from "./verification/GeoAnswer";
-import { TimelineData } from "./verification/TimelineData";
-import { TimelineAnswer } from "./verification/TimelineAnswer";
+import { KIND } from "../../common/models/questions/common/Kind";
+import { Marker } from "../../common/models/questions/geolocation/Marker";
 import { QuestionFactory } from "./../../common/models/questions/QuestionFactory";
+import {MultipleChoiceData, MultipleChoiceAnswer} from "./verification/services/MultipleChoiceVerificationService";
+import {TimelineData} from "./verification/answers/TimelineData";
+import {TimelineAnswer} from "./verification/answers/TimelineAnswer";
+import {GeoData} from "./verification/answers/GeoData";
+import {GeoAnswer} from "./verification/answers/GeoAnswer";
+import {Answer} from "./verification/answers/Answer";
 
 
 interface QuestionAnswer {
@@ -106,6 +104,10 @@ export module AnswerService {
     if (!tile) {
       throw new Meteor.Error('500', `Cannot find tile with id ${tileId.toString()}`);
     }
+    
+    tile.questions.forEach((q: Question, i: number) => {
+      q.userAnswer = answers[i];
+    });
 
     const boardState = game.boardState;
     const currentPlayer: number = game.playerTurn;
@@ -115,11 +117,12 @@ export module AnswerService {
 
     const result = AnswerVerificationService.verifyTile(tile, typedAnswers);
     const questions = tile.questions;
+    
 
-    const scores = _.zip(questions, result).map(([question, score]) => ({
-      questionId: (<Question>question)._id,
-      score: score
-    }));
+    const scores = questions.map((q: Question, i: number) => {
+      return {questionId: q._id, score: result[i]};
+    });
+
     
     const index = findIndex(tiles, (t: Tile) => t._id.toString() == tileId.toString());
     const row = Math.floor(index / 3);

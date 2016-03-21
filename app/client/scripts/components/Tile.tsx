@@ -4,9 +4,9 @@ import {Tooltip} from './bootstrap/Tooltip';
 import {Routes} from './../../../common/Routes';
 import {progressImage} from './../boot/helpers/progressImage';
 import {ModalManager} from './../ModalManager';
-import {SubjectType} from "../../../common/models/questions/SubjectType";
+import {SubjectType} from "../../../common/models/questions/common/SubjectType";
 import {Score} from "../../../common/models/Score";
-import {Kind} from "../../../common/models/questions/Kind";
+import {Kind} from "../../../common/models/questions/common/Kind";
 
 const icons = {
   Order: 'sort', // 'sort-up'

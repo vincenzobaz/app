@@ -1,6 +1,6 @@
 import { ScoreInterface, Score } from "./Score";
 import Question from "./Question";
-import {Kind, KIND} from "./questions/Kind";
+import {Kind, KIND} from "./questions/common/Kind";
 import {QuestionFactory} from "./../../common/models/questions/QuestionFactory";
 
 export interface RawTile {
@@ -62,8 +62,6 @@ export class Tile implements RawTile {
 
   static fromRaw(tile: RawTile) {
     if (tile.type == KIND.Timeline && (!tile.question1.subject || !tile.question2.subject || !tile.question3.subject)) {
-      // console.log("******************************* HEUREKA ***************************");
-      // console.log(tile);
     }
     if (!tile) {
       return null;

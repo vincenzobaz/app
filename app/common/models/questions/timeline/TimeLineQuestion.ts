@@ -1,9 +1,9 @@
-import {RawSubject, Subject} from "./Subject";
-import {QuestionType} from "./QuestionType";
-import {KIND, Kind} from "./Kind";
-import {RawQuestion, default as Question} from "../Question";
+import {RawSubject, Subject} from "./../common/Subject";
+import {QuestionType} from "./../common/QuestionType";
+import {KIND, Kind} from "./../common/Kind";
+import {RawQuestion, default as Question} from "../../Question";
 import {TimelineUnit} from "./TimelineUnit";
-import {SubjectFactory} from "./SubjectFactory";
+import {SubjectFactory} from "./../common/SubjectFactory";
 
 
 
@@ -15,6 +15,7 @@ export interface RawTimelineQuestion extends RawQuestion {
   step: number;
   threshold: number;
   answer: string;
+  userAnswer?: string;
 }
 
 export class TimelineQuestion extends Question {

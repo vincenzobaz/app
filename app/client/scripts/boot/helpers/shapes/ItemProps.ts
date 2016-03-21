@@ -1,4 +1,4 @@
-import {Subject} from "../../../../../common/models/questions/Subject";
+import {Subject} from "../../../../../common/models/questions/common/Subject";
 
 interface ItemProps {
   text?: string;

@@ -1,5 +1,5 @@
 import { GeoData } from "./GeoData";
-import { Answer } from "./AnswerVerificationService";
+import {Answer} from "./Answer";
 
 export class GeoAnswer extends Answer {
 

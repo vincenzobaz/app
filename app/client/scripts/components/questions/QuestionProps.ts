@@ -1,9 +1,9 @@
-import {SubjectType} from "../../../../common/models/questions/SubjectType";
-import {Subject} from "../../../../common/models/questions/Subject";
-import {Choice} from "../../../../common/models/questions/Choice";
-import {Marker} from "../../../../common/models/questions/Marker";
-import {Item} from "../../../../common/models/questions/Item";
-import {TimelineUnit} from "../../../../common/models/questions/TimelineUnit";
+import {SubjectType} from "../../../../common/models/questions/common/SubjectType";
+import {Subject} from "../../../../common/models/questions/common/Subject";
+import {Choice} from "../../../../common/models/questions/multiplechoice/Choice";
+import {Marker} from "../../../../common/models/questions/geolocation/Marker";
+import {Item} from "../../../../common/models/questions/common/Item";
+import {TimelineUnit} from "../../../../common/models/questions/timeline/TimelineUnit";
 
 export interface QuestionProps {
   onDone: Function;

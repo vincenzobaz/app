@@ -1,6 +1,6 @@
 
 import { TimelineData } from "./TimelineData";
-import { Answer } from "./AnswerVerificationService";
+import {Answer} from "./Answer";
 
 export class TimelineAnswer extends Answer {
   /**

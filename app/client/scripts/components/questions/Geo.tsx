@@ -5,9 +5,9 @@ import {getConfig} from './../../boot/helpers/getConfig';
 import {Post} from './../facebook/Post';
 import {GoogleMap} from './../GoogleMap';
 import {getQuestionTitleByType} from "../../boot/helpers/getQuestionTitleByType";
-import {SubjectType} from "../../../../common/models/questions/SubjectType";
-import {Subject} from "../../../../common/models/questions/Subject";
-import {Marker} from "../../../../common/models/questions/Marker";
+import {SubjectType} from "../../../../common/models/questions/common/SubjectType";
+import {Subject} from "../../../../common/models/questions/common/Subject";
+import {Marker} from "../../../../common/models/questions/geolocation/Marker";
 import * as Boots from "react-bootstrap";
 import {QuestionProps} from "./QuestionProps";
 

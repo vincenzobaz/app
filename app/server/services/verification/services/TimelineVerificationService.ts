@@ -1,11 +1,11 @@
 
-import { TimelineQuestion} from "../../../common/models/questions/TimeLineQuestion";
-import { TimelineAnswer } from "./TimelineAnswer";
-import {TimelineUnit, TIMELINE_UNIT} from "../../../common/models/questions/TimelineUnit";
 
+import {TimelineQuestion} from "../../../../common/models/questions/timeline/TimeLineQuestion";
+import {TimelineAnswer} from "../answers/TimelineAnswer";
+import {TIMELINE_UNIT} from "../../../../common/models/questions/timeline/TimelineUnit";
 var moment = require("moment");
 
-export default class TimelineVerificationService {
+export class TimelineVerificationService {
 
     /**
      * verifies the timeline answer
@@ -14,7 +14,7 @@ export default class TimelineVerificationService {
      * @param {TimelineAnswer} answer
      * @return {number} 0 for incorrect 1 for correct
      */
-    static verifyAnswer(question: TimelineQuestion, answer: TimelineAnswer) {
+    static verifyAnswer(question: TimelineQuestion, answer: TimelineAnswer): number {
         switch(question.unit) {
             case TIMELINE_UNIT.Day:
                 return moment(answer.data.date).dayOfYear() == moment(question.getAnswer()).dayOfYear()? 1: 0;

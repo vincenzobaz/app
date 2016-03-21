@@ -1,6 +1,5 @@
+import {Subject} from "./../common/Subject";
 
-
-import {Subject} from "./Subject";
 export interface OrderChoice {
     uId: string;
     subject: Subject;

@@ -5,8 +5,8 @@ import {getQuestionTitleByType} from './../../boot/helpers/getQuestionTitleByTyp
 import {Post} from './../facebook/Post';
 import {SortableList} from './../SortableList';
 import {debug} from "util";
-import {Item} from "../../../../common/models/questions/Item";
-import {SubjectType} from "../../../../common/models/questions/SubjectType";
+import {Item} from "../../../../common/models/questions/common/Item";
+import {SubjectType} from "../../../../common/models/questions/common/SubjectType";
 import {Button} from "react-bootstrap";
 import {QuestionProps} from "./QuestionProps";
 

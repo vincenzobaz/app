@@ -1,14 +1,9 @@
-import { RawSubject, Subject } from "./Subject";
-import { OrderChoice } from "./OrderChoice";
-import { QuestionType } from "./QuestionType";
-import {KIND, Kind} from "./Kind";
-import { Item } from "./Item";
-import {SubjectType, SUBJECT_TYPE} from "./SubjectType";
-import {SubjectWithId} from './SubjectWithId';
-import Question from "../Question";
-import {OrderAnswer} from "../../../server/services/verification/OrderAnswer";
-import {SubjectFactory} from "./SubjectFactory";
-import {RawQuestion} from "../Question";
+import {OrderChoice} from "./OrderChoice";
+import {QuestionType} from "./../common/QuestionType";
+import {Kind} from "./../common/Kind";
+import {Item} from "./../common/Item";
+import {SUBJECT_TYPE} from "./../common/SubjectType";
+import Question, {RawQuestion} from "../../Question";
 
 export interface RawOrderQuestion extends RawQuestion{
     _id: string | Mongo.ObjectID;
@@ -25,11 +20,13 @@ export class OrderQuestion extends Question {
   
   public items: Item[];
   constructor(_id: string | Mongo.ObjectID,
-              items: Item[],
-              answer: number[],
               type: QuestionType,
-              kind: Kind) {
-    super(_id, null, type, kind, answer);
+              kind: Kind,
+              answer: number[],
+              userAnswer: number[],
+              items: Item[]
+  ) {
+    super(_id, null, type, kind, answer, userAnswer);
     this.items = items;
     }
 
@@ -73,7 +70,14 @@ export class OrderQuestion extends Question {
 
   static orderQustionFromRaw(raw: RawOrderQuestion) {
     let items = raw.items || OrderQuestion.convertChoices(raw.choices);
-    return new OrderQuestion(raw._id, items, raw.answer, raw.type, raw.kind);
+    return new OrderQuestion(
+        raw._id,
+        raw.type,
+        raw.kind,
+        raw.answer,
+        raw.userAnswer,
+        items
+        );
   }
   
 }

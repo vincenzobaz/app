@@ -1,5 +1,7 @@
 import { OrderData } from "./OrderData";
-import { Answer } from "./AnswerVerificationService";
+import {Answer} from "./Answer";
+
+
 export class OrderAnswer extends Answer {
 
   /**

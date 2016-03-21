@@ -1,6 +1,6 @@
 
-import { Answer } from "./AnswerVerificationService";
-import { MultipleChoiceQuestion } from "../../../common/models/questions/MultipleChoiceQuestion";
+import {MultipleChoiceQuestion} from "../../../../common/models/questions/multiplechoice/MultipleChoiceQuestion";
+import {Answer} from "../answers/Answer";
 
 export class MultipleChoiceData {
     /**

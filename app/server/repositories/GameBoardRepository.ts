@@ -1,7 +1,7 @@
 import { GameBoards } from "../collections/GameBoards";
 import {GameBoard} from "../../common/models/GameBoard";
 import {Tile} from "../../common/models/Tile";
-import {KIND} from "../../common/models/questions/Kind";
+import {KIND} from "../../common/models/questions/common/Kind";
 
 
 export const GameBoardRepository = {

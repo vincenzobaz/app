@@ -3,9 +3,9 @@
 import {getQuestionTitleByType} from './../../boot/helpers/getQuestionTitleByType'
 import {Post} from '../facebook/Post';
 import {agoToDate, dateToAgo, getDateString, addUnitsToDate} from '../../boot/helpers/timeAgo';
-import {SubjectType} from "../../../../common/models/questions/SubjectType";
-import {Subject} from "../../../../common/models/questions/Subject";
-import {TimelineUnit} from "../../../../common/models/questions/TimelineUnit";
+import {SubjectType} from "../../../../common/models/questions/common/SubjectType";
+import {Subject} from "../../../../common/models/questions/common/Subject";
+import {TimelineUnit} from "../../../../common/models/questions/timeline/TimelineUnit";
 import {Button} from "react-bootstrap";
 import {QuestionProps} from "./QuestionProps";
 import pluralize from "pluralize";

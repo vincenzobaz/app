@@ -1,10 +1,10 @@
 import {RawQuestion, default as Question} from "../Question";
-import {MultipleChoiceQuestion, RawMultipleChoiceQuestion} from "./MultipleChoiceQuestion";
-import {TimelineQuestion, RawTimelineQuestion} from "./TimeLineQuestion";
-import {OrderQuestion, RawOrderQuestion} from "./OrderQuestion";
-import {GeoQuestion, RawGeoQuestion} from "./GeoQuestion";
-import {KIND, Kind} from "./Kind";
-import {SUBJECT_TYPE} from "./SubjectType";
+import {MultipleChoiceQuestion, RawMultipleChoiceQuestion} from "./multiplechoice/MultipleChoiceQuestion";
+import {TimelineQuestion, RawTimelineQuestion} from "./timeline/TimeLineQuestion";
+import {OrderQuestion, RawOrderQuestion} from "./order/OrderQuestion";
+import {GeoQuestion, RawGeoQuestion} from "./geolocation/GeoQuestion";
+import {KIND, Kind} from "./common/Kind";
+import {SUBJECT_TYPE} from "./common/SubjectType";
 
 
 export module QuestionFactory {

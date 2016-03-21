@@ -1,5 +1,5 @@
 
-import {SubjectType} from "../../../../common/models/questions/SubjectType";
+import {SubjectType} from "../../../../common/models/questions/common/SubjectType";
 const en = {
 
   TLWhenDidYouShareThisPost: 'When did you share this post?',

@@ -1,6 +1,6 @@
 
 'use strict';
-import {TimelineUnit} from "../../../../common/models/questions/TimelineUnit";
+import {TimelineUnit} from "../../../../common/models/questions/timeline/TimelineUnit";
 
 const moment = require('moment');
 

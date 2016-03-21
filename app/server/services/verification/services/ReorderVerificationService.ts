@@ -1,12 +1,9 @@
+import {OrderQuestion} from "../../../../common/models/questions/order/OrderQuestion";
+import {OrderAnswer} from "../answers/OrderAnswer";
+import {Item} from "../../../../common/models/questions/common/Item";
 
 
-import { OrderQuestion } from "../../../common/models/questions/OrderQuestion";
-import { OrderAnswer } from "./OrderAnswer";
-import {Item} from "../../../common/models/questions/Item";
-
-
-
-export const OrderVerificationService = {
+export class OrderVerificationService {
 
   /**
    * Verifies if the answer provided is at the correct location
@@ -14,9 +11,9 @@ export const OrderVerificationService = {
    * @param {OrderQuestion} question
    * @param {OrderAnswer} answer
    *
-   * @return {boolean}
+   * @return {number}
    */
-  verifyAnswer(question: OrderQuestion, answer: OrderAnswer)
+  static verifyAnswer(question: OrderQuestion, answer: OrderAnswer): number 
   {
         const right      = _.zip(question.answer, answer.data.items).map(([answer, given]) => {return answer.toString() == (<Item>given).id ? 1 : 0});
         const correct    = right.reduce((acc, cur) => acc + cur, 0);
@@ -24,7 +21,7 @@ export const OrderVerificationService = {
 
         console.log(`OrderVerificationService: got ${correct} correct answers over ${numAnswers}`);
 
-        return correct == numAnswers;
+        return correct == numAnswers? 1 : 0;
     }
 
 };
