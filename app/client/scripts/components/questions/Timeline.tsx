@@ -2,7 +2,7 @@
 'use strict';
 import {getQuestionTitleByType} from './../../boot/helpers/getQuestionTitleByType'
 import {Post} from '../facebook/Post';
-import { agoToDate, dateToAgo } from '../../boot/helpers/timeAgo';
+import {agoToDate, dateToAgo, getDateString, addUnitsToDate} from '../../boot/helpers/timeAgo';
 import {SubjectType} from "../../../../common/models/questions/SubjectType";
 import {Subject} from "../../../../common/models/questions/Subject";
 import {TimelineUnit} from "../../../../common/models/questions/TimelineUnit";
@@ -27,19 +27,27 @@ interface TimelineState {
 
 export class Timeline extends React.Component<TimelineProps, TimelineState> {
 
+  private currentDate: string;
+  
   constructor(props: TimelineProps) {
     super(props);
+    let ago = this.toRelative(props.initialDate);
     this.state = {
       ago: this.toRelative(this.props.initialDate)
     };
+    this.currentDate = addUnitsToDate(props.initialDate, ago, props.unit);
   }
   
 
-  componentWillReceiveProps(props) {
+  componentWillReceiveProps(props: TimelineProps) {
+    this.props = props;
+    let ago = this.toRelative(props.initialDate);
     this.setState({
-      ago: this.toRelative(props.default)
+      ago: ago
     });
+    this.currentDate = addUnitsToDate(props.initialDate, ago, props.unit);
   }
+
 
   toRelative(date) {
     return dateToAgo(date, this.props.unit.toString().toLowerCase());
@@ -83,8 +91,7 @@ export class Timeline extends React.Component<TimelineProps, TimelineState> {
 
   getButtonText() {
     const agoStr  = pluralize(this.props.unit.toString().toLowerCase(), this.state.ago, true);
-    const dateStr = agoToDate(this.props.initialDate, this.state.ago, this.props.unit);
-
+    const dateStr = agoToDate(this.currentDate, this.state.ago, this.props.unit);
     return `${agoStr} ago (${dateStr})`;
   }
 
@@ -96,7 +103,7 @@ export class Timeline extends React.Component<TimelineProps, TimelineState> {
 
   onSubmit() {
     this.props.onDone({
-      date: agoToDate(this.props.initialDate, this.state.ago, this.props.unit, null)
+      date: agoToDate(this.currentDate, this.state.ago, this.props.unit, null)
     });
   }
 
