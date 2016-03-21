@@ -15,8 +15,6 @@ export default class TimelineVerificationService {
      * @return {number} 0 for incorrect 1 for correct
      */
     static verifyAnswer(question: TimelineQuestion, answer: TimelineAnswer) {
-      console.log(`We have the timeline question: ${question.answer} with min: ${question.min} max: ${question.max}, initial: ${question.initialDate}`);
-      console.log("With the answer: ", answer);
         switch(question.unit) {
             case TIMELINE_UNIT.Day:
                 return moment(answer.data.date).dayOfYear() == moment(question.getAnswer()).dayOfYear()? 1: 0;
