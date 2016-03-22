@@ -2,6 +2,7 @@ interface LinkProps {
   text: string;
   url: string;
   thumbnailUrl: string;
+  answered?: boolean;
 }
 
 export class Link extends React.Component<LinkProps, {}> {
@@ -11,11 +12,21 @@ export class Link extends React.Component<LinkProps, {}> {
         <div className="post post-link">
           <blockquote>{this.props.text}</blockquote>
           {this.renderThumbnail(this.props.thumbnailUrl)}
-          <div>
-              <a href={this.props.url} target="_blank">{this.props.url}</a>
-              </div>
+          {this.renderLink()}
         </div>
     );
+  }
+  
+  renderLink() {
+    if (this.props.answered) {
+      return (
+          <div>
+            <a href={this.props.url} target="_blank">Link</a>
+          </div>
+      )
+    } else {
+      return <noscript />
+    }
   }
 
   renderThumbnail(url) {
@@ -23,7 +34,7 @@ export class Link extends React.Component<LinkProps, {}> {
       return null;
     }
 
-    return <img src={url} className="post-link-thumbnail" />;
+    return <img draggable={false} src={url} className="post-link-thumbnail" />;
   }
 
 }

@@ -237,6 +237,8 @@
 
 .post-link-thumbnail, .post-video-thumbnail {
   margin-bottom: 20px;
+  max-height: 50px;
+  max-width: 50px;
 }
 
 .question-reorder {
