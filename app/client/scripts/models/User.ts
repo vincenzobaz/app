@@ -2,12 +2,15 @@ import {Services, FacebookService} from "../../../server/MeteorUser";
 import {TrainingStatus} from "./TrainingStatus";
 import {Routes} from "../../../common/Routes";
 
+interface Profile {
+  name: string
+}
+
 interface RawUser {
   _id: Mongo.ObjectID | string;
   fb: FacebookService;
-  services : Services;
-
-
+  services: Services;
+  profile: Profile;
 }
 
 export class User {
@@ -16,10 +19,9 @@ export class User {
               public fb: FacebookService,
               public username: string,
               public services: Services,
+              public profile: Profile,
               public status: TrainingStatus = TrainingStatus.NotStarted,
               public firstTime: boolean = true
-              
-  
   ) {
   }
 

@@ -17,9 +17,10 @@ export class Player extends React.Component<PlayerProps, {}> {
 
 
   render() {
-    var classNames = this.getClassNames();
-    const friend = this.props.player as Friend;
-    const avatarUrl = friend.avatarUrl || this.getFacebookAvatar();
+    const classNames = this.getClassNames();
+    const friend     = this.props.player as Friend;
+    const name       = friend.name || this.getName()
+    const avatarUrl  = friend.avatarUrl || this.getFacebookAvatar();
 
     return (
       <div className={classNames.prefix}>
@@ -31,7 +32,7 @@ export class Player extends React.Component<PlayerProps, {}> {
             <div className="media-body">
               <h4 className="media-heading">
                 <span>{this.props.score}</span>
-                <div>{friend.name}</div>
+                <div>{name}</div>
               </h4>
               <p>{this.renderTurnText()}</p>
             </div>
@@ -57,9 +58,14 @@ export class Player extends React.Component<PlayerProps, {}> {
     };
   }
 
+  getName(): string {
+    const user = this.props.player as User;
+    return user.profile.name;
+  }
+
   getFacebookAvatar(): string {
-    let user = this.props.player as User;
-    console.log("Avatar for user: ", user);
+    const user = this.props.player as User;
     return Routes.Assets.avatars.facebook(user.services.facebook.id);
   }
+
 }
