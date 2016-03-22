@@ -37,16 +37,10 @@ export class Game {
   }
 
 
-  get opponent(): Friend | Meteor.User {
+  get opponent(): Friend {
     const opId = this.opponentId;
-
-    if (opId == Meteor.userId()) {
-      return UserStore.byId(opId);
-    }
-
     return FriendStore.byId(opId) || FriendStore.byUserId(opId);
   }
-
 
   get currentPlayerId() {
     return (this.playerTurn == 1) ? this.player1 : this.player2;

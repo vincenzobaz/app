@@ -1,9 +1,8 @@
 
-'use strict';
-
 import {Player} from './Player';
 import {Game} from "../models/Game";
 import {User} from "../models/User";
+import {Routes} from "../../../common/Routes";
 
 interface PlayersProps {
   game?: Game;
@@ -30,8 +29,12 @@ export class Players extends React.Component<PlayersProps, {}> {
       return <AbsentPlayer />;
     }
 
-    const game = this.props.game;
+    const game     = this.props.game;
     const opponent = game.opponent;
+
+    const user        = this.props.user;
+    const myName      = user.profile.name;
+    const myAvatarUrl = Routes.Assets.avatars.facebook(user.services.facebook.id);
 
     if (opponent == null) {
       return <AbsentPlayer />;
@@ -39,8 +42,19 @@ export class Players extends React.Component<PlayersProps, {}> {
 
     return (
       <div>
-        <Player player={this.props.user} isOpponent={false} isTurn={game.isMyTurnToPlay} score={game.score.me} waiting={game.isWaiting} />
-        <Player player={opponent} isTurn={!game.isMyTurnToPlay} isOpponent={true} score={game.score.them} waiting={game.isWaiting} />
+        <Player name={myName}
+                avatarUrl={myAvatarUrl}
+                isOpponent={false}
+                isTurn={game.isMyTurnToPlay}
+                score={game.score.me}
+                waiting={game.isWaiting} />
+
+        <Player name={opponent.name}
+                avatarUrl={opponent.avatarUrl}
+                isTurn={!game.isMyTurnToPlay}
+                isOpponent={true}
+                score={game.score.them}
+                waiting={game.isWaiting} />
       </div>
     );
   }
