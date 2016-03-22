@@ -10,6 +10,19 @@
   -ms-filter: "FlipH";
 }
 
+@mixin vertical-center() {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
 // Page elements
 
 .dashboard-main {
@@ -666,8 +679,18 @@ background-color : $navigationbackgroundcolor;
     display: none;
   }
 
-  .navbar-brand {
+  img.navbar-brand {
     padding: 5px;
+    display: inline-block;
+  }
+
+  .navbar-nav {
+    width: 100%;
+    text-align: center;
+    > li {
+      float: none;
+      display: inline-block;
+    }
   }
 
   @media (min-width: 768px) {
@@ -694,6 +717,10 @@ background-color : $navigationbackgroundcolor;
       padding: 1em;
       text-align: center;
       line-height: 1.6;
+
+      &.active, &.next, &.prev {
+        @include vertical-center();
+      }
     }
 
     .carousel-control {
@@ -754,7 +781,9 @@ background-color : $navigationbackgroundcolor;
 
 .call-to-action {
     text-align: center;
-
+    .btn {
+      font-size: 1.6em;
+    }
 }
 
 .social-icon {

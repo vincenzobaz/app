@@ -29,7 +29,7 @@ export class Home extends React.Component<{}, HomeState> {
     const sections = [
       "Intro",
       "How to play",
-      "Images",
+      "Screen shot",
       "Privacy",
       "Play"
     ];
@@ -52,7 +52,7 @@ export class Home extends React.Component<{}, HomeState> {
     return (
       <Navbar fluid={true} fixedTop={true}>
         <Nav>
-          {[brand, ...items]}
+          {[/*brand,*/ ...items]}
         </Nav>
       </Navbar>
     );
@@ -88,17 +88,19 @@ export class Home extends React.Component<{}, HomeState> {
             <section title="How to play">
               <h2>How to play</h2>
               <div className='copy'>
-                Ever played <a href="https://en.wikipedia.org/wiki/Tic-tac-toe">Tic-Tac-Toe</a>?
-                Then you are already a master of reminisce.me! There is only one catch. If you
-                want to conquer a tile, you have to remember as much as you can of your Facebook
-                profile. Who liked your post? When did you post that interesting link?  Who
-                commented on that weird picture? Test you memory and win the game against a
-                random opponent, or your own friends!
+                <p>
+                  Ever played <a href="https://en.wikipedia.org/wiki/Tic-tac-toe">Tic-Tac-Toe</a>?
+                  Then you are already a master of reminisce.me! There is only one catch. If you
+                  want to conquer a tile, you have to remember as much as you can of your Facebook
+                  profile. Who liked your post? When did you post that interesting link?  Who
+                  commented on that weird picture? Test you memory and win the game against a
+                  random opponent, or your own friends!
+                </p>
               </div>
             </section>
           </CarouselItem>
           <CarouselItem>
-            <section title="Images">
+            <section title="Screen shot">
               <img src='images/home-1.jpg' alt='' width='650' height='590' />
             </section>
           </CarouselItem>
