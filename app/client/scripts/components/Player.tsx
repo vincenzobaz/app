@@ -1,6 +1,7 @@
 
 import {Friend} from "../../../common/models/Friend";
 import {User} from "../models/User";
+import {Routes} from "../../../common/Routes";
 
  
 
@@ -18,7 +19,7 @@ export class Player extends React.Component<PlayerProps, {}> {
   render() {
     var classNames = this.getClassNames();
     const friend = this.props.player as Friend;
-    const avatarUrl = friend.avatarUrl;
+    const avatarUrl = friend.avatarUrl || this.getFacebookAvatar();
 
     return (
       <div className={classNames.prefix}>
@@ -56,4 +57,9 @@ export class Player extends React.Component<PlayerProps, {}> {
     };
   }
 
+  getFacebookAvatar(): string {
+    let user = this.props.player as User;
+    console.log("Avatar for user: ", user);
+    return Routes.Assets.avatars.facebook(user.services.facebook.id);
+  }
 }

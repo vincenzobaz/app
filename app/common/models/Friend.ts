@@ -20,7 +20,6 @@ export class Friend {
                 public name: string,
                 public friendOf: string,
                 public isBot: boolean) {
-Mongo.ObjectID
     }
   
     get avatarUrl() {
