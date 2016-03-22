@@ -657,6 +657,26 @@ background-color : $navigationbackgroundcolor;
     margin-bottom: 2em;
   }
 
+  header {
+    display: none;
+  }
+
+  .navbar-brand {
+    padding: 5px;
+  }
+
+  @media (min-width: 768px) {
+    header {
+      display: block;
+      height: 55px;
+    }
+
+    .navbar > .container .navbar-brand,
+    .navbar > .container-fluid .navbar-brand {
+        margin-left: 0;
+    }
+  }
+
   .carousel {
     height: 100%;
 
@@ -669,6 +689,11 @@ background-color : $navigationbackgroundcolor;
       padding: 1em;
       text-align: center;
       line-height: 1.6;
+    }
+
+    .carousel-control {
+      color: #175A82;
+      background-image: none;
     }
   }
 }

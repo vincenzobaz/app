@@ -3,7 +3,19 @@ import {Carousel, CarouselItem, Navbar, NavItem, Nav} from "react-bootstrap";
 
 import {FacebookStore} from "../stores/FacebookStore";
 
-export class Home extends React.Component<{}, {}> {
+interface HomeState {
+  index: number
+}
+
+export class Home extends React.Component<{}, HomeState> {
+
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      index: 0
+    };
+  }
 
   componentDidMount() {
     jQuery.getScript("//cdn.iubenda.com/iubenda.js");
@@ -23,7 +35,11 @@ export class Home extends React.Component<{}, {}> {
     ];
 
     const items = sections.map((title, index) =>
-      <NavItem key={index}>{title}</NavItem>);
+      <NavItem key={index} active={this.state.index == index}
+               onClick={this.handleSelect.bind(this, index)}>
+        {title}
+      </NavItem>
+    );
 
     const brand = (
       <li key={-1}>
@@ -42,13 +58,19 @@ export class Home extends React.Component<{}, {}> {
     );
   }
 
+  handleSelect(selectedIndex: number) {
+    this.setState({
+      index: selectedIndex,
+    });
+  }
+
   render() {
     return (
       <div id="home">
         <header id="main-header">
           {this.renderNav()}
         </header>
-        <Carousel wrap={false} interval={0}>
+        <Carousel activeIndex={this.state.index} onSelect={this.handleSelect.bind(this)} wrap={false} interval={0}>
           <CarouselItem>
             <section title="Intro">
               <div className='logo'>
