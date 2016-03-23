@@ -81,5 +81,14 @@
     max-width: 50px;
 }
 
+.question-navigation {
+    text-align: center;
+  display: flex;
 
+ 
+  }
 
+.question-navigation-button {
+  flex-basis: 0;
+  flex-grow: 1;
+}

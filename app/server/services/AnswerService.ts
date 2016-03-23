@@ -13,11 +13,11 @@ import { KIND } from "../../common/models/questions/common/Kind";
 import { Marker } from "../../common/models/questions/geolocation/Marker";
 import { QuestionFactory } from "./../../common/models/questions/QuestionFactory";
 import {MultipleChoiceData, MultipleChoiceAnswer} from "./verification/services/MultipleChoiceVerificationService";
-import {TimelineData} from "./verification/answers/TimelineData";
-import {TimelineAnswer} from "./verification/answers/TimelineAnswer";
-import {GeoData} from "./verification/answers/GeoData";
-import {GeoAnswer} from "./verification/answers/GeoAnswer";
-import {Answer} from "./verification/answers/Answer";
+import {TimelineData} from "../../common/models/questions/answers/TimelineData";
+import {TimelineAnswer} from "../../common/models/questions/answers/TimelineAnswer";
+import {GeoData} from "../../common/models/questions/answers/GeoData";
+import {GeoAnswer} from "../../common/models/questions/answers/GeoAnswer";
+import {Answer} from "./../../common/models/questions/answers/Answer";
 
 
 interface QuestionAnswer {
@@ -144,6 +144,7 @@ export module AnswerService {
     }
 
     tile.disabled = true;
+    tile.answered = true;
 
     const filterMoves = m => m.row !== row || m.column !== col;
 

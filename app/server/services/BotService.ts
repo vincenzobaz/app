@@ -15,13 +15,13 @@ import {Game} from "../collections/Game";
 import {Entry, indexArray} from "../../common/helpers/indexedArray";
 import * as _ from "lodash";
 import User = Meteor.User;
-import {TimelineData} from "./verification/answers/TimelineData";
-import {TimelineAnswer} from "./verification/answers/TimelineAnswer";
+import {TimelineData} from "../../common/models/questions/answers/TimelineData";
+import {TimelineAnswer} from "../../common/models/questions/answers/TimelineAnswer";
 import {MultipleChoiceData, MultipleChoiceAnswer} from "./verification/services/MultipleChoiceVerificationService";
-import {GeoData} from "./verification/answers/GeoData";
-import {GeoAnswer} from "./verification/answers/GeoAnswer";
-import {OrderData} from "./verification/answers/OrderData";
-import {OrderAnswer} from "./verification/answers/OrderAnswer";
+import {GeoData} from "../../common/models/questions/answers/GeoData";
+import {GeoAnswer} from "../../common/models/questions/answers/GeoAnswer";
+import {OrderData} from "../../common/models/questions/answers/OrderData";
+import {OrderAnswer} from "../../common/models/questions/answers/OrderAnswer";
 
 
 const BOT_USERNAME = 'bot';

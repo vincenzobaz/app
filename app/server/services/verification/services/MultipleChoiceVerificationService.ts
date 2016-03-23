@@ -1,6 +1,6 @@
 
 import {MultipleChoiceQuestion} from "../../../../common/models/questions/multiplechoice/MultipleChoiceQuestion";
-import {Answer} from "../answers/Answer";
+import {Answer} from "../../../../common/models/questions/answers/Answer";
 
 export class MultipleChoiceData {
     /**

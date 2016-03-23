@@ -1,5 +1,5 @@
 import {OrderQuestion} from "../../../../common/models/questions/order/OrderQuestion";
-import {OrderAnswer} from "../answers/OrderAnswer";
+import {OrderAnswer} from "../../../../common/models/questions/answers/OrderAnswer";
 import {Item} from "../../../../common/models/questions/common/Item";
 
 

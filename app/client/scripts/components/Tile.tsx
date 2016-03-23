@@ -28,6 +28,7 @@ interface TileProps {
   opponentId?: string | Mongo.ObjectID;
   score: Score;
   disabled: boolean;
+  answered: boolean;
   
 }
 
@@ -62,7 +63,7 @@ export class Tile extends React.Component<TileProps, {}> {
   }
 
   isDisabled() {
-    return this.props.disabled;
+    return this.props.disabled && !this.props.answered;
   }
 
   getCellClassNames() {

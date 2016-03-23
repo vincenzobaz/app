@@ -3,7 +3,6 @@
 import {ErrorStore} from './../../stores/ErrorStore';
 import {progressImage} from './../../boot/helpers/progressImage';
 import {TimeLeft} from './../TimeLeft';
-import {AnswerStore} from './../../stores/AnswerStore';
 import {MultipleChoice} from './../questions/MultipleChoice';
 import {Timeline} from './../questions/Timeline';
 import {Geo} from './../questions/Geo';
@@ -18,6 +17,7 @@ import {Tile} from "../../../../common/models/Tile";
 import {KIND} from "../../../../common/models/questions/common/Kind";
 import {QuestionTimer} from "../../boot/helpers/QuestionTimer";
 import {QuestionFactory} from "../../../../common/models/questions/QuestionFactory";
+import {Button} from 'react-bootstrap';
 // import {Timer} from "timer-machine";
 
 
@@ -86,7 +86,13 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
 
   nextStep() {
     this.setState({
-      step: this.state.step + 1
+      step: Math.min(this.state.step + 1, this.props.tile.questions.length - 1)
+    });
+  }
+  
+  previousStep() {
+    this.setState({
+      step: Math.max(this.state.step - 1, 0) 
     });
   }
 
@@ -189,17 +195,18 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
   }
 
   render() {
-    const onHide = this.props.onRequestHide? this.props.onRequestHide.bind(this): this.onClose.bind(this);
+    const onHide = this.props.onRequestHide ? this.props.onRequestHide.bind(this) : this.onClose.bind(this);
+    const footer = this.props.tile.answered ? this.renderDoneFooter() : this.renderFooter();
     return (
         <Modal show={this.state.showModal} onHide={onHide}>
           <Modal.Header>
-              <Modal.Title>{this.renderTitle()}</Modal.Title>
+            <Modal.Title>{this.renderTitle()}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-              {this.renderBody()}
+            {this.renderBody()}
           </Modal.Body>
           <Modal.Footer>
-              {this.renderFooter()}
+            {footer}
           </Modal.Footer>
         </Modal>
     );
@@ -212,7 +219,7 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
 
     return (
         <span className='close' role='button' data-dismiss='modal' aria-hidden='true'
-            onClick={this.props.onRequestHide}>
+              onClick={this.props.onRequestHide}>
         <i className='icon-remove-sign icon-2x'></i>
       </span>
     );
@@ -240,12 +247,12 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
       const onREquestHide = this.onClose.bind(this);
 
       return (
-        <Done game={this.props.game}
-              tile={this.props.tile}
-              answers={this.state.answers}
-              onSent={this.props.onClose}
-              onSendError={this.props.onSendError}
-              onClose={onREquestHide}/>
+          <Done game={this.props.game}
+                tile={this.props.tile}
+                answers={this.state.answers}
+                onSent={this.props.onClose}
+                onSendError={this.props.onSendError}
+                onClose={onREquestHide}/>
       );
     }
 
@@ -258,29 +265,59 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
     }
 
     return (
-      <TimeLeft maxTime={this.maxTime}
-                onTimeUp={this.onTimeUp.bind(this)} />
+        <TimeLeft maxTime={this.maxTime}
+                  onTimeUp={this.onTimeUp.bind(this)}/>
     );
   }
 
   renderFooter() {
     return (
-      <div className='grid-container'>
-        <div className='grid-50'>
-          {this.renderTimeLeft(this.isDone())}
+        <div className='grid-container'>
+          <div className='grid-25'>
+            {this.renderTimeLeft(this.isDone())}
+          </div>
+
+
+          <div className='grid-25' style={{textAlign: 'right'}}>
+            <img src={progressImage(this.state.step + 1, 'red')} alt='' width='22' height='22'/>
+          </div>
         </div>
-        <div className='grid-50' style={{textAlign: 'right'}}>
-          <img src={progressImage(this.state.step + 1, 'red')} alt='' width='22' height='22'/>
-        </div>
-      </div>
     );
   }
 
+  renderDoneFooter() {
+    let previousDisabled = this.state.step == 0;
+    let nextDisabled = this.state.step == this.steps.length - 1;
+    return (
+    <div className='grid-container'>
+
+      <div className="grid-100 question-navigation">
+        <Button className="question-navigation-button" disabled={previousDisabled}
+                onClick={this.onClickPrevious.bind(this)}>
+          Previous
+        </Button>
+        <Button className="question-navigation-button" disabled={nextDisabled}
+        onClick={this.onClickNext.bind(this)}>
+          Next
+        </Button>
+      </div>
+    </div>
+    )
+  }
+  
+  onClickNext() {
+    this.nextStep();
+  }
+
+  onClickPrevious() {
+    this.previousStep();
+  }
+  
   onClose(event: React.MouseEvent) {
     this.setState({showModal: false});
     if (this.props.onRequestHide) {
       this.props.onRequestHide(event);
-    } 
+    }
   }
 
 }

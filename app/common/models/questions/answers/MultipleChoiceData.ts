@@ -1,0 +1,3 @@
+interface MultipleChoiceData {
+  choice: number
+}

@@ -1,4 +1,4 @@
-import {GeoAnswer} from "../answers/GeoAnswer";
+import {GeoAnswer} from "../../../../common/models/questions/answers/GeoAnswer";
 import {GeoQuestion} from "../../../../common/models/questions/geolocation/GeoQuestion";
 
 
