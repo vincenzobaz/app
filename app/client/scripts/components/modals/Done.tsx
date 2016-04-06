@@ -1,10 +1,10 @@
 
 import {Game} from "../../models/Game";
 import {Answer} from "../../models/Answer";
-import {debug} from "util";
 import {AnswerStore} from "./../../stores/AnswerStore";
 import {Tile} from "../../../../common/models/Tile";
-import * as Boots from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
+import {Result} from "../../models/Result";
 
 interface DoneProps {
   game: Game;
@@ -13,6 +13,7 @@ interface DoneProps {
   onSent: Function;
   onSendError: Function;
   onClose: Function;
+  onClickPrevious;
 }
 
 interface DoneState {
@@ -55,7 +56,7 @@ export class Done extends React.Component<DoneProps, DoneState> {
             result: res
           });
 
-          this.props.onSent();
+          this.props.onSent(Tile.fromRaw(res.tile));
         });
   }
 
@@ -78,9 +79,6 @@ export class Done extends React.Component<DoneProps, DoneState> {
           <div className="results">
               You got <span className="correct">{result.correct}</span> answers right,
             and <span className="wrong">{result.wrong}</span> wrong.
-              </div>
-          <div>
-              <Boots.Button onClick={this.props.onClose}>Close</Boots.Button>
               </div>
         </div>
     );

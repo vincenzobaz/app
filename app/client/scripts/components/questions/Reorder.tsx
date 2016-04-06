@@ -1,5 +1,3 @@
-'use strict';
-
 import {getQuestionTitleByType} from './../../boot/helpers/getQuestionTitleByType'
 import {Post} from './../facebook/Post';
 import {SortableList} from './../SortableList';
@@ -26,6 +24,8 @@ interface ReorderState {
 
 export class Reorder extends React.Component<ReorderProps, ReorderState> {
 
+  private userAnswer: Item[];
+  
   constructor(props: ReorderProps) {
     super(props);
     this.prepareState(props)
@@ -36,10 +36,9 @@ export class Reorder extends React.Component<ReorderProps, ReorderState> {
     this.prepareState(props);
   }
   
-  prepareState(props) {
+  prepareState(props: ReorderProps) {
     let items = props.items;
-    if (props.answer != null) {
-      console.log("we are preparing the state");
+    if (props.answer != null && props.userAnswer) {
       items = props.answer.map((i: number) => {return items.find((item: Item) => {return item.id == i})});
     }
     this.state = {
@@ -91,13 +90,13 @@ export class Reorder extends React.Component<ReorderProps, ReorderState> {
   }
 
   onSort(items) {
-    this.state.items = items;
+    this.userAnswer = items;
   }
 
   onDone() {
     console.log("we are done");
     this.props.onDone({
-      items: this.state.items
+      items: this.userAnswer
     });
   }
 

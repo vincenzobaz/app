@@ -68,10 +68,6 @@ export class Timeline extends React.Component<TimelineProps, {} > {
       let afterDate: Moment = moment(date);
       beforeDate.subtract(before, unit);
       afterDate.add(after, unit);
-      console.log(`
-                      the answer given: ${userAnswer.format(format)},
-                       actual answer: ${answer.format(format)} 
-                       is between ${beforeDate.format(format)} - ${afterDate.format(format)}: ${this.inBetweenInclusive(userAnswer, beforeDate, afterDate, unit)}`);
       if (this.inBetweenInclusive(userAnswer, beforeDate, afterDate, unit) && this.inBetweenInclusive(answer, beforeDate, afterDate, unit) ) {
         className = "button-correct";
       } else if (this.inBetweenInclusive(userAnswer, beforeDate, afterDate, unit)) {

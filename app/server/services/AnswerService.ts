@@ -172,7 +172,8 @@ export module AnswerService {
       win: wins,
       draw: draw,
       correct: correctAnswersNum,
-      wrong: wrongAnswersNum
+      wrong: wrongAnswersNum,
+      tile: tile
     };
 
     console.log(`Result of player ${currentPlayer} turn:`, returnValue);

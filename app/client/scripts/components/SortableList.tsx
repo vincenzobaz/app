@@ -166,6 +166,8 @@ export class SortableList extends React.Component<SortableListProps, SortableLis
 
   handleMouseUp = (): void => {
     this.setState({isPressed: false, delta: 0});
+    
+    this.props.onSort(this.state.order.map((i: number) => {return this.state.items[i]}));
   };
 
 
@@ -274,8 +276,6 @@ export class SortableList extends React.Component<SortableListProps, SortableLis
     let changedHeight = itemsHeight[index] != height;
     
     if (changedHeight) {
-      console.log("we height changed for ", index);
-    
       itemsHeight[index] = height;
       this.setState({
         itemHeight: itemsHeight,

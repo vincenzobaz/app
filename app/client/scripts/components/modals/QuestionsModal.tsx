@@ -41,6 +41,7 @@ interface QuestionModalState {
   answers?: any[];
   done?: boolean;
   showModal?: boolean;
+  tile?: Tile;
 }
 
 
@@ -63,7 +64,8 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
       timeUp: false,
       step: -1,
       answers: [],
-      showModal: true
+      showModal: true,
+      tile: props.tile
     };
   }
 
@@ -85,14 +87,16 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
   }
 
   nextStep() {
+
     this.setState({
-      step: Math.min(this.state.step + 1, this.props.tile.questions.length - 1)
+      step: Math.min(this.state.step + 1, this.state.tile.questions.length),
     });
+
   }
-  
+
   previousStep() {
     this.setState({
-      step: Math.max(this.state.step - 1, 0) 
+      step: Math.max(this.state.step - 1, 0)
     });
   }
 
@@ -102,7 +106,7 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
 
 
   getSteps() {
-    return this.props.questions.map(this.questionToStep.bind(this))
+    return this.state.tile.questions.map(this.questionToStep.bind(this))
         .filter(q => q != null);
   }
 
@@ -149,12 +153,20 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
   }
 
   nextQuestion() {
-    this.timers[this.state.step + 1].start();
+    if (this.state.step == this.state.tile.questions.length - 1) {
+      this.setState({
+        done: true
+      });
+    } else {
+      this.timers[this.state.step + 1].start();
+    }
+
     this.nextStep();
+
   }
 
   isDone() {
-    return this.state.answers.length == this.props.questions.length;
+    return this.state.done;
   }
 
   isTimeUp() {
@@ -186,17 +198,15 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
       timeUp: this.state.timeUp,
       step: this.state.step,
       answers: this.state.answers,
-      done: this.isDone()
     });
 
-    if (!this.isDone()) {
-      this.nextQuestion();
-    }
+    this.nextQuestion();
+    
   }
 
   render() {
     const onHide = this.props.onRequestHide ? this.props.onRequestHide.bind(this) : this.onClose.bind(this);
-    const footer = this.props.tile.answered ? this.renderDoneFooter() : this.renderFooter();
+    const footer = this.state.tile.answered ? this.renderDoneFooter() : this.renderFooter();
     return (
         <Modal show={this.state.showModal} onHide={onHide}>
           <Modal.Header>
@@ -235,24 +245,20 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
 
   renderBody() {
     if (this.isTimeUp()) {
-      return <TimeUp game={this.props.game} tile={this.props.tile}/>;
+      return <TimeUp game={this.props.game} tile={this.state.tile}/>;
     }
 
     if (this.isDone()) {
-      const game = this.props.game;
-      const tile = this.props.tile;
-      const answers = this.state.answers;
-      const onClose = this.props.onClose;
-      const sendError = this.props.onSendError;
       const onREquestHide = this.onClose.bind(this);
-
       return (
           <Done game={this.props.game}
-                tile={this.props.tile}
+                tile={this.state.tile}
                 answers={this.state.answers}
-                onSent={this.props.onClose}
+                onSent={this.onAnswerReceived.bind(this)}
                 onSendError={this.props.onSendError}
-                onClose={onREquestHide}/>
+                onClose={onREquestHide}
+                onClickPrevious={this.onClickPrevious.bind(this)}
+          />
       );
     }
 
@@ -287,37 +293,60 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
 
   renderDoneFooter() {
     let previousDisabled = this.state.step == 0;
-    let nextDisabled = this.state.step == this.steps.length - 1;
-    return (
-    <div className='grid-container'>
+    let nextDisabled = this.state.step >= this.steps.length - 1;
+    let nextButton = <noscript/>;
+    let previousButtonText = "Previous";
+    if (this.state.done) {
+      previousButtonText = "See answers";
+    }
+    if (nextDisabled) {
+      nextButton = <Button className="question-navigation-button"
+                                     onClick={this.onClose.bind(this)}>
+        Close
+      </Button>;
 
-      <div className="grid-100 question-navigation">
-        <Button className="question-navigation-button" disabled={previousDisabled}
-                onClick={this.onClickPrevious.bind(this)}>
-          Previous
-        </Button>
-        <Button className="question-navigation-button" disabled={nextDisabled}
-        onClick={this.onClickNext.bind(this)}>
-          Next
-        </Button>
-      </div>
-    </div>
+    } else {
+      nextButton = <Button className="question-navigation-button" onClick={this.onClickNext.bind(this)}>
+        Next
+      </Button>
+    }
+    
+    return (
+        <div className='grid-container'>
+
+          <div className="grid-100 question-navigation">
+            <Button className="question-navigation-button" disabled={previousDisabled}
+                    onClick={this.onClickPrevious.bind(this)}>
+              {previousButtonText}
+            </Button>
+            {nextButton}
+          </div>
+        </div>
     )
   }
-  
+
   onClickNext() {
     this.nextStep();
   }
 
   onClickPrevious() {
     this.previousStep();
+    this.state.done = false;
   }
-  
+
   onClose(event: React.MouseEvent) {
     this.setState({showModal: false});
     if (this.props.onRequestHide) {
       this.props.onRequestHide(event);
     }
+  }
+
+  onAnswerReceived(tile: Tile) {
+    console.log("we received answer", tile, tile.questions);
+    this.setState({
+      tile: tile
+    });
+    this.steps = this.getSteps();
   }
 
 }
