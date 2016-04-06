@@ -48,6 +48,16 @@
 	background-color: rgb(255, 255, 255);
 	box-sizing: border-box;
 	-webkit-box-sizing: border-box;
+  width: 94%;
+
+  .post-media {
+    text-align: center;
+    img {
+      margin: 10px;
+      max-height: 100px;
+      max-width: 100px;
+    }
+  }
 }
 
 
