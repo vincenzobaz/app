@@ -1,34 +1,13 @@
 
-
-import {getEndGameDesc} from './../components/EndGame';
-import {ModalManager} from './../ModalManager';
-import {Board} from './../components/Board';
+import {ModalManager} from "./../ModalManager";
+import {Board} from "./../components/Board";
 import {Game} from "../models/Game";
-
 
 interface PlayGameProps {
   currentGame: Game;
 }
+
 export class PlayGame extends React.Component<PlayGameProps, {}> {
-
-
-
-  componentDidUpdate() {
-    if (this.hasGameEnded()) { 
-      this.showEndModal();
-    }
-  }
-
-  componentDidMount() {
-    if (this.hasGameEnded()) {
-      this.showEndModal();
-    }
-  }
-
-  showEndModal() {
-    const endGame = getEndGameDesc(this.props.currentGame);
-    ModalManager.showModal(endGame);
-  }
 
   render() {
     const game = this.props.currentGame;

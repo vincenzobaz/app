@@ -5,7 +5,6 @@ import {Game} from "../models/Game";
 import {Games} from "../collections/Games";
 import {GameStore} from "../stores/GameStore";
 import {ModalManager} from "../ModalManager";
-import {getEndGameDesc} from "./EndGame";
 
 interface FooterProps {
   currentGame?: Game;
@@ -40,15 +39,6 @@ export class Footer extends React.Component<FooterProps, {}> {
       GameStore.pause();
       Session.set('page', page);
     };
-  }
-
-  executeTest() {
-    return (e: React.MouseEvent) => {
-      const game = Games.findOne();
-      const endGame = getEndGameDesc(game);
-      ModalManager.showModal(endGame);
-    }
-
   }
 
 }

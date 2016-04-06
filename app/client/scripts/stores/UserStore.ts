@@ -1,5 +1,4 @@
 
-
 export module UserStore {
 
   export function isLoggedIn() {
