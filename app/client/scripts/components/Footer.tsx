@@ -13,7 +13,7 @@ interface FooterProps {
 }
 
 export class Footer extends React.Component<FooterProps, {}> {
-  
+
   render() {
     return (
       <ul className='menu'>
@@ -22,15 +22,12 @@ export class Footer extends React.Component<FooterProps, {}> {
               <img src={Routes.Assets.at('images/reminisce-logo-ios.png')} alt='Reminisce' width='48' height='48' />
             </a>
         </li>
-        <li className=''>
+        {/*<li className=''>
           <a href="#" onClick={this.showPage('about')}>About</a>
-        </li>
-        <li className=''>
-          <a href="#" onClick={this.executeTest()}>Test</a>
-        </li>
-        <li className='right'>
+        </li>*/}
+        {/*<li className='right'>
           <a href="#" onClick={this.showPage('account')}>Account</a>
-        </li>
+        </li>*/}
         <li className='manage-game right'>
           <GameToolbar game={this.props.currentGame} />
         </li>
