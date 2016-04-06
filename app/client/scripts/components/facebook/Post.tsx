@@ -6,9 +6,10 @@ import {Link} from "./Link";
 import {Page} from "./Page";
 import {Text} from "./Text";
 import {Comment} from "./Comment";
+
 export class None extends React.Component<{}, {}>{
   render() {
-    return <noscript />;
+    return null;
   }
 }
 
@@ -27,25 +28,20 @@ const types =  {
   PagePost    : Page,
 };
 
-
 interface PostProps {
   post: Subject;
   interactive?: boolean;
 }
 
 export class Post extends React.Component<PostProps, {}>{
-  
 
   constructor(props: PostProps) {
     super(props);
   }
-  
-
-  
 
   render() {
     if (!this.props.post || !this.props.post.type) {
-      return <noscript />;
+      return null;
     }
 
     const post: Subject = this.props.post;

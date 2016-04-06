@@ -10,7 +10,6 @@ interface PlayerProps {
 
 export class Player extends React.Component<PlayerProps, {}> {
 
-
   render() {
     const classNames = this.getClassNames();
 
@@ -44,7 +43,7 @@ export class Player extends React.Component<PlayerProps, {}> {
 
   getClassNames() {
     return {
-      pull: 'pull-' + (this.props.isOpponent ? 'right' : 'left'),
+      pull: 'avatar pull-' + (this.props.isOpponent ? 'right' : 'left'),
       prefix: 'grid-30' + (this.props.isOpponent ? '' : ' prefix-20'),
       player: 'player' + (this.props.isTurn ? ' turn' : '') + (this.props.isOpponent ? ' opponent' : '')
     };

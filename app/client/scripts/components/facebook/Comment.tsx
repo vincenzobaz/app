@@ -9,13 +9,17 @@ interface CommentProps {
 export class Comment extends React.Component<CommentProps, {}> {
 
   render() {
+    if (!this.props.comment) {
+      return null;
+    }
+
     return (
-        <div>
-          <Post post={this.props.post} interactive={false} />
-          <div className="post post-comment">
-              <blockquote>{this.props.comment}</blockquote>
-              </div>
+      <div>
+        <Post post={this.props.post} interactive={false} />
+        <div className="post post-comment">
+          <blockquote>{this.props.comment}</blockquote>
         </div>
+      </div>
     );
   }
 

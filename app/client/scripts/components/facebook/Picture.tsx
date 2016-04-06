@@ -1,4 +1,5 @@
 import {Zoomable} from "../jquery/Zoomable";
+
 interface PictureProps {
   imageUrl: string;
   text?: string;
@@ -12,30 +13,38 @@ export class Picture extends React.Component<PictureProps, {}>{
   }
 
   render() {
+    if (!this.props.imageUrl) {
+      return null;
+    }
+
     return (
-        <div className="post post-picture">
-          {this.renderPicture()}
-          {this.renderPictureCaption(this.props.text)}
-        </div>
+      <div className="post post-picture">
+        {this.renderPicture()}
+        {this.renderPictureCaption(this.props.text)}
+      </div>
     );
   }
 
   renderPicture() {
-    
-    if (this.props.interactive) {
-      return (
-          <Zoomable url="miau">
-
-          </Zoomable>
-        // <Zoomable url={this.props.imageUrl}>
-        //   <figure className="zoomable">
-        //     <img src={this.props.imageUrl} alt="" />
-        //   </figure>
-        // </Zoomable>
-      );
+    if (!this.props.imageUrl) {
+      return null;
     }
 
-    return <img className="reorderImage" draggable={false} src={this.props.imageUrl} alt="" />;
+    // if (this.props.interactive) {
+    //   return (
+    //     <Zoomable url={this.props.imageUrl}>
+    //       <figure className="zoomable">
+    //         <img src={this.props.imageUrl} alt="" />
+    //       </figure>
+    //     </Zoomable>
+    //   );
+    // }
+
+    return (
+      <div className="post-media">
+        <img draggable={false} src={this.props.imageUrl} alt="" />
+      </div>
+    );
   }
 
   renderPictureCaption(caption) {
@@ -44,9 +53,9 @@ export class Picture extends React.Component<PictureProps, {}>{
     }
 
     return (
-        <div className="picture-caption">
-          {caption}
-        </div>
+      <div className="picture-caption">
+        {caption}
+      </div>
     );
   }
 

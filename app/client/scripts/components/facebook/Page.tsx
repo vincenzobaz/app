@@ -8,10 +8,10 @@ export class Page extends React.Component<PageProps, {}> {
 
   render() {
     return (
-        <div className="post post-page">
-          {this.renderThumbnail()}
-          <span>{this.props.name}</span>
-        </div>
+      <div className="post post-page">
+        {this.renderThumbnail()}
+        <span>{this.props.name}</span>
+      </div>
     );
   }
 
@@ -20,7 +20,11 @@ export class Page extends React.Component<PageProps, {}> {
       return null;
     }
 
-    return <img draggable={false} src={this.props.photoUrl} className="post-page-thumbnail"/>;
+    return (
+      <div className="post-media">
+        <img draggable={false} src={this.props.photoUrl} alt="" />
+      </div>
+    );
   }
 
 }

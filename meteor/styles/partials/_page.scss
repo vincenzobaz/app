@@ -205,11 +205,11 @@
   }
 
   blockquote {
-    font-style: italic;
-    color: $neutralcolor;
-
     @include zero;
-    margin-bottom: $baselineheight;
+
+    color: $neutralcolor;
+    font-style: italic;
+    padding-left: 10px;
   }
 
 }
@@ -245,17 +245,19 @@
 
 .post-text {
   blockquote {
-    margin-bottom: 10px;
+    margin-bottom: 0;
   }
   img {
     max-height: 350px;
   }
 }
 
-.post-link-thumbnail, .post-video-thumbnail {
-  margin-bottom: 20px;
-  max-height: 50px;
-  max-width: 50px;
+.post-media {
+  text-align: center;
+  img {
+    max-height: 200px;
+    max-width: 200px;
+  }
 }
 
 .question-reorder {
@@ -355,6 +357,11 @@
 
 }
 
+
+.question-subject {
+  margin-bottom: 20px;
+}
+
 .question-geo {
 
     iframe {
@@ -389,10 +396,6 @@
       input {
         margin-bottom: 15px;
       }
-    }
-
-    .question-subject {
-      margin-bottom: 20px;
     }
 
     .post-page {
@@ -464,14 +467,16 @@
     }
   }
 
-
   .player {
-      padding: 0 0 $baselineheight*2  0;
+    padding: 0 0 $baselineheight*2  0;
 
-      &.turn {
-        background: transparent url(../images/arr-red.png) 5%  80px  no-repeat;
-      }
+    &.turn {
+      background: transparent url(../images/arr-red.png) 5%  80px  no-repeat;
+    }
 
+    .avatar {
+      margin-top: .375em;
+    }
   }
 
   .player.opponent {
