@@ -12,9 +12,10 @@ const en = {
   ORDPostTime: 'Order theses posts after the time you posted them',
   MCWhoLikedYourPost: 'Who liked this post you made?',
   MCWhoCommentedOnYourPost: 'Who commented on this post you made?',
+  MCWhoMadeThisCommentOnYourPost: 'Who made this comment on your post?',
   GeoWhatCoordinatesWereYouAt: 'Where were you when you posted this?',
   MCWhichPageDidYouLike: 'Which page did you like?'
-
+  
 };
 
 const titles = {

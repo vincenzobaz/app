@@ -77,6 +77,14 @@ export class SortableList extends React.Component<SortableListProps, SortableLis
     });
   }
 
+  componentWillReceiveProps(props) {
+    this.props = props;
+    this.setState({
+      items: this.props.items,
+    });
+  }
+
+
   componentWillUnmount() {
     window.removeEventListener('touchmove', this.handleTouchMove);
     window.removeEventListener('touchend', this.handleMouseUp);
@@ -96,8 +104,6 @@ export class SortableList extends React.Component<SortableListProps, SortableLis
   };
 
   handleMouseDown = (pos, pressY, {pageY}): void => {
-
-   
     let topOffset = this.state.itemComponents.map((item: React.ReactHTMLElement) => {
       return $(item).offset().top;
     });
@@ -162,12 +168,6 @@ export class SortableList extends React.Component<SortableListProps, SortableLis
     this.setState({isPressed: false, delta: 0});
   };
 
-  componentWillReceiveProps(props) {
-    this.setState({
-      items: this.props.items,
-      calibrationComplete: false
-    });
-  }
 
 
   render() {
@@ -178,7 +178,7 @@ export class SortableList extends React.Component<SortableListProps, SortableLis
     });
     let divStyle = {
       height: totalHeight + "px",
-      overflow: "auto",
+      overflow: "visible",
       width: "100%"
     };
     if (this.state.calibrationComplete) {
@@ -225,8 +225,8 @@ export class SortableList extends React.Component<SortableListProps, SortableLis
 
       return (
           <div className="demo8">
-            {items.map((item, i: number) => {
-              return <div key={_.uniqueId()} className="demo8-item-static" >
+            {items.map((item) => {
+              return <div key={_.uniqueId()} className="demo8-item-static">
                 {this.renderItem(item)}
               </div>
             })}

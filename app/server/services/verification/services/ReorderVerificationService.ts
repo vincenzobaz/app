@@ -9,19 +9,19 @@ export class OrderVerificationService {
    * Verifies if the answer provided is at the correct location
    *
    * @param {OrderQuestion} question
-   * @param {OrderAnswer} answer
+   * @param {OrderAnswer} userAnswer
    *
    * @return {number}
    */
-  static verifyAnswer(question: OrderQuestion, answer: OrderAnswer): number 
-  {
-        const right      = _.zip(question.answer, answer.data.items).map(([answer, given]) => {return answer.toString() == (<Item>given).id ? 1 : 0});
-        const correct    = right.reduce((acc, cur) => acc + cur, 0);
-        const numAnswers = question.answer.length;
+  static verifyAnswer(question: OrderQuestion, userAnswer: OrderAnswer): number {
+    const answers: number[] = question.answer;
+    
+    const right = _.range(answers.length).map((i: number) => {return answers[i] == userAnswer.data.items[i].id ? 1 : 0});
+    const correct = right.reduce((acc, cur) => acc + cur, 0);
+    const numAnswers = question.answer.length;
 
-        console.log(`OrderVerificationService: got ${correct} correct answers over ${numAnswers}`);
+    return correct == numAnswers ? 1 : 0;
+  }
 
-        return correct == numAnswers? 1 : 0;
-    }
-
-};
+}
+;

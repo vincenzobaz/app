@@ -10,7 +10,7 @@ export const TimeoutMixin = {
   componentWillMount() {
     this.timeout = new Timeout(
       this.props.maxTime * 1000,
-      this.onTimeUp, 1000, this.tick.bind(this), true
+      this.onTimeUp.bind(this), 1000, this.tick.bind(this), true
     );
   },
 
@@ -38,7 +38,7 @@ export const TimeoutMixin = {
   },
 
   isTimeUp() {
-    return !!this.state.timeUp;
+    return this.state.timeUp;
   },
 
   stopTimer() {

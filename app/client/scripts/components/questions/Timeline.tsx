@@ -1,110 +1,141 @@
-
-'use strict';
-import {getQuestionTitleByType} from './../../boot/helpers/getQuestionTitleByType'
-import {Post} from '../facebook/Post';
-import {agoToDate, dateToAgo, getDateString, addUnitsToDate} from '../../boot/helpers/timeAgo';
-import {SubjectType} from "../../../../common/models/questions/common/SubjectType";
-import {Subject} from "../../../../common/models/questions/common/Subject";
-import {TimelineUnit} from "../../../../common/models/questions/timeline/TimelineUnit";
-import {Button} from "react-bootstrap";
+import {getQuestionTitleByType} from "./../../boot/helpers/getQuestionTitleByType";
+import {Post} from "../facebook/Post";
+import {TimelineUnit, TIMELINE_UNIT} from "../../../../common/models/questions/timeline/TimelineUnit";
+import {Button, ButtonGroup} from "react-bootstrap";
 import {QuestionProps} from "./QuestionProps";
-import pluralize from "pluralize";
-// let pluralize: any = require("pluralize");
+import {Moment} from "moment/moment";
+import {TimelineAnswer} from "../../../../common/models/questions/answers/TimelineAnswer";
+const moment = require('moment');
 
 
-
-interface TimelineProps extends QuestionProps{
-  max: string;
-  min: string;
+interface TimelineProps extends QuestionProps {
+  dates: Date[];
   step: number;
-  initialDate: string;
   unit: TimelineUnit;
+  answer?: string;
+  before: number;
+  after: number;
+  userAnswer?: TimelineAnswer;
 }
 
-interface TimelineState {
-  ago: number;
-}
 
-export class Timeline extends React.Component<TimelineProps, TimelineState> {
+export class Timeline extends React.Component<TimelineProps, {} > {
 
-  private currentDate: string;
-  
   constructor(props: TimelineProps) {
     super(props);
-    let ago = this.toRelative(props.initialDate);
-    this.state = {
-      ago: this.toRelative(this.props.initialDate)
-    };
-    this.currentDate = addUnitsToDate(props.initialDate, ago, props.unit);
   }
-  
+
 
   componentWillReceiveProps(props: TimelineProps) {
     this.props = props;
-    let ago = this.toRelative(props.initialDate);
-    this.setState({
-      ago: ago
-    });
-    this.currentDate = addUnitsToDate(props.initialDate, ago, props.unit);
   }
+  
 
-
-  toRelative(date) {
-    return dateToAgo(date, this.props.unit.toString().toLowerCase());
-  }
-
-  propsToRelative() {
-    return {
-      min     : this.toRelative(this.props.min),
-      max     : this.toRelative(this.props.max),
-      initialDate : this.toRelative(this.props.initialDate),
-    };
-  }
 
   render() {
-    const rel = this.propsToRelative();
+    const unit = this.props.unit;
     const title = getQuestionTitleByType(this.props.type);
     const subject = this.props.subject;
-    const step = this.props.step;
-    const value = this.state.ago.toString();
-    const buttonText = this.getButtonText();
-
+    const before = this.props.before;
+    const after = this.props.after;
+    
     return (
-      <div className="question question-time">
-        <h4>{title}</h4>
-        <div className="question-subject">
-          <Post post={subject} />
+        <div className="question question-time">
+          <h4>{title}</h4>
+          <div className="question-subject">
+            <Post post={subject}/>
+          </div>
+          <div className="question-input">
+            <ButtonGroup vertical>
+              {this.props.dates.map((date: Date) => {
+              return this.createButton(date, before, after, unit)
+          })}
+            </ButtonGroup>
+          </div>
         </div>
-        <div className="question-input">
-          <input
-            type="range"
-            max={rel.min}
-            min={rel.max}
-            step={this.props.step}
-            value={this.state.ago.toString()}
-            onChange={this.onChange.bind(this)} />
-          <Button onClick={this.onSubmit.bind(this)}>{this.getButtonText()}</Button>
-        </div>
-      </div>
     );
   }
+  
+  createButton(date: Date, before: number, after: number, unit: TimelineUnit) {
 
-  getButtonText() {
-    const agoStr  = pluralize(this.props.unit.toString().toLowerCase(), this.state.ago, true);
-    const dateStr = agoToDate(this.currentDate, this.state.ago, this.props.unit);
-    return `${agoStr} ago (${dateStr})`;
+    const format = "MMMM Do YYYY";
+    let className = "default";
+    if (this.props.userAnswer && this.props.answer) {
+      const userAnswer: Moment = moment(this.props.userAnswer.data.date);
+      const answer: Moment = moment(this.props.answer);
+
+      let beforeDate: Moment = moment(date);
+      let afterDate: Moment = moment(date);
+      beforeDate.subtract(before, unit);
+      afterDate.add(after, unit);
+      console.log(`
+                      the answer given: ${userAnswer.format(format)},
+                       actual answer: ${answer.format(format)} 
+                       is between ${beforeDate.format(format)} - ${afterDate.format(format)}: ${this.inBetweenInclusive(userAnswer, beforeDate, afterDate, unit)}`);
+      if (this.inBetweenInclusive(userAnswer, beforeDate, afterDate, unit) && this.inBetweenInclusive(answer, beforeDate, afterDate, unit) ) {
+        className = "button-correct";
+      } else if (this.inBetweenInclusive(userAnswer, beforeDate, afterDate, unit)) {
+        className = "button-wrong";
+      } else if (this.inBetweenInclusive(answer, beforeDate, afterDate, unit)) {
+        className = "button-correct";
+      }
+    }
+    const text = this.getButtonTextForMoment(date, unit, before, after);
+    return(
+        <Button className={className} key={_.uniqueId()}
+                onClick={this.onSubmit.bind(this, date)}>{text}</Button>
+    )
   }
 
-  onChange(e) {
-    this.setState({
-      ago: +e.target.value
-    });
+  inBetweenInclusive(date: Moment, from: Moment, until: Moment, unit: TimelineUnit): boolean {
+    return date.isSameOrAfter(from, unit) && date.isSameOrBefore(until, unit);
   }
 
-  onSubmit() {
-    this.props.onDone({
-      date: agoToDate(this.currentDate, this.state.ago, this.props.unit, null)
-    });
+
+  getButtonTextForMoment(date: Date, unit: TimelineUnit, before?: number, after?: number) {
+    var format = "YYYY";
+    let beforeDate = moment(_.cloneDeep(date));
+    let afterDate = moment(_.cloneDeep(date));
+    switch (unit) {
+      case TIMELINE_UNIT.Year:
+        format = "YYYY";
+        break;
+      case TIMELINE_UNIT.Month:
+        format = "MMMM YYYY";
+        break;
+      case TIMELINE_UNIT.Week:
+        format = "ddd, MMMM Do YYYY";
+        break;
+      case TIMELINE_UNIT.Day:
+        format = "ddd, MMMM Do YYYY";
+        break;
+    }
+    if (before >= 1 || after >= 1) {
+      beforeDate.subtract(before, unit);
+      afterDate.add(after, unit);
+      if (unit == TIMELINE_UNIT.Week) {
+        afterDate.add(1, 'week').subtract(1, 'day');
+      }
+      return (<div className='timeline-date-container'>
+        <div className="timeline-date-left"> {beforeDate.format(format)}</div>
+        <div className="timeline-date-separator"> -</div>
+        <div className="timeline-date-right">{afterDate.format(format)}</div>
+      </div>);
+    } else {
+      return (<div>{moment(date).format(format)}</div>);
+
+    }
+
+  }
+
+  onSubmit(date: Date) {
+    if (this.props.userAnswer == null) {
+      this.props.onDone(
+          {
+            date: date
+          }
+      );
+    }
   }
 
 }

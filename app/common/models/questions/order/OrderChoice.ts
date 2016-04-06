@@ -1,7 +1,7 @@
 import {Subject} from "./../common/Subject";
 
 export interface OrderChoice {
-    uId: string;
+    uId: number;
     subject: Subject;
     type: String;
 }

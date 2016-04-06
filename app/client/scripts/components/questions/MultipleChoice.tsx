@@ -1,4 +1,3 @@
-
 import {getQuestionTitleByType} from './../../boot/helpers/getQuestionTitleByType'
 import {Post} from './../facebook/Post';
 import {Prop} from './../Prop';
@@ -8,7 +7,7 @@ import {QuestionProps} from "./QuestionProps";
 import * as _ from 'lodash';
 import {MultipleChoiceAnswer} from "../../../../server/services/verification/services/MultipleChoiceVerificationService";
 
-interface MultipleChoiceProps extends QuestionProps{
+interface MultipleChoiceProps extends QuestionProps {
   choices: Choice[];
   answered?: boolean;
   correct: number;
@@ -31,63 +30,54 @@ export class MultipleChoice extends React.Component<MultipleChoiceProps, Multipl
   }
 
   render() {
-    if (this.props.userAnswer) {
-      return (
-      <div className="question question-multiplechoice">
-        <h4>{getQuestionTitleByType(this.props.type)}</h4>
-        <div className="question-subject grid-50">
-          <Post post={this.props.subject} />
-        </div>
-        <div className="question-input grid-50">
-          <ul className='answers avatar-answers'>
-            {this.props.choices.map(this.renderChoice.bind(this))}
-          </ul>
-        </div>
-      </div>
-      )
-    }
+    const title = getQuestionTitleByType(this.props.type);
+
     return (
-      <div className="question question-multiplechoice">
-        <h4>{getQuestionTitleByType(this.props.type)}</h4>
-        <div className="question-subject grid-50">
-          <Post post={this.props.subject} />
+        <div className="question question-multiplechoice">
+          <h4>{title}</h4>
+          <div className="question-subject grid-50">
+            <Post post={this.props.subject}/>
+          </div>
+          <div className="question-input grid-50">
+            <ul className='answers avatar-answers'>
+              {this.props.choices.map(this.renderChoice.bind(this))}
+            </ul>
+          </div>
         </div>
-        <div className="question-input grid-50">
-          <ul className='answers avatar-answers'>
-            {this.props.choices.map(this.renderChoice.bind(this))}
-          </ul>
-        </div>
-      </div>
     );
   }
-  
-  
+
 
   renderChoice(choice, index) {
-    //FIXME: The button classes should use the bootsrap-variants mixin
-    let className = "";
-    if (this.props.userAnswer && this.props.answer && index == this.props.answer) {
-        className = "btn-success";
-    } else if (this.props.userAnswer && this.props.answer && index == this.props.userAnswer.data.choice) {
-        className = "btn-error";
+    let bsStyle = "default";
+    let className = null;
+    if (this.props.userAnswer != null && this.props.answer != null) {
+      if (index == this.props.answer) {
+        bsStyle = null;
+        className = "button-correct";
+      } else if (index == this.props.userAnswer.data.choice) {
+        bsStyle = null;
+        className = "button-wrong";
+      }
     }
+
     return (
-      <li key={_.uniqueId()}>
-        <Button className={className}  onClick={this.onChoice(choice, index).bind(this)}>
-          <Prop {...choice} />
-        </Button>
-      </li>
+        <li key={_.uniqueId()}>
+          <Button className={className} onClick={this.onChoice.bind(this, choice, index)}>
+            <Prop {...choice} />
+          </Button>
+        </li>
     );
   }
 
   onChoice(choice, index) {
-    return (e) => {
+    if (this.props.userAnswer == null) {
       this.props.onDone({
         choice: index
       });
-    };
+    }
   }
-  
+
 
 }
 

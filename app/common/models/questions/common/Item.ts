@@ -1,7 +1,7 @@
 
 import {Subject} from "./Subject";
 export interface Item {
-    id: string;
+    id: number;
     text?: string;
     subject?: Subject;
 }

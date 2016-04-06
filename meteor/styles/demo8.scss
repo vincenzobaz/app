@@ -1,3 +1,6 @@
+@import "bootstrap/bootstrap/mixins/_buttons";
+
+
 * {
 	padding: 0;
 	margin: 0;
@@ -77,8 +80,9 @@
 }
 
 .reorderImage {
-    max-height: 50px;
-    max-width: 50px;
+    max-height: 100px;
+  width: auto;
+    //max-width: 50px;
 }
 
 .question-navigation {
@@ -91,4 +95,81 @@
 .question-navigation-button {
   flex-basis: 0;
   flex-grow: 1;
+}
+
+.timeline-date-container {
+  display: table;
+  width: 100%;
+}
+
+.timeline-date-left {
+  text-align: right;
+  display: table-cell;
+  width: 48%;
+
+}
+
+.timeline-date-separator {
+  text-align: center;
+  display: table-cell;
+  width: 4%;
+
+}
+.timeline-date-right {
+  text-align: left;
+  display: table-cell;
+  width: 48%;
+
+}
+
+.post-page-thumbnail {
+  max-height: 40px;
+  max-width: 40px;
+}
+
+.post-table {
+  td {
+    padding: 10px;
+  }
+}
+
+$correct-color: rgb(218, 255, 157);
+$wrong-color: rgb(255, 138, 132);
+$grey-border: #b8b8b8;
+
+
+@mixin order-item($color) {
+  border-right: 10px solid $color;
+  flex: 1;
+  width: 100%;
+  overflow: visible;
+  pointer-events: auto;
+  transform-origin: 10% 50% 0px;
+  border-radius: 4px;
+  color: rgb(153, 153, 153);
+  padding: 5px;
+  margin: 5px;
+  line-height: 30px;
+  font-size: 14px;
+  font-weight: 400;
+  background-color: rgb(255, 255, 255);
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 2px 0px;
+}
+.correct-order  {
+  @include order-item($correct-color);
+
+}
+
+.wrong-order {
+  @include order-item($wrong-color);
+}
+
+.button-correct {
+  @include button-variant(#000000, $correct-color, $grey-border);
+}
+
+.button-wrong {
+  @include button-variant(#000000, $wrong-color, $grey-border);
 }

@@ -9,4 +9,6 @@ declare module "react-motion" {
     damping?: number;
     precision?: number;
   }
+  
+  export class TransitionMotion extends React.Component<any, any>{}
 }

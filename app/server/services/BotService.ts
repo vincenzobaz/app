@@ -173,8 +173,8 @@ console.log("Bot answered: ", tile.type);
           return geoAnswer;
         case KIND.Order:
             const answers: number[] = q.answer;
-          const correctOrder = new OrderAnswer(0, new OrderData(answers.map((id: number) => {return {id: id.toString()}}))) ; 
-          const incorrectOrder = new OrderAnswer(0, new OrderData(answers.map((id: number) => {return {id: "1"}}))) ;
+          const correctOrder = new OrderAnswer(0, new OrderData(answers.map((id: number) => {return {id: id}}))) ; 
+          const incorrectOrder = new OrderAnswer(0, new OrderData(answers.map((id: number) => {return {id: 1}}))) ;
           return _.random(0, 100) < successrate ? correctOrder : incorrectOrder;
         default:
           throw new Meteor.Error('500', `Unknown Question Kind ${q.kind} for Bot`);
