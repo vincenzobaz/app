@@ -328,12 +328,11 @@
 
 
       button {
-
         @include font-size(14);
+        @include text-overflow;
 
         text-align: left;
-    /*         text-overflow: ellipsis; */
-        white-space: nowrap;
+        display: block;
 
         .media-object {
           display: inline;
@@ -861,12 +860,11 @@ background-color : $navigationbackgroundcolor;
 }
 
 .rf-combobox-option {
+  @include text-overflow;
+
   display: block;
   padding: 2px 6px 2px 6px;
   cursor: pointer;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 
   &:focus {
     outline: 0;

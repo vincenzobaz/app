@@ -35,10 +35,10 @@ export class MultipleChoice extends React.Component<MultipleChoiceProps, Multipl
     return (
         <div className="question question-multiplechoice">
           <h4>{title}</h4>
-          <div className="question-subject grid-50">
+          <div className="question-subject">
             <Post post={this.props.subject}/>
           </div>
-          <div className="question-input grid-50">
+          <div className="question-input">
             <ul className='answers avatar-answers'>
               {this.props.choices.map(this.renderChoice.bind(this))}
             </ul>
