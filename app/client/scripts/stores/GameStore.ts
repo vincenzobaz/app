@@ -9,11 +9,7 @@ import {MeteorPromise} from "./../boot/helpers/meteor";
 import {Game} from "../models/Game";
 import {Games} from "../collections/Games";
 
-
-
 const GameSession = NamespacedSession('GameStore');
-
-
 
 export module GameStore {
 
@@ -23,6 +19,10 @@ export module GameStore {
       return null;
     }
     return this.load(gameId);
+  }
+
+  export function pause() {
+    GameSession.set('currentId', null);
   }
 
   export function list() {
