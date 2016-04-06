@@ -602,15 +602,20 @@ background-color : $navigationbackgroundcolor;
   @include zero;
 
   border-top: 1px dotted $neutralcolor;
-  padding: $baselineheight/2 0 0 0;
+  padding: 5px 0;
+
   ul.menu {
       list-style-type : none;
       @include zero;
       @include clearfix;
 
       & > li {
-      //display : inline-block;
-      float: left;
+        float: left;
+
+        &, span {
+          line-height: 48px;
+        }
+
         &.branding {
             margin : 0 $gutterwidth 0 0;
             a {
@@ -619,7 +624,6 @@ background-color : $navigationbackgroundcolor;
         }
 
         &.manage-game {
-            padding-top: 4px;
         }
 
         &.right {
@@ -636,16 +640,16 @@ background-color : $navigationbackgroundcolor;
         }
 
         & > a {
-        display : inline-block;
-        padding : $gutterwidth/2 $gutterwidth/2 $gutterwidth/2 0;
-        /*   border-bottom : $navigationborderwidth $navigationborderstyle $navigationbordercolor; */
-        color : $navigationlinkcolor;
-        border-width : 0;
-        /*   @include font-size(14);  */
-        text-transform : none;
+          display : inline-block;
+          padding : $gutterwidth/2 $gutterwidth/2 $gutterwidth/2 0;
+          /*   border-bottom : $navigationborderwidth $navigationborderstyle $navigationbordercolor; */
+          color : $navigationlinkcolor;
+          border-width : 0;
+          /*   @include font-size(14);  */
+          text-transform : none;
 
           &:hover {
-          color : $navigationlinkcolorhover;
+            color : $navigationlinkcolorhover;
           }
         }
 
