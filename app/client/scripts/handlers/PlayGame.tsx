@@ -1,6 +1,7 @@
 
 import {ModalManager} from "./../ModalManager";
 import {Board} from "./../components/Board";
+import {GameResult} from "./../components/GameResult";
 import {Game} from "../models/Game";
 
 interface PlayGameProps {
@@ -11,37 +12,49 @@ export class PlayGame extends React.Component<PlayGameProps, {}> {
 
   render() {
     const game = this.props.currentGame;
-    const gameId = game._id;
 
     if (this.hasGameEnded()) {
       return (
-        <div>
-          <Board gameId={gameId} game={game} />
+        <div className="play-game play-game-ended">
+          <GameResult game={game} />
+          <Board game={game} />
         </div>
       );
     }
 
     if (this.isPlaying()) {
       return (
-        <div>
-          <Board gameId={gameId} game={game} />
+        <div className="play-game play-game-playing">
+          <Board game={game} />
         </div>
       );
     }
 
     if (this.isWaiting()) {
-      return this.renderWaiting();
+      return (
+        <div className="play-game play-game-waiting">
+          {this.renderWaiting()}
+        </div>
+      );
     }
 
     if (this.isCreating()) {
-      return this.renderCreating();
+      return (
+        <div className="play-game play-game-creating">
+          {this.renderCreating()}
+        </div>
+      );
     }
 
-    return this.renderNoGame();
+    return (
+      <div className="play-game play-game-nogame">
+        {this.renderNoGame()}
+      </div>
+    );
   }
 
   renderNoGame() {
-    var style = {
+    const style = {
       textAlign: 'center',
       lineHeight: '2em',
       marginTop: '3em'
@@ -51,7 +64,7 @@ export class PlayGame extends React.Component<PlayGameProps, {}> {
   }
 
   renderCreating() {
-    var style = {
+    const style = {
       textAlign: 'center',
       lineHeight: '2em',
       marginTop: '3em'
@@ -65,7 +78,7 @@ export class PlayGame extends React.Component<PlayGameProps, {}> {
   }
 
   renderWaiting() {
-    var style = {
+    const style = {
       textAlign: 'center',
       lineHeight: '2em',
       marginTop: '3em'
@@ -101,9 +114,9 @@ export class PlayGame extends React.Component<PlayGameProps, {}> {
       return game.hasEnded;
     }, false);
   }
-  
+
   withGame(fn, defValue): Game {
-    var game = this.props.currentGame;
+    const game = this.props.currentGame;
 
     if (game == null) {
       return defValue;

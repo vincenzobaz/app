@@ -29,6 +29,33 @@
   margin: $baselineheight*2 0;
 }
 
+.play-game {
+  position: relative;
+
+  .game-result {
+    position: absolute;
+    top: -4.5em;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 3em;
+    font-weight: bold;
+
+    // &.won {
+    //   background: #FFC3BD;
+    // }
+
+    // &.lost {
+    //   background-color: #ABC5D3;
+    // }
+
+    &, &.draw {
+      background-color: #FDFFC6;
+    }
+  }
+}
+
 .well {
   padding: 19px 19px 0px 19px !important;
 }

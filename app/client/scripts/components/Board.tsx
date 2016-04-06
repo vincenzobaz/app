@@ -5,7 +5,6 @@ import {createTiles} from './../boot/helpers/createTiles';
 import {Game} from "../models/Game";
 
 interface BoardProps {
-  gameId: string | Mongo.ObjectID;
   game: Game;
 }
 
