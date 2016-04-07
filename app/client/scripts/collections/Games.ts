@@ -42,9 +42,7 @@ export function reduceScore(scores: RawTileState[]): number {
 
 
 export function computeScoreForPlayer(board: RawTileState[][], player: number): number {
-
-  return 0;
-  // return board.reduce((acc, row) => acc.concat(row), [])
-  //     .filter((s: RawTileState) => s.player === player)
-  //     .reduce((acc, s) => acc + s.score, 0);
+  return board.reduce((acc, row) => acc.concat(row), [])
+      .filter((s: RawTileState) => s.player === player)
+      .reduce((acc, s) => acc + s.score, 0);
 }
