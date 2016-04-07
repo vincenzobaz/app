@@ -1,2 +1,13 @@
-.meteor/local
-packages/*/.build*
+*.iml
+.idea
+meteor/.meteor/local
+meteor/packages/*/.build*
+meteor/packages/tests-proxy
+settings*.json
+env/
+data/
+npm-debug.log
+node_modules/*
+typings/*
+!typings/custom/
+webpack/assets/*
