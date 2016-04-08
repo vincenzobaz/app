@@ -17,23 +17,33 @@ export class Video extends React.Component<VideoProps, {}> {
           {this.renderThumbnail()}
           <div className="post-video-text">
             <Text text={this.props.text} />
+            {this.renderUrl(this.props.url)}
           </div>
         </TwoColumns>
       </div>
     );
   }
 
+  renderUrl(url) {
+    if (!url) {
+      return null;
+    }
+
+    return (
+      <a href={url} target="_blank">
+        <div className="post-video-url">{url}</div>
+      </a>
+    );
+  }
+
   renderThumbnail() {
-    if (!this.props.url || !this.props.thumbnailUrl) {
+    if (!this.props.thumbnailUrl) {
       return null;
     }
 
     return (
       <div className="post-media">
-        <a href={this.props.url} target="_blank">
-          <img draggable={false} src={this.props.thumbnailUrl} alt="" />
-          <div className="post-video-url">{this.props.url}</div>
-        </a>
+        <img draggable={false} src={this.props.thumbnailUrl} alt="" />
       </div>
     );
   }
