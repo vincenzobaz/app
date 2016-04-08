@@ -6,7 +6,6 @@ import {RawTileState} from "../../../server/collections/TileState";
 import {GameBoard, RawGameBoard} from "../../../common/models/GameBoard";
 import {Friend} from "../../../common/models/Friend";
 
-
 export interface RawGame {
   _id: string | Mongo.ObjectID;
   player1: string | Mongo.ObjectID;
@@ -87,6 +86,10 @@ export class Game {
   }
 
   get isLost() {
+    if (this.isDraw) {
+      return false;
+    }
+
     return !this.isWon;
   }
 
