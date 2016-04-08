@@ -18,5 +18,5 @@ COPY . /usr/src/app
 RUN ./node_modules/.bin/typings install
 
 EXPOSE 80
-CMD [ "node", "prod.js" ]
-
+ENTRYPOINT ["node"]
+CMD ["prod.js"]

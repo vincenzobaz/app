@@ -37,11 +37,11 @@ module.exports = {
             },
             {
                 test: /\.tsx?$/,
-                loader: 'babel!ts-loader',
+                loader: 'babel?' + '{presets: ["es2015", "react"]}' + '!ts-loader',
             },
             {
                 test: /\.jsx?$/,
-                loader: 'babel',
+                loader: 'babel?' + '{presets: ["es2015", "react"]}',
                 exclude: /node_modules|lib/,
             },
 

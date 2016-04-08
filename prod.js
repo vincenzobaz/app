@@ -1,6 +1,6 @@
 require('shelljs/global');
 if (!process.env.NODE_ENV) {
-  process.env.NODE_ENV = env.NODE_ENV = 'production';
+    process.env.NODE_ENV = env.NODE_ENV = 'production';
 }
 
 var fs = require('fs');
@@ -26,37 +26,38 @@ var loadClientBundleHtml = path.join(dirs.webpack, 'loadClientBundle.html');
 var loadClientBundleLink = path.join(dirs.meteor, 'client/loadClientBundle.html');
 var requireServerBundleJs = path.join(dirs.meteor, 'server/require.server.bundle.js');
 
-exec('node core-js-custom-build.js');
 
 if (fs.existsSync(loadClientBundleLink)) rm(loadClientBundleLink);
 if (fs.existsSync(requireServerBundleJs)) rm(requireServerBundleJs);
+
 
 var serverCompiler = webpack(serverConfig);
 var serverBundleReady = false;
 var clientBundleReady = false;
 
-serverCompiler.watch(serverConfig.watchOptions || {}, function(err, stats) {
-  console.log(stats.toString(statsOptions));
-  if (!serverBundleReady) {
-    serverBundleReady = true;
-    cp('-f', serverBundlePath, serverBundleLink);
-    compileClient();
-  }
+serverCompiler.watch(serverConfig.watchOptions || {}, function (err, stats) {
+    console.log(stats.toString(statsOptions));
+    if (!serverBundleReady) {
+        serverBundleReady = true;
+        cp('-f', serverBundlePath, serverBundleLink);
+        compileClient();
+    }
 });
 
 function compileClient() {
-  var clientCompiler = webpack(clientConfig);
-  clientCompiler.watch(clientConfig.watchOptions || {}, function(err, stats) {
-    console.log(stats.toString(statsOptions));
-    if (!clientBundleReady) {
-      clientBundleReady = true;
-      cp('-f', clientBundlePath, clientBundleLink);
-      runMeteor();
-    }
-  });
+    var clientCompiler = webpack(clientConfig);
+    clientCompiler.watch(clientConfig.watchOptions || {}, function (err, stats) {
+        console.log(stats.toString(statsOptions));
+        if (!clientBundleReady) {
+            clientBundleReady = true;
+            cp('-f', clientBundlePath, clientBundleLink);
+            runMeteor();
+        }
+    });
 }
 
 function runMeteor() {
-  cd(dirs.meteor);
-  exec('meteor run --production --settings ../settings/prod.json', {async: true});
+    console.log("Running Meteor")
+    cd(dirs.meteor);
+    exec('meteor run --release 1.2.1 --production --settings ../settings/prod.json', {async: true});
 }
