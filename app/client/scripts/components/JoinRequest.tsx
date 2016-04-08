@@ -9,12 +9,11 @@ interface JoinRequestProps {
 }
 
 export class JoinRequest extends React.Component<JoinRequestProps, {}> {
-  
+
   constructor(props: JoinRequestProps) {
     super(props);
-    
   }
-  
+
   render() {
     const from      = this.props.request.from;
     const avatarUrl = from != null ? from.avatarUrl : '';
@@ -31,7 +30,7 @@ export class JoinRequest extends React.Component<JoinRequestProps, {}> {
               {name}
             </h5>
             <div className="waiting-actions">
-              <button className='btn btn-mini btn-success' onClick={this.accept.bind(this)}>ACCEPT</button>
+              <button className='btn btn-xs btn-success' onClick={this.accept.bind(this)}>ACCEPT</button>
               <small> or <a href='' onClick={this.decline.bind(this)}>decline</a></small>
             </div>
           </div>
@@ -58,8 +57,8 @@ export const None = React.createClass({
     return (
       <li>
         <div className='media'>
-          <div className='media-body'>
-            <p style={center}>No join requests</p>
+          <div className='media-body' style={center}>
+            No join requests
           </div>
         </div>
       </li>

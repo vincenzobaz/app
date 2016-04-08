@@ -558,33 +558,34 @@ ul.join-requests, ul.games {
 
     li {
       margin:  0;
-      padding: 10px 0 0 0;
+      padding: 10px 0 10px 0;
       border-top: 1px dotted $neutralcolor;
     }
 
     .waiting-actions {
+      margin-top: 5px;
+
       small a {
         color: $primarycolor;
       }
     }
 
-    .waiting p {
-        font-weight: bold;
-        color: $primarycolor;
+    .waiting {
+      .pull-left {
+        margin-top: 4px;
+      }
     }
 
     small {
       text-transform: uppercase;
     }
 
-    p {
-        b {
-            color: $secondarycolor;
-        }
+    b {
+        color: $secondarycolor;
+    }
 
-        b.player {
-            color: $primarycolor;
-        }
+    b.player {
+        color: $primarycolor;
     }
 
 }

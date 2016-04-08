@@ -30,7 +30,7 @@ export class GameItem extends React.Component<GameItemProps, {}> {
                       {opponentName}
                     </a>
                     </h5>
-                <p>{this.renderDescription()}</p>
+                <span>{this.renderDescription()}</span>
               </div>
               </div>
         </li>

@@ -9,11 +9,9 @@ interface JoinRequestsProps {
 
 export class JoinRequests extends React.Component<JoinRequestsProps,{}> {
 
- 
-
   render() {
     return (
-      <div className='well'>
+      <div className='join-requests-panel well'>
         <h4 className='h5'>Join requests</h4>
         <ul className='join-requests'>
           {this.renderRequests()}
