@@ -1,4 +1,5 @@
 
+import {User} from "../models/User";
 export module UserStore {
 
   export function isLoggedIn() {
@@ -15,11 +16,12 @@ export module UserStore {
       return null;
     }
 
-    return Meteor.user();
+    const mUser = Meteor.user();
+    return new User(mUser._id, mUser.username, mUser.services, mUser.profile);
   }
 
   export function byId(id) {
-    return Meteor.users.findOne(id);;
+    return Meteor.users.findOne(id);
   }
 
   export function byFacebookId(id) {

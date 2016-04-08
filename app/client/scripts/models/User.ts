@@ -8,21 +8,20 @@ interface Profile {
 
 interface RawUser {
   _id: Mongo.ObjectID | string;
-  fb: FacebookService;
   services: Services;
   profile: Profile;
 }
 
 export class User {
-
+  private fb: FacebookService;
   constructor(public _id: Mongo.ObjectID,
-              public fb: FacebookService,
               public username: string,
               public services: Services,
               public profile: Profile,
               public status: TrainingStatus = TrainingStatus.NotStarted,
               public firstTime: boolean = true
   ) {
+    this.fb = services.facebook;
   }
 
 
@@ -70,5 +69,7 @@ export class User {
 
     return Routes.Assets.at('images/avatar-default.png');
   }
+  
+  
 }
 

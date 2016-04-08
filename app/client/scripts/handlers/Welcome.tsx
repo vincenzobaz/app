@@ -4,6 +4,7 @@ import {debug} from "util";
 import {Game} from "../models/Game";
 import {User} from "../models/User";
 import {TrainingStatus} from "../models/TrainingStatus";
+import construct = Reflect.construct;
 
 
 interface WelcomeProps {
@@ -36,9 +37,8 @@ export class Welcome extends React.Component<WelcomeProps, {}> {
     );
   }
 
-  /* eslint comma-spacing: 0 */
   renderWelcomeText() {
-    var user = this.props.user;
+    const user: User = this.props.user;
     return (
       <p>
         Welcome{!user.firstTime ? ' back' : ''}, {user.firstName}!<br /><br />

@@ -4,11 +4,16 @@
 import {JoinRequestStore} from './../stores/JoinRequestStore';
 import * as Model from "../models/JoinRequest";
 
-interface JoinRequestprops {
+interface JoinRequestProps {
   request: Model.JoinRequest;
 }
 
-export class JoinRequest extends React.Component<JoinRequestprops, {}> {
+export class JoinRequest extends React.Component<JoinRequestProps, {}> {
+  
+  constructor(props: JoinRequestProps) {
+    super(props);
+    
+  }
   
   render() {
     const from      = this.props.request.from;
@@ -18,7 +23,7 @@ export class JoinRequest extends React.Component<JoinRequestprops, {}> {
     return (
       <li className='waiting'>
         <div className='media'>
-          <a className='pull-left' title='Switch to this game' onClick={this.accept}>
+          <a className='pull-left' title='Switch to this game' onClick={this.accept.bind(this)}>
             <img className='media-object img-circle' width='40' src={avatarUrl} alt='' />
           </a>
           <div className='media-body'>
@@ -26,8 +31,8 @@ export class JoinRequest extends React.Component<JoinRequestprops, {}> {
               {name}
             </h5>
             <div className="waiting-actions">
-              <button className='btn btn-mini btn-success' onClick={this.accept}>ACCEPT</button>
-              <small> or <a href='' onClick={this.decline}>decline</a></small>
+              <button className='btn btn-mini btn-success' onClick={this.accept.bind(this)}>ACCEPT</button>
+              <small> or <a href='' onClick={this.decline.bind(this)}>decline</a></small>
             </div>
           </div>
         </div>

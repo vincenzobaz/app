@@ -5,7 +5,8 @@ import {Game} from "./Game";
 
 interface RawJoinRequest {
   _id: Mongo.ObjectID | string;
-  fromId: Mongo.ObjectID | string;
+  from: Mongo.ObjectID | string;
+  to: Mongo.ObjectID | string;
   gameId: Mongo.ObjectID | string;
 }
 
@@ -26,7 +27,7 @@ export class JoinRequest {
   getOpponent() {
     return this.from;
   }
-
+  
   get game(): Game | {} {
     return GameStore.byId(this.gameId);
   }
@@ -35,7 +36,7 @@ export class JoinRequest {
 
 export const JoinRequests = new Mongo.Collection("joinRequests", {
   transform(doc: RawJoinRequest) {
-    return new JoinRequest(doc._id, doc.fromId, doc.gameId);
+    return new JoinRequest(doc._id, doc.from, doc.gameId);
   }
 });
 

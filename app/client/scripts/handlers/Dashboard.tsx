@@ -8,6 +8,7 @@ import {Footer} from './../components/Footer';
 import {Game} from "../models/Game";
 import {User} from "../models/User";
 import {JoinRequest} from "../models/JoinRequest";
+import {GAME_STATUS} from "../../../common/models/GameStatus";
 
 interface DashboardProps {
   currentGame?: Game;
@@ -31,7 +32,7 @@ export class Dashboard extends React.Component<DashboardProps,{}> {
                         <div id="sidebar" className="notifications">
                             <GamesList
                                 title="Current games"
-                                games={this.props.games.filter(g => !g.hasEnded)}
+                                games={this.props.games.filter((g: Game) => !g.hasEnded && g.status != GAME_STATUS.Waiting)}
                                 className="current-games"
                             />
                             <GamesList
