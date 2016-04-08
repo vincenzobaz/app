@@ -1,4 +1,6 @@
-import {Text} from "./Text";
+
+import { TwoColumns } from './layout/TwoColumns';
+import { Text }       from './Text';
 
 interface VideoProps {
   text?: string;
@@ -11,8 +13,12 @@ export class Video extends React.Component<VideoProps, {}> {
   render() {
     return (
       <div className="post post-video">
-        <Text text={this.props.text} />
-        {this.renderThumbnail()}
+        <TwoColumns>
+          {this.renderThumbnail()}
+          <div className="post-video-text">
+            <Text text={this.props.text} />
+          </div>
+        </TwoColumns>
       </div>
     );
   }

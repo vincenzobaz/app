@@ -1,3 +1,6 @@
+
+import { TwoColumns } from './layout/TwoColumns';
+
 interface LinkProps {
   text: string;
   url: string;
@@ -10,8 +13,18 @@ export class Link extends React.Component<LinkProps, {}> {
   render() {
     return (
       <div className="post post-link">
-        <blockquote>{this.props.text}</blockquote>
-        {this.renderThumbnail(this.props.thumbnailUrl)}
+        <TwoColumns>
+          {this.renderThumbnail(this.props.thumbnailUrl)}
+          {this.renderText(this.props.text)}
+        </TwoColumns>
+      </div>
+    );
+  }
+
+  renderText(text) {
+    return (
+      <div className="post-link-value">
+        <blockquote>{text}</blockquote>
         {this.renderLink()}
       </div>
     );

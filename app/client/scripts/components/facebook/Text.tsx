@@ -1,6 +1,8 @@
+
 interface TextProps {
   text: string;
 }
+
 export class Text extends React.Component<TextProps, {}> {
 
   render() {

@@ -1,3 +1,6 @@
+
+import { TwoColumns } from './layout/TwoColumns';
+
 interface PageProps {
   name: string;
   pageId?: string;
@@ -9,8 +12,10 @@ export class Page extends React.Component<PageProps, {}> {
   render() {
     return (
       <div className="post post-page">
-        {this.renderThumbnail()}
-        <span>{this.props.name}</span>
+        <TwoColumns>
+          {this.renderThumbnail()}
+          {this.props.name}
+        </TwoColumns>
       </div>
     );
   }
@@ -21,7 +26,7 @@ export class Page extends React.Component<PageProps, {}> {
     }
 
     return (
-      <div className="post-media">
+      <div className="post-media grid-30">
         <img draggable={false} src={this.props.photoUrl} alt="" />
       </div>
     );

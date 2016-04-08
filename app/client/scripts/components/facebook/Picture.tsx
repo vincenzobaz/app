@@ -1,4 +1,7 @@
-import {Zoomable} from "../jquery/Zoomable";
+
+// import {Zoomable} from "../jquery/Zoomable";
+
+import { TwoColumns } from './layout/TwoColumns';
 
 interface PictureProps {
   imageUrl: string;
@@ -19,8 +22,10 @@ export class Picture extends React.Component<PictureProps, {}>{
 
     return (
       <div className="post post-picture">
-        {this.renderPicture()}
-        {this.renderPictureCaption(this.props.text)}
+        <TwoColumns>
+          {this.renderPicture()}
+          {this.renderPictureCaption(this.props.text)}
+        </TwoColumns>
       </div>
     );
   }

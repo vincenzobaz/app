@@ -56,6 +56,16 @@
   }
 }
 
+.layout-2cols {
+  display: flex;
+  align-items: center;
+
+  .layout-col-left {}
+  .layout-col-right {
+    text-align: left;
+  }
+}
+
 .well {
   padding: 19px 19px 0px 19px !important;
 }
@@ -234,6 +244,7 @@
   blockquote {
     @include zero;
 
+    text-align: left;
     color: $neutralcolor;
     font-style: italic;
     padding-left: 10px;
@@ -276,14 +287,6 @@
   }
   img {
     max-height: 350px;
-  }
-}
-
-.post-media {
-  text-align: center;
-  img {
-    max-height: 200px;
-    max-width: 200px;
   }
 }
 
