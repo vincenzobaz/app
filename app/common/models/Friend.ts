@@ -8,7 +8,7 @@ interface  RawFriend {
     userId: string;
     facebookId: string;
     name: string;
-    friendOf: string;
+    friendOf: string | Mongo.ObjectID;
     isBot: boolean;
 }
 
@@ -18,7 +18,7 @@ export class Friend {
                 public userId: string | Mongo.ObjectID,
                 public facebookId: string,
                 public name: string,
-                public friendOf: string,
+                public friendOf: string | Mongo.ObjectID,
                 public isBot: boolean) {
     }
   

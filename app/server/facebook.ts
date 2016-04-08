@@ -3,6 +3,11 @@ import {FriendRepository} from './repositories/FriendRepository'
 import User = Meteor.User;
 import { MeteorUser } from "./MeteorUser";
 
+export interface FBFriend {
+  name: string;
+  id: string;
+}
+
 // FIXME: Awful design...
 // TODO: Handle paging.
 // TODO: Fix caching.

@@ -113,12 +113,6 @@ export function setupMeteorMethods() {
     'Facebook.getFriends'() {
       this.unblock();
       const user = Meteor.users.findOne(this.userId);
-      const friends = FriendRepository.friendsOf(this.userId);
-    
-      // TODO: Figure out when to refresh friends from Facebook
-      if (friends && friends.length > 0) {
-        return friends;
-      }
       const fbFriends = FacebookService.getFriends(user);
       return FriendRepository.updateFriends(this.userId, fbFriends);
     },

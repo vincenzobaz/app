@@ -1,6 +1,7 @@
 import {Friends} from './../../common/collections/Friends';
 import {UserRepository} from './UserRepository';
 import {Friend} from "../../common/models/Friend";
+import {FBFriend} from "../facebook";
 
 export const FriendRepository = {
 
@@ -43,12 +44,12 @@ export const FriendRepository = {
         return true;
     },
 
-    updateFriends(userId, friends) {
-        return friends.map((f: Friend) => {
-            var friend = FriendRepository.byFacebookId(f._id, userId);
+    updateFriends(userId: Mongo.ObjectID, friends: FBFriend[]) {
+        return friends.map((f: FBFriend) => {
+            var friend = FriendRepository.byFacebookId(f.id, userId);
 
             if (friend == null) {
-                friend = new Friend(new Mongo.ObjectID(), f._id, userId, f.name, userId, f.isBot);
+                friend = new Friend(new Mongo.ObjectID(), null, f.id, f.name, userId, false);
             }
             else {
                 FriendRepository.updateUserId(friend);
