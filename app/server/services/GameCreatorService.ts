@@ -55,7 +55,7 @@ class GameCreator {
     return HTTPHelper.get(url, callback);
   }
 
-};
+}
 
 export const GameCreatorService = new GameCreator(process.env.GAME_CREATOR_URL);
 

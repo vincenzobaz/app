@@ -26,7 +26,7 @@ Meteor.startup(() => {
         throw new Error("Missing environment variable: TIMEOUT_BETWEEN_FETCHES");
     }
     
-    Meteor.setInterval(Server.fetchAllBoards.bind(Server), process.env.TIMEOUT_BETWEEN_FETCHES);
+    Meteor.setInterval(Server.fetchAllBoards.bind(Server), process.env.TIMEOUT_BETWEEN_FETCHES || 5000);
 });
 
 Accounts.onLogin(attempt => {

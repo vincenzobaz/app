@@ -32,7 +32,7 @@ export class Dashboard extends React.Component<DashboardProps,{}> {
                         <div id="sidebar" className="notifications">
                             <GamesList
                                 title="Current games"
-                                games={this.props.games.filter((g: Game) => !g.hasEnded && g.status != GAME_STATUS.Waiting)}
+                                games={this.props.games.filter((g: Game) => !g.hasEnded)}
                                 className="current-games"
                             />
                             <GamesList

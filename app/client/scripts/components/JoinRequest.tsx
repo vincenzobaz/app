@@ -51,7 +51,7 @@ export class JoinRequest extends React.Component<JoinRequestProps, {}> {
 
 }
 
-export const None = React.createClass({
+export class None extends React.Component<any, any> {
   render() {
     var center = {textAlign: 'center'};
     return (
@@ -64,5 +64,5 @@ export const None = React.createClass({
       </li>
     );
   }
-});
+}
 

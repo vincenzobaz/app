@@ -71,27 +71,7 @@ export const JoinRequestService = {
         }
 
         console.log(`Checking if user ${currentUserId} is friend with ${friend.userId}`);
-
-        if (friend.userId == null) {
-          const friendUser = UserRepository.byFacebookId(friend.facebookId);
-
-          if (friendUser == null) {
-            const msg = `Friend ${friendId} has no associated user.`;
-            throw new Meteor.Error('JoinRequestService.noAssociatedUser', msg);
-          }
-
-          friend.userId = friendUser._id;
-          FriendRepository.save(friend);
-        }
-
-        const currentUser = Meteor.users.findOne(currentUserId);
-        const asFriend    = {
-          id: currentUser.services.facebook.id,
-          name: currentUser.services.facebook.name,
-          isBot: false
-        };
-
-        FriendRepository.updateFriends(friend.userId, [asFriend]);
+      
 
         return Meteor.users.findOne(friend.userId);
     },

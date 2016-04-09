@@ -8,6 +8,7 @@ import {GameBoardRepository} from './repositories/GameBoardRepository';
 import {GameStatus, GAME_STATUS} from './../common/models/GameStatus';
 import {GameFetch} from "./collections/GameFetch";
 import {GameCreatorService} from './services/GameCreatorService';
+import {User} from "../client/scripts/models/User";
 
 export const Server = {
 
@@ -28,7 +29,7 @@ export const Server = {
         gameBoard = GameBoard.fromRaw(botBoard);
       }
       else {
-        const user = Meteor.users.findOne(userId);
+        const user: Meteor.User = Meteor.users.findOne(userId);
         const fbUserId = user.services.facebook.id;
         const accessToken = user.services.facebook.accessToken;
         const data: any = GameCreatorService.fetchGameboard(fbUserId, accessToken).data;
@@ -59,19 +60,20 @@ export const Server = {
       return gameBoard;
     }
     catch (e) {
-      console.error(`ERROR: Can't create game board from game creator result: ${e}`);
+      console.error(`ERROR: Can't create game board from game-creator result: ${e}`);
     
       if (createFetch && !BotService.isBot(userId)) {
+        console.log(`Creating new fetch request as it failed for user ${userId} in game: ${game._id}`);
         const fetch = new GameFetch(
             new Mongo.ObjectID(),
             game._id,
-            game.getPlayerBoard(playerNum),
+            userId,
             playerNum,
             1
         );
-    
+      
         GameFetchRepository.save(fetch);
-      }
+      } 
     }
   },
 
@@ -92,9 +94,9 @@ export const Server = {
 
   fetchAllBoards() {
     const fetches = GameFetches.find().fetch();
-
-    fetches.forEach(fetch => {
+    fetches.forEach((fetch: GameFetch) => {
       Meteor.setTimeout(() => {
+        console.log(`Trygin again to fetch data for ${fetch.playerId} in game: ${fetch.gameId} for the: ${fetch.tries} time`);
         this.processFetch(fetch);
       }, 0);
     });
@@ -107,14 +109,14 @@ export const Server = {
     console.log(` - Player Num: ${fetch.player}`);
     console.log(` - Tries: ${fetch.tries}`);
 
-    const board = this.fetchGameBoard(fetch.player, fetch.gameId, fetch.player, false);
+    const board = this.fetchGameBoard(fetch.playerId, fetch.gameId, fetch.player, false);
 
     if (board == null) {
       this.fetchFailed(fetch);
+    } else {
+      GameFetches.remove(fetch._id);
+
     }
-
-    GameFetches.remove(fetch._id);
-
   },
 
   fetchFailed(fetch: GameFetch) {
