@@ -149,7 +149,7 @@ export const BotService = {
     // const method = (firstTurn) ? 'pickRandom' : 'pickTile';
     const method = 'pickTile';
     const tile: Tile = BotService[method](game, gameBoard);
-    const successrate = 100;
+    const successrate = 33;
 
     if (!tile) {
       throw new Meteor.Error('500', "Bot could't find a tile to play on.");
