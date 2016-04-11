@@ -123,7 +123,7 @@ export const Server = {
     fetch.incrementTries();
 
     if (fetch.tries >= 10) {
-      const failedGame: Game = Games.findOne(fetch._id);
+      const failedGame: Game = Games.findOne(fetch.gameId);
       failedGame.status = GAME_STATUS.Failed;
       Games.update(failedGame._id, failedGame);
 
