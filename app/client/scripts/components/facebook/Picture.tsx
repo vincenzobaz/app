@@ -2,9 +2,11 @@
 // import {Zoomable} from "../jquery/Zoomable";
 
 import { TwoColumns } from './layout/TwoColumns';
+import {Text} from "./Text";
 
 interface PictureProps {
   imageUrl: string;
+  thumbnailUrl: string;
   text?: string;
   interactive: boolean;
 }
@@ -16,45 +18,32 @@ export class Picture extends React.Component<PictureProps, {}>{
   }
 
   render() {
-    if (!this.props.imageUrl) {
-      return null;
+    const image = this.props.imageUrl || this.props.thumbnailUrl;
+    if (image == null) {
+      return <Text text={this.props.text}/>;
     }
 
     return (
       <div className="post post-picture">
         <TwoColumns>
-          {this.renderPicture()}
+          {this.renderPicture(image)}
           {this.renderPictureCaption(this.props.text)}
         </TwoColumns>
       </div>
     );
   }
 
-  renderPicture() {
-    if (!this.props.imageUrl) {
-      return null;
-    }
-
-    // if (this.props.interactive) {
-    //   return (
-    //     <Zoomable url={this.props.imageUrl}>
-    //       <figure className="zoomable">
-    //         <img src={this.props.imageUrl} alt="" />
-    //       </figure>
-    //     </Zoomable>
-    //   );
-    // }
-
+  renderPicture(imageUrl: string) {
     return (
       <div className="post-media">
-        <img draggable={false} src={this.props.imageUrl} alt="" />
+        <img draggable={false} src={imageUrl} alt="" />
       </div>
     );
   }
 
   renderPictureCaption(caption) {
     if (!caption) {
-      return null;
+      return <noscript />;
     }
 
     return (

@@ -18,10 +18,11 @@ export module SubjectFactory {
         subject = new Subject();
           subject.comment = data.comment;
           subject.text = data.text;
-          subject.thumbnailUrl = data.thumbnailUrl;
+          subject.thumbnailUrl = data.thumbnailUrl || data.imageUrl || data.facebookImageUrl || data.photoUrl;
           subject.name = data.name;
           subject.type = data.type;
           subject.photoUrl = data.photoUrl;
+          subject.url = data.url;
         break;
     }
     if (!subject) {

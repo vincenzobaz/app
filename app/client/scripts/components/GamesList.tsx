@@ -33,9 +33,11 @@ export class GamesList extends React.Component<GamesListProps, {}> {
     }
 
     const sortedGames = this.sortGames(this.props.games);
-    return sortedGames.map((game: Game) =>
-      <GameItem key={game._id.toString()} game={game} />
-    );
+    console.log("Starting to render games");
+    return sortedGames.map((game: Game) => {
+      console.log("rendering games ", game._id);
+      return <GameItem key={game._id.toString()} game={game}/>
+    });
   }
 
   sortGames(games: Game[]) {

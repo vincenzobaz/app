@@ -32,8 +32,7 @@ export const Server = {
         const user: Meteor.User = Meteor.users.findOne(userId);
         const fbUserId = user.services.facebook.id;
         const accessToken = user.services.facebook.accessToken;
-        const data: any = GameCreatorService.fetchGameboard(fbUserId, accessToken).data;
-        const rawBoard: RawGameBoard = data;//GameCreatorService.fetchGameboard(fbUserId, accessToken).data;
+        const rawBoard: RawGameBoard = GameCreatorService.fetchGameboard(fbUserId, accessToken).data;
         rawBoard.userId = userId;
 
         gameBoard = GameBoard.fromRaw(rawBoard);
