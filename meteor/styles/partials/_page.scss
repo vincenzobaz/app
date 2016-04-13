@@ -60,9 +60,16 @@
   display: flex;
   align-items: center;
 
-  .layout-col-left {}
+  &.container-fluid {
+    padding: 0px;
+  }
+
+  .layout-col-left {
+    padding-left: 0px;
+  }
   .layout-col-right {
     text-align: left;
+    padding-right: 0px;
   }
 }
 
