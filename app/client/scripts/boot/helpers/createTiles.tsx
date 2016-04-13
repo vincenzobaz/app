@@ -23,12 +23,12 @@ const createTile = (game: Game, tile: Tile, tileNum: number) => {
   const col = tileNum - 1 - (row * 3);
   const tileState: RawTileState = boardState[row][col];
   const playerNum = game.myPlayerNumber;
-
+  
   const score = {
-    me: playerNum == tileState.player && tileState.player != 0 ? tileState.score : 0,
-    them: playerNum != tileState.player && tileState.player != 0 ? tileState.score : 0
+      me: playerNum == 1? tileState.player1Score: tileState.player2Score,
+    them: playerNum == 1? tileState.player2Score: tileState.player1Score
   };
-
+  
   const disabled = tile.isDisabled ||
       score.me >= 3 || score.them >= 3 ||
       game.hasEnded || !game.isMyTurnToPlay;

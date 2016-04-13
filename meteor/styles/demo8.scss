@@ -1,5 +1,9 @@
 @import "bootstrap/bootstrap/mixins/_buttons";
+@import "config";
 
+
+$empty-color: #bfbfbf;
+$both-played-color: #1f1028;
 
 * {
 	padding: 0;
@@ -182,4 +186,39 @@ $grey-border: #b8b8b8;
 
 .button-wrong {
   @include button-variant(#000000, $wrong-color, $grey-border);
+}
+
+.user-answered {
+  background-color: lighten($primarycolor, 65%);
+}
+
+.enemy-answered {
+  background-color: lighten($secondarycolor, 55%);
+}
+
+.both-answered {
+  background-color: lighten($both-played-color, 80%);
+}
+
+.trigger-ring {
+  fill-rule: evenodd;
+  clip-rule: evenodd;
+  stroke-linejoin: round;
+  stroke-miterlimit: 1.41421;
+}
+
+.trigger-ring-element-empty {
+  fill: $empty-color;
+}
+
+.trigger-ring-element-user-conquered {
+  fill: $primarycolor;
+}
+
+.trigger-ring-element-enemy-conquered {
+  fill: $secondarycolor;
+}
+
+.trigger-ring-element-both {
+  fill: $secondarycolor;
 }

@@ -13,11 +13,11 @@ export const GameService = {
   },
 
   createGame(player1Id, player2Id) {
-    const boardState: RawTileState[][] = [
-      [{player: 0, score: 0}, {player: 0, score: 0}, {player: 0, score: 0}],
-      [{player: 0, score: 0}, {player: 0, score: 0}, {player: 0, score: 0}],
-      [{player: 0, score: 0}, {player: 0, score: 0}, {player: 0, score: 0}]
-    ];
+    const boardState: RawTileState[][] = _.range(0, 3).map((i: number) => {
+      return _.range(0, 3).map((j: number) => {
+        return {player: 0, score: 0, player1Score: -1, player2Score: -1};
+      });
+    });
 
     return new Game(
         new Mongo.ObjectID(),

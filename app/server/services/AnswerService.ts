@@ -138,9 +138,14 @@ export module AnswerService {
     if (newScore > otherScore || otherScore == 0) {
       const scoreKey = `player${currentPlayer}Scores`;
       game[scoreKey][tileId.toString()] = scores;
-
       boardState[row][col].player = currentPlayer;
       boardState[row][col].score = newScore;
+    }
+    
+    if (currentPlayer == 1) {
+      boardState[row][col].player1Score = newScore;
+    } else {
+      boardState[row][col].player2Score = newScore;
     }
 
     tile.disabled = true;
@@ -176,7 +181,7 @@ export module AnswerService {
       tile: tile
     };
 
-    console.log(`Result of player ${currentPlayer} turn:`, returnValue);
+    console.log(`Result of player ${currentPlayer} row: ${row}, column: ${col}`, _.omit(returnValue, 'tile'));
 
     return returnValue;
   }

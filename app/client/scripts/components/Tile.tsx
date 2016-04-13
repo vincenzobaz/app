@@ -1,5 +1,3 @@
-
-
 import {Tooltip} from './bootstrap/Tooltip';
 import {Routes} from './../../../common/Routes';
 import {progressImage} from './../boot/helpers/progressImage';
@@ -7,6 +5,8 @@ import {ModalManager} from './../ModalManager';
 import {SubjectType} from "../../../common/models/questions/common/SubjectType";
 import {Score} from "../../../common/models/Score";
 import {Kind} from "../../../common/models/questions/common/Kind";
+import CSSProperties = __React.CSSProperties;
+import {ProgressImage} from "./tile/ProgressImage";
 
 const icons = {
   Order: 'sort', // 'sort-up'
@@ -17,7 +17,7 @@ const icons = {
 };
 
 const typeToIcon = (type) =>
-  icons[type] || icons.Misc;
+icons[type] || icons.Misc;
 
 interface TileProps {
   title: string;
@@ -28,28 +28,23 @@ interface TileProps {
   opponentId?: string | Mongo.ObjectID;
   score: Score;
   disabled: boolean;
-  answered: boolean;
-  
+  userAnswered?: boolean;
+  enemyAnswered?: boolean;
+  answered?: boolean;
+
 }
 
 export class Tile extends React.Component<TileProps, {}> {
-  
-  render() {
-    return (
-      <div className={this.getCellClassNames()}>
-        <Tooltip title={this.props.title} placement={this.props.placement}>
-          {this.renderTrigger()}
-        </Tooltip>
-      </div>
-    );
-  }
 
-  renderTrigger() {
+  render() {
+    console.log("something", this.props.userAnswered, this.props.enemyAnswered, this.props.score);
+
     return (
-      <a role='button' href='#' onClick={this.onClick.bind(this)}>
-        <img src={this.getProgressImage()} alt={this.props.title} style={this.getImageStyle()} />
-        <i className={this.getIconClassNames()}></i>
-      </a>
+        <div className={this.getCellClassNames()+ ", " + this.tileBackgroundStyle(this.props.score)}>
+          <Tooltip title={this.props.title} placement={this.props.placement}>
+            <ProgressImage type={this.props.type} score={this.props.score} onClick={this.onClick.bind(this)}/>
+          </Tooltip>
+        </div>
     );
   }
 
@@ -74,32 +69,18 @@ export class Tile extends React.Component<TileProps, {}> {
       this.props.type
     ].join(' ');
   }
-
-  getIconClassNames() {
-    return [
-      `icon-${typeToIcon(this.props.type)}`,
-      'icon-2x'
-    ].join(' ');
-  }
-
-  getImageStyle(): {backgroundImage: string, backgroundSize: string} {
-    if (this.props.opponentId) {
-      return {
-        backgroundImage: `url(${Routes.Facebook.avatar(this.props.opponentId as string)})`,
-        backgroundSize: '76px 76px'
-      };
+  
+  tileBackgroundStyle(score: Score): string {
+    if (score.me >= 0 && score.them >= 0) {
+        return "both-answered"
+    } else if (score.me >= 0) {
+      return "user-answered";
+    } else if (score.them >= 0) {
+      return "enemy-answered"
+    } else {
+      return ""
     }
 
-    return null;
-  }
-
-  getProgressImage() {
-    var sub = this.props.score,
-        max = (sub.me >= sub.them) ? 'me' : 'them',
-        color = (max == 'me') ? 'red' : 'blue',
-        score = parseInt(sub[max], 10);
-
-    return progressImage(score, color);
   }
 
 }
