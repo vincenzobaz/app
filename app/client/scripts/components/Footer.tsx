@@ -12,33 +12,39 @@ interface FooterProps {
 
 export class Footer extends React.Component<FooterProps, {}> {
 
-  render() {
-    return (
-      <ul className='menu'>
-        <li className='branding'>
-            <a href="#" onClick={this.showPage('home')}>
-              <img src={Routes.Assets.at('images/reminisce-logo-ios.png')} alt='Reminisce' width='48' height='48' />
-            </a>
-        </li>
-        {/*<li className=''>
-          <a href="#" onClick={this.showPage('about')}>About</a>
-        </li>*/}
-        {/*<li className='right'>
-          <a href="#" onClick={this.showPage('account')}>Account</a>
-        </li>*/}
-        <li className='manage-game right'>
-          <GameToolbar game={this.props.currentGame} />
-        </li>
-      </ul>
-    );
-  }
-
   showPage(page) {
     return (e) => {
       e.preventDefault();
       GameStore.pause();
       Session.set('page', page);
     };
+  }
+
+  render() {
+    return (
+      <div id='footer' className='container-fluid'>
+      {this.renderBranding()}
+      {this.renderGameToolbar()}
+      </div>
+    );
+  }
+
+  renderBranding() {
+    return (
+      <div className='branding grid-10'>
+        <a href="#" onClick={this.showPage('home')}>
+          <img src={Routes.Assets.at('images/reminisce-logo-ios.png')} alt='Reminisce' width='48' height='48' />
+        </a>
+      </div>
+    );
+  }
+
+  renderGameToolbar() {
+    return (
+      <div className='grid-50 pull-right text-right'>
+        <GameToolbar game={this.props.currentGame} />
+      </div>
+    );
   }
 
 }

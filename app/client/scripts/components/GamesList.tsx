@@ -5,11 +5,10 @@ interface GamesListProps {
   games: Game[];
   title: string;
   className?: string;
-  
 }
 
 export class GamesList extends React.Component<GamesListProps, {}> {
-  
+
   constructor(props: GamesListProps) {
     super(props);
     if (!this.props.className) {
@@ -26,18 +25,17 @@ export class GamesList extends React.Component<GamesListProps, {}> {
       </div>
     );
   }
-  
+
   renderGames(): JSX.Element | JSX.Element[] {
     if (this.props.games.length <= 0) {
       return <None />;
     }
 
     const sortedGames = this.sortGames(this.props.games);
-    console.log("Starting to render games");
-    return sortedGames.map((game: Game) => {
-      console.log("rendering games ", game._id);
-      return <GameItem key={game._id.toString()} game={game}/>
-    });
+
+    return sortedGames.map((game: Game) =>
+      <GameItem key={game._id.toString()} game={game}/>
+    );
   }
 
   sortGames(games: Game[]) {

@@ -3,7 +3,7 @@
 import {GameStore} from './../stores/GameStore';
 import {StartGameModal} from './modals/StartGameModal';
 import {QuitGameModal} from './modals/QuitGameModal';
-import {FriendsAutocomplete} from './FriendsAutocomplete';
+import {FriendsSearchbox} from './FriendsSearchbox';
 import {debug} from "util";
 import {Friend} from "../../../common/models/Friend";
 import {Game} from "../models/Game";
@@ -71,54 +71,55 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
   }
 
   onQuit() {
-    debug('quit game');
     GameStore.quit(this.props.game);
     Session.set('page', 'home');
   }
 
   onResume() {
-    debug('resume game');
+
   }
 
   renderModal() {
     if (this.state.showStartGameModal && this.state.friend) {
       return (
-        <StartGameModal friend={this.state.friend}
-                        onOk={this.onStart.bind(this)}
-                        onCancel={this.onAbortStart.bind(this)} />
+        <StartGameModal
+          friend={this.state.friend}
+          onOk={this.onStart.bind(this)}
+          onCancel={this.onAbortStart.bind(this)} />
       );
     }
 
     if (this.state.showQuitGameModal && this.props.game) {
       return (
-        <QuitGameModal game={this.props.game}
-                       onQuit={this.onQuit.bind(this)}
-                       onResume={this.onResume.bind(this)}
-                       onRequestHide={(() => {})}
-                      />
+        <QuitGameModal
+          game={this.props.game}
+           onQuit={this.onQuit.bind(this)}
+           onResume={this.onResume.bind(this)}
+           onRequestHide={(() => {})} />
       );
     }
   }
 
   render() {
     return (
-      <span>
-        <span className='start-game'>
-          Start new game with
-          &nbsp;
-          <FriendsAutocomplete onSelect={this.onFriendSelect.bind(this)} />
-          {/* &nbsp; <i className='icon-check-sign'></i> */}
-        </span>
-        &nbsp;
+      <div className="game-toolbar">
+        <div className='start-game container-fluid'>
+          <div className="grid-50">
+            Start new game with
+          </div>
+          <div className="grid-50">
+            <FriendsSearchbox onSelect={this.onFriendSelect.bind(this)} />
+          </div>
+        </div>
         {this.renderQuitGameButton()}
         {this.renderModal()}
-      </span>
+      </div>
     );
   }
 
   renderQuitGameButton() {
     if (this.props.game == null) {
-      return <div></div>;
+      return null;
     }
 
     return (

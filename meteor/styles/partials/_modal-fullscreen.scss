@@ -1,0 +1,78 @@
+
+@mixin fullscreen($margin) {
+  top: $margin;
+  right: $margin;
+  bottom: $margin;
+  left: $margin;
+}
+
+$modal-fullscreen-margin: 10%;
+$modal-fullscreen-radius: 8px;
+
+@mixin modal-fullscreen($margin) {
+  position: fixed;
+  @include fullscreen($margin);
+  overflow: hidden;
+  width: auto;
+  margin: 0;
+  border-radius: 4px;
+
+  &.fade.in {
+    top: $margin;
+  }
+
+  .modal-dialog {
+    position: fixed;
+    @include fullscreen($margin);
+    padding: 0;
+    background: white;
+  }
+
+  .modal-content {
+    position: absolute;
+    @include fullscreen(0);
+  }
+
+  .modal-header {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 30px;
+  }
+
+  .modal-body {
+    position: absolute;
+    top: 54px;
+    bottom: 49px;
+    right: 0;
+    left: 0;
+    overflow: auto;
+  }
+
+  .modal-footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  &, .modal-dialog, .modal-header, .modal-content, .modal-dialog, .modal-footer {
+    border-radius: $modal-fullscreen-radius;
+  }
+
+  .modal-header {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .modal-footer {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+}
+
+.modal.fullscreen {
+  @include modal-fullscreen($modal-fullscreen-margin);
+}
+
