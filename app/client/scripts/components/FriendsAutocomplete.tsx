@@ -1,16 +1,15 @@
 
 'use strict';
 
-import {FriendStore} from './../stores/FriendStore';
-import {Friend} from './../../../common/models/Friend';
-import {FriendsList} from "./FriendsList";
-import {Typeahead} from "react-typeahead";
-const fuzzy = require('fuzzy');
+import {FriendsList} from './FriendsList';
+import {Typeahead}   from 'react-typeahead';
+import {test}        from 'fuzzy';
 
+import {FriendStore} from './../stores/FriendStore';
+import {Friend}      from './../../../common/models/Friend';
 
 interface FriendsAutocompleteProps {
   onSelect: Function;
-  
 }
 
 interface FriendsAutocompleteState {
@@ -18,7 +17,7 @@ interface FriendsAutocompleteState {
 }
 
 export class FriendsAutocomplete extends React.Component<FriendsAutocompleteProps, FriendsAutocompleteState> {
-  
+
   constructor(props: FriendsAutocompleteProps) {
     super(props);
     this.state = {
@@ -26,35 +25,35 @@ export class FriendsAutocomplete extends React.Component<FriendsAutocompleteProp
     };
   }
 
-  
   handleSelect(selection) {
     this.setState({
       selection: selection,
     });
-  
+
     this.props.onSelect(selection);
   }
 
   render() {
     return (
-        <div className="friends-autocomplete">
-          <Typeahead
-              options={FriendStore.friendsWithUserId()}
-              placeholder="Type a friend's name…"
-              maxVisible={10}
-              onOptionSelected={this.handleSelect.bind(this)}
-              filterOption={this.friendMatchingQuery}
-              displayOption="name"
-              customListComponent={FriendsList}
-              defaultClassNames={false}
-              customClasses={{input: "form-control"}}
-              className="rf-combobox"
-              />
-        </div>
+      <div className="friends-autocomplete">
+        <Typeahead
+          options={FriendStore.friendsWithUserId()}
+          placeholder="Type a friend's name…"
+          maxVisible={10}
+          onOptionSelected={this.handleSelect.bind(this)}
+          filterOption={this.friendMatchingQuery}
+          displayOption="name"
+          customListComponent={FriendsList}
+          defaultClassNames={false}
+          customClasses={{input: "form-control"}}
+          className="rf-combobox"
+          />
+      </div>
     );
   }
+
   friendMatchingQuery(query, friend: Friend) {
-    return fuzzy.test(query, friend.name);
+    return test(query, friend.name);
   }
 
 }
