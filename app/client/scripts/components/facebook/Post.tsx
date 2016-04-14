@@ -1,11 +1,12 @@
 
-import {Subject} from "../../../../common/models/questions/common/Subject";
-import {Picture} from "./Picture";
-import {Video}   from "./Video";
-import {Link}    from "./Link";
-import {Page}    from "./Page";
-import {Text}    from "./Text";
-import {Comment} from "./Comment";
+import {Subject}    from "../../../../common/models/questions/common/Subject";
+import {Picture}    from "./Picture";
+import {Video}      from "./Video";
+import {Link}       from "./Link";
+import {Page}       from "./Page";
+import {Text}       from "./Text";
+import {Comment}    from "./Comment";
+import {TaggedPost} from "./TaggedPost";
 
 export class None extends React.Component<{}, {}>{
   render() {
@@ -58,7 +59,16 @@ export class Post extends React.Component<PostProps, {}>{
 
     post.interactive = this.props.interactive;
 
-    return React.createElement(types[post.type], _.assign(post, {onLoad: this.props.onLoad}));
+    const postElement = React.createElement(
+      types[post.type],
+      _.assign(post, {onLoad: this.props.onLoad})
+    );
+
+    return (
+      <TaggedPost post={post}>
+        {postElement}
+      </TaggedPost>
+    );
   }
 
 }

@@ -234,7 +234,14 @@
 }
 
 
-
+.post-tagged {
+  .post-tagged-by {
+    span {
+      font-weight: bold;
+      color: $primarycolor;
+    }
+  }
+}
 
 .post-picture {
 

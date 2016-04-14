@@ -14,50 +14,51 @@ interface RawUser {
 
 export class User {
   private fb: FacebookService;
-  constructor(public _id: Mongo.ObjectID,
-              public username: string,
-              public services: Services,
-              public profile: Profile,
-              public status: TrainingStatus = TrainingStatus.NotStarted,
-              public firstTime: boolean = true
+
+  constructor(
+    public _id: Mongo.ObjectID,
+    public username: string,
+    public services: Services,
+    public profile: Profile,
+    public status: TrainingStatus = TrainingStatus.NotStarted,
+    public firstTime: boolean = true
   ) {
     this.fb = services.facebook;
   }
 
-
-  get facebookId() {
+  get facebookId(): string {
     return this.fb.id;
   }
 
-  get firstName() {
+  get firstName(): string {
     return this.fb.first_name;
   }
 
-  get lastName() {
+  get lastName(): string {
     return this.fb.last_name;
   }
 
-  get name() {
+  get name(): string {
     return this.fb.name;
   }
 
-  get gender() {
+  get gender(): string {
     return this.fb.gender;
   }
 
-  get email() {
+  get email(): string {
     return this.fb.email;
   }
 
-  get locale() {
+  get locale(): string {
     return this.fb.locale;
   }
   
-  isBot() {
+  isBot(): boolean {
     return this.username && (this.username == 'bot1' || this.username == 'bot2');
   }
 
-  getAvatarUrl() {
+  getAvatarUrl(): string {
 
     if (this.isBot()) {
       return Routes.Assets.at('images/bot-avatar.png');
