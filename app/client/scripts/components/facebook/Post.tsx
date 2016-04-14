@@ -1,10 +1,10 @@
 
 import {Subject} from "../../../../common/models/questions/common/Subject";
 import {Picture} from "./Picture";
-import {Video} from "./Video";
-import {Link} from "./Link";
-import {Page} from "./Page";
-import {Text} from "./Text";
+import {Video}   from "./Video";
+import {Link}    from "./Link";
+import {Page}    from "./Page";
+import {Text}    from "./Text";
 import {Comment} from "./Comment";
 
 export class None extends React.Component<{}, {}>{

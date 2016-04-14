@@ -7,7 +7,7 @@ import {BoardStateService} from "./BoardStateService";
 import {AnswerService} from "./AnswerService";
 import {Marker} from "./../../common/models/questions/geolocation/Marker";
 import Question from "../../common/models/Question";
-import {TimelineQuestion} from "../../common/models/questions/timeline/TimeLineQuestion";
+import {TimelineQuestion} from "../../common/models/questions/timeline/TimelineQuestion";
 import {Tile} from "../../common/models/Tile";
 import {GameBoard} from "../../common/models/GameBoard";
 import {RawTileState} from "../collections/TileState";

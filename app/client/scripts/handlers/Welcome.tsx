@@ -1,6 +1,5 @@
 import {GameStore} from './../stores/GameStore';
 import {JoinRequest} from "../models/JoinRequest";
-import {debug} from "util";
 import {Game} from "../models/Game";
 import {User} from "../models/User";
 import {TrainingStatus} from "../models/TrainingStatus";
@@ -14,11 +13,10 @@ interface WelcomeProps {
 }
 
 export class Welcome extends React.Component<WelcomeProps, {}> {
-  
 
   switchToTraining(e) {
     e.preventDefault();
-    debug('TODO: Switch to training');
+    console.error('TODO: Switch to training');
   }
 
   startBotGame(e) {

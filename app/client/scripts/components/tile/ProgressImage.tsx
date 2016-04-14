@@ -1,4 +1,6 @@
+
 import MouseEventHandler = React.MouseEventHandler;
+
 import {Score} from "../../../../common/models/Score";
 
 interface ProgressImageProps {
@@ -9,21 +11,19 @@ interface ProgressImageProps {
 
 export class ProgressImage extends React.Component<ProgressImageProps, {}> {
 
-
   render() {
-
     const triggerStyle = "trigger-ring";
 
-    const score = this.conquerorScore(this.props.score);
+    const score     = this.conquerorScore(this.props.score);
     const conqueror = this.conqueror(this.props.score);
+
     const elementStyles = _.range(1, 4).map((i: number) => {
-          if (i > score) {
-            return "trigger-ring-element-empty"
-          } else {
-            return `trigger-ring-element-${conqueror}-conquered`;
-          }
-        }
-    );
+      if (i > score) {
+        return "trigger-ring-element-empty";
+      } else {
+        return `trigger-ring-element-${conqueror}-conquered`;
+      }
+    });
 
     return (
         <a role='button' href='#' onClick={this.props.onClick}>
@@ -73,3 +73,4 @@ export class ProgressImage extends React.Component<ProgressImageProps, {}> {
   }
 
 }
+

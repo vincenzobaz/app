@@ -61,7 +61,7 @@ export class TimelineQuestion extends Question {
       }
 
       if (counter >= 100) {
-        throw new Meteor.Error("We reached maximum iterations for TimeLineQuestion generation");
+        throw new Meteor.Error("We reached maximum iterations for TimelineQuestion generation");
       }
       let lowerMoments = _.rangeRight(1, lower + 1).map((i) => {
         return moment(answer).subtract(step * i, unit).toDate()
@@ -70,7 +70,7 @@ export class TimelineQuestion extends Question {
         return moment(answer).add(step * i, unit).toDate()
       });
       this.dates = (lowerMoments.concat([moment(answer).toDate()])).concat(upperMoments);
-      
+
     } else {
       this.dates = dates;
       this.before = before;

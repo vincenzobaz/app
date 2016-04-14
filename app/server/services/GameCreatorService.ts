@@ -1,22 +1,27 @@
-import {HTTPHelper} from './../helpers/http';
-import {encode} from 'querystring'
-import { GameBoard, RawGameBoard } from "../../common/models/GameBoard";
+
+import {encode}                  from 'querystring';
+
+import {HTTPHelper}              from './../helpers/http';
+import {GameBoard, RawGameBoard} from '../../common/models/GameBoard';
+
+const DEBUG = false;
 
 interface Parameter {
   user_id: string;
   access_token: string;
 }
+
 class GameCreator {
 
   constructor(public baseUrl: string) {
-    if (baseUrl == null || baseUrl == '') {
+    if (baseUrl == null || baseUrl === '') {
       throw new Error('GameCreatorService: missing baseUrl argument.');
     }
   }
 
   url(method, params?: Parameter) {
     let query;
-    
+
     if (params != null) {
       query = '?' + encode(params);
     }
@@ -35,6 +40,8 @@ class GameCreator {
 
     const url = this.url('fetchData', params);
 
+    DEBUG && console.log('Fetching data from ' + url);
+
     return HTTPHelper.get(url, callback);
   }
 
@@ -43,8 +50,10 @@ class GameCreator {
       user_id: fbUserId,
       access_token: accessToken
     };
-    
+
     const url = this.url('gameboard', params);
+
+    DEBUG && console.log('Fetching gameboard from ' + url);
 
     return HTTPHelper.get(url, callback);
   }

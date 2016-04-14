@@ -1,6 +1,6 @@
 import {RawQuestion, default as Question} from "../Question";
 import {MultipleChoiceQuestion, RawMultipleChoiceQuestion} from "./multiplechoice/MultipleChoiceQuestion";
-import {TimelineQuestion, RawTimelineQuestion} from "./timeline/TimeLineQuestion";
+import {TimelineQuestion, RawTimelineQuestion} from "./timeline/TimelineQuestion";
 import {OrderQuestion, RawOrderQuestion} from "./order/OrderQuestion";
 import {GeoQuestion, RawGeoQuestion} from "./geolocation/GeoQuestion";
 import {KIND, Kind} from "./common/Kind";

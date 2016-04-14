@@ -1,6 +1,6 @@
 
 
-import {TimelineQuestion} from "../../../../common/models/questions/timeline/TimeLineQuestion";
+import {TimelineQuestion} from "../../../../common/models/questions/timeline/TimelineQuestion";
 import {TimelineAnswer} from "../../../../common/models/questions/answers/TimelineAnswer";
 import {TIMELINE_UNIT} from "../../../../common/models/questions/timeline/TimelineUnit";
 var moment = require("moment");

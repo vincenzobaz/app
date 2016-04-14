@@ -9,7 +9,6 @@ import {Geo} from './../questions/Geo';
 import {Reorder} from './../questions/Reorder';
 import {Game} from "../../models/Game";
 import Question from "../../../../common/models/Question";
-import {debug} from "util";
 import {Modal} from 'react-bootstrap';
 import {TimeUp} from "./TimeUp";
 import {Done} from "./Done";
@@ -115,7 +114,7 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
     const kind = question.kind;
 
     if (!QuestionFactory.doesQuestionExist(kind)) {
-      debug(`Unknown question kind: ${kind}. Available kinds:` + KIND);
+      console.error(`Unknown question kind: ${kind}. Available kinds:` + KIND);
       ErrorStore.emitError(new Error(`Unknown question kind: ${kind}`));
       return null;
     }

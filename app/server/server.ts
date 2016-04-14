@@ -59,8 +59,9 @@ export const Server = {
       return gameBoard;
     }
     catch (e) {
-      console.error(`ERROR: Can't create game board from game-creator result: ${e}`);
-    
+      console.error(`ERROR: Can't create game board from game creator result.`);
+      console.error(`ERROR: ${e.stack}`);
+
       if (createFetch && !BotService.isBot(userId)) {
         console.log(`Creating new fetch request as it failed for user ${userId} in game: ${game._id}`);
         const fetch = new GameFetch(
@@ -70,9 +71,9 @@ export const Server = {
             playerNum,
             1
         );
-      
+
         GameFetchRepository.save(fetch);
-      } 
+      }
     }
   },
 
@@ -84,10 +85,11 @@ export const Server = {
     const accessToken = user.services.facebook.accessToken;
 
     try {
-      GameCreatorService.fetchData(fbUserId, accessToken);
+      const result = GameCreatorService.fetchData(fbUserId, accessToken);
+      console.log(`Game creator replied: ${result.data.message}`);
     }
     catch (e) {
-      console.log(`INFO: Non 200 reply from Game creator to 'fetchData' request ${e}`);
+      console.error(`Non 200 reply from game creator to 'fetchData' request ${e}`);
     }
   },
 
