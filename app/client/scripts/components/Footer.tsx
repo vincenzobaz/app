@@ -22,16 +22,20 @@ export class Footer extends React.Component<FooterProps, {}> {
 
   render() {
     return (
-      <div id='footer' className='container-fluid'>
-      {this.renderBranding()}
-      {this.renderGameToolbar()}
-      </div>
+      <footer id="footer" className="navbar-default navbar-fixed-bottom">
+        <div className="container-fluid">
+          <div className="row">
+            {this.renderBranding()}
+            {this.renderGameToolbar()}
+          </div>
+        </div>
+      </footer>
     );
   }
 
   renderBranding() {
     return (
-      <div className='branding grid-10'>
+      <div className='branding col-sm-4 col-xs-2'>
         <a href="#" onClick={this.showPage('home')}>
           <img src={Routes.Assets.at('images/reminisce-logo-ios.png')} alt='Reminisce' width='48' height='48' />
         </a>
@@ -41,7 +45,7 @@ export class Footer extends React.Component<FooterProps, {}> {
 
   renderGameToolbar() {
     return (
-      <div className='grid-50 pull-right text-right'>
+      <div className='col-xs-10 col-sm-8 pull-right text-right'>
         <GameToolbar game={this.props.currentGame} />
       </div>
     );

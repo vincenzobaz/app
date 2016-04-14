@@ -53,13 +53,7 @@ export class Dashboard extends React.Component<DashboardProps,{}> {
                         </div>
                     </div>
                 </div>
-                <nav id="navigation-toggle" role="navigation">
-                    <div className="grid-container">
-                        <div id="js-footer" className="grid-100">
-                            <Footer />
-                        </div>
-                    </div>
-                </nav>
+                <Footer />
             </div>
         );
     }

@@ -102,11 +102,11 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
   render() {
     return (
       <div className="game-toolbar">
-        <div className='start-game container-fluid'>
-          <div className="grid-50">
+        <div className="start-game container-fluid">
+          <span className="col-sm-6 hidden-xs">
             Start new game with
-          </div>
-          <div className="grid-50">
+          </span>
+          <div className="col-xs-12 col-sm-6">
             <FriendsSearchbox onSelect={this.onFriendSelect.bind(this)} />
           </div>
         </div>
