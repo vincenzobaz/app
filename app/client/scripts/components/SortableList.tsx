@@ -179,7 +179,6 @@ export class SortableList extends React.Component<SortableListProps, SortableLis
 
 
   render() {
-    console.log("heights of sortable: ", this.state.itemHeight);
     const {mouse, isPressed, lastPressed, order} = this.state;
     const items = this.state.items;
     const totalHeight = this.state.itemHeight.reduce((acc, h) => {

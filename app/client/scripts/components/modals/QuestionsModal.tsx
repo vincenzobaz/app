@@ -18,6 +18,7 @@ import {KIND} from "../../../../common/models/questions/common/Kind";
 import {QuestionTimer} from "../../boot/helpers/QuestionTimer";
 import {QuestionFactory} from "../../../../common/models/questions/QuestionFactory";
 import {Button} from 'react-bootstrap';
+import {RunConfig, ENVIRONMENT} from "../../boot/helpers/RunConfig";
 // import {Timer} from "timer-machine";
 
 
@@ -207,8 +208,10 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
   render() {
     const onHide = this.props.onRequestHide ? this.props.onRequestHide.bind(this) : this.onClose.bind(this);
     const footer = this.state.tile.answered ? this.renderDoneFooter() : this.renderFooter();
+    //true indicated the modal can be dismissed if clicked in the background
+    const backdrop = RunConfig.env == ENVIRONMENT.Production? "static" :true;
     return (
-        <Modal show={this.state.showModal} onHide={onHide}>
+        <Modal show={this.state.showModal} onHide={onHide} backdrop={backdrop}>
           <Modal.Header>
             <Modal.Title>{this.renderTitle()}</Modal.Title>
           </Modal.Header>
