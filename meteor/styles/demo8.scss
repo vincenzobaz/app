@@ -4,14 +4,6 @@
 $empty-color: #bfbfbf;
 $both-played-color: #1f1028;
 
-* {
-  padding: 0;
-  margin: 0;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
-}
-
 .demo8-outer {
   background-color: #EEE;
   color: #FFF;
@@ -28,8 +20,6 @@ $both-played-color: #1f1028;
 }
 
 .demo8 {
-  /*width: 420px;*/
-  /*height: auto;*/
   display: table;
   min-height: 15em;
   clear: both;
