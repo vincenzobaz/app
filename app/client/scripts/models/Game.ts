@@ -42,7 +42,7 @@ export class Game {
   }
 
   get currentPlayerId() {
-    return (this.playerTurn == 1) ? this.player1 : this.player2;
+    return (this.playerTurn === 1) ? this.player1 : this.player2;
   }
 
   get currentPlayer() {
@@ -50,31 +50,35 @@ export class Game {
   }
 
   get isMyTurnToPlay() {
-    return this.currentPlayerId == Meteor.userId();
+    return this.currentPlayerId === Meteor.userId();
   }
 
   get myPlayerNumber() {
-    return this.player1 == Meteor.userId() ? 1 : 2;
+    return this.player1 === Meteor.userId() ? 1 : 2;
   }
 
   get hasEnded() {
-    return this.status == GAME_STATUS.Ended;
+    return this.status === GAME_STATUS.Ended;
   }
 
   get isPlaying() {
-    return this.status == GAME_STATUS.Playing;
+    return this.status === GAME_STATUS.Playing;
   }
 
   get isWaiting() {
-    return this.status == GAME_STATUS.Waiting;
+    return this.status === GAME_STATUS.Waiting;
   }
 
   get isCreating() {
-    return this.status == GAME_STATUS.Creating;
+    return this.status === GAME_STATUS.Creating;
+  }
+
+  get hasFailed() {
+    return this.status === GAME_STATUS.Failed;
   }
 
   get isDraw() {
-    return this.wonBy == 0;
+    return this.wonBy === 0;
   }
 
   get isWon() {
@@ -82,7 +86,7 @@ export class Game {
       return false;
     }
 
-    return this.myPlayerNumber == this.wonBy;
+    return this.myPlayerNumber === this.wonBy;
   }
 
   get isLost() {

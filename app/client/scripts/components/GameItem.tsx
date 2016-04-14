@@ -1,9 +1,9 @@
 
-import {GameStore} from './../stores/GameStore';
-import {GameStatus, GAME_STATUS} from './../../../common/models/GameStatus';
-import {Game} from "../models/Game";
-import {Friend} from "../../../common/models/Friend";
-import {Score} from "../../../common/models/Score";
+import {Game}        from '../models/Game';
+import {GameStore}   from './../stores/GameStore';
+import {GAME_STATUS} from './../../../common/models/GameStatus';
+import {Friend}      from '../../../common/models/Friend';
+import {Score}       from '../../../common/models/Score';
 
 interface GameItemProps {
   game: Game;
@@ -19,21 +19,21 @@ export class GameItem extends React.Component<GameItemProps, {}> {
     const classNames       = this.getClassNames();
 
     return (
-        <li className={classNames.waiting}>
-          <div className='media'>
-              <a className='pull-left' title='Switch to this game' href="#" onClick={this.switchToGame(game)}>
-                <img className='media-object img-circle' width='40' src={avatarUrl} alt='' />
+      <li className={classNames.waiting}>
+        <div className='media'>
+          <a className='pull-left' title='Switch to this game' href="#" onClick={this.switchToGame(game)}>
+            <img className='media-object img-circle' width='40' src={avatarUrl} alt='' />
+          </a>
+          <div className='media-body'>
+            <h5 className='media-heading'>
+              <a title='Switch to this game' onClick={this.switchToGame(game)} href="#">
+                {opponentName}
               </a>
-              <div className='media-body'>
-                <h5 className='media-heading'>
-                    <a title='Switch to this game' onClick={this.switchToGame(game)} href="#">
-                      {opponentName}
-                    </a>
-                    </h5>
-                <span>{this.renderDescription()}</span>
-              </div>
-              </div>
-        </li>
+            </h5>
+            <span>{this.renderDescription()}</span>
+          </div>
+        </div>
+      </li>
     );
   }
 
@@ -67,7 +67,7 @@ export class GameItem extends React.Component<GameItemProps, {}> {
         return <b>Failed</b>;
 
       case GAME_STATUS.Ended:
-        var text = '';
+        let text = '';
 
         if (game.isWon)       text = 'Won';
         else if (game.isDraw) text = 'Draw';
@@ -96,25 +96,26 @@ export class GameItem extends React.Component<GameItemProps, {}> {
 
   getClassNames() {
     return {
-      waiting: this.props.game.isWaiting? 'waiting' : ''
+      waiting: this.props.game.isWaiting ? 'waiting' : ''
     };
   }
 }
 
 
 export class None extends React.Component<{}, {}> {
+
   render() {
-    var center = {textAlign: 'center'};
+    const center = { textAlign: 'center' };
+
     return (
-        <li>
-          <div className='media'>
-              <div className='media-body'>
-                <p style={center}>No games</p>
-              </div>
-              </div>
-        </li>
+      <li>
+        <div className='media'>
+          <div className='media-body'>
+            <p style={center}>No games</p>
+          </div>
+        </div>
+      </li>
     );
   }
 }
-
 
