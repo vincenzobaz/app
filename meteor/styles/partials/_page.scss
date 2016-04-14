@@ -600,16 +600,17 @@ ul.join-requests, ul.games {
 // Footer
 
 #navigation-toggle {
+  @include zero;
+
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 1000;
 
-  @include zero;
-
   border-top: 1px dotted $neutralcolor;
   padding: 5px 0;
+  background-color: #fff;
 }
 
 #footer {
