@@ -62,6 +62,9 @@ var config = module.exports = _.assign(_.clone(config), {
     plugins: (config.plugins || []).concat([
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify('development')
+        })
     ]),
     devServer: {
         publicPath: devProps.baseUrl + '/assets/',
