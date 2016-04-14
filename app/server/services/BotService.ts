@@ -126,9 +126,6 @@ export const BotService = {
     }
     
     const result = BotService.playTurn(game);
-    console.log("Results for bot turn:", result);
-    
-    // BotService.drawBoardState(Games.findOne(game._id));
     
     if (handle && (result.win || result.draw)) {
       handle.stop();
@@ -137,7 +134,7 @@ export const BotService = {
   },
 
   playTurn(game: Game) {
-    console.log("Bot is playing")
+    console.log("Bot is playing");
     if (game.status != GAME_STATUS.Playing) {
       return;
     }
@@ -146,8 +143,7 @@ export const BotService = {
     const gameBoard = game.getCurrentBoard();
     const firstTurn = game.getCurrentPlayerAvailableMoves().length == 9;
 
-    // const method = (firstTurn) ? 'pickRandom' : 'pickTile';
-    const method = 'pickTile';
+    const method = (firstTurn) ? 'pickRandom' : 'pickTile';
     const tile: Tile = BotService[method](game, gameBoard);
     const successrate = 33;
 

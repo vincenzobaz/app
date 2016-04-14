@@ -1,5 +1,3 @@
-
-
 import MouseEventHandler = React.MouseEventHandler;
 import {Score} from "../../../../common/models/Score";
 
@@ -10,18 +8,15 @@ interface ProgressImageProps {
 }
 
 export class ProgressImage extends React.Component<ProgressImageProps, {}> {
-  
-  
-  
+
+
   render() {
-    
+
     const triggerStyle = "trigger-ring";
 
     const score = this.conquerorScore(this.props.score);
     const conqueror = this.conqueror(this.props.score);
-    console.log("Conqueror", conqueror, score, this.props.score);
     const elementStyles = _.range(1, 4).map((i: number) => {
-      console.log(`index: ${i}, score: ${score}`);
           if (i > score) {
             return "trigger-ring-element-empty"
           } else {
@@ -29,7 +24,7 @@ export class ProgressImage extends React.Component<ProgressImageProps, {}> {
           }
         }
     );
-    
+
     return (
         <a role='button' href='#' onClick={this.props.onClick}>
           <svg width="130" height="130" className={triggerStyle}>
@@ -43,18 +38,19 @@ export class ProgressImage extends React.Component<ProgressImageProps, {}> {
               <path
                   d="M59,10.484l0,18.928c-17.539,2.656 -31,17.812 -31,36.088c0,4.743 0.906,9.275 2.556,13.434l-15.69,9.073c-3.184,-6.957 -4.958,-14.691 -4.958,-22.837c0,-28.359 21.51,-51.735 49.092,-54.686Z"
                   className={elementStyles[2]}/>
-            </g></svg>
+            </g>
+          </svg>
           <i className={this.getIconClassNames()}></i>
         </a>
     );
   }
-  
+
   conqueror(score: Score): string {
-    return score.me > score.them? "user": "enemy";
+    return score.me > score.them ? "user" : "enemy";
   }
-  
+
   conquerorScore(score: Score): number {
-    return score.me > score.them? score.me: score.them;
+    return score.me > score.them ? score.me : score.them;
   }
 
   getIconClassNames() {
@@ -63,15 +59,15 @@ export class ProgressImage extends React.Component<ProgressImageProps, {}> {
       'icon-2x'
     ].join(' ');
   }
-  
+
   private icons = {
-  Order: 'sort', // 'sort-up'
-  MultipleChoice: 'list',
-  Timeline: 'time', // 'calendar'
-  Geolocation: 'map-marker', // 'geo'
-  Misc: 'question'
-};
-  
+    Order: 'sort', // 'sort-up'
+    MultipleChoice: 'list',
+    Timeline: 'time', // 'calendar'
+    Geolocation: 'map-marker', // 'geo'
+    Misc: 'question'
+  };
+
   typeToIcon(type) {
     return this.icons[type] || this.icons.Misc;
   }

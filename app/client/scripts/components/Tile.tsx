@@ -16,8 +16,6 @@ const icons = {
   Misc: 'question'
 };
 
-const typeToIcon = (type) =>
-icons[type] || icons.Misc;
 
 interface TileProps {
   title: string;
@@ -37,8 +35,6 @@ interface TileProps {
 export class Tile extends React.Component<TileProps, {}> {
 
   render() {
-    console.log("something", this.props.userAnswered, this.props.enemyAnswered, this.props.score);
-
     return (
         <div className={this.getCellClassNames()+ ", " + this.tileBackgroundStyle(this.props.score)}>
           <Tooltip title={this.props.title} placement={this.props.placement}>
