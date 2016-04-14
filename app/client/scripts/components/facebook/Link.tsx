@@ -6,6 +6,7 @@ interface LinkProps {
   url: string;
   thumbnailUrl: string;
   answered?: boolean;
+  onLoad?: Function;
 }
 
 export class Link extends React.Component<LinkProps, {}> {
@@ -49,9 +50,15 @@ export class Link extends React.Component<LinkProps, {}> {
 
     return (
       <div className="post-media">
-        <img draggable={false} src={url} alt="" />
+        <img draggable={false} src={url} alt="" onLoad={this.onLoad.bind(this)}/>
       </div>
     );
+  }
+  
+  onLoad() {
+    if(this.props.onLoad) {
+      this.props.onLoad();
+    }
   }
 
 }

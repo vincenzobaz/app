@@ -32,14 +32,13 @@ interface SortableListState {
   orderedOffset?: number[];
   orderedHeight?: number[];
   itemComponents?: React.ReactHTMLElement[];
-  calibrationComplete?: boolean;
 }
 
 export class SortableList extends React.Component<SortableListProps, SortableListState> {
 
-  constructor(props: SortableListProps) {
-    super(props);
-    this.state = {
+
+  defaultState() {
+    return ({
       items: this.props.items,
       delta: 0,
       mouse: 0,
@@ -57,33 +56,39 @@ export class SortableList extends React.Component<SortableListProps, SortableLis
       }),
       itemComponents: this.props.items.map((i) => {
         return null
-      }),
-      calibrationComplete: false
-    };
+      })
+    }
+    );
   }
 
+
+  constructor(props: SortableListProps) {
+    super(props);
+    this.state = this.defaultState();
+  }
+
+
   componentDidMount() {
+    console.log("Mounted");
     window.addEventListener('touchmove', this.handleTouchMove);
     window.addEventListener('touchend', this.handleMouseUp);
     window.addEventListener('mousemove', this.handleMouseMove);
     window.addEventListener('mouseup', this.handleMouseUp);
 
+
     let itemsHeight = this.state.itemComponents.map(item => {
       return $(item).outerHeight(true)
     });
     this.setState({
-      calibrationComplete: true,
       itemHeight: itemsHeight,
     });
+
   }
 
   componentWillReceiveProps(props) {
     this.props = props;
-    this.setState({
-      items: this.props.items,
-    });
+    this.setState(this.defaultState());
   }
-
 
   componentWillUnmount() {
     window.removeEventListener('touchmove', this.handleTouchMove);
@@ -166,13 +171,15 @@ export class SortableList extends React.Component<SortableListProps, SortableLis
 
   handleMouseUp = (): void => {
     this.setState({isPressed: false, delta: 0});
-    
-    this.props.onSort(this.state.order.map((i: number) => {return this.state.items[i]}));
+
+    this.props.onSort(this.state.order.map((i: number) => {
+      return this.state.items[i]
+    }));
   };
 
 
-
   render() {
+    console.log("heights of sortable: ", this.state.itemHeight);
     const {mouse, isPressed, lastPressed, order} = this.state;
     const items = this.state.items;
     const totalHeight = this.state.itemHeight.reduce((acc, h) => {
@@ -183,59 +190,44 @@ export class SortableList extends React.Component<SortableListProps, SortableLis
       overflow: "visible",
       width: "100%"
     };
-    if (this.state.calibrationComplete) {
-      return (
-          <div style={divStyle}>
-            {items.map(item => {
-              const i = items.indexOf(item);
-              const orderIndex = order.indexOf(i);
-              const style = lastPressed === i && isPressed
-                  ? {
-                scale: spring(1.1, springConfig),
-                shadow: spring(16, springConfig),
-                y: mouse,
-              }
-                  : {
-                scale: spring(1, springConfig),
-                shadow: spring(1, springConfig),
-                y: spring(this.getHeightUpToItem(orderIndex, order), springConfig),
-              };
-              return (
-                  <Motion style={style} key={i}>
-                    {({scale, shadow, y}) =>
-                        <div
-                            ref={this.setItemHeight.bind(this, i)}
-                            onMouseDown={this.handleMouseDown.bind(this, i, y)}
-                            onTouchStart={this.handleTouchStart.bind(this, i, y)}
-                            className="demo8-item"
-                            style={{
+    return (
+        <div style={divStyle}>
+          {items.map(item => {
+            const i = items.indexOf(item);
+            const orderIndex = order.indexOf(i);
+            const style = lastPressed === i && isPressed
+                ? {
+              scale: spring(1.1, springConfig),
+              shadow: spring(16, springConfig),
+              y: mouse,
+            }
+                : {
+              scale: spring(1, springConfig),
+              shadow: spring(1, springConfig),
+              y: spring(this.getHeightUpToItem(orderIndex, order), springConfig),
+            };
+            return (
+                <Motion style={style} key={i}>
+                  {({scale, shadow, y}) =>
+                      <div
+                          ref={this.setItemHeight.bind(this, i)}
+                          onMouseDown={this.handleMouseDown.bind(this, i, y)}
+                          onTouchStart={this.handleTouchStart.bind(this, i, y)}
+                          className="demo8-item"
+                          style={{
                     boxShadow: `rgba(0, 0, 0, 0.2) 0px ${shadow}px ${2 * shadow}px 0px`,
                     transform: `translate3d(0, ${y}px, 0) scale(${scale})`,
                     WebkitTransform: `translate3d(0, ${y}px, 0) scale(${scale})`,
                     zIndex: i === lastPressed ? 99 : i,
                   }}>
-                          {this.renderItem(item)}
-                        </div>
-                    }
-                  </Motion>
-              );
-            })}
-          </div>
-      );
-    }
-    else {
-
-      return (
-          <div className="demo8">
-            {items.map((item) => {
-              return <div key={_.uniqueId()} className="demo8-item-static">
-                {this.renderItem(item)}
-              </div>
-            })}
-          </div>
-      );
-
-    }
+                        {this.renderItem(item)}
+                      </div>
+                  }
+                </Motion>
+            );
+          })}
+        </div>
+    );
 
   }
 
@@ -254,7 +246,7 @@ export class SortableList extends React.Component<SortableListProps, SortableLis
     return (
         <div
             key={item.id}>
-          {this.props.renderItem(item)}
+          {this.props.renderItem(item, this.onLoad.bind(this))}
         </div>
     );
   }
@@ -274,7 +266,7 @@ export class SortableList extends React.Component<SortableListProps, SortableLis
     let itemsHeight: number[] = this.state.itemHeight;
     let height = $(itemComponent).outerHeight(true);
     let changedHeight = itemsHeight[index] != height;
-    
+
     if (changedHeight) {
       itemsHeight[index] = height;
       this.setState({
@@ -283,7 +275,14 @@ export class SortableList extends React.Component<SortableListProps, SortableLis
     }
   }
 
-
+  onLoad() {
+    let itemsHeight = this.state.itemComponents.map(item => {
+      return $(item).outerHeight(true)
+    });
+    this.setState({
+      itemHeight: itemsHeight,
+    });
+  }
 }
 
 

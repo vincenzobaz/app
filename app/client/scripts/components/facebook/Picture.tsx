@@ -9,22 +9,27 @@ interface PictureProps {
   thumbnailUrl: string;
   text?: string;
   interactive: boolean;
+  onLoad?: Function;
 }
 
 export class Picture extends React.Component<PictureProps, {}>{
+
+  private element: any;
+
 
   constructor(props: PictureProps) {
     super(props);
   }
 
   render() {
+    
     const image = this.props.imageUrl || this.props.thumbnailUrl;
     if (image == null) {
       return <Text text={this.props.text}/>;
     }
 
     return (
-      <div className="post post-picture">
+      <div className="post post-picture" ref={this.selfRef.bind(this)}>
         <TwoColumns>
           {this.renderPicture(image)}
           {this.renderPictureCaption(this.props.text)}
@@ -36,7 +41,7 @@ export class Picture extends React.Component<PictureProps, {}>{
   renderPicture(imageUrl: string) {
     return (
       <div className="post-media">
-        <img draggable={false} src={imageUrl} alt="" />
+        <img onLoad={this.onLoad.bind(this)} draggable={false} src={imageUrl} alt="" />
       </div>
     );
   }
@@ -52,5 +57,16 @@ export class Picture extends React.Component<PictureProps, {}>{
       </div>
     );
   }
+
+  selfRef(element: any){
+    this.element = element;
+  }
+
+  onLoad(){
+    if(this.props.onLoad) {
+      this.props.onLoad();
+    }
+  }
+
 
 }

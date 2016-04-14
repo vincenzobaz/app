@@ -61,27 +61,32 @@ export class Reorder extends React.Component<ReorderProps, ReorderState> {
       return (<div className="question question-reorder">
         <h4>{getQuestionTitleByType(this.props.type.toString())}</h4>
         <p>Click and drag the items in the correct order.</p>
-        {this.state.items.map((item: Item) => {return this.renderItem(item)})}
+        {this.state.items.map((item: Item) => {
+          return (
+           <div key={_.uniqueId()} className="demo8-item-static">
+             {this.renderItem(item)}
+          </div>
+        )})}
       </div>);
     }
 
   }
 
-  renderItem(item: Item) {
+  renderItem(item: Item, onLoad?: Function) {
  
     if (this.props.userAnswer != null && this.props.answer != null) {
       const index: number = this.state.items.indexOf(item);
       const userItem = this.props.userAnswer.data.items[index];
       const className = userItem.id == this.state.items[index].id? "correct-order": "wrong-order";
       if (item.subject) {
-        return (<div className={className}>
-        <Post post={item.subject} interactive={false}/>
+        return (<div className={`${className}` }>
+        <Post post={item.subject} onLoad={onLoad} interactive={false}/>
         </div>)
       }
     } else {
 
       if (item.subject) {
-        return <Post post={item.subject} interactive={false} />;
+        return <Post post={item.subject} onLoad={onLoad} interactive={false} />;
       }
     }
 
@@ -94,7 +99,6 @@ export class Reorder extends React.Component<ReorderProps, ReorderState> {
   }
 
   onDone() {
-    console.log("we are done");
     this.props.onDone({
       items: this.userAnswer
     });

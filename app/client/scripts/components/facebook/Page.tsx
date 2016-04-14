@@ -5,6 +5,7 @@ interface PageProps {
   name: string;
   pageId?: string;
   photoUrl?: string;
+  onLoad?: Function;
 }
 
 export class Page extends React.Component<PageProps, {}> {
@@ -27,9 +28,15 @@ export class Page extends React.Component<PageProps, {}> {
 
     return (
       <div className="post-media grid-30">
-        <img draggable={false} src={this.props.photoUrl} alt="" />
+        <img onLoad={this.onLoad.bind(this)} draggable={false} src={this.props.photoUrl} alt="" />
       </div>
     );
+  }
+  
+  onLoad(){
+    if (this.props.onLoad) {
+      this.props.onLoad();
+    }
   }
 
 }

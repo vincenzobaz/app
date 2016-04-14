@@ -31,6 +31,7 @@ const types =  {
 interface PostProps {
   post: Subject;
   interactive?: boolean;
+  onLoad?: Function;
 }
 
 export class Post extends React.Component<PostProps, {}>{
@@ -57,7 +58,7 @@ export class Post extends React.Component<PostProps, {}>{
 
     post.interactive = this.props.interactive;
 
-    return React.createElement(types[post.type], post);
+    return React.createElement(types[post.type], _.assign(post, {onLoad: this.props.onLoad}));
   }
 
 }
