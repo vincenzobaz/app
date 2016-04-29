@@ -1,8 +1,8 @@
 
-
 import EventEmitter = NodeJS.EventEmitter;
+
 interface ModalHandlerProps {
-  manager: EventEmiterProps;
+  store: EventEmiterProps;
 }
 
 interface ModalHanlderState {
@@ -22,12 +22,12 @@ export class ModalHandler extends React.Component<ModalHandlerProps, ModalHanlde
 
   
   componentDidMount() {
-    this.props.manager.on('modal', this.onNewModal.bind(this));
+    this.props.store.on('modal', this.onNewModal.bind(this));
     console.log('subscribed');
   }
   
   componentWillUnmount() {
-    this.props.manager.off('modal', this.onNewModal.bind(this));
+    this.props.store.off('modal', this.onNewModal.bind(this));
     console.log('unsubscribed');
   }
   

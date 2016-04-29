@@ -1,7 +1,7 @@
 import {Tooltip} from './bootstrap/Tooltip';
 import {Routes} from './../../../common/Routes';
 import {progressImage} from './../boot/helpers/progressImage';
-import {ModalManager} from './../ModalManager';
+import {ModalStore} from './../stores/ModalStore';
 import {SubjectType} from "../../../common/models/questions/common/SubjectType";
 import {Score} from "../../../common/models/Score";
 import {Kind} from "../../../common/models/questions/common/Kind";
@@ -50,7 +50,8 @@ export class Tile extends React.Component<TileProps, {}> {
     if (this.isDisabled()) {
       return;
     }
-    ModalManager.showModal(this.props.questionModal);
+
+    ModalStore.showModal(this.props.questionModal);
   }
 
   isDisabled() {

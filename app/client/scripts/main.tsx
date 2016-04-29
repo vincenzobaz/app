@@ -6,7 +6,7 @@ import * as ReactDOM from 'react-dom';
 import {ErrorStore} from './stores/ErrorStore';
 import {ErrorHandler} from './components/ErrorHandler';
 import {ModalHandler} from './components/ModalHandler';
-import {ModalManager} from './ModalManager';
+import {ModalStore} from './stores/ModalStore';
 import {Main} from "./handlers/Main";
 
 
@@ -21,7 +21,7 @@ var App = {
     this.loadGoogleCharts();
     ReactDOM.render(<ErrorHandler store={ErrorStore} />, $$('error'));
     ReactDOM.render(<Main />, $$('app'));
-    ReactDOM.render(<ModalHandler manager={ModalManager} />, $$('modal'));
+    ReactDOM.render(<ModalHandler store={ModalStore} />, $$('modal'));
   },
 
   subscribe() {

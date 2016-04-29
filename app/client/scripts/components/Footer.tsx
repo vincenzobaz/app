@@ -4,7 +4,6 @@ import {Routes} from "../../../common/Routes";
 import {Game} from "../models/Game";
 import {Games} from "../collections/Games";
 import {GameStore} from "../stores/GameStore";
-import {ModalManager} from "../ModalManager";
 
 interface FooterProps {
   currentGame?: Game;

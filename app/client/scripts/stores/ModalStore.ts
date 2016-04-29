@@ -1,10 +1,9 @@
 
-
 import {EventEmitter} from 'events';
 
 const nop = () => {};
 
-class _ModalManager extends EventEmitter {
+class _ModalStore extends EventEmitter {
 
   showElement(element, props = {}, onDismiss = nop) {
     this.emit('modal', {
@@ -17,12 +16,13 @@ class _ModalManager extends EventEmitter {
   showModal(modal) {
     this.emit('modal', modal);
   }
-  
+
   off(event: string, listener: Function): EventEmitter {
     console.error("Not implemented yet");
     return this;
   }
+
 }
 
-export const ModalManager = new _ModalManager();
+export const ModalStore = new _ModalStore();
 

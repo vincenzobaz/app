@@ -1,5 +1,4 @@
 
-import {ModalManager} from "./../ModalManager";
 import {Board} from "./../components/Board";
 import {GameResult} from "./../components/GameResult";
 import {Game} from "../models/Game";
