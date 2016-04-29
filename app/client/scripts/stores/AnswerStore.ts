@@ -1,6 +1,6 @@
 
 import {Tile} from "../../../common/models/Tile";
-import {MeteorPromise} from "./../helpers/meteor";
+import {MeteorPromise} from "../helpers/meteor";
 import {Game} from "../models/Game";
 import {Answer} from "../models/Answer";
 

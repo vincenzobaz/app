@@ -1,5 +1,5 @@
 
-import {GameBoard, RawGameBoard} from "./../../common/models/GameBoard";
+import {GameBoard, RawGameBoard} from "../../common/models/GameBoard";
 
 export const GameBoards = new Mongo.Collection<GameBoard>('gameBoards', {
     transform(doc: RawGameBoard) {

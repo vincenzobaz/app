@@ -1,12 +1,12 @@
 'use strict';
 
-import {ErrorStore} from './../../stores/ErrorStore';
-import {progressImage} from './../../helpers/progressImage';
-import {TimeLeft} from './../TimeLeft';
-import {MultipleChoice} from './../questions/MultipleChoice';
-import {Timeline} from './../questions/Timeline';
-import {Geo} from './../questions/Geo';
-import {Reorder} from './../questions/Reorder';
+import {ErrorStore} from '../../stores/ErrorStore';
+import {progressImage} from '../../helpers/progressImage';
+import {TimeLeft} from '../TimeLeft';
+import {MultipleChoice} from '../questions/MultipleChoice';
+import {Timeline} from '../questions/Timeline';
+import {Geo} from '../questions/Geo';
+import {Reorder} from '../questions/Reorder';
 import {Game} from "../../models/Game";
 import Question from "../../../../common/models/Question";
 import {Modal} from 'react-bootstrap';

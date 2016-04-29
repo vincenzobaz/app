@@ -4,7 +4,7 @@ import Question from "../../../common/models/Question";
 import {KIND} from "../../../common/models/questions/common/Kind";
 import {Tile} from "../../../common/models/Tile";
 import {VerificationService} from "./services/VerificationService";
-import {Answer} from "./../../../common/models/questions/answers/Answer";
+import {Answer} from "../../../common/models/questions/answers/Answer";
 import {GeoVerificationService} from "./services/GeoVerificationService";
 import {TimelineVerificationService} from "./services/TimelineVerificationService";
 

@@ -1,10 +1,10 @@
-import {RawSubject, Subject} from "./../common/Subject";
-import {QuestionType} from "./../common/QuestionType";
-import {KIND, Kind} from "./../common/Kind";
+import {RawSubject, Subject} from "../common/Subject";
+import {QuestionType} from "../common/QuestionType";
+import {KIND, Kind} from "../common/Kind";
 import {RawQuestion, default as Question} from "../../Question";
 import {Marker} from "./Marker";
 import {Location} from "./Location";
-import {SubjectFactory} from "./../common/SubjectFactory";
+import {SubjectFactory} from "../common/SubjectFactory";
 
 
 export interface RawGeoQuestion extends RawQuestion {

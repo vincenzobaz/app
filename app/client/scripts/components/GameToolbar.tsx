@@ -4,7 +4,7 @@ import {Modal, Button}    from 'react-bootstrap';
 import {Game}             from '../models/Game';
 import {Friend}           from '../../../common/models/Friend';
 import {Friends}          from '../../../common/collections/Friends';
-import {GameStore}        from './../stores/GameStore';
+import {GameStore}        from '../stores/GameStore';
 import {QuitGameModal}    from './modals/QuitGameModal';
 import {StartGameModal}   from './modals/StartGameModal';
 import {FriendsSearchbox} from './FriendsSearchbox';

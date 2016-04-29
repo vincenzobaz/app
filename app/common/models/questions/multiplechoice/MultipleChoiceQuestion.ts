@@ -1,9 +1,9 @@
-import {RawSubject, Subject} from "./../common/Subject";
+import {RawSubject, Subject} from "../common/Subject";
 import {RawChoice, Choice} from "./Choice";
-import {QuestionType} from "./../common/QuestionType";
-import {KIND, Kind} from "./../common/Kind";
+import {QuestionType} from "../common/QuestionType";
+import {KIND, Kind} from "../common/Kind";
 import {RawQuestion, default as Question} from "../../Question";
-import {SubjectFactory} from "./../common/SubjectFactory";
+import {SubjectFactory} from "../common/SubjectFactory";
 
 
 export interface RawMultipleChoiceQuestion extends RawQuestion{

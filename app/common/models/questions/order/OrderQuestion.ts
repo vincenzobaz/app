@@ -1,8 +1,8 @@
 import {OrderChoice} from "./OrderChoice";
-import {QuestionType} from "./../common/QuestionType";
-import {Kind} from "./../common/Kind";
-import {Item} from "./../common/Item";
-import {SUBJECT_TYPE} from "./../common/SubjectType";
+import {QuestionType} from "../common/QuestionType";
+import {Kind} from "../common/Kind";
+import {Item} from "../common/Item";
+import {SUBJECT_TYPE} from "../common/SubjectType";
 import Question, {RawQuestion} from "../../Question";
 
 export interface RawOrderQuestion extends RawQuestion{

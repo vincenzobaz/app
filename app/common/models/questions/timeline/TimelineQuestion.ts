@@ -1,9 +1,9 @@
-import {RawSubject, Subject} from "./../common/Subject";
-import {QuestionType} from "./../common/QuestionType";
-import {KIND, Kind} from "./../common/Kind";
+import {RawSubject, Subject} from "../common/Subject";
+import {QuestionType} from "../common/QuestionType";
+import {KIND, Kind} from "../common/Kind";
 import {RawQuestion, default as Question} from "../../Question";
 import {TimelineUnit, TIMELINE_UNIT} from "./TimelineUnit";
-import {SubjectFactory} from "./../common/SubjectFactory";
+import {SubjectFactory} from "../common/SubjectFactory";
 const moment = require('moment');
 import * as _ from "lodash";
 import {Moment} from "moment";

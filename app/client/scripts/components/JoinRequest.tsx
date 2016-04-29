@@ -1,7 +1,7 @@
 
 'use strict';
 
-import {JoinRequestStore} from './../stores/JoinRequestStore';
+import {JoinRequestStore} from '../stores/JoinRequestStore';
 import * as Model from "../models/JoinRequest";
 
 interface JoinRequestProps {

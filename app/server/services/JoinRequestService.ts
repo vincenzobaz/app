@@ -1,9 +1,9 @@
-import {Server} from './../server';
-import {Games} from './../collections/Games';
-import {Friends} from './../../common/collections/Friends';
+import {Server} from '../server';
+import {Games} from '../collections/Games';
+import {Friends} from '../../common/collections/Friends';
 import {BotService} from './BotService';
 import {GameService} from './GameService';
-import {JoinRequestRepository} from './../repositories/JoinRequestRepository';
+import {JoinRequestRepository} from '../repositories/JoinRequestRepository';
 import {FriendRepository} from "../repositories/FriendRepository";
 import { JoinRequests } from "../collections/JoinRequests";
 import { Game } from "../collections/Game";

@@ -1,7 +1,7 @@
 
 import {Game} from "../../models/Game";
 import {Answer} from "../../models/Answer";
-import {AnswerStore} from "./../../stores/AnswerStore";
+import {AnswerStore} from "../../stores/AnswerStore";
 import {Tile} from "../../../../common/models/Tile";
 import {Button} from 'react-bootstrap';
 import {Result} from "../../models/Result";

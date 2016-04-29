@@ -1,9 +1,9 @@
 
 'use strict';
 
-import {getConfig} from './../../helpers/getConfig';
-import {Post} from './../facebook/Post';
-import {GoogleMap} from './../GoogleMap';
+import {getConfig} from '../../helpers/getConfig';
+import {Post} from '../facebook/Post';
+import {GoogleMap} from '../GoogleMap';
 import {getQuestionTitleByType} from "../../helpers/getQuestionTitleByType";
 import {SubjectType} from "../../../../common/models/questions/common/SubjectType";
 import {Subject} from "../../../../common/models/questions/common/Subject";

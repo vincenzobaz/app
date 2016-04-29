@@ -1,5 +1,5 @@
-import {Friend} from './../../../common/models/Friend';
-import {Friends} from './../../../common/collections/Friends';
+import {Friend} from '../../../common/models/Friend';
+import {Friends} from '../../../common/collections/Friends';
 
 export module FriendStore {
 

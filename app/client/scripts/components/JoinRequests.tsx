@@ -1,6 +1,6 @@
 
 import {JoinRequest, None} from './JoinRequest';
-import * as Model from './../models/JoinRequest';
+import * as Model from '../models/JoinRequest';
 
 
 interface JoinRequestsProps {

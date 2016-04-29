@@ -1,5 +1,5 @@
 
-import {DeleteAllData} from "./../components/account/DeleteAllData";
+import {DeleteAllData} from "../components/account/DeleteAllData";
 
 export class Account extends React.Component<{}, {}>{
 

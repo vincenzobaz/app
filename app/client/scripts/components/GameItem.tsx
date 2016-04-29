@@ -1,7 +1,7 @@
 
 import {Game}        from '../models/Game';
-import {GameStore}   from './../stores/GameStore';
-import {GAME_STATUS} from './../../../common/models/GameStatus';
+import {GameStore}   from '../stores/GameStore';
+import {GAME_STATUS} from '../../../common/models/GameStatus';
 import {Friend}      from '../../../common/models/Friend';
 import {Score}       from '../../../common/models/Score';
 

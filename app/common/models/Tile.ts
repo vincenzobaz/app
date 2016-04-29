@@ -1,7 +1,7 @@
 import { ScoreInterface, Score } from "./Score";
 import Question from "./Question";
 import {Kind, KIND} from "./questions/common/Kind";
-import {QuestionFactory} from "./../../common/models/questions/QuestionFactory";
+import {QuestionFactory} from "../../common/models/questions/QuestionFactory";
 
 export interface RawTile {
   _id: string | Mongo.ObjectID;

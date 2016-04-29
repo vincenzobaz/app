@@ -1,8 +1,8 @@
 
-import {GamesList}    from './../components/GamesList';
-import {JoinRequests} from './../components/JoinRequests';
-import {Players}      from './../components/Players';
-import {Footer}       from './../components/Footer';
+import {GamesList}    from '../components/GamesList';
+import {JoinRequests} from '../components/JoinRequests';
+import {Players}      from '../components/Players';
+import {Footer}       from '../components/Footer';
 import {Game}         from '../models/Game';
 import {User}         from '../models/User';
 import {JoinRequest}  from '../models/JoinRequest';

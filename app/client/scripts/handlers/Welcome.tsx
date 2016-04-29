@@ -1,4 +1,4 @@
-import {GameStore} from './../stores/GameStore';
+import {GameStore} from '../stores/GameStore';
 import {JoinRequest} from "../models/JoinRequest";
 import {Game} from "../models/Game";
 import {User} from "../models/User";

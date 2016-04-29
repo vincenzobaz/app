@@ -1,4 +1,4 @@
-import {JoinRequests} from './../collections/JoinRequests';
+import {JoinRequests} from '../collections/JoinRequests';
 
 export const JoinRequestRepository = {
 

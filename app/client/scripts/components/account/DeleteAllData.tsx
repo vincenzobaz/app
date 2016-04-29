@@ -1,7 +1,7 @@
 
 
-import {DismissableAlert} from './../bootstrap/DismissableAlert';
-import {AccountStore} from './../../stores/AccountStore';
+import {DismissableAlert} from '../bootstrap/DismissableAlert';
+import {AccountStore} from '../../stores/AccountStore';
 import {Button, Panel} from "react-bootstrap";
 
 

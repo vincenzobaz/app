@@ -1,6 +1,6 @@
-import {UserStore} from "./../stores/UserStore";
-import {GameStatus, GAME_STATUS} from "./../../../common/models/GameStatus";
-import {FriendStore} from "./../stores/FriendStore";
+import {UserStore} from "../stores/UserStore";
+import {GameStatus, GAME_STATUS} from "../../../common/models/GameStatus";
+import {FriendStore} from "../stores/FriendStore";
 import {Score} from "../../../common/models/Score";
 import {RawTileState} from "../../../server/collections/TileState";
 import {GameBoard, RawGameBoard} from "../../../common/models/GameBoard";

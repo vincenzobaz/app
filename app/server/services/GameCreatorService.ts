@@ -1,7 +1,7 @@
 
 import {encode}                  from 'querystring';
 
-import {HTTPHelper}              from './../helpers/http';
+import {HTTPHelper}              from '../helpers/http';
 import {GameBoard, RawGameBoard} from '../../common/models/GameBoard';
 
 const DEBUG = false;

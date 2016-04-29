@@ -11,13 +11,13 @@ import {GameStatus, GAME_STATUS} from "../../common/models/GameStatus";
 import { GameBoard } from "../../common/models/GameBoard";
 import { KIND } from "../../common/models/questions/common/Kind";
 import { Marker } from "../../common/models/questions/geolocation/Marker";
-import { QuestionFactory } from "./../../common/models/questions/QuestionFactory";
+import { QuestionFactory } from "../../common/models/questions/QuestionFactory";
 import {MultipleChoiceData, MultipleChoiceAnswer} from "./verification/services/MultipleChoiceVerificationService";
 import {TimelineData} from "../../common/models/questions/answers/TimelineData";
 import {TimelineAnswer} from "../../common/models/questions/answers/TimelineAnswer";
 import {GeoData} from "../../common/models/questions/answers/GeoData";
 import {GeoAnswer} from "../../common/models/questions/answers/GeoAnswer";
-import {Answer} from "./../../common/models/questions/answers/Answer";
+import {Answer} from "../../common/models/questions/answers/Answer";
 
 
 interface QuestionAnswer {

@@ -1,4 +1,4 @@
-import {getQuestionTitleByType} from "./../../helpers/getQuestionTitleByType";
+import {getQuestionTitleByType} from "../../helpers/getQuestionTitleByType";
 import {Post} from "../facebook/Post";
 import {TimelineUnit, TIMELINE_UNIT} from "../../../../common/models/questions/timeline/TimelineUnit";
 import {Button, ButtonGroup} from "react-bootstrap";

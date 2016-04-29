@@ -1,4 +1,4 @@
-import {GameStore} from './../stores/GameStore';
+import {GameStore} from '../stores/GameStore';
 import {Friends} from "../../../common/collections/Friends";
 import {Friend} from "../../../common/models/Friend";
 import {Game} from "./Game";

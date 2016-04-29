@@ -1,4 +1,4 @@
-import {Friends} from './../../common/collections/Friends';
+import {Friends} from '../../common/collections/Friends';
 import {UserRepository} from './UserRepository';
 import {Friend} from "../../common/models/Friend";
 import {FBFriend} from "../facebook";

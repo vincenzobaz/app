@@ -4,9 +4,9 @@
 import Autosuggest from 'react-autosuggest';
 import {test}        from 'fuzzy';
 
-import {FriendStore} from './../stores/FriendStore';
-import {Friend}      from './../../../common/models/Friend';
-import {Routes}      from './../../../common/Routes';
+import {FriendStore} from '../stores/FriendStore';
+import {Friend}      from '../../../common/models/Friend';
+import {Routes}      from '../../../common/Routes';
 
 const theme = require('./FriendsSearchbox.css');
 
