@@ -6,7 +6,7 @@
 
 'use strict';
 
-import {randomStr} from './../boot/helpers/randomStr';
+import {randomStr} from './../helpers/randomStr';
 import Marker = google.maps.Marker;
 import {encode} from "querystring";
 

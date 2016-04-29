@@ -1,5 +1,5 @@
 
-import {MeteorPromise} from './../boot/helpers/meteor';
+import {MeteorPromise} from '../helpers/meteor';
 
 export module AccountStore {
 

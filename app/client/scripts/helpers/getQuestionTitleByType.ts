@@ -1,7 +1,7 @@
 
-import {SubjectType} from "../../../../common/models/questions/common/SubjectType";
-const en = {
+import {SubjectType} from "../../../common/models/questions/common/SubjectType";
 
+const en = {
   TLWhenDidYouShareThisPost: 'When did you share this post?',
   TLWhenDidYouLikeThisPage: 'When did you like this page?',
   ORDPageLike: 'Order these pages according to the number of likes: most likes on top',
@@ -15,7 +15,6 @@ const en = {
   MCWhoMadeThisCommentOnYourPost: 'Who made this comment on your post?',
   GeoWhatCoordinatesWereYouAt: 'Where were you when you posted this?',
   MCWhichPageDidYouLike: 'Which page did you like?'
-  
 };
 
 const titles = {

@@ -1,7 +1,7 @@
 
 'use strict';
 
-import {createTiles} from './../boot/helpers/createTiles';
+import {createTiles} from './../helpers/createTiles';
 import {Game} from "../models/Game";
 
 interface BoardProps {

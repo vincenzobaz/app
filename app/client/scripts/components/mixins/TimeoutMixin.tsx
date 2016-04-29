@@ -1,7 +1,7 @@
 
 'use strict';
 
-import {Timeout} from './../helpers/Timeout';
+import {Timeout} from '../../helpers/Timeout';
 
 export const TimeoutMixin = {
 

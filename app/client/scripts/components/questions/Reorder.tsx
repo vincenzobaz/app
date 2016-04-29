@@ -1,4 +1,4 @@
-import {getQuestionTitleByType} from './../../boot/helpers/getQuestionTitleByType'
+import {getQuestionTitleByType} from './../../helpers/getQuestionTitleByType'
 import {Post} from './../facebook/Post';
 import {SortableList} from './../SortableList';
 import {debug} from "util";

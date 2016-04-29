@@ -1,5 +1,5 @@
-import {MeteorPromise} from "../boot/helpers/meteor";
-import {getConfig} from "../boot/helpers/getConfig";
+import {MeteorPromise} from "../helpers/meteor";
+import {getConfig} from "../helpers/getConfig";
 
 export module FacebookStore {
 

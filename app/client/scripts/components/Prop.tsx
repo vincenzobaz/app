@@ -3,7 +3,7 @@
 
 import {Routes} from './../../../common/Routes';
 import {FacebookStore} from './../stores/FacebookStore';
-import {renderIcon} from './../boot/helpers/renderIcon';
+import {renderIcon} from './../helpers/renderIcon';
 import {Page} from "./facebook/Page";
 
 

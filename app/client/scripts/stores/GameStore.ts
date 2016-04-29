@@ -1,11 +1,11 @@
 
 
-import {NamespacedSession} from './../boot/helpers/NamespacedSession';
+import {NamespacedSession} from './../helpers/NamespacedSession';
 
 import {JoinRequestStore} from './JoinRequestStore';
 import {FriendStore} from './FriendStore';
 import {Friend} from "../../../common/models/Friend";
-import {MeteorPromise} from "./../boot/helpers/meteor";
+import {MeteorPromise} from "./../helpers/meteor";
 import {Game} from "../models/Game";
 import {Games} from "../collections/Games";
 

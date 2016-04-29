@@ -1,7 +1,7 @@
 'use strict';
 
 import {ErrorStore} from './../../stores/ErrorStore';
-import {progressImage} from './../../boot/helpers/progressImage';
+import {progressImage} from './../../helpers/progressImage';
 import {TimeLeft} from './../TimeLeft';
 import {MultipleChoice} from './../questions/MultipleChoice';
 import {Timeline} from './../questions/Timeline';
@@ -14,10 +14,10 @@ import {TimeUp} from "./TimeUp";
 import {Done} from "./Done";
 import {Tile} from "../../../../common/models/Tile";
 import {KIND} from "../../../../common/models/questions/common/Kind";
-import {QuestionTimer} from "../../boot/helpers/QuestionTimer";
+import {QuestionTimer} from "../../helpers/QuestionTimer";
 import {QuestionFactory} from "../../../../common/models/questions/QuestionFactory";
 import {Button} from 'react-bootstrap';
-import {RunConfig, ENVIRONMENT} from "../../boot/helpers/RunConfig";
+import {RunConfig, ENVIRONMENT} from "../../helpers/RunConfig";
 // import {Timer} from "timer-machine";
 
 

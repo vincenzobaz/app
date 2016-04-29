@@ -1,7 +1,7 @@
 
 'use strict';
-import {Routes} from "../../../../common/Routes";
 
+import {Routes} from "../../../common/Routes";
 
 export function image(s, c) {
   s = Math.max(0, Math.min(s, 3));

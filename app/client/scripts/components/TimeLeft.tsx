@@ -1,8 +1,8 @@
 
 'use strict';
 
-import {TimeoutMixin} from './../boot/mixins/TimeoutMixin';
-import {timerStyle} from './../boot/helpers/timerStyle';
+import {TimeoutMixin} from './mixins/TimeoutMixin';
+import {timerStyle} from '../helpers/timerStyle';
 import * as ReactMixin from 'react-mixin';
 
 

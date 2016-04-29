@@ -1,6 +1,6 @@
 import {Tooltip} from './bootstrap/Tooltip';
 import {Routes} from './../../../common/Routes';
-import {progressImage} from './../boot/helpers/progressImage';
+import {progressImage} from './../helpers/progressImage';
 import {ModalStore} from './../stores/ModalStore';
 import {SubjectType} from "../../../common/models/questions/common/SubjectType";
 import {Score} from "../../../common/models/Score";

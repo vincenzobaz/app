@@ -1,11 +1,11 @@
 'use strict';
 
-import {QuestionsModal} from "./../../components/modals/QuestionsModal";
-import {Game} from "../../models/Game";
-import {Tile} from "../../../../common/models/Tile";
-import * as Component from "./../../components/Tile";
-import {RawTileState} from "../../../../server/collections/TileState";
-import {Kind} from "../../../../common/models/questions/common/Kind";
+import {QuestionsModal} from "../components/modals/QuestionsModal";
+import {Game} from "../models/Game";
+import {Tile} from "../../../common/models/Tile";
+import * as Component from "../components/Tile";
+import {RawTileState} from "../../../server/collections/TileState";
+import {Kind} from "../../../common/models/questions/common/Kind";
 
 
 export const createTiles = (game: Game) =>
