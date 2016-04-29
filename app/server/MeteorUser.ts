@@ -1,8 +1,6 @@
 
-import User = Meteor.User;
-
-export interface MeteorUser extends User {
-  services: Services;
+export interface MeteorUser extends Meteor.User {
+  services?: Services;
 }
 
 export interface Services {
