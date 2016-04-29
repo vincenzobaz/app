@@ -6,7 +6,7 @@ module.exports = {
     context: __dirname,
     entry: [
         'regenerator/runtime',
-        '../app/client/scripts/main'
+        '../app/client/main'
     ],
     output: {
         path: path.join(__dirname, 'assets'),
