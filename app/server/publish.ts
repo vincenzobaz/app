@@ -47,7 +47,10 @@ export function publishCollections() {
     Meteor.publish('notifications', function() {
         LOG_PUBLISH && console.log(`Publishing notifications for user ${this.userId}...`);
 
-        return Notifications.find({ userId: this.userId });
+        return Notifications.find({
+          userId: this.userId,
+          shown: false
+        });
     });
 
 }

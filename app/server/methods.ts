@@ -2,10 +2,11 @@ import {JoinRequestService} from './services/JoinRequestService';
 import {GameService} from './services/GameService';
 import {AnswerService} from './services/AnswerService';
 import {GameCreatorService} from './services/GameCreatorService';
+import {AccountService} from "./services/AccountService";
 import {FriendRepository} from './repositories/FriendRepository';
-import { FacebookService } from "./facebook";
-import { Server } from "./server";
-import { AccountService } from "./services/AccountService";
+import {NotificationRepository} from './repositories/NotificationRepository';
+import {FacebookService} from "./facebook";
+import {Server} from "./server";
 
 export function setupMeteorMethods() {
   Meteor.methods({
@@ -121,10 +122,13 @@ export function setupMeteorMethods() {
       this.unblock();
       var user = Meteor.users.findOne(this.userId);
       return FacebookService.getPermissions(user);
+    },
+
+    'Notifications.markAsShown'(ids: string[]) {
+      this.unblock();
+      NotificationRepository.markAsShown(Meteor.userId(), ids);
     }
   });
-
-
 
 }
 

@@ -8,7 +8,6 @@ import {GameBoardRepository} from './repositories/GameBoardRepository';
 import {GameStatus, GAME_STATUS} from '../common/models/GameStatus';
 import {GameFetch} from "./collections/GameFetch";
 import {GameCreatorService} from './services/GameCreatorService';
-import {User} from "../client/scripts/models/User";
 
 export const Server = {
 
