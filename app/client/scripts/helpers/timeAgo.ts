@@ -1,8 +1,7 @@
 
-'use strict';
-import {TimelineUnit} from "../../../../common/models/questions/timeline/TimelineUnit";
+import {TimelineUnit} from "../../../common/models/questions/timeline/TimelineUnit";
 
-const moment = require('moment');
+import * as moment from 'moment';
 
 export const agoToDate = (from: string, ago: number, unit: TimelineUnit, format = 'ddd Do MMMM YYYY') => {
   return moment(from).subtract(ago, unit).format(format);
