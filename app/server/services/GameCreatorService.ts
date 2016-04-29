@@ -13,11 +13,7 @@ interface Parameter {
 
 class GameCreator {
 
-  constructor(public baseUrl: string) {
-    if (baseUrl == null || baseUrl === '') {
-      throw new Error('GameCreatorService: missing baseUrl argument.');
-    }
-  }
+  constructor(public baseUrl: string) {}
 
   url(method, params?: Parameter) {
     let query;
