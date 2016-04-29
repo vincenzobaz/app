@@ -1,13 +1,13 @@
 
-import { Games } from "./collections/Games";
-import { GameBoards } from "./collections/GameBoards";
-import { JoinRequests } from "./collections/JoinRequests";
-import { Friends } from "../common/collections/Friends";
-const LOG_PUBLISH = true;
+import { Games }         from "./collections/Games";
+import { GameBoards }    from "./collections/GameBoards";
+import { JoinRequests }  from "./collections/JoinRequests";
+import { Friends }       from "../common/collections/Friends";
+import { Notifications } from "../common/collections/Notifications";
 
+const LOG_PUBLISH = process.env.NODE_ENV === 'development';
 
 export function publishCollections() {
-    "use strict";
     Meteor.publish('games', function() {
         LOG_PUBLISH && console.log(`Publishing games for user ${this.userId}...`);
 
@@ -43,7 +43,13 @@ export function publishCollections() {
 
         return Friends.find({ friendOf: this.userId });
     });
-  
+
+    Meteor.publish('notifications', function() {
+        LOG_PUBLISH && console.log(`Publishing notifications for user ${this.userId}...`);
+
+        return Notifications.find({ userId: this.userId });
+    });
+
 }
 
 

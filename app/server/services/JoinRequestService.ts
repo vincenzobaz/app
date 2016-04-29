@@ -1,19 +1,25 @@
-import {Server} from '../server';
-import {Games} from '../collections/Games';
-import {Friends} from '../../common/collections/Friends';
-import {BotService} from './BotService';
-import {GameService} from './GameService';
-import {JoinRequestRepository} from '../repositories/JoinRequestRepository';
-import {FriendRepository} from "../repositories/FriendRepository";
-import { JoinRequests } from "../collections/JoinRequests";
-import { Game } from "../collections/Game";
-import {GameStatus, GAME_STATUS} from "../../common/models/GameStatus";
-import { UserRepository } from "../repositories/UserRepository";
-import JoinRequest from "../collections/JoinRequest";
-import { RawJoinRequest } from "../collections/JoinRequest";
-import { MeteorUser } from "../MeteorUser";
-import User = Meteor.User;
-import {Friend} from "../../common/models/Friend";
+import { Server }                       from '../server';
+import { BotService }                   from './BotService';
+import { GameService }                  from './GameService';
+
+import { Friends }                      from '../../common/collections/Friends';
+import { GameStatus, GAME_STATUS }      from "../../common/models/GameStatus";
+import { Friend }                       from "../../common/models/Friend";
+
+import { Game }                         from "../collections/Game";
+import { Games }                        from '../collections/Games';
+import { JoinRequests }                 from "../collections/JoinRequests";
+import JoinRequest, { RawJoinRequest  } from "../collections/JoinRequest";
+
+import { JoinRequestRepository }        from '../repositories/JoinRequestRepository';
+import { FriendRepository }             from "../repositories/FriendRepository";
+import { UserRepository  }              from "../repositories/UserRepository";
+
+import { GlobalEventBus, Events }       from '../events';
+
+import { MeteorUser  }                  from "../MeteorUser";
+
+import User                             = Meteor.User;
 
 export const JoinRequestService = {
 
@@ -31,6 +37,10 @@ export const JoinRequestService = {
         } catch (e) {}
 
         JoinRequests.remove(requestId);
+
+        const event = new Events.JoinRequestAccepted(request);
+        GlobalEventBus.emit(event);
+
         return Games.findOne(game._id);
     },
 
@@ -50,6 +60,10 @@ export const JoinRequestService = {
         var game: Game = Games.findOne(request.gameId);
         game.status = GAME_STATUS.Declined;
         Games.update(game._id, game);
+
+        const event = new Events.JoinRequestDeclined(request);
+        GlobalEventBus.emit(event);
+
         return {status: "success", msg: "Success"};
     },
 
@@ -78,12 +92,23 @@ export const JoinRequestService = {
 
     send(currentUserId: string, friendId): {status: string, requestId: JoinRequest, msg: string } {
       try {
-        const opponent: MeteorUser  = this.getOpponent(currentUserId, friendId);
-        const game      = GameService.createGame(currentUserId, opponent._id);
-        const gameId    = Games.insert(game);
-        const join      = JoinRequest.fromRaw({_id: new Mongo.ObjectID(), from: currentUserId, to: opponent._id, gameId: gameId});
-        const requestId = JoinRequestRepository.save(join);
+        const opponent: MeteorUser = this.getOpponent(currentUserId, friendId);
+
+        const game        = GameService.createGame(currentUserId, opponent._id);
+        const gameId      = Games.insert(game);
+        const joinRequest = JoinRequest.fromRaw({
+          _id: new Mongo.ObjectID(),
+          from: currentUserId,
+          to: opponent._id,
+          gameId: gameId
+        });
+
+        const requestId = JoinRequestRepository.save(joinRequest);
+
         console.log(`Created join request ${requestId} from ${currentUserId} to ${opponent._id} for game ${gameId}`);
+
+        const event = new Events.NewJoinRequest(joinRequest);
+        GlobalEventBus.emit(event);
 
         return {
           status: 'success',

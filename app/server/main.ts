@@ -3,7 +3,7 @@ import * as _ from "lodash";
 
 import { BotService }              from "./services/BotService";
 import { Server }                  from "./server";
-import { setup as setupServices }  from "./services";
+import { setupServices }           from "./services";
 import { FriendRepository }        from "./repositories/FriendRepository";
 import { publishCollections }      from "./publish";
 import { setupMeteorMethods }      from "./methods";
@@ -17,6 +17,7 @@ Meteor.startup(() => {
 
     publishCollections();
     setupMeteorMethods();
+
     BotService.createBot();
     BotService.observeGameCreation();
 

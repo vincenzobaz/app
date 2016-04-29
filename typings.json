@@ -8,6 +8,7 @@
     "lodash": "github:DefinitelyTyped/DefinitelyTyped/lodash/lodash.d.ts#dc9dabe74a5be62613b17a3605309783a12ff28a",
     "meteor": "github:DefinitelyTyped/DefinitelyTyped/meteor/meteor.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
     "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#dc9dabe74a5be62613b17a3605309783a12ff28a",
+    "notifyjs": "registry:dt/notifyjs#1.2.8+20160317120654",
     "react": "github:DefinitelyTyped/DefinitelyTyped/react/react.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
     "react-addons-create-fragment": "github:DefinitelyTyped/DefinitelyTyped/react/react-addons-create-fragment.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
     "react-addons-css-transition-group": "github:DefinitelyTyped/DefinitelyTyped/react/react-addons-css-transition-group.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",

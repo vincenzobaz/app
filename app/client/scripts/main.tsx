@@ -12,16 +12,19 @@ const $$ = document.getElementById.bind(document);
 
 class App {
 
-  run() {
+  boot() {
     ErrorStore.register();
-    this.subscribe();
 
+    this.subscribe();
+  }
+
+  render() {
     ReactDOM.render(<ErrorHandler store={ErrorStore} />, $$('error'));
     ReactDOM.render(<ModalHandler store={ModalStore} />, $$('modal'));
     ReactDOM.render(<Main />, $$('app'));
   }
 
-  subscribe() {
+  private subscribe(): void {
     console.log('Subscribing to Meteor channels...');
 
     Meteor.subscribe('games');
@@ -29,11 +32,15 @@ class App {
     Meteor.subscribe('joinRequests');
     Meteor.subscribe('userServices');
     Meteor.subscribe('friends');
+    Meteor.subscribe('notifications');
   }
 
 };
 
-const app = new App();
 
-Meteor.startup(() => app.run());
+Meteor.startup(() => {
+  const app = new App();
+  app.boot();
+  app.render();
+});
 
