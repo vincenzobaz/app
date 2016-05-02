@@ -1,7 +1,7 @@
 
-import { EventBus, EventType, Event } from './EventBus';
+import { EventBus, EventType, Event } from './events/EventBus';
 
-import JoinRequest from '../collections/JoinRequest';
+import JoinRequest from './collections/JoinRequest';
 
 const isDebug = process.env.NODE_ENV === 'development';
 
