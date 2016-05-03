@@ -12,7 +12,6 @@ module.exports = {
   context: __dirname,
   target: 'node',
   entry: [
-    'regenerator/runtime',
     '../app/server/main',
   ],
   output: {
