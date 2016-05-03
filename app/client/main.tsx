@@ -13,19 +13,26 @@ const $$ = document.getElementById.bind(document);
 
 class App {
 
-  boot() {
+  boot(): void {
     ErrorStore.register();
-
     this.subscribe();
+
+    if (this.isLoggedIn()) {
+      this.enableNotifications();
+    }
   }
 
-  render() {
+  render(): void {
     ReactDOM.render(<ErrorHandler store={ErrorStore} />, $$('error'));
     ReactDOM.render(<ModalHandler store={ModalStore} />, $$('modal'));
     ReactDOM.render(<Main />, $$('app'));
   }
 
-  private subscribe(): void {
+  isLoggedIn(): boolean {
+    return Meteor.userId() != null;
+  }
+
+  subscribe(): void {
     console.log('Subscribing to Meteor channels...');
 
     Meteor.subscribe('games');
@@ -36,20 +43,20 @@ class App {
     Meteor.subscribe('notifications');
   }
 
+  enableNotifications(): void {
+    NotificationStore.requestPermissionIfNeeded();
+
+    Tracker.autorun(() => {
+      NotificationStore.fetchAndShow();
+    });
+  }
+
 };
 
+const app = new App();
 
 Meteor.startup(() => {
-  const app = new App();
   app.boot();
   app.render();
-});
-
-Accounts.onLogin(() => {
-  NotificationStore.requestPermissionIfNeeded();
-
-  Tracker.autorun(() => {
-    NotificationStore.fetchAndShow();
-  });
 });
 
