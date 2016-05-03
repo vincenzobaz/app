@@ -20,24 +20,21 @@ export class ModalHandler extends React.Component<ModalHandlerProps, ModalHanlde
     };
   }
 
-  
   componentDidMount() {
     this.props.store.on('modal', this.onNewModal.bind(this));
-    console.log('subscribed');
   }
-  
+
   componentWillUnmount() {
     this.props.store.off('modal', this.onNewModal.bind(this));
-    console.log('unsubscribed');
   }
-  
+
   onNewModal(modal) {
     this.setState({
       modal: modal,
       isOpen: true
     });
   }
-  
+
   render() {
     if (this.state.modal) {
       const modal = this.state.modal;
@@ -51,14 +48,14 @@ export class ModalHandler extends React.Component<ModalHandlerProps, ModalHanlde
       return <noscript/>;
     }
   }
-  
+
   dismiss(callback) {
       this.setState({
         modal: null,
         isOpen: false
       });
-  
-      if (typeof callback == 'function') {
+
+      if (typeof callback === 'function') {
         callback();
       }
   }
