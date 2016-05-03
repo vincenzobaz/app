@@ -1,0 +1,14 @@
+local.reminisce.me:80
+
+bind 127.0.0.1
+
+tls off
+gzip
+
+proxy / localhost:3000 {
+  websocket
+  proxy_header Host {host}
+  proxy_header X-Real-IP {remote}
+  proxy_header X-Forwarded-Proto {scheme}
+}
+
