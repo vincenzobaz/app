@@ -65,7 +65,8 @@
     "timer-machine": "1.0.1",
     "ts-loader": "^0.8.1",
     "typings": "^0.7.8",
-    "url-loader": "^0.5.7"
+    "url-loader": "^0.5.7",
+    "visibility": "0.0.0"
   },
   "devDependencies": {
     "babel-plugin-react-transform": "^2.0.0",

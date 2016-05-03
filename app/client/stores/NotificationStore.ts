@@ -2,7 +2,8 @@
 import { Notifications } from '../../common/collections/Notifications';
 import { Notification }  from '../../common/models/Notification';
 
-const Notify = require('notifyjs');
+const Notify     = require('notifyjs');
+const Visibility = require('visibility')();
 
 export const NotificationStore = {
 
@@ -37,6 +38,19 @@ export const NotificationStore = {
   },
 
   showNotif(note: Notification): void {
+    if (Visibility.visible()) {
+      this.showInPageNotif(note);
+    }
+    else {
+      this.showDesktopNotif(note);
+    }
+  },
+
+  showInPageNotif(note: Notification): void {
+    console.log(`In page notifications not implemented yet. Got: ${note.message}`);
+  },
+
+  showDesktopNotif(note: Notification): void {
     const notif = new Notify(note.message, {
       timeout: 10, // seconds
       closeOnClick: true,
