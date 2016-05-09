@@ -16,6 +16,7 @@ module.exports = {
     resolve: {
         extensions: ['', '.ts', '.tsx', '.js', '.jsx'],
         root: path.join(__dirname, '../app'),
+        leaflet_marker: __dirname + "../node_modules/leaflet/dist/images/marker.svg"
     },
     module: {
         loaders: [

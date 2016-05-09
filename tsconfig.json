@@ -3,7 +3,7 @@
     "jsx": "preserve",
     "target": "ES6",
     "declaration": false,
-    "module": "es2015",
+    "module": "es6",
     "experimentalDecorators": true,
     "sourceMap": true,
     "noLib": false,

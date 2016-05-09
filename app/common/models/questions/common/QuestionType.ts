@@ -12,7 +12,7 @@ export type QuestionType = "MCWhoLikedYourPost" |
     "ORDPostTime"
 
 
-export const QuestionType = {
+export const QUESTION_TYPE = {
   MCWhoLikedYourPost: 'MCWhoLikedYourPost' as QuestionType,
   MCWhoMadeThisCommentOnYourPost: 'MCWhoMadeThisCommentOnYourPost' as QuestionType,
   MCWhichPageDidYouLike: 'MCWhichPageDidYouLike' as QuestionType,

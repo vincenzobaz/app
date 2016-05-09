@@ -404,15 +404,15 @@
 
 .question-geo {
 
-    iframe {
-      display: block;
-      border: $gutterwidth/4 solid $lightneutralcolor;
-      margin: 0 auto $baselineheight auto;
-    }
+    // iframe {
+    //   display: block;
+    //   border: $gutterwidth/4 solid $lightneutralcolor;
+    //   margin: 0 auto $baselineheight auto;
+    // }
 
     .map {
       img {
-        max-width: none;
+         max-width: none;
       }
     }
 

@@ -10,7 +10,7 @@ import {SubjectFactory} from "../common/SubjectFactory";
 export interface RawGeoQuestion extends RawQuestion {
   range: number,
   defaultLocation: Location,
-  answer: Location,
+  answer: FBLocation,
   userAnswer: Location
 }
 
@@ -20,7 +20,7 @@ export class GeoQuestion extends Question {
       subject: Subject,
       type: QuestionType,
       kind: Kind,
-      answer: Location,
+      answer: FBLocation,
       userAnswer: Location,
       public range: number, 
       public defaultLocation: Location

@@ -38,10 +38,10 @@ export const BotService = {
       this.createBot();
     }
 
-    return Meteor.users.findOne({username: BOT_USERNAME});
+    return Meteor.users.findOne({ username: BOT_USERNAME });
   },
 
-  isBot(userId:string | Mongo.ObjectID) {
+  isBot(userId: string | Mongo.ObjectID) {
     return BotService.getBot()._id == userId;
   },
 
@@ -55,7 +55,7 @@ export const BotService = {
   },
 
   botCreated() {
-    return Meteor.users.find({username: BOT_USERNAME}).count() > 0;
+    return Meteor.users.find({ username: BOT_USERNAME }).count() > 0;
   },
 
   createBot(force = false) {
@@ -75,28 +75,28 @@ export const BotService = {
 
   observeGameCreation() {
     const bot = BotService.bot();
-  
+
     const query = Games.find(
-        {
-          $and: [{
-            $or: [{player1: bot._id}, {player2: bot._id}]
-          },
-            {
-              status: {$in: [GAME_STATUS.Playing, GAME_STATUS.Creating, GAME_STATUS.Waiting]}
-            }]
-        });
-  
+      {
+        $and: [{
+          $or: [{ player1: bot._id }, { player2: bot._id }]
+        },
+          {
+            status: { $in: [GAME_STATUS.Playing, GAME_STATUS.Creating, GAME_STATUS.Waiting] }
+          }]
+      });
+
     const handle = query.observe({
       added(game) {
         BotService.observeGame(game._id, bot._id);
-  
-        const request = JoinRequests.findOne({gameId: game._id});
+
+        const request = JoinRequests.findOne({ gameId: game._id });
         if (request) {
           JoinRequestService.accept(request._id);
           console.log(`Bot #1 accepted join request ${request._id}.`);
         }
       },
-     
+
       removed(game) {
         console.log(`Game ${game._id} that bot #1 was playing has been removed.`);
       }
@@ -112,8 +112,8 @@ export const BotService = {
       changed(newGame, oldGame) {
         if (BotService.isBot(newGame.getCurrentPlayer())) {
           //FIXME: find a better way
-          setTimeout(Meteor['bindEnvironment'](function() {
-           BotService.onGameChanged(newGame, handle);
+          setTimeout(Meteor['bindEnvironment'](function () {
+            BotService.onGameChanged(newGame, handle);
           }), TIMEOUT);
         }
       }
@@ -124,9 +124,9 @@ export const BotService = {
     if (game.status == GAME_STATUS.Ended || game.status == GAME_STATUS.Waiting) {
       return;
     }
-    
+
     const result = BotService.playTurn(game);
-    
+
     if (handle && (result.win || result.draw)) {
       handle.stop();
       console.log(`Game ended. Won: ${result.win}. Draw: ${result.draw}.`);
@@ -150,27 +150,26 @@ export const BotService = {
     if (!tile) {
       throw new Meteor.Error('500', "Bot could't find a tile to play on.");
     }
-console.log("Bot answered: ", tile.type);
+    console.log("Bot answered: ", tile.type);
     const answers = _.map(tile.questions, (q: Question) => {
       switch (q.kind) {
         case KIND.Timeline:
           return new TimelineAnswer(
-              new TimelineData(_.random(0, 100) < successrate ? q.answer : (<TimelineQuestion>q).initialDate)
+            new TimelineData(_.random(0, 100) < successrate ? q.answer : (<TimelineQuestion>q).initialDate)
           );
         case KIND.MultipleChoice:
           return new MultipleChoiceAnswer(
-              new MultipleChoiceData(_.random(0, 100) < successrate ? q.answer : q.answer + 1 % 4)
+            new MultipleChoiceData(_.random(0, 100) < successrate ? q.answer : q.answer + 1 % 4)
           );
         case KIND.Geolocation:
-          const geoAnswer = new GeoAnswer(
-              //new GeoData(new Marker(0, 0))
-              new GeoData(_.random(0, 100) < successrate ? q.answer: new Marker(0, 0))
-          );
+          const geoAnswer = _.random(0, 100) < successrate ?
+            new GeoAnswer(q.answer) :
+            new GeoAnswer(new GeoData(new Marker(0, 0), ""))
           return geoAnswer;
         case KIND.Order:
-            const answers: number[] = q.answer;
-          const correctOrder = new OrderAnswer(0, new OrderData(answers.map((id: number) => {return {id: id}}))) ; 
-          const incorrectOrder = new OrderAnswer(0, new OrderData(answers.map((id: number) => {return {id: 1}}))) ;
+          const answers: number[] = q.answer;
+          const correctOrder = new OrderAnswer(0, new OrderData(answers.map((id: number) => { return { id: id } })));
+          const incorrectOrder = new OrderAnswer(0, new OrderData(answers.map((id: number) => { return { id: 1 } })));
           return _.random(0, 100) < successrate ? correctOrder : incorrectOrder;
         default:
           throw new Meteor.Error('500', `Unknown Question Kind ${q.kind} for Bot`);
@@ -211,7 +210,7 @@ console.log("Bot answered: ", tile.type);
   minmax(game: Game, player: number, depth: number) {
     const score = BotService.score(game.boardState, player, depth);
     if (score != 0) {
-      return {move: null, score: score};
+      return { move: null, score: score };
     }
     depth += 1;
     var scores = [];
@@ -221,23 +220,23 @@ console.log("Bot answered: ", tile.type);
     // console.log("the possibilities", possibilities);
     if (possibilities.length == 0) {
       // console.log("We are done", moves);
-      return {move: null, score: 0};
+      return { move: null, score: 0 };
     }
     _.forEach(possibilities, m => {
       const updatedGame: Game = new Game(
-          game._id,
-          game.player1,
-          game.player2,
-          game.player1Board,
-          game.player2Board, 
-          game.status,
-          game.playerTurn,
-          game.player1Score,
-          game.player1Score,
-          BotService.highPerformanceArrayCloining(game.boardState) as RawTileState[][],
-          game.player1AvailableMoves,
-          game.player2AvailableMoves,
-          game.wonBy, game.creationTime
+        game._id,
+        game.player1,
+        game.player2,
+        game.player1Board,
+        game.player2Board,
+        game.status,
+        game.playerTurn,
+        game.player1Score,
+        game.player1Score,
+        BotService.highPerformanceArrayCloining(game.boardState) as RawTileState[][],
+        game.player1AvailableMoves,
+        game.player2AvailableMoves,
+        game.wonBy, game.creationTime
       );
 
       BotService.makeMove(updatedGame, m, updatedGame.playerTurn);
@@ -248,11 +247,11 @@ console.log("Bot answered: ", tile.type);
     if (game.playerTurn == player) {
       const maxScoreIndex = _.indexOf(scores, _.max(scores));
       const move = moves[maxScoreIndex];
-      return {move: move, score: scores[maxScoreIndex]}
+      return { move: move, score: scores[maxScoreIndex] }
     } else {
       const minScoreIndex = _.indexOf(scores, _.min(scores));
       const move = moves[minScoreIndex];
-      return {move: move, score: scores[minScoreIndex]}
+      return { move: move, score: scores[minScoreIndex] }
     }
   },
   makeMove(game: Game, move: RawAvailableMove, player: number) {
@@ -262,13 +261,13 @@ console.log("Bot answered: ", tile.type);
     game.player2AvailableMoves = _.filter(game.player2AvailableMoves, m => {
       return m.row != move.row || m.column != move.column
     });
-    game.boardState[move.row][move.column] = {player: player, score: 3};
+    game.boardState[move.row][move.column] = { player: player, score: 3 };
     game.playerTurn = (player % 2) + 1;
   },
 
   score(boardState: RawTileState[][], currentPlayer, depth) {
     const boardStateService = new BoardStateService(boardState, currentPlayer);
-    
+
     if (boardStateService.playerWins()) {
       return 10 - depth;
     }
@@ -304,7 +303,7 @@ console.log("Bot answered: ", tile.type);
     }
   },
 
-  highPerformanceArrayCloining(existingArray)  {
+  highPerformanceArrayCloining(existingArray) {
     var newObj = (existingArray instanceof Array) ? [] : {};
     for (var i in existingArray) {
       if (i == 'clone') continue;

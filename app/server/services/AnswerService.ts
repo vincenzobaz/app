@@ -1,3 +1,4 @@
+///<reference path="../../common/models/questions/answers/Answer.ts"/>
 
 import { findIndex, zip } from "lodash";
 import Question from "../../common/models/Question";
@@ -17,8 +18,10 @@ import {TimelineData} from "../../common/models/questions/answers/TimelineData";
 import {TimelineAnswer} from "../../common/models/questions/answers/TimelineAnswer";
 import {GeoData} from "../../common/models/questions/answers/GeoData";
 import {GeoAnswer} from "../../common/models/questions/answers/GeoAnswer";
-import {Answer} from "../../common/models/questions/answers/Answer";
-
+import {Answer} from "./../../common/models/questions/answers/Answer";
+import {OrderData} from "../../common/models/questions/answers/OrderData";
+import {OrderItem} from "../../common/models/questions/answers/OrderItem";
+import {OrderAnswer} from "../../common/models/questions/answers/OrderAnswer";
 
 interface QuestionAnswer {
   question: Question;
@@ -104,7 +107,7 @@ export module AnswerService {
     if (!tile) {
       throw new Meteor.Error('500', `Cannot find tile with id ${tileId.toString()}`);
     }
-    
+
     tile.questions.forEach((q: Question, i: number) => {
       q.userAnswer = answers[i];
     });
@@ -117,13 +120,13 @@ export module AnswerService {
 
     const result = AnswerVerificationService.verifyTile(tile, typedAnswers);
     const questions = tile.questions;
-    
+
 
     const scores = questions.map((q: Question, i: number) => {
-      return {questionId: q._id, score: result[i]};
+      return { questionId: q._id, score: result[i] };
     });
 
-    
+
     const index = findIndex(tiles, (t: Tile) => t._id.toString() == tileId.toString());
     const row = Math.floor(index / 3);
     const col = index % 3;
@@ -141,7 +144,7 @@ export module AnswerService {
       boardState[row][col].player = currentPlayer;
       boardState[row][col].score = newScore;
     }
-    
+
     if (currentPlayer == 1) {
       boardState[row][col].player1Score = newScore;
     } else {
@@ -169,8 +172,8 @@ export module AnswerService {
 
     game.nextTurn();
 
-    Games.update(game._id, game);
-    GameBoardRepository.save(board);
+    // Games.update(game._id, game);
+    // GameBoardRepository.save(board);
 
     const returnValue = {
       status: 'success',
@@ -190,9 +193,9 @@ export module AnswerService {
     const questions: Question[] = tile.questions;
     let questionAnswer: QuestionAnswer[] = [];
 
-    
+
     for (let i: number = 0; i < questions.length; i++) {
-      questionAnswer[i]= {question: QuestionFactory.questionFromRaw(questions[i]), answer: answers[i]};
+      questionAnswer[i] = { question: QuestionFactory.questionFromRaw(questions[i]), answer: answers[i] };
 
     }
     return questionAnswer.map((entry: QuestionAnswer) => this.typeAnswer(entry.question, entry.answer));
@@ -210,15 +213,13 @@ export module AnswerService {
         return new TimelineAnswer(new TimelineData(data.date));
 
       case KIND.Geolocation:
-        return new GeoAnswer(new GeoData(new Marker(data.marker.latitude, data.marker.longitude)));
+        return new GeoAnswer(new GeoData(new Marker(data.marker.latitude, data.marker.longitude), data.place));
 
       case KIND.Order:
-        // const items = data.items.map(i => new OrderItem(i.id, i.text));
-        // const order = new OrderData(items);
-        //
-        // return new OrderAnswer(answer.timespent, order);
-        return answer;
+        const items = data.items.map(i => new OrderItem(i.id, i.text));
+        const order = new OrderData(items);
 
+        return new OrderAnswer(answer.timespent, order);
       default:
         throw new Meteor.Error('500', `Unsupported question type ${kind}`);
     }

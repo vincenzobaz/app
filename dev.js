@@ -64,7 +64,7 @@ function compileClient() {
 
 function runMeteor() {
   cd(dirs.meteor);
-  exec('meteor --settings ../settings/devel.json', {async: true});
+  exec('MONGO_URL=mongodb://localhost:27017/meteor meteor --settings ../settings/devel.json', {async: true});
 }
 
 function updateRequireServerBundleJs(stats) {
