@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Carousel, CarouselItem, Navbar, NavItem, Nav} from "react-bootstrap";
+import {Carousel, CarouselItem, Navbar, NavItem, Nav, Row, Col} from "react-bootstrap";
 
 import {FacebookStore} from "../stores/FacebookStore";
 
@@ -121,22 +121,30 @@ export class Home extends React.Component<{}, HomeState> {
             </section>
           </CarouselItem>
           <CarouselItem>
-            <section title="Play" className="grid-container">
+            <section title="Play">
+            <Row>
               <h2>OK, time to play!</h2>
-              <div className='connect-facebook grid-100'>
+              <div className='connect-facebook'>
                   <p>You&#8217;ll be asked to connect your Facebook profile first.</p>
               </div>
-                <a className="btn btn-block btn-social btn-lg btn-facebook prefix-25 facebook-login" onClick={this.login.bind(this)}>
+              </Row>
+              <Row>
+              <Col xs={6} xsOffset={3}>
+                <a className="btn btn-block btn-social btn-lg btn-facebook facebook-login" onClick={this.login.bind(this)}>
                   <span className="fa fa-facebook"></span>
                   Sign in with Facebook
                 </a>
+              </Col>
+              </Row>
+              <Row>
               <br/>
-              <small className="disclaimer grid-100">
+              <small className="disclaimer">
                 All the permissions are exlusively used to generate personalized questions for you,
                 extracted from your activity on facebook.
                 No other player will ever see any of your posts or other items, 
                 you are be the only one to see the generated questions.
               </small>
+              </Row>
             </section>
           </CarouselItem>
         </Carousel>
