@@ -110,8 +110,7 @@ export class Home extends React.Component<{}, HomeState> {
               <div className='copy'>
                 <p>
                   <i style={{float: 'left', marginRight: '10px'}} className='icon-lock icon-4x'></i>
-                  We develop reminisce.me to make you have a lot of fun, and ultimately with the
-                  scientific purpose of understanding how the human memory works. As such, we don&#8217;t
+                  We develop reminisce.me to make you have a lot of fun. As such, we don&#8217;t
                   store permanently any of your personal data. We are so transparent about it that we
                   decided to release the whole game platform (client and server) as <a href="https://github.com/reminisceme/">open-source</a>!
                 </p>
@@ -122,15 +121,22 @@ export class Home extends React.Component<{}, HomeState> {
             </section>
           </CarouselItem>
           <CarouselItem>
-            <section title="Start">
+            <section title="Play" className="grid-container">
               <h2>OK, time to play!</h2>
-              <div className='connect-facebook'>
-                  <p><i className='icon-facebook-sign icon-2x'></i>&ensp;
-                  You&#8217;ll be asked to connect your Facebook profile first.</p>
+              <div className='connect-facebook grid-100'>
+                  <p>You&#8217;ll be asked to connect your Facebook profile first.</p>
               </div>
-              <div className='call-to-action'>
-                  <a onClick={this.login} className='btn btn-primary' type='submit'>Start Playing</a>
-              </div>
+                <a className="btn btn-block btn-social btn-lg btn-facebook prefix-25 facebook-login" onClick={this.login.bind(this)}>
+                  <span className="fa fa-facebook"></span>
+                  Sign in with Facebook
+                </a>
+              <br/>
+              <small className="disclaimer grid-100">
+                All the permissions are exlusively used to generate personalized questions for you,
+                extracted from your activity on facebook.
+                No other player will ever see any of your posts or other items, 
+                you are be the only one to see the generated questions.
+              </small>
             </section>
           </CarouselItem>
         </Carousel>
