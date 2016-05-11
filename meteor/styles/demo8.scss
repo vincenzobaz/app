@@ -220,3 +220,28 @@ $grey-border: #b8b8b8;
   margin-top: 20px;
   max-width: 300px;  
 }
+
+.account-settings {
+  height: 400px
+}
+
+.settings-info {
+  color: #747474;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.button-logout {
+  @include button-variant(#000000, $wrong-color, $grey-border);
+  width: 100%;
+}
+
+.no-left-padding{
+  padding-left: 0;
+}
+
+.settings-button {
+  align-content: right;
+  height: 40px;
+}

@@ -4,6 +4,7 @@ import {Routes} from "../../common/Routes";
 import {Game} from "../models/Game";
 import {Games} from "../collections/Games";
 import {GameStore} from "../stores/GameStore";
+import {Button} from 'react-bootstrap';
 
 interface FooterProps {
   currentGame?: Game;
@@ -44,11 +45,13 @@ export class Footer extends React.Component<FooterProps, {}> {
 
   renderGameToolbar() {
     return (
-      <div className='col-xs-10 col-sm-8 pull-right text-right'>
+      <div className='col-xs-8 col-sm-6 pull-right text-right'>
         <GameToolbar game={this.props.currentGame} />
       </div>
     );
   }
+  
+
 
 }
 

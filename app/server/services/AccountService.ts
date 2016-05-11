@@ -25,7 +25,7 @@ class Account {
     };
 
     const url = this.url('removeUser', params);
-    return HTTPHelper.get(url, callback);
+    return HTTPHelper.del(url, callback);
   }
 
 }

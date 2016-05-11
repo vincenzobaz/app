@@ -30,7 +30,6 @@ export function setupMeteorMethods() {
       const fbUserId = user.services.facebook.id;
     
       const result = AccountService.deleteUserData(fbUserId);
-    
       if (result.statusCode == 200) {
         Meteor.users.remove(userId);
       }

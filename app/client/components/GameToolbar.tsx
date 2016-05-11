@@ -1,6 +1,3 @@
-
-import {Modal, Button}    from 'react-bootstrap';
-
 import {Game}             from '../models/Game';
 import {Friend}           from '../../common/models/Friend';
 import {Friends}          from '../../common/collections/Friends';
@@ -8,6 +5,9 @@ import {GameStore}        from '../stores/GameStore';
 import {QuitGameModal}    from './modals/QuitGameModal';
 import {StartGameModal}   from './modals/StartGameModal';
 import {FriendsSearchbox} from './FriendsSearchbox';
+import {Row, Col, Button, Modal} from 'react-bootstrap';
+import {AccountSettings} from './AccountSettings';
+
 
 interface GameToolbarProps {
   game: Game;
@@ -17,6 +17,7 @@ interface GameToolbarState {
   friend: Friend;
   showStartGameModal: boolean;
   showQuitGameModal: boolean;
+  showAccountSettings: boolean;
 }
 
 export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarState> {
@@ -27,7 +28,8 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
     this.state = {
       friend: null,
       showStartGameModal: false,
-      showQuitGameModal: false
+      showQuitGameModal: false,
+      showAccountSettings: false
     };
   }
 
@@ -35,16 +37,21 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
     this.setState({
       friend: friend,
       showStartGameModal: true,
-      showQuitGameModal: false
+      showQuitGameModal: false,
+      showAccountSettings: false
+
     });
   }
 
   onClickQuitGameButton() {
+
     this.setState({
       friend: this.state.friend,
-      showQuitGameModal: true,
-      showStartGameModal: false
+      showStartGameModal: this.state.showStartGameModal,
+      showQuitGameModal: this.state.showQuitGameModal,
+      showAccountSettings: true
     });
+
   }
 
   startGame(friend) {
@@ -55,7 +62,8 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
     this.setState({
       friend: this.state.friend,
       showStartGameModal: false,
-      showQuitGameModal: false
+      showQuitGameModal: false,
+      showAccountSettings: false
     });
 
     this.startGame(this.state.friend);
@@ -65,7 +73,8 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
     this.setState({
       showStartGameModal: false,
       showQuitGameModal: false,
-      friend: null
+      friend: null,
+      showAccountSettings: false
     });
   }
 
@@ -81,52 +90,72 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
   renderModal() {
     if (this.state.showStartGameModal && this.state.friend) {
       return (
-        <StartGameModal
-          friend={this.state.friend}
-          onOk={this.onStart.bind(this)}
-          onCancel={this.onAbortStart.bind(this)} />
+          <StartGameModal
+              friend={this.state.friend}
+              onOk={this.onStart.bind(this)}
+              onCancel={this.onAbortStart.bind(this)} />
       );
     }
 
     if (this.state.showQuitGameModal && this.props.game) {
       return (
-        <QuitGameModal
-          game={this.props.game}
-           onQuit={this.onQuit.bind(this)}
-           onResume={this.onResume.bind(this)}
-           onRequestHide={(() => {})} />
+          <QuitGameModal
+              game={this.props.game}
+              onQuit={this.onQuit.bind(this)}
+              onResume={this.onResume.bind(this)}
+              onRequestHide={(() => {})} />
       );
     }
   }
 
   render() {
+
     return (
-      <div className="game-toolbar">
-        <div className="start-game container-fluid">
-          <span className="col-sm-6 hidden-xs">
-            Start new game with
-          </span>
-          <div className="col-xs-12 col-sm-6">
-            <FriendsSearchbox onSelect={this.onFriendSelect.bind(this)} />
-          </div>
+        <div>
+          <Modal show={this.state.showAccountSettings} onHide={this.onHide.bind(this)}>
+            <Modal.Header closeButton>
+              <Modal.Title>Account Settings</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <AccountSettings />
+            </Modal.Body>
+          </Modal>
+          <Row>
+            <div className="game-toolbar">
+              <Col sm={3} xsHidden className="start-game" >
+                Start new game with
+              </Col>
+              <Col xs={11} sm={8} className="no-left-padding">
+                <FriendsSearchbox onSelect={this.onFriendSelect.bind(this)} />
+
+              </Col>
+              <Col xs={1} className="no-left-padding">
+                {this.renderQuitGameButton()}
+              </Col>
+              {this.renderModal()}
+            </div>
+
+          </Row>
+
         </div>
-        {this.renderQuitGameButton()}
-        {this.renderModal()}
-      </div>
     );
   }
 
   renderQuitGameButton() {
-    if (this.props.game == null) {
-      return null;
-    }
-
     return (
-      <Button onClick={this.onClickQuitGameButton.bind(this)}>
-        <i className='icon-signout'></i>
-        Quit this game
-      </Button>
+        <Button className="settings-button" onClick={this.onClickQuitGameButton.bind(this)}>
+          <i className='fa fa-cog fa-2x'></i>
+        </Button>
     );
+  }
+  
+  onHide() {
+    this.setState({
+      friend: this.state.friend,
+      showStartGameModal: this.state.showStartGameModal,
+      showQuitGameModal: this.state.showQuitGameModal,
+      showAccountSettings: false
+    })
   }
 
 }
