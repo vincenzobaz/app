@@ -1,7 +1,7 @@
 
 import MouseEventHandler = React.MouseEventHandler;
 
-import {Score} from "../../../common/models/Score";
+import {Score, CONQUERER_TYPE} from "../../../common/models/Score";
 
 interface ProgressImageProps {
   onClick: MouseEventHandler;
@@ -46,7 +46,7 @@ export class ProgressImage extends React.Component<ProgressImageProps, {}> {
   }
 
   conqueror(score: Score): string {
-    return score.me > score.them ? "user" : "enemy";
+    return score.conqueredBy == CONQUERER_TYPE.ME ? "user" : "enemy";
   }
 
   conquerorScore(score: Score): number {

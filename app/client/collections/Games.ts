@@ -3,6 +3,7 @@ import {Game, RawGame} from "../models/Game";
 import {RawTileState} from "../../server/collections/TileState";
 import {RawGameBoard, GameBoard} from "../../common/models/GameBoard";
 import * as ServerCollection from "../../server/collections/Game";
+import {Score} from "../../common/models/Score";
 
 
 export const Games = new Mongo.Collection('games', {
@@ -10,26 +11,26 @@ export const Games = new Mongo.Collection('games', {
     const isPlayer1 = doc.player1 == Meteor.userId();
     let board: RawGameBoard = null;
     if (isPlayer1 && doc.player1Board) {
-      board =  GameBoards.findOne(doc.player1Board._id, {transform: null}) as RawGameBoard;
+      board = GameBoards.findOne(doc.player1Board._id, {transform: null}) as RawGameBoard;
     } else if (!isPlayer1 && doc.player2Board) {
       board = GameBoards.findOne(doc.player2Board._id, {transform: null}) as RawGameBoard;
     }
 
     const game: RawGame = {
-      _id     : doc._id,
-      player1 : doc.player1,
-      player2 : doc.player2,
-      board   : board,
-      status  : doc.status,
-      wonBy   : doc.wonBy,
-      score   : {
-        me   : computeScoreForPlayer(doc.boardState, isPlayer1 ? 1 : 2),
-        them : computeScoreForPlayer(doc.boardState, isPlayer1 ? 2 : 1)
-      },
-      boardState   : doc.boardState,
-      opponentId   : (isPlayer1) ? doc.player2 : doc.player1,
-      playerTurn   : doc.playerTurn,
-      creationTime : doc.creationTime
+      _id: doc._id,
+      player1: doc.player1,
+      player2: doc.player2,
+      board: board,
+      status: doc.status,
+      wonBy: doc.wonBy,
+      score: new Score(
+          computeScoreForPlayer(doc.boardState, isPlayer1 ? 1 : 2),
+          computeScoreForPlayer(doc.boardState, isPlayer1 ? 2 : 1)
+      ),
+      boardState: doc.boardState,
+      opponentId: (isPlayer1) ? doc.player2 : doc.player1,
+      playerTurn: doc.playerTurn,
+      creationTime: doc.creationTime
     };
 
     return Game.fromRaw(game);

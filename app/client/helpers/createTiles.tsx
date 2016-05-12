@@ -6,6 +6,7 @@ import {Tile} from "../../common/models/Tile";
 import * as Component from "../components/Tile";
 import {RawTileState} from "../../server/collections/TileState";
 import {Kind} from "../../common/models/questions/common/Kind";
+import {Score, CONQUERER_TYPE, ConquererType, getConquerorType} from "../../common/models/Score";
 
 
 export const createTiles = (game: Game) =>
@@ -24,16 +25,19 @@ const createTile = (game: Game, tile: Tile, tileNum: number) => {
   const tileState: RawTileState = boardState[row][col];
   const playerNum = game.myPlayerNumber;
   
-  const score = {
+  console.log("Tile: ", tileState);
+  
+  const score: Score = {
       me: playerNum == 1? tileState.player1Score: tileState.player2Score,
-    them: playerNum == 1? tileState.player2Score: tileState.player1Score
+    them: playerNum == 1? tileState.player2Score: tileState.player1Score,
+    conqueredBy: getConquerorType(playerNum, tileState)
   };
   
   const disabled = tile.isDisabled ||
       score.me >= 3 || score.them >= 3 ||
       game.hasEnded || !game.isMyTurnToPlay;
 
-  return (
+  return(
       <Component.Tile key={'tile-' + tile._id}
                       title={''}
                       type={type}
@@ -44,6 +48,7 @@ const createTile = (game: Game, tile: Tile, tileNum: number) => {
                       disabled={disabled}
                       answered={tile.answered}
       />
+    
   );
 };
 
@@ -59,6 +64,8 @@ const getModalDesc = (game: Game, tile: Tile) => {
     }
   };
 };
+
+
 
 const p = ['left', 'top', 'right'];
 const placementForTileAt = (n) =>
