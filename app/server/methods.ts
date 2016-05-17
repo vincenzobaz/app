@@ -3,9 +3,9 @@ import {GameService} from './services/GameService';
 import {AnswerService} from './services/AnswerService';
 import {GameCreatorService} from './services/GameCreatorService';
 import {AccountService} from "./services/AccountService";
+import {FacebookService} from "./services/FacebookService";
 import {FriendRepository} from './repositories/FriendRepository';
 import {NotificationRepository} from './repositories/NotificationRepository';
-import {FacebookService} from "./facebook";
 import {Server} from "./server";
 
 export function setupMeteorMethods() {

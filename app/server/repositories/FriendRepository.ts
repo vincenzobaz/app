@@ -1,7 +1,7 @@
-import {Friends} from '../../common/collections/Friends';
 import {UserRepository} from './UserRepository';
-import {Friend} from "../../common/models/Friend";
-import {FBFriend} from "../facebook";
+import {Friends}        from '../../common/collections/Friends';
+import {Friend}         from "../../common/models/Friend";
+import {FBFriend}       from '../services/FacebookService';
 
 export const FriendRepository = {
 

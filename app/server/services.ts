@@ -1,6 +1,7 @@
 
 import { GlobalEventBus }      from './events';
-import { NotificationService } from './services/NotificationService';
+import { DesktopNotificationService }  from './services/notification/DesktopNotificationService';
+import { FacebookNotificationService } from './services/notification/FacebookNotificationService';
 
 function checkEnvironment() {
   let abort = false;
@@ -66,8 +67,12 @@ function setupGoogleMaps() {
 function setupNotifications() {
   const isDev = process.env.NODE_ENV === 'development';
 
-  const notifService = new NotificationService(isDev);
-  notifService.subscribeTo(GlobalEventBus);
+  const services = [
+    new DesktopNotificationService(isDev),
+    new FacebookNotificationService(isDev)
+  ];
+
+  services.forEach(service => service.subscribeTo(GlobalEventBus));
 }
 
 export function setupServices() {

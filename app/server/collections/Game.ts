@@ -110,6 +110,9 @@ export class Game {
     }
   }
 
+  isDraw(): boolean {
+    return this.wonBy === 0;
+  }
 
   static fromRaw(raw: RawGame): Game {
     return new Game(
