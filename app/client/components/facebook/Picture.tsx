@@ -1,8 +1,6 @@
 
-// import {Zoomable} from "../jquery/Zoomable";
-
 import { TwoColumns } from './layout/TwoColumns';
-import {Text} from "./Text";
+import { Text }       from './Text';
 
 interface PictureProps {
   imageUrl: string;
@@ -16,14 +14,13 @@ export class Picture extends React.Component<PictureProps, {}>{
 
   private element: any;
 
-
   constructor(props: PictureProps) {
     super(props);
   }
 
   render() {
-    
     const image = this.props.imageUrl || this.props.thumbnailUrl;
+
     if (image == null) {
       return <Text text={this.props.text}/>;
     }
@@ -68,5 +65,5 @@ export class Picture extends React.Component<PictureProps, {}>{
     }
   }
 
-
 }
+
