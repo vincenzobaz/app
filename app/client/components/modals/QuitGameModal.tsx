@@ -16,7 +16,7 @@ export class QuitGameModal extends React.Component<QuitGameModalProps, {}> {
     return (
         <Modal backdrop={true} animation={true} dialogClassName='error' onHide={this.onResume.bind(this)}>
           <Modal.Header>
-            <Modal.Title id='confirm'>Quitting will make you to lose this game</Modal.Title>
+            <Modal.Title>Quitting will make you to lose this game</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <p>

@@ -5,13 +5,14 @@ import {RawQuestion, default as Question} from "../../Question";
 import {Marker} from "./Marker";
 import {Location} from "./Location";
 import {SubjectFactory} from "../common/SubjectFactory";
+import {GeoAnswer} from "../answers/GeoAnswer";
 
 
 export interface RawGeoQuestion extends RawQuestion {
   range: number,
   defaultLocation: Location,
   answer: FBLocation,
-  userAnswer: Location
+  userAnswer: GeoAnswer
 }
 
 export class GeoQuestion extends Question {
@@ -21,7 +22,7 @@ export class GeoQuestion extends Question {
       type: QuestionType,
       kind: Kind,
       answer: FBLocation,
-      userAnswer: Location,
+      userAnswer: GeoAnswer,
       public range: number, 
       public defaultLocation: Location
       ) 

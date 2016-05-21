@@ -1,9 +1,9 @@
-import {Address} from '../../../../common/external_services/OpenStreetMapsHelper';
-import * as url from 'url';
 import {GeoQuestion} from '../../../../common/models/questions/geolocation/GeoQuestion';
 import {GeoAnswer} from '../../../../common/models/questions/answers/GeoAnswer';
 import {Location} from '../../../../common/models/questions/geolocation/Location';
 import * as _ from 'lodash';
+import {GeoNameEntityCollection} from "../../../collections/GeoNameEntityCollection";
+import {GeoNameEntity} from "../../../../common/models/GeoNameEntity";
 
 
 
@@ -21,24 +21,72 @@ export class GeoVerificationService {
     const correctLocation: Location = question.answer;
     const lat = correctLocation.latitude;
     const long = correctLocation.longitude;
-    const email: string = "info@reminisce.me";
-    const zoom: number = 18;
-    let correct = 0;
+    console.log("Geverification received the following answer", answer);
+    const entity: GeoNameEntity = GeoNameEntityCollection.findOne({
+      loc: {
+        $near: {
+          $geometry: {
+            type: "Point",
+            coordinates: [answer.data.longitude, answer.data.latitude]
+          },
+          $maxDistance: 100000,
+        }
+      },
+      country_code: {$exists: true},
+      feature_class: "P"
+    });
+    
+    const correctEntity: GeoNameEntity = GeoNameEntityCollection.findOne({
+      loc: {
+        $near: {
+          $geometry: {
+            type: "Point",
+            coordinates: [long, lat]
+          },
+          $maxDistance: 100000,
+        }
+      },
+      country_code: {$exists: true},
+      feature_class: "P"
+    });
+    question.answer = GeoVerificationService.createAnswerFromEntity(correctEntity);
+    question.userAnswer = GeoVerificationService.createAnswerFromEntity(entity);
+    
+    if (correctEntity && entity) {
+      if (correctEntity.admin1Code && correctEntity.admin1Code.length > 0) {
+        if (correctEntity.admin2Code && correctEntity.admin2Code.length > 0) {
+          if (entity.admin1Code == correctEntity.admin1Code && entity.admin2Code == correctEntity.admin2Code) {
+            return 1;
+          } else {
+            return 0;
+          }
+        } else {
+          if (entity.admin1Code == correctEntity.admin1Code) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+      }
+    }
 
-   _.forIn(answer.data.place, (answerValue, answerKey) => {
-     _.forIn(question.answer, (correctValue, correctKey) => {
-         console.log(`The place is: answer => ${answerKey}:${answerValue}:| correct => ${correctKey}:${correctValue} `);
-       //As Country is too broad
-       if (answerValue == correctValue && correctKey != 'country') {
-         console.log(`********** The place is correct: answer => ${answerValue}:${answerKey} | correct => ${correctValue} ${correctKey}`);
-         correct = 1;
-       }
-     })
-     console.log("We are done *************************************************")
-   });
+    //If our geolocation data isn't sufficient we give the player the point
+    return 1;
 
-    return correct
+  }
 
+  static createAnswerFromEntity(entity: GeoNameEntity): GeoAnswer {
+    const location: Location = new Location(
+        entity.latitude,
+        entity.longitude,
+        entity.name,
+        entity.countryCode,
+        entity.admin1Code,
+        entity.admin2Code,
+        entity.admin3Code,
+        entity.admin4Code
+    );
+    return new GeoAnswer(location);
   }
 
 

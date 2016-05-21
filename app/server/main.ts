@@ -11,6 +11,7 @@ import { setupMeteorMethods }      from "./methods";
 import { RawTileState }            from "./collections/TileState";
 import { GAME_STATUS, GameStatus } from "../common/models/GameStatus";
 import { Game }                    from "./collections/Game";
+import {GeoNameEntityCollection} from "./collections/GeoNameEntityCollection";
 
 Meteor.startup(() => {
     setupServices();

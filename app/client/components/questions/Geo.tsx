@@ -1,88 +1,194 @@
 
-import {getConfig} from '../../helpers/getConfig';
-import {Post} from '../facebook/Post';
-import {GoogleMap} from '../GoogleMap';
+import {getConfig} from "../../helpers/getConfig";
+import {Post} from "../facebook/Post";
 import {getQuestionTitleByType} from "../../helpers/getQuestionTitleByType";
-import {SubjectType} from "../../../common/models/questions/common/SubjectType";
-import {Subject} from "../../../common/models/questions/common/Subject";
-import {Marker} from "../../../common/models/questions/geolocation/Marker";
-import * as Model from "../../../common/models/questions/geolocation/Marker";
-import {QuestionProps} from "./QuestionProps";
-import {ReminisceMap} from "./../ReminisceMap";
-import {GeoData} from "../../../common/models/questions/answers/GeoData";
-import {Address} from "../../../common/external_services/OpenStreetMapsHelper";
-import * as _ from "lodash";
+import * as Model from "../../common/models/questions/geolocation/Marker";
+import {Marker} from "../../common/models/questions/geolocation/Marker";
 import {Button} from "react-bootstrap";
-// import * as L from 'leaflet';
-// import { render } from 'react-dom';
+import {QuestionProps} from "./QuestionProps";
+import {ReminisceMap} from "../ReminisceMap";
+import Autosuggest from 'react-autosuggest';
+import * as _ from "lodash";
+import {GeoNameEntity} from "../../common/models/GeoNameEntity";
+import {Location} from "../../../common/models/questions/geolocation/Location";
+
+const theme = require('./GeoSuggestionBox.css');
 
 
 interface Configuration {
-    zoom: number;
-    apiKey: string;
-    sensor: boolean;
-    marker: any;
+  zoom: number;
+  apiKey: string;
+  sensor: boolean;
+  marker: any;
 
 }
 
+
 interface GeoProps extends QuestionProps {
-    defaultLocation: Model.Marker;
+  defaultLocation: Model.Marker;
 }
 
 interface GeoState {
-    marker: Model.Marker;
-    place?: string;
-    conf?: Configuration;
+  marker?: Model.Marker
+  value?: string;
+  place?: string;
+  countryCode?: string;
+  conf?: Configuration;
+  suggestions?: GeoNameEntity[];
+  isLoading?: boolean;
+  latitude?: number;
+  longitude?: number;
+  selectedSuggestion?: GeoNameEntity;
 }
 
 
-
 export class Geo extends React.Component<GeoProps, GeoState> {
-    private conf: any;
-    private place: Address;
-    private userMarker: Model.Marker;
-    constructor(props: GeoProps) {
-        super(props);
-        this.state = {
-            marker: props.defaultLocation
-        };
-        this.conf = getConfig('gmaps');
+  private conf: any;
+  private userMarker: Model.Marker;
 
-        console.log("We received geo props: ", props);
-    }
+  constructor(props: GeoProps) {
+    super(props);
+    this.state = {
+      marker: props.defaultLocation,
+      value: '',
+      place: '',
+      countryCode: null,
+      suggestions: [],
+      isLoading: false,
+      latitude: 0,
+      longitude: 0,
+      selectedSuggestion: null
+    };
+    this.conf = getConfig('gmaps');
 
-    componentWillReceiveProps(props: GeoProps) {
+  }
+
+  componentWillReceiveProps(props: GeoProps) {
+    this.setState({
+      marker: {latitude: props.defaultLocation.latitude, longitude: props.defaultLocation.longitude},
+      latitude: 0,
+      longitude: 0,
+      place: '',
+      suggestions: [],
+      isLoading: false,
+      selectedSuggestion: null
+    });
+  }
+
+  loadSuggestions(place: string, countryCode?: string) {
+    this.setState({
+      isLoading: true
+    });
+    Meteor.call('Geolocation.getSuggestions', place, countryCode, function (error: Meteor.Error, result: GeoNameEntity[]) {
+      if (place === this.state.place && countryCode === this.state.countryCode) {
         this.setState({
-            marker: { latitude: props.defaultLocation.latitude, longitude: props.defaultLocation.longitude }
+          isLoading: false,
+          suggestions: result
         });
+      } else { // Ignore suggestions if input value changed
+        this.setState({
+          isLoading: false
+        });
+      }
+    }.bind(this));
+  }
+
+  onChange(event, {newValue}) {
+    const {place, countryCode} = this.decomposeEntry(newValue);
+    this.setState({
+      value: newValue,
+      place: place,
+      countryCode: countryCode
+    });
+  }
+
+  onSuggestionsUpdateRequested({value}) {
+    const {place, countryCode} = this.decomposeEntry(value);
+
+    this.loadSuggestions(place, countryCode);
+
+  }
+
+  decomposeEntry(entry: string): {place: string, countryCode: string} {
+    const entries: string[] = entry.split(',');
+    const place = entries[0].trim();
+    const countryCode = entries.length > 1 ? entries[1].trim() : null;
+    return {place: place, countryCode: countryCode};
+  }
+
+
+  getSuggestionValue(suggestion: GeoNameEntity) {
+    return `${suggestion.name}, ${suggestion.countryCode}`;
+  }
+
+  renderSuggestion(suggestion: GeoNameEntity) {
+    return (
+        <span className="location-suggestion">{suggestion.name}, <span className="admin">{suggestion.countryCode}</span></span>
+    );
+  }
+
+
+  onSuggestionSelected(event, {suggestion, suggestionValue, sectionIndex, method}) {
+    this.setState({
+      selectedSuggestion: suggestion,
+      latitude: suggestion.latitude,
+      longitude: suggestion.longitude
+    })
+  }
+
+  render() {
+    const {value, suggestions} = this.state;
+
+    const inputProps = {
+      placeholder: 'Type a location',
+      value,
+      onChange: this.onChange.bind(this)
+    };
+    const suggested = this.state.selectedSuggestion;
+    const marker = this.state.selectedSuggestion ? new L.LatLng(suggested.latitude, suggested.longitude) : null;
+    if (!this.state.marker) {
+      return (<div>Loading...</div>);
     }
-    render() {
-        if (!this.state.marker) {
-            return (<div>Loading...</div>);
-        }
-        const position = new Marker(_.random(0, 100), _.random(0, 100));
-        return (
-            <div className="question question-geo">
-                <h4>{getQuestionTitleByType(this.props.type.toString()) }</h4>
-                <div className="question-subject grid-100">
-                    <Post post={this.props.subject} />
-                </div>
-                <div className="grid-100">
-                    <ReminisceMap position={this.state.marker} onSelectedPosition={this.onMarkerMove.bind(this)} />
-                    <Button onClick={this.onDone.bind(this) }>Done</Button>
-                </div>
+    const zoomLevel = this.state.selectedSuggestion ? 13 : 1;
+    const lat = this.state.latitude ? this.state.latitude : 0;
+    const long = this.state.longitude ? this.state.longitude : 0;
+    return (
+        <div className="question question-geo">
+          <h4>{getQuestionTitleByType(this.props.type.toString()) }</h4>
+          <div className="question-subject grid-100">
+            <Post post={this.props.subject}/>
+          </div>
+          <div className="grid-100">
+          <Autosuggest suggestions={suggestions}
+                       onSuggestionsUpdateRequested={this.onSuggestionsUpdateRequested.bind(this)}
+                       getSuggestionValue={this.getSuggestionValue.bind(this)}
+                       renderSuggestion={this.renderSuggestion.bind(this)}
+                       onSuggestionSelected={this.onSuggestionSelected.bind(this)}
+                       inputProps={inputProps}
+                       theme={theme}
+          />
             </div>
-        );
-    }
+          <div className="grid-100">
+            <ReminisceMap
+                longitude={long}
+                latitude={lat}
+                zoomLevel={zoomLevel}
+                onSelectedPosition={this.onMarkerMove.bind(this)}
+                marker={marker}
+            />
+            <Button onClick={this.onDone.bind(this) }>Done</Button>
+          </div>
+        </div>
+    );
+  }
 
-    onMarkerMove(position: Model.Marker, place: Address): void {
-        this.place = place;
-        this.userMarker = position;
-    }
+  onMarkerMove(position: Model.Marker): void {
+    this.userMarker = position;
+  }
 
-    onDone(e) {
-        this.props.onDone(new GeoData(this.userMarker, this.place));
-    }
+  onDone(e) {
+    this.props.onDone(new Location(this.userMarker.latitude, this.userMarker.longitude));
+  }
 
 }
 

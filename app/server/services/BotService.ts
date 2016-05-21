@@ -18,10 +18,10 @@ import User = Meteor.User;
 import {TimelineData} from "../../common/models/questions/answers/TimelineData";
 import {TimelineAnswer} from "../../common/models/questions/answers/TimelineAnswer";
 import {MultipleChoiceData, MultipleChoiceAnswer} from "./verification/services/MultipleChoiceVerificationService";
-import {GeoData} from "../../common/models/questions/answers/GeoData";
 import {GeoAnswer} from "../../common/models/questions/answers/GeoAnswer";
 import {OrderData} from "../../common/models/questions/answers/OrderData";
 import {OrderAnswer} from "../../common/models/questions/answers/OrderAnswer";
+import {Location} from "../../common/models/questions/geolocation/Location";
 
 
 const BOT_USERNAME = 'bot';
@@ -164,7 +164,7 @@ export const BotService = {
         case KIND.Geolocation:
           const geoAnswer = _.random(0, 100) < successrate ?
             new GeoAnswer(q.answer) :
-            new GeoAnswer(new GeoData(new Marker(0, 0), ""))
+            new GeoAnswer(new Location(0, 0));
           return geoAnswer;
         case KIND.Order:
           const answers: number[] = q.answer;

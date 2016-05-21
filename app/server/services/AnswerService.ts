@@ -16,12 +16,13 @@ import { QuestionFactory } from "../../common/models/questions/QuestionFactory";
 import {MultipleChoiceData, MultipleChoiceAnswer} from "./verification/services/MultipleChoiceVerificationService";
 import {TimelineData} from "../../common/models/questions/answers/TimelineData";
 import {TimelineAnswer} from "../../common/models/questions/answers/TimelineAnswer";
-import {GeoData} from "../../common/models/questions/answers/GeoData";
 import {GeoAnswer} from "../../common/models/questions/answers/GeoAnswer";
 import {Answer} from "./../../common/models/questions/answers/Answer";
 import {OrderData} from "../../common/models/questions/answers/OrderData";
 import {OrderItem} from "../../common/models/questions/answers/OrderItem";
 import {OrderAnswer} from "../../common/models/questions/answers/OrderAnswer";
+import {Location} from "../../common/models/questions/geolocation/Location";
+import {GeoQuestion} from "../../common/models/questions/geolocation/GeoQuestion";
 
 interface QuestionAnswer {
   question: Question;
@@ -31,6 +32,7 @@ interface QuestionAnswer {
 export module AnswerService {
 
   export function timeOut(gameId: string, tileId: string) {
+
     if (gameId == null || tileId == null) {
       return {
         status: 'error',
@@ -67,6 +69,7 @@ export module AnswerService {
 
     tile.disabled = true;
     GameBoardRepository.save(board);
+    console.log("the modified tile looks like this: ", tile);
 
     const currentPlayer = game.playerTurn;
     const boardService = new BoardStateService(game.boardState, currentPlayer);
@@ -83,7 +86,8 @@ export module AnswerService {
     }
 
     game.nextTurn();
-    Games.update(game._id, game);
+    //FIXME: for debuggin:
+    //Games.update(game._id, game);
 
     return {
       status: 'success',
@@ -92,6 +96,7 @@ export module AnswerService {
   }
 
   export function post(gameId: string | Mongo.ObjectID, tileId: Mongo.ObjectID, answers, game?: Game) {
+
     if (!game) {
       game = Games.findOne(gameId);
     }
@@ -169,11 +174,11 @@ export module AnswerService {
       game.wonBy = 0;
       game.status = GAME_STATUS.Ended;
     }
+    console.log("the modified tile looks like this: ", (tile.question1.userAnswer as GeoAnswer).data);
 
     game.nextTurn();
-
-    // Games.update(game._id, game);
-    // GameBoardRepository.save(board);
+    Games.update(game._id, game);
+    GameBoardRepository.save(board);
 
     const returnValue = {
       status: 'success',
@@ -213,7 +218,7 @@ export module AnswerService {
         return new TimelineAnswer(new TimelineData(data.date));
 
       case KIND.Geolocation:
-        return new GeoAnswer(new GeoData(new Marker(data.marker.latitude, data.marker.longitude), data.place));
+        return new GeoAnswer(data);
 
       case KIND.Order:
         const items = data.items.map(i => new OrderItem(i.id, i.text));
