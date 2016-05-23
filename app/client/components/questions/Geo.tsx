@@ -3,7 +3,6 @@ import {getConfig} from "../../helpers/getConfig";
 import {Post} from "../facebook/Post";
 import {getQuestionTitleByType} from "../../helpers/getQuestionTitleByType";
 import * as Model from "../../common/models/questions/geolocation/Marker";
-import {Marker} from "../../common/models/questions/geolocation/Marker";
 import {Button} from "react-bootstrap";
 import {QuestionProps} from "./QuestionProps";
 import {ReminisceMap} from "../ReminisceMap";
@@ -12,6 +11,8 @@ import * as _ from "lodash";
 import {GeoNameEntity} from "../../common/models/GeoNameEntity";
 import {Location} from "../../../common/models/questions/geolocation/Location";
 import {GeoAnswer} from "../../../common/models/questions/answers/GeoAnswer";
+import Loader from 'react-loader';
+import {Col} from 'react-bootstrap';
 
 const theme = require('./GeoSuggestionBox.css');
 
@@ -86,10 +87,6 @@ export class Geo extends React.Component<GeoProps, GeoState> {
           isLoading: false,
           suggestions: result
         });
-      } else { // Ignore suggestions if input value changed
-        this.setState({
-          isLoading: false
-        });
       }
     }.bind(this));
   }
@@ -138,6 +135,7 @@ export class Geo extends React.Component<GeoProps, GeoState> {
   }
 
   render() {
+
     if (this.props.userAnswer){
       return this.renderAnswer();
     } else {
@@ -164,10 +162,10 @@ export class Geo extends React.Component<GeoProps, GeoState> {
     return (
         <div className="question question-geo">
           <h4>{getQuestionTitleByType(this.props.type.toString()) }</h4>
-          <div className="question-subject grid-100">
+          <Col sm={12}>
             <Post post={this.props.subject}/>
-          </div>
-          <div className="grid-100">
+          </Col>
+          <Col sm={12}>
             <Autosuggest suggestions={suggestions}
                          onSuggestionsUpdateRequested={this.onSuggestionsUpdateRequested.bind(this)}
                          getSuggestionValue={this.getSuggestionValue.bind(this)}
@@ -176,8 +174,10 @@ export class Geo extends React.Component<GeoProps, GeoState> {
                          inputProps={inputProps}
                          theme={theme}
             />
-          </div>
-          <div className="grid-100">
+              <Loader loaded={!this.state.isLoading} scale={0.5} width={1} left="93%" />
+          </Col>
+
+          <Col sm={12} >
             <ReminisceMap
                 longitude={long}
                 latitude={lat}
@@ -186,8 +186,8 @@ export class Geo extends React.Component<GeoProps, GeoState> {
                 marker={marker}
             />
             <Button onClick={this.onDone.bind(this) }>Done</Button>
+          </Col>
           </div>
-        </div>
     );
   }
 
