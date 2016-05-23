@@ -49,21 +49,30 @@ export class GeoVerificationService {
       country_code: {$exists: true},
       feature_class: "P"
     });
-    question.answer = GeoVerificationService.createAnswerFromEntity(correctEntity);
-    question.userAnswer = GeoVerificationService.createAnswerFromEntity(entity);
+
     
     if (correctEntity && entity) {
+      correctEntity.latitude = lat;
+      correctEntity.longitude = long;
+      question.answer = GeoVerificationService.createAnswerFromEntity(correctEntity);
+      entity.latitude = answer.data.longitude;
+      entity.latitude = answer.data.latitude;
+      question.userAnswer = GeoVerificationService.createAnswerFromEntity(entity);
       if (correctEntity.admin1Code && correctEntity.admin1Code.length > 0) {
         if (correctEntity.admin2Code && correctEntity.admin2Code.length > 0) {
           if (entity.admin1Code == correctEntity.admin1Code && entity.admin2Code == correctEntity.admin2Code) {
+            question.correct = true;
             return 1;
           } else {
+            question.correct = false;
             return 0;
           }
         } else {
           if (entity.admin1Code == correctEntity.admin1Code) {
+            question.correct = true;
             return 1;
           } else {
+            question.correct = false;
             return 0;
           }
         }
@@ -71,6 +80,7 @@ export class GeoVerificationService {
     }
 
     //If our geolocation data isn't sufficient we give the player the point
+    question.correct = true;
     return 1;
 
   }

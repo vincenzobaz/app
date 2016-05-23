@@ -11,6 +11,7 @@ import Autosuggest from 'react-autosuggest';
 import * as _ from "lodash";
 import {GeoNameEntity} from "../../common/models/GeoNameEntity";
 import {Location} from "../../../common/models/questions/geolocation/Location";
+import {GeoAnswer} from "../../../common/models/questions/answers/GeoAnswer";
 
 const theme = require('./GeoSuggestionBox.css');
 
@@ -26,6 +27,9 @@ interface Configuration {
 
 interface GeoProps extends QuestionProps {
   defaultLocation: Model.Marker;
+  userAnswer?: GeoAnswer;
+  answer?: GeoAnswer;
+  correct?: boolean;
 }
 
 interface GeoState {
@@ -41,11 +45,10 @@ interface GeoState {
   selectedSuggestion?: GeoNameEntity;
 }
 
-
+const selectedZoomlevel = 12;
+const fullyZoomedOut = 1;
 export class Geo extends React.Component<GeoProps, GeoState> {
-  private conf: any;
   private userMarker: Model.Marker;
-
   constructor(props: GeoProps) {
     super(props);
     this.state = {
@@ -59,8 +62,6 @@ export class Geo extends React.Component<GeoProps, GeoState> {
       longitude: 0,
       selectedSuggestion: null
     };
-    this.conf = getConfig('gmaps');
-
   }
 
   componentWillReceiveProps(props: GeoProps) {
@@ -137,6 +138,14 @@ export class Geo extends React.Component<GeoProps, GeoState> {
   }
 
   render() {
+    if (this.props.userAnswer){
+      return this.renderAnswer();
+    } else {
+      return this.renderQuestions();
+    }
+  }
+
+  renderQuestions() {
     const {value, suggestions} = this.state;
 
     const inputProps = {
@@ -149,7 +158,7 @@ export class Geo extends React.Component<GeoProps, GeoState> {
     if (!this.state.marker) {
       return (<div>Loading...</div>);
     }
-    const zoomLevel = this.state.selectedSuggestion ? 13 : 1;
+    const zoomLevel = this.state.selectedSuggestion ? selectedZoomlevel : fullyZoomedOut;
     const lat = this.state.latitude ? this.state.latitude : 0;
     const long = this.state.longitude ? this.state.longitude : 0;
     return (
@@ -159,15 +168,15 @@ export class Geo extends React.Component<GeoProps, GeoState> {
             <Post post={this.props.subject}/>
           </div>
           <div className="grid-100">
-          <Autosuggest suggestions={suggestions}
-                       onSuggestionsUpdateRequested={this.onSuggestionsUpdateRequested.bind(this)}
-                       getSuggestionValue={this.getSuggestionValue.bind(this)}
-                       renderSuggestion={this.renderSuggestion.bind(this)}
-                       onSuggestionSelected={this.onSuggestionSelected.bind(this)}
-                       inputProps={inputProps}
-                       theme={theme}
-          />
-            </div>
+            <Autosuggest suggestions={suggestions}
+                         onSuggestionsUpdateRequested={this.onSuggestionsUpdateRequested.bind(this)}
+                         getSuggestionValue={this.getSuggestionValue.bind(this)}
+                         renderSuggestion={this.renderSuggestion.bind(this)}
+                         onSuggestionSelected={this.onSuggestionSelected.bind(this)}
+                         inputProps={inputProps}
+                         theme={theme}
+            />
+          </div>
           <div className="grid-100">
             <ReminisceMap
                 longitude={long}
@@ -180,6 +189,52 @@ export class Geo extends React.Component<GeoProps, GeoState> {
           </div>
         </div>
     );
+  }
+
+  renderAnswer() {
+    const marker = new L.LatLng(this.props.answer.data.latitude, this.props.answer.data.longitude);
+    const lat = this.state.latitude ? this.state.latitude : 0;
+    const long = this.state.longitude ? this.state.longitude : 0;
+    if (this.props.correct) {
+    return (
+        <div className="question question-geo">
+          <h4>{getQuestionTitleByType(this.props.type.toString()) }</h4>
+          <div className="question-subject grid-100">
+            <Post post={this.props.subject}/>
+          </div>
+          <div className="grid-100 correct-geo">
+            <ReminisceMap
+                longitude={long}
+                latitude={lat}
+                zoomLevel={fullyZoomedOut}
+                solutionMarker={marker}
+            />
+          </div>
+        </div>
+    );
+    } else {
+      const userMarker = new L.LatLng(this.props.userAnswer.data.latitude, this.props.userAnswer.data.longitude);
+      return (
+          <div className="question question-geo">
+            <h4>{getQuestionTitleByType(this.props.type.toString()) }</h4>
+            <div className="question-subject grid-100">
+              <Post post={this.props.subject}/>
+            </div>
+            <div className="grid-100 wrong-geo">
+              <ReminisceMap
+                  longitude={long}
+                  latitude={lat}
+                  zoomLevel={fullyZoomedOut}
+                  solutionMarker={marker}
+                  userMarker={userMarker}
+              />
+            </div>
+          </div>
+      );
+    }
+
+
+
   }
 
   onMarkerMove(position: Model.Marker): void {

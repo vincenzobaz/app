@@ -210,3 +210,18 @@ $grey-border: #b8b8b8;
    color: darkgray;
  }
 }
+
+@mixin geo($color) {
+  background-color: $color;
+  padding: 5px;
+}
+
+.correct-geo {
+  @include geo($correct-color);
+}
+
+.wrong-geo {
+  @include geo($wrong-color);
+}
+
+

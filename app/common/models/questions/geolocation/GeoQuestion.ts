@@ -13,6 +13,7 @@ export interface RawGeoQuestion extends RawQuestion {
   defaultLocation: Location,
   answer: FBLocation,
   userAnswer: GeoAnswer
+  correct?: boolean;
 }
 
 export class GeoQuestion extends Question {
@@ -24,7 +25,8 @@ export class GeoQuestion extends Question {
       answer: FBLocation,
       userAnswer: GeoAnswer,
       public range: number, 
-      public defaultLocation: Location
+      public defaultLocation: Location,
+      public correct: boolean
       ) 
   {
     super(_id, subject, type, kind, answer, userAnswer);
@@ -49,7 +51,8 @@ export class GeoQuestion extends Question {
         raw.answer,
         raw.userAnswer,
         raw.range, 
-        raw.defaultLocation
+        raw.defaultLocation,
+        raw.correct
     );
   }
 }
