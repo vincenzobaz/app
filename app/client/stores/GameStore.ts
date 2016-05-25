@@ -1,34 +1,40 @@
 
+import { browserHistory }     from 'react-router';
+import { Option, Some, None } from 'option-t';
 
-import {NamespacedSession} from '../helpers/NamespacedSession';
-
-import {JoinRequestStore} from './JoinRequestStore';
-import {FriendStore} from './FriendStore';
-import {Friend} from "../../common/models/Friend";
-import {MeteorPromise} from "../helpers/meteor";
-import {Game} from "../models/Game";
-import {Games} from "../collections/Games";
-
-const GameSession = NamespacedSession('GameStore');
+import { JoinRequestStore } from './JoinRequestStore';
+import { FriendStore }      from './FriendStore';
+import { Friend }           from '../../common/models/Friend';
+import { MeteorPromise }    from '../helpers/meteor';
+import { Game }             from '../models/Game';
+import { Games }            from '../collections/Games';
 
 export module GameStore {
 
-  export function current() {
-    const gameId = GameSession.get('currentId');
-    if (gameId == null) {
-      return null;
+  // FIXME: Games.findOne always returns null
+  // export function byId(gameId: Mongo.ObjectID | string): Option<Game> {
+  //   const game = <Game>Games.findOne(gameId);
+  //   console.log('GameStore.byId(' + gameId + ')', game);
+  //   return (game == null) ? new None<Game>() : new Some<Game>(game);
+  // }
+
+  export function byId(gameId: Mongo.ObjectID | string): Option<Game> {
+    const games = GameStore.list();
+    for (let i = 0; i < games.length; i += 1) {
+      if (`${games[i]._id}` == `${gameId}`) {
+        return new Some<Game>(games[i]);
+      }
     }
-    return this.load(gameId);
+
+    return new None<Game>();
   }
 
-  export function pause() {
-    GameSession.set('currentId', null);
-  }
-
-  export function list() {
-    return Games
-            .find({}, { sort: { creationTime: -1 } })
-            .fetch()
+  export function list(): Game[] {
+    return <Game[]>(
+      Games
+        .find({}, { sort: { creationTime: -1 } })
+        .fetch()
+    );
   }
 
   export function start(friendId) {
@@ -40,30 +46,21 @@ export module GameStore {
     return JoinRequestStore.send(bot._id);
   }
 
-  export function load(gameId) {
-    return Games.findOne(gameId)
-  }
-
   export function quit(game: Game) {
     MeteorPromise.call('Game.quit', game._id, () => {
-      GameSession.set('currentId', null);
-      Session.set('page', 'home');
+      browserHistory.push('/');
     });
   }
 
   export function switchTo(game: Game | Mongo.ObjectID | string, isId = true) {
-    if (isId) {
-      GameSession.set('currentId', game);
-    }
-    else {
-      GameSession.set('currentId', (<Game>game)._id);
-    }
+    const gameId = isId ? game : (<Game>game)._id;
 
-    Session.set('page', 'game');
-  }
-  
-  export function byId(gameId: Mongo.ObjectID | string): Game | {} {
-    return Games.findOne(gameId);
+    browserHistory.push(`/play/${gameId}`)
   }
 
 }
+
+const root: any = window;
+
+root.GameStore = GameStore;
+root.Games = Games;

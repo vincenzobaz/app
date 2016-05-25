@@ -23,5 +23,8 @@
     "react-dom": "github:DefinitelyTyped/DefinitelyTyped/react/react-dom.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
     "react-global": "github:DefinitelyTyped/DefinitelyTyped/react/react-global.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
     "react-mixin": "github:DefinitelyTyped/DefinitelyTyped/react-mixin/react-mixin.d.ts#dc9dabe74a5be62613b17a3605309783a12ff28a"
+  },
+  "dependencies": {
+    "react-router": "registry:npm/react-router#2.0.0+20160214194820"
   }
 }

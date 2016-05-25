@@ -1,12 +1,10 @@
 
-import {JoinRequests, JoinRequest} from "../models/JoinRequest";
-
-
+import { JoinRequests, JoinRequest } from "../models/JoinRequest";
 
 export module JoinRequestStore {
 
-  export function list(): JoinRequest[] | {} {
-    return JoinRequests.find().fetch();
+  export function list(): JoinRequest[] {
+    return <JoinRequest[]>JoinRequests.find().fetch();
   }
 
   export function accept(joinRequest: JoinRequest) {
@@ -22,5 +20,4 @@ export module JoinRequestStore {
   }
 
 };
-
 

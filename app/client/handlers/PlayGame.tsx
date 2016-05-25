@@ -1,55 +1,53 @@
 
-import {Board} from "../components/Board";
-import {GameResult} from "../components/GameResult";
-import {Game} from "../models/Game";
+import { Option  }        from 'option-t';
+
+import { Board }          from '../components/Board';
+import { GameResult }     from '../components/GameResult';
+import { Game }           from '../models/Game';
 
 interface PlayGameProps {
-  currentGame: Game;
+  game: Option<Game>;
 }
 
 export class PlayGame extends React.Component<PlayGameProps, {}> {
 
   render() {
-    const game = this.props.currentGame;
+    const { game } = this.props;
 
-    if (this.hasGameEnded()) {
-      return (
-        <div className="play-game play-game-ended">
-          <GameResult game={game} />
-          <Board game={game} />
-        </div>
-      );
-    }
+    return game.map(game => {
+      if (game.hasEnded) {
+        return (
+          <div className="play-game play-game-ended">
+            <GameResult game={game} />
+            <Board      game={game} />
+          </div>
+        );
+      }
 
-    if (this.isPlaying()) {
-      return (
-        <div className="play-game play-game-playing">
-          <Board game={game} />
-        </div>
-      );
-    }
+      if (game.isPlaying) {
+        return (
+          <div className="play-game play-game-playing">
+            <Board game={game} />
+          </div>
+        );
+      }
 
-    if (this.isWaiting()) {
-      return (
-        <div className="play-game play-game-waiting">
-          {this.renderWaiting()}
-        </div>
-      );
-    }
+      if (game.isWaiting) {
+        return (
+          <div className="play-game play-game-waiting">
+            {this.renderWaiting()}
+          </div>
+        );
+      }
 
-    if (this.isCreating()) {
-      return (
-        <div className="play-game play-game-creating">
-          {this.renderCreating()}
-        </div>
-      );
-    }
-
-    return (
-      <div className="play-game play-game-nogame">
-        {this.renderNoGame()}
-      </div>
-    );
+      if (game.isCreating) {
+        return (
+          <div className="play-game play-game-creating">
+            {this.renderCreating()}
+          </div>
+        );
+      }
+    }).unwrapOrElse(() => this.renderNoGame());
   }
 
   renderNoGame() {
@@ -59,7 +57,11 @@ export class PlayGame extends React.Component<PlayGameProps, {}> {
       marginTop: '3em'
     };
 
-    return <p style={style}>No game selected.</p>;
+    return (
+      <div className="play-game play-game-nogame">
+        <p style={style}>No game selected.</p>
+      </div>
+    );
   }
 
   renderCreating() {
@@ -90,38 +92,5 @@ export class PlayGame extends React.Component<PlayGameProps, {}> {
     );
   }
 
-  isPlaying() {
-    return this.withGame(game => {
-      return game.isPlaying;
-    }, false);
-  }
-
-  isCreating() {
-    return this.withGame(game => {
-      return game.isCreating;
-    }, false);
-  }
-
-  isWaiting() {
-    return this.withGame(game => {
-      return game.isWaiting;
-    }, false);
-  }
-
-  hasGameEnded() {
-    return this.withGame((game: Game) => {
-      return game.hasEnded;
-    }, false);
-  }
-
-  withGame(fn, defValue): Game {
-    const game = this.props.currentGame;
-
-    if (game == null) {
-      return defValue;
-    }
-
-    return fn(game);
-  }
-
 }
+

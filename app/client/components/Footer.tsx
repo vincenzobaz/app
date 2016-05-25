@@ -1,24 +1,18 @@
 
-import {GameToolbar} from "./GameToolbar";
-import {Routes} from "../../common/Routes";
-import {Game} from "../models/Game";
-import {Games} from "../collections/Games";
-import {GameStore} from "../stores/GameStore";
-import {Button} from 'react-bootstrap';
+import { Button }      from 'react-bootstrap';
+import { Link }        from 'react-router';
+
+import { GameToolbar } from './GameToolbar';
+import { Routes }      from '../../common/Routes';
+import { Game }        from '../models/Game';
+import { Games }       from '../collections/Games';
+import { GameStore }   from '../stores/GameStore';
 
 interface FooterProps {
   currentGame?: Game;
 }
 
 export class Footer extends React.Component<FooterProps, {}> {
-
-  showPage(page) {
-    return (e) => {
-      e.preventDefault();
-      GameStore.pause();
-      Session.set('page', page);
-    };
-  }
 
   render() {
     return (
@@ -36,9 +30,9 @@ export class Footer extends React.Component<FooterProps, {}> {
   renderBranding() {
     return (
       <div className='branding col-sm-4 col-xs-2'>
-        <a href="#" onClick={this.showPage('home')}>
+        <Link to="/">
           <img src={Routes.Assets.at('images/reminisce-logo-ios.png')} alt='Reminisce' width='48' height='48' />
-        </a>
+        </Link>
       </div>
     );
   }
@@ -50,8 +44,6 @@ export class Footer extends React.Component<FooterProps, {}> {
       </div>
     );
   }
-  
-
 
 }
 

@@ -1,13 +1,14 @@
 
+import {Option} from 'option-t';
+
 import {Player} from './Player';
 import {Game} from "../models/Game";
 import {User} from "../models/User";
 import {Routes} from "../../common/Routes";
 
 interface PlayersProps {
-  game?: Game;
+  game: Option<Game>;
   user?: User;
-  children?: any;
 }
 
 export class Players extends React.Component<PlayersProps, {}> {
@@ -21,17 +22,14 @@ export class Players extends React.Component<PlayersProps, {}> {
   }
 
   renderPlayers() {
-    if (this.props.children) {
-      return this.props.children;
-    }
+    const optGame = this.props.game;
 
-    if (!this.props.game) {
+    if (optGame.isNone) {
       return <AbsentPlayer />;
     }
 
-    const game     = this.props.game;
-    const opponent = game.opponent;
-
+    const game        = optGame.unwrap();
+    const opponent    = game.opponent;
     const user        = this.props.user;
     const myName      = user.profile.name;
     const myAvatarUrl = Routes.Assets.avatars.facebook(user.services.facebook.id);
@@ -61,10 +59,8 @@ export class Players extends React.Component<PlayersProps, {}> {
 }
 
 export class AbsentPlayer extends React.Component<{}, {}> {
-
   render() {
-    return <noscript />;
+    return null;
   }
 }
-
 

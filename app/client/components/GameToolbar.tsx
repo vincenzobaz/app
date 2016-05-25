@@ -1,3 +1,6 @@
+import {Row, Col, Button, Modal} from 'react-bootstrap';
+import {browserHistory}          from 'react-router';
+
 import {Game}             from '../models/Game';
 import {Friend}           from '../../common/models/Friend';
 import {Friends}          from '../../common/collections/Friends';
@@ -5,8 +8,7 @@ import {GameStore}        from '../stores/GameStore';
 import {QuitGameModal}    from './modals/QuitGameModal';
 import {StartGameModal}   from './modals/StartGameModal';
 import {FriendsSearchbox} from './FriendsSearchbox';
-import {Row, Col, Button, Modal} from 'react-bootstrap';
-import {AccountSettings} from './AccountSettings';
+import {AccountSettings}  from './AccountSettings';
 
 
 interface GameToolbarProps {
@@ -80,7 +82,7 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
 
   onQuit() {
     GameStore.quit(this.props.game);
-    Session.set('page', 'home');
+    browserHistory.push('/');
   }
 
   onResume() {

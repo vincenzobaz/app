@@ -25,8 +25,6 @@ const createTile = (game: Game, tile: Tile, tileNum: number) => {
   const tileState: RawTileState = boardState[row][col];
   const playerNum = game.myPlayerNumber;
   
-  console.log("Tile: ", tileState);
-  
   const score: Score = {
       me: playerNum == 1? tileState.player1Score: tileState.player2Score,
     them: playerNum == 1? tileState.player2Score: tileState.player1Score,

@@ -1,22 +1,29 @@
-    
-'use strict';
 
-import {UserStore} from './stores/UserStore';
-import {GameStore} from './stores/GameStore';
-import {JoinRequestStore} from './stores/JoinRequestStore';
-import {FriendStore} from './stores/FriendStore';
+import { UserStore }        from './stores/UserStore';
+import { GameStore }        from './stores/GameStore';
+import { FriendStore }      from './stores/FriendStore';
+import { JoinRequestStore } from './stores/JoinRequestStore';
 
-var debug = require('debug')('AppState');
+import { User }             from './models/User';
+import { Game }             from './models/Game';
+import { Friend }           from '../common/models/Friend';
+import { JoinRequest }      from './models/JoinRequest';
 
-export function getAppState() {
+export interface AppState {
+  isLoggedIn   : boolean;
+  user         : User;
+  games        : Game[];
+  friends      : Friend[];
+  joinRequests : JoinRequest[];
+}
+
+export function getAppState(): AppState {
   return {
-    isLoggedIn: UserStore.isLoggedIn() || false,
-    page: Session.get('page') || 'home',
-    user: UserStore.current() || null,
-    currentGame: GameStore.current() || null,
-    games: GameStore.list() || [],
-    joinRequests: JoinRequestStore.list() || [],
-    friends: FriendStore.list() || []
+    isLoggedIn   : UserStore.isLoggedIn()  || false,
+    user         : UserStore.current()     || null,
+    games        : GameStore.list()        || [],
+    friends      : FriendStore.list()      || [],
+    joinRequests : JoinRequestStore.list() || []
   };
 }
 
