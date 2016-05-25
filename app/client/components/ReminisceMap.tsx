@@ -16,10 +16,6 @@ interface ReminisceMapProps {
 
 
 const standard = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-const toner = 'http://tile.stamen.com/toner/{z}/{x}/{y}.png';
-const watercolor = 'http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg';
-const wiki = 'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png';
-const wikimedia = ' https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png';
 export class ReminisceMap extends React.Component<ReminisceMapProps, {}> {
   private map: L.Map;
   private marker: L.Marker;
@@ -111,7 +107,7 @@ export class ReminisceMap extends React.Component<ReminisceMapProps, {}> {
     L.Icon.Default.imagePath = '/images';
     const position = L.latLng(this.props.latitude, this.props.longitude);
     this.map = L.map('mapid').setView(position, this.props.zoomLevel).on('click', this.onMapClick.bind(this));
-    this.createMapLayer(wiki).addTo(this.map);
+    this.createMapLayer(standard).addTo(this.map);
     this.marker = L.marker(new L.LatLng(0, 0)).addTo(this.map);
     this.solutionMarker = L.marker(new L.LatLng(0, 0)).addTo(this.map);
     this.userMarker = L.marker(new L.LatLng(0, 0)).addTo(this.map);
