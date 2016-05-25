@@ -29,7 +29,7 @@ export class Friend {
           return Routes.Assets.avatars.facebook(this.facebookId);
         }
   
-        return Routes.Assets.avatars.default();
+        return Routes.Assets.avatars.unknown();
     }
   
   static fromRaw(data: RawFriend) {

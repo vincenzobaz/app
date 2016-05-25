@@ -30,7 +30,7 @@ export class Footer extends React.Component<FooterProps, {}> {
   renderBranding() {
     return (
       <div className='branding col-sm-4 col-xs-2'>
-        <Link to="/">
+        <Link to={Routes.Page.home()}>
           <img src={Routes.Assets.at('images/reminisce-logo-ios.png')} alt='Reminisce' width='48' height='48' />
         </Link>
       </div>

@@ -1,6 +1,9 @@
 
+import {Link}        from 'react-router';
+
 import {Game}        from '../models/Game';
 import {GameStore}   from '../stores/GameStore';
+import {Routes}      from '../../common/Routes';
 import {GAME_STATUS} from '../../common/models/GameStatus';
 import {Friend}      from '../../common/models/Friend';
 import {Score}       from '../../common/models/Score';
@@ -21,14 +24,14 @@ export class GameItem extends React.Component<GameItemProps, {}> {
     return (
       <li className={classNames.waiting}>
         <div className='media'>
-          <a className='pull-left' title='Switch to this game' href="#" onClick={this.switchToGame(game)}>
+          <Link to={Routes.Page.playGame(game)} className='pull-left' title='Switch to this game'>
             <img className='media-object img-circle' width='40' src={avatarUrl} alt='' />
-          </a>
+          </Link>
           <div className='media-body'>
             <h5 className='media-heading'>
-              <a title='Switch to this game' onClick={this.switchToGame(game)} href="#">
+              <Link to={Routes.Page.playGame(game)} title='Switch to this game'>
                 {opponentName}
-              </a>
+              </Link>
             </h5>
             <span>{this.renderDescription()}</span>
           </div>
@@ -85,13 +88,6 @@ export class GameItem extends React.Component<GameItemProps, {}> {
       default:
         return <b>?</b>;
     }
-  }
-
-  switchToGame(game) {
-    return (e) => {
-      e.preventDefault();
-      GameStore.switchTo(game._id);
-    };
   }
 
   getClassNames() {

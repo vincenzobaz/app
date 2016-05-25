@@ -5,6 +5,7 @@ import { Option, Some, None } from 'option-t';
 import { JoinRequestStore } from './JoinRequestStore';
 import { FriendStore }      from './FriendStore';
 import { Friend }           from '../../common/models/Friend';
+import { Routes }           from '../../common/Routes';
 import { MeteorPromise }    from '../helpers/meteor';
 import { Game }             from '../models/Game';
 import { Games }            from '../collections/Games';
@@ -48,19 +49,9 @@ export module GameStore {
 
   export function quit(game: Game) {
     MeteorPromise.call('Game.quit', game._id, () => {
-      browserHistory.push('/');
+      browserHistory.push(Routes.Page.home());
     });
-  }
-
-  export function switchTo(game: Game | Mongo.ObjectID | string, isId = true) {
-    const gameId = isId ? game : (<Game>game)._id;
-
-    browserHistory.push(`/play/${gameId}`)
   }
 
 }
 
-const root: any = window;
-
-root.GameStore = GameStore;
-root.Games = Games;

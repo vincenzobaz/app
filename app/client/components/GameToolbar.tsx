@@ -2,6 +2,7 @@ import {Row, Col, Button, Modal} from 'react-bootstrap';
 import {browserHistory}          from 'react-router';
 
 import {Game}             from '../models/Game';
+import {Routes}           from '../../common/Routes';
 import {Friend}           from '../../common/models/Friend';
 import {Friends}          from '../../common/collections/Friends';
 import {GameStore}        from '../stores/GameStore';
@@ -82,7 +83,7 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
 
   onQuit() {
     GameStore.quit(this.props.game);
-    browserHistory.push('/');
+    browserHistory.push(Routes.Page.home());
   }
 
   onResume() {
