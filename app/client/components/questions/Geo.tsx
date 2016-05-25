@@ -2,17 +2,17 @@
 import {getConfig} from "../../helpers/getConfig";
 import {Post} from "../facebook/Post";
 import {getQuestionTitleByType} from "../../helpers/getQuestionTitleByType";
-import * as Model from "../../common/models/questions/geolocation/Marker";
+import * as Model from "../../../common/models/questions/geolocation/Marker";
 import {Button} from "react-bootstrap";
 import {QuestionProps} from "./QuestionProps";
 import {ReminisceMap} from "../ReminisceMap";
 import Autosuggest from 'react-autosuggest';
 import * as _ from "lodash";
-import {GeoNameEntity} from "../../common/models/GeoNameEntity";
 import {Location} from "../../../common/models/questions/geolocation/Location";
 import {GeoAnswer} from "../../../common/models/questions/answers/GeoAnswer";
 import Loader from 'react-loader';
 import {Col} from 'react-bootstrap';
+import {GeoNameEntity} from "../../../common/models/GeoNameEntity";
 
 const theme = require('./GeoSuggestionBox.css');
 
