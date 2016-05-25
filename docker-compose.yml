@@ -47,6 +47,28 @@ dbdata:
     - SYS_CHROOT
   restart: on-failure:5
   
+#mongo-seed-geolocation:
+#  build: ../seed/geolocation-seed
+#  links: 
+#    - mongo:mongo
+#  restart: on-failure:5
+#  
+#
+#mongo-seed-admin1:
+#  build: ../seed/admin1-seed
+#  links: 
+#    - mongo:mongo
+#  restart: on-failure:5
+#  
+#
+#
+#mongo-seed-admin2:
+#  build: ../seed/admin2-seed
+#  links: 
+#    - mongo:mongo
+#  restart: on-failure:5
+#  
+#
 
 
 
