@@ -7,7 +7,9 @@ export class _ErrorStore extends EventEmitter {
 
   register() {
     // window.onerror = this.onGlobalError.bind(this);
-    Promise.onPossiblyUnhandledRejection(this.onPromiseError.bind(this));
+    //FIXME: Currently the error store breaks the whole app if *any* exception occurs (only white screen for user)
+    //Therefore this is disabled until fixed
+    // Promise.onPossiblyUnhandledRejection(this.onPromiseError.bind(this));
   }
 
   emitTurnError(error) {
