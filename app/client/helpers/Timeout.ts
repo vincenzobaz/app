@@ -1,5 +1,6 @@
 
 'use strict';
+import {ENVIRONMENT, RunConfig} from "./RunConfig";
 
 var nop = function() {};
 
@@ -25,17 +26,20 @@ Timeout.prototype = {
   },
 
   tick() {
-    this.timeLeft -= this.interval;
-    if (this.timeLeft <= 0) {
-      if (this.lastTick) {
-        this.onTick(0);
+    if (RunConfig.env == ENVIRONMENT.Production) {
+      this.timeLeft -= this.interval;
+      if (this.timeLeft <= 0) {
+        if (this.lastTick) {
+          this.onTick(0);
+        }
+        this.onTimeUp();
+        this.stop();
       }
-      this.onTimeUp();
-      this.stop();
+      else {
+        this.onTick(this.timeLeft);
+      }
     }
-    else {
-      this.onTick(this.timeLeft);
-    }
+
   }
 
 };

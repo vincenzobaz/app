@@ -75,7 +75,7 @@ export class ReminisceMap extends React.Component<ReminisceMapProps, {}> {
     if (this.props.marker) {
       this.configureMarker(this.marker, this.blueIcon, this.props.marker, true);
       if (this.props.onSelectedPosition) {
-        this.props.onSelectedPosition({latitude: this.props.latitude, longitude: this.props.longitude});
+        this.props.onSelectedPosition(new Marker(this.props.latitude, this.props.longitude));
       }
     } else {
       this.makeMarkerInvisible(this.marker);
@@ -132,7 +132,7 @@ export class ReminisceMap extends React.Component<ReminisceMapProps, {}> {
     this.marker.setOpacity(1);
     this.showPopup(this.marker, e.latlng).then(place => {
       if (this.props.onSelectedPosition) {
-        this.props.onSelectedPosition({latitude: e.latlng.lat, longitude: e.latlng.lng});
+        this.props.onSelectedPosition(new Marker(e.latlng.lat, e.latlng.lng));
 
       }
     });

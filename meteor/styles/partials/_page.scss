@@ -411,6 +411,8 @@
     // }
 
     .map {
+      height: 600px;
+      width: auto;
       img {
          max-width: none;
       }
@@ -1152,4 +1154,26 @@ $grey-border: #b8b8b8;
   @include geo($wrong-color);
 }
 
+.geo-tooltip {
+  position: relative;
+  display: inline-block;
+  
+  .tooltiptext {
+    width: 180px;
+    display: inline-block;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+
+    /* Position the tooltip */
+    position: absolute;
+    bottom: 42px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    z-index: 1;
+  }
+}
 

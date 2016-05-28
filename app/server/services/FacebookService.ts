@@ -1,6 +1,6 @@
 
-import { FriendRepository } from './repositories/FriendRepository'
-import { MeteorUser }       from './MeteorUser';
+import { FriendRepository } from './../repositories/FriendRepository'
+import { MeteorUser }       from './../MeteorUser';
 
 export interface FBFriend {
   id: string;
