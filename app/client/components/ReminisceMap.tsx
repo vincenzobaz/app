@@ -13,7 +13,7 @@ interface ReminisceMapProps {
   solutionMarker?: L.LatLng;
   userMarker?: L.LatLng;
 }
-
+const heidel = 'http://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}'; 
 
 const standard = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 export class ReminisceMap extends React.Component<ReminisceMapProps, {}> {
@@ -107,7 +107,7 @@ export class ReminisceMap extends React.Component<ReminisceMapProps, {}> {
     L.Icon.Default.imagePath = '/images';
     const position = L.latLng(this.props.latitude, this.props.longitude);
     this.map = L.map('mapid').setView(position, this.props.zoomLevel).on('click', this.onMapClick.bind(this));
-    this.createMapLayer(standard).addTo(this.map);
+    this.createMapLayer(heidel).addTo(this.map);
     this.marker = L.marker(new L.LatLng(0, 0)).addTo(this.map);
     this.solutionMarker = L.marker(new L.LatLng(0, 0)).addTo(this.map);
     this.userMarker = L.marker(new L.LatLng(0, 0)).addTo(this.map);
