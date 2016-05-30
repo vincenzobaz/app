@@ -26,5 +26,8 @@
   },
   "dependencies": {
     "react-router": "registry:npm/react-router#2.0.0+20160214194820"
+  },
+  "globalDependencies": {
+    "fbsdk": "registry:dt/fbsdk#0.0.0+20160316155526"
   }
 }
