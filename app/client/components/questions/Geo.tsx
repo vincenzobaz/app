@@ -255,6 +255,10 @@ export class Geo extends React.Component<GeoProps, GeoState> {
     if (this.state.markers.length > 0) {
       const marker = this.state.markers[0];
       this.props.onDone(new Location(marker.latitude, marker.longitude));
+      this.setState({
+        markers: [],
+        value: ''
+      });
     }
 
   }

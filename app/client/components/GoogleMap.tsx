@@ -153,7 +153,6 @@ export class GoogleMap extends React.Component<GoogleMapProps, GoogleMapState> {
 
     var callbackName = `gmap_cb_${randomStr(10)}`;
     window[callbackName] = this.showMap.bind(this);
-
     var params = {
       key: this.props.apiKey,
       callback: callbackName
@@ -161,7 +160,7 @@ export class GoogleMap extends React.Component<GoogleMapProps, GoogleMapState> {
 
     var query = encode(params);
     var script = document.createElement('script');
-    script.src = 'https://maps.googleapis.com/maps/api/js?sensor=false' + query;
+    script.src = 'https://maps.googleapis.com/maps/api/js?' + query;
     document.body.appendChild(script);
   }
   
