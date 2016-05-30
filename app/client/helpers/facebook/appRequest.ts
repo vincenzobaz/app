@@ -4,7 +4,7 @@ import {Lazy} from '../Lazy';
 interface FBAppRequestOptions {
   message: string;
   to?: string;
-  action_type?: string; // "send" | "askfor" | "turn"
+  action_type?: 'send' | 'askfor' | 'turn';
   object_id?: string;
   max_recipients?: number;
   data?: string;
@@ -21,8 +21,8 @@ const fbUi = new Lazy(() => <FBUI>Promise.promisify(FB.ui));
 
 const override = {
   method: 'apprequests',
-  app_id: 'TODO',
-  redirect_uri: '/request/accept'
+  // app_id: 'TODO',
+  // redirect_uri: '/request/accept'
 };
 
 function overrideParams(options: FBAppRequestOptions): RequestsDialogParams {

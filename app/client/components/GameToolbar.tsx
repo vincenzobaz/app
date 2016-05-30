@@ -40,10 +40,14 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
       max_recipients: 1
     });
 
-    p.then((req) => {
-      console.log(req);
-      // FacebookStore.storeRequest(req);
-    });
+    p
+      .then((req) => {
+        console.log(req);
+        // FacebookStore.storeRequest(req);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
   }
 
   onClickSettingsButton() {
