@@ -1,4 +1,6 @@
 
+import {Lazy} from '../Lazy';
+
 interface FBAppRequestOptions {
   message: string;
   to?: string;
@@ -15,7 +17,7 @@ interface FBAppRequestResponse {
 }
 
 type FBUI  = (FBAppRequestParams) => Promise<FBAppRequestResponse>
-const fbUi = <FBUI>Promise.promisify(FB.ui);
+const fbUi = new Lazy(() => <FBUI>Promise.promisify(FB.ui));
 
 const override = {
   method: 'apprequests',
@@ -32,6 +34,6 @@ function overrideParams(options: FBAppRequestOptions): RequestsDialogParams {
 }
 
 export function sendAppRequest(options: FBAppRequestOptions): Promise<FBAppRequestResponse> {
-  return fbUi(overrideParams(options));
+  return fbUi.value(overrideParams(options));
 }
 

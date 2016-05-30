@@ -100,13 +100,20 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
       <div>
         <Row>
           <div className="game-toolbar">
-            <Button className="request-button" onClick={this.onClickRequestButton.bind(this)}>
-              Play with a friend
-            </Button>
+            {this.renderRequestButton()}
+            {this.renderSettingsButton()}
             {this.renderModal()}
           </div>
         </Row>
       </div>
+    );
+  }
+
+  renderRequestButton() {
+    return (
+      <Button className="request-button" onClick={this.onClickRequestButton.bind(this)}>
+        Play with a friend
+      </Button>
     );
   }
 
