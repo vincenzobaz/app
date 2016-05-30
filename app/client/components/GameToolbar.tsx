@@ -1,24 +1,24 @@
 import {Row, Col, Button, Modal} from 'react-bootstrap';
 import {browserHistory}          from 'react-router';
 
+import {sendAppRequest}   from '../helpers/facebook/appRequest';
+
 import {Game}             from '../models/Game';
 import {Routes}           from '../../common/Routes';
 import {Friend}           from '../../common/models/Friend';
 import {Friends}          from '../../common/collections/Friends';
 import {GameStore}        from '../stores/GameStore';
+import {JoinRequestStore} from '../stores/JoinRequestStore';
 import {QuitGameModal}    from './modals/QuitGameModal';
 import {StartGameModal}   from './modals/StartGameModal';
 import {FriendsSearchbox} from './FriendsSearchbox';
 import {AccountSettings}  from './AccountSettings';
-
 
 interface GameToolbarProps {
   game: Game;
 }
 
 interface GameToolbarState {
-  friend: Friend;
-  showStartGameModal: boolean;
   showQuitGameModal: boolean;
   showAccountSettings: boolean;
 }
@@ -29,55 +29,27 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
     super(props);
 
     this.state = {
-      friend: null,
-      showStartGameModal: false,
       showQuitGameModal: false,
       showAccountSettings: false
     };
   }
 
-  onFriendSelect(friend) {
-    this.setState({
-      friend: friend,
-      showStartGameModal: true,
-      showQuitGameModal: false,
-      showAccountSettings: false
+  onClickRequestButton() {
+    const p = sendAppRequest({
+      message: 'Do you want to reminisce with me?',
+      max_recipients: 1
+    });
 
+    p.then((req) => {
+      console.log(req);
+      // FacebookStore.storeRequest(req);
     });
   }
 
-  onClickQuitGameButton() {
-
+  onClickSettingsButton() {
     this.setState({
-      friend: this.state.friend,
-      showStartGameModal: this.state.showStartGameModal,
       showQuitGameModal: this.state.showQuitGameModal,
       showAccountSettings: true
-    });
-
-  }
-
-  startGame(friend) {
-    GameStore.start(friend._id);
-  }
-
-  onStart() {
-    this.setState({
-      friend: this.state.friend,
-      showStartGameModal: false,
-      showQuitGameModal: false,
-      showAccountSettings: false
-    });
-
-    this.startGame(this.state.friend);
-  }
-
-  onAbortStart() {
-    this.setState({
-      showStartGameModal: false,
-      showQuitGameModal: false,
-      friend: null,
-      showAccountSettings: false
     });
   }
 
@@ -90,75 +62,60 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
 
   }
 
+  onHideAccountModal() {
+    this.setState({
+      showQuitGameModal: this.state.showQuitGameModal,
+      showAccountSettings: false
+    })
+  }
+
   renderModal() {
-    if (this.state.showStartGameModal && this.state.friend) {
+    if (this.state.showQuitGameModal && this.props.game) {
       return (
-          <StartGameModal
-              friend={this.state.friend}
-              onOk={this.onStart.bind(this)}
-              onCancel={this.onAbortStart.bind(this)} />
+        <QuitGameModal
+          show={this.state.showQuitGameModal && this.props.game != null}
+          game={this.props.game}
+          onQuit={this.onQuit.bind(this)}
+          onResume={this.onResume.bind(this)}
+          onRequestHide={(() => {})} />
       );
     }
 
-    if (this.state.showQuitGameModal && this.props.game) {
+    if (this.state.showAccountSettings) {
       return (
-          <QuitGameModal
-              game={this.props.game}
-              onQuit={this.onQuit.bind(this)}
-              onResume={this.onResume.bind(this)}
-              onRequestHide={(() => {})} />
+        <Modal show={this.state.showAccountSettings} onHide={this.onHideAccountModal.bind(this)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Account Settings</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <AccountSettings />
+          </Modal.Body>
+        </Modal>
       );
     }
   }
 
   render() {
-
     return (
-        <div>
-          <Modal show={this.state.showAccountSettings} onHide={this.onHide.bind(this)}>
-            <Modal.Header closeButton>
-              <Modal.Title>Account Settings</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <AccountSettings />
-            </Modal.Body>
-          </Modal>
-          <Row>
-            <div className="game-toolbar">
-              <Col sm={3} xsHidden className="start-game" >
-                Start new game with
-              </Col>
-              <Col xs={11} sm={8} className="no-left-padding">
-                <FriendsSearchbox onSelect={this.onFriendSelect.bind(this)} />
-
-              </Col>
-              <Col xs={1} className="no-left-padding">
-                {this.renderQuitGameButton()}
-              </Col>
-              {this.renderModal()}
-            </div>
-
-          </Row>
-
-        </div>
+      <div>
+        <Row>
+          <div className="game-toolbar">
+            <Button className="request-button" onClick={this.onClickRequestButton.bind(this)}>
+              Play with a friend
+            </Button>
+            {this.renderModal()}
+          </div>
+        </Row>
+      </div>
     );
   }
 
-  renderQuitGameButton() {
+  renderSettingsButton() {
     return (
-        <Button className="settings-button" onClick={this.onClickQuitGameButton.bind(this)}>
-          <i className='fa fa-cog fa-2x'></i>
-        </Button>
+      <Button className="settings-button" onClick={this.onClickSettingsButton.bind(this)}>
+        <i className='fa fa-cog fa-2x'></i>
+      </Button>
     );
-  }
-  
-  onHide() {
-    this.setState({
-      friend: this.state.friend,
-      showStartGameModal: this.state.showStartGameModal,
-      showQuitGameModal: this.state.showQuitGameModal,
-      showAccountSettings: false
-    })
   }
 
 }

@@ -38,10 +38,6 @@ export module GameStore {
     );
   }
 
-  export function start(friendId) {
-    return JoinRequestStore.send(friendId);
-  }
-
   export function startBotGame() {
     const bot: Friend = FriendStore.bot();
     return JoinRequestStore.send(bot._id);
