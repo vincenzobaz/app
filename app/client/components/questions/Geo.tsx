@@ -12,10 +12,11 @@ import {GeoAnswer} from "../../../common/models/questions/answers/GeoAnswer";
 import Loader from 'react-loader';
 import {Col} from 'react-bootstrap';
 import {GeoNameEntity} from "../../../common/models/GeoNameEntity";
-import GoogleMap from 'google-map-react'
+
 import {GeoMarker} from "./GeoMarker";
 import {Marker} from "../../../common/models/questions/geolocation/Marker";
-import {Map} from 'google.maps'
+// import {Map} from 'google.maps'
+import {GoogleMap} from "../GoogleMap";
 
 const theme = require('./GeoSuggestionBox.css');
 
@@ -49,11 +50,11 @@ interface GeoState {
   locationText?: string;
   zoom?: number;
   markers?: Model.Marker[];
-  map?: Map;
+  map?: google.maps.Map;
 }
 
 const selectedZoomlevel = 12;
-const fullyZoomedOut = 3;
+const fullyZoomedOut = 1;
 export class Geo extends React.Component<GeoProps, GeoState> {
   private userMarker: Model.Marker;
   private conf: Configuration;
@@ -89,9 +90,6 @@ export class Geo extends React.Component<GeoProps, GeoState> {
   }
 
   componentDidMount() {
-    // this.conf = getConfig('gmaps');
-    console.log("we mounted, ", this.conf);
-
   }
 
   loadSuggestions(place: string, countryCode?: string) {
@@ -148,7 +146,9 @@ export class Geo extends React.Component<GeoProps, GeoState> {
     this.setState({
       selectedSuggestion: entity,
       latitude: suggestion.latitude,
-      longitude: suggestion.longitude
+      longitude: suggestion.longitude,
+      zoom: selectedZoomlevel,
+      markers: [new Marker(suggestion.latitude, suggestion.longitude)]
     });
 
     this.getLocationText(entity.latitude, entity.longitude).then((text) => this.setState({locationText: text}));
@@ -164,7 +164,6 @@ export class Geo extends React.Component<GeoProps, GeoState> {
   }
 
   renderQuestions() {
-    console.log("we need to render stuff:", this.state.latitude);
     const {value, suggestions} = this.state;
 
     const inputProps = {
@@ -172,21 +171,9 @@ export class Geo extends React.Component<GeoProps, GeoState> {
       value,
       onChange: this.onChange.bind(this)
     };
-    const suggested = this.state.selectedSuggestion;
-    const marker = this.state.selectedSuggestion ? new L.LatLng(suggested.latitude, suggested.longitude) : null;
 
     const lat = this.state.latitude ? this.state.latitude : 0;
     const long = this.state.longitude ? this.state.longitude : 0;
-    const mapOptions = {
-      // minZoomOverride: true,
-      // minZoom: 1
-    };
-    console.log("lat lng rnder", lat, long);
-    const center = {lat: lat, lng: long};
-    const bootstrap = {
-      key: this.conf.apiKey,
-      language: 'en'
-    };
     return (
         <div className="question question-geo">
           <h4>{getQuestionTitleByType(this.props.type.toString()) }</h4>
@@ -207,28 +194,13 @@ export class Geo extends React.Component<GeoProps, GeoState> {
 
           <Col sm={12}>
             <div className="map">
-              <GoogleMap
-                  bootstrapURLKeys={bootstrap}
-                  center={center}
-                  zoom={this.state.zoom}
-                  onClick={this.onMapClick.bind(this)}
-                  yesIWantToUseGoogleMapApiInternals={true}
-                  options={mapOptions}
-                  onZoomAnimationEnd={this.onZoomEnded.bind(this)}
-                  onGoogleApiLoaded={({map, maps}) => {
-                  map.minZoom = 1;
-                  this.setState({
-                  map: map
-                  });
-                  }}
-               
-              >
-                {this.state.markers.map(m => {
-                  return <GeoMarker key={_.uniqueId()} lat={m.latitude} lng={m.longitude} color={m.color} text={this.state.locationText} visible={m.visible}/>
-                })}
-          
-              </GoogleMap>
-
+              <GoogleMap latitude={lat} longitude={long}
+                         zoom={this.state.zoom}
+                         width={"auto"} height={250}
+                         apiKey={this.conf.apiKey} 
+                         onClick={this.onMapClick.bind(this)}
+                         markers={this.state.markers}
+              />
             </div>
             <Button onClick={this.onDone.bind(this) }>Done</Button>
           </Col>
@@ -237,48 +209,34 @@ export class Geo extends React.Component<GeoProps, GeoState> {
   }
 
   renderAnswer() {
-    const marker = new L.LatLng(this.props.answer.data.latitude, this.props.answer.data.longitude);
+    const markers = [new Marker(this.props.answer.data.latitude, this.props.answer.data.longitude, "green")];
     const lat = this.state.latitude ? this.state.latitude : 0;
     const long = this.state.longitude ? this.state.longitude : 0;
-    if (this.props.correct) {
-      return (
-          <div className="question question-geo">
-            <h4>{getQuestionTitleByType(this.props.type.toString()) }</h4>
-            <div className="question-subject grid-100">
-              <Post post={this.props.subject}/>
-            </div>
-            <div className="grid-100 correct-geo">
-              <ReminisceMap
-                  longitude={long}
-                  latitude={lat}
-                  zoomLevel={this.state.zoom}
-                  solutionMarker={marker}
-              />
-            </div>
-          </div>
-      );
-    } else {
-      const userMarker = new L.LatLng(this.props.userAnswer.data.latitude, this.props.userAnswer.data.longitude);
-      return (
-          <div className="question question-geo">
-            <h4>{getQuestionTitleByType(this.props.type.toString()) }</h4>
-            <div className="question-subject grid-100">
-              <Post post={this.props.subject}/>
-            </div>
-            <div className="grid-100 wrong-geo">
-              <ReminisceMap
-                  longitude={long}
-                  latitude={lat}
-                  zoomLevel={fullyZoomedOut}
-                  solutionMarker={marker}
-                  userMarker={userMarker}
-              />
-            </div>
-          </div>
-      );
+    let styleName = "correct-geo";
+    if (!this.props.correct) {
+      markers.push(new Marker(this.props.userAnswer.data.latitude, this.props.userAnswer.data.longitude, "red"))
+      styleName = "wrong-geo";
     }
+    return (
+        <div className="question question-geo">
+          <h4>{getQuestionTitleByType(this.props.type.toString()) }</h4>
+          <Col sm={12}>
+            <Post post={this.props.subject}/>
+          </Col>
 
-
+          <Col sm={12}>
+            <div className={`map ${styleName}`}>
+              <GoogleMap latitude={lat} longitude={long}
+                         zoom={this.state.zoom}
+                         width={"auto"} height={250}
+                         apiKey={this.conf.apiKey}
+                         onClick={this.onMapClick.bind(this)}
+                         markers={markers}
+              />
+            </div>
+          </Col>
+        </div>
+    );
   }
 
   getLocationText(lat: number, lng: number) {
@@ -291,66 +249,37 @@ export class Geo extends React.Component<GeoProps, GeoState> {
           }
         }));
   }
-
-  onMarkerMove(position: Model.Marker): void {
-    this.userMarker = position;
-  }
+  
 
   onDone(e) {
-    this.props.onDone(new Location(this.userMarker.latitude, this.userMarker.longitude));
-  }
-  
-  onMapClick({event, x, y, lat, lng}) {
-    console.log("we have the current state", this.state);
-    let zoom = this.state.map.getZoom();
-    let center = {lat: this.state.map.getCenter().lat(), lng: this.state.map.getCenter().lng()};
-    const markers = this.state.markers;
-    if (markers.length == 0) {
-      markers.push(new Marker(lat, lng));
-    } else {
-      markers[0].latitude = lat;
-      markers[0].longitude = lng;
+    if (this.state.markers.length > 0) {
+      const marker = this.state.markers[0];
+      this.props.onDone(new Location(marker.latitude, marker.longitude));
     }
-    if (zoom < 3) {
-      zoom = 5;
-      center = {lat: lat, lng: lng};
-    } else {
-      zoom = this.state.zoom;
-    }
-    this.setState({
-      latitude: center.lat,
-      longitude: center.lng,
-      markers: markers,
-      zoom: zoom
-    });
-    console.log("zoom", this.state.zoom);
 
   }
-
-  creatMapOptions(maps) {
-    return {
-      minZoomOverride: true,
-      minZoom: 0
-    };
-  }
   
-  onZoomEnded() {
-    // if (this.state.map.getZoom() < 3) {
-    //   this.state.markers.forEach(m => m.visible = false);
-    // } else {
-    //   this.state.markers.forEach(m => m.visible = true);
-    //
-    // }
-    if (this.state.map.getZoom() != this.state.zoom) {
-      let center = {lat: this.state.map.getCenter().lat(), lng: this.state.map.getCenter().lng()};
+  onMapClick(lat: number, lng: number, zoom: number, center: google.maps.LatLng) {
+    //if the user hasn't answered the question yet we create or move the marker on the map
+    if (!this.props.userAnswer) {
+      const markers = this.state.markers;
+      if (markers.length == 0) {
+        markers.push(new Marker(lat, lng));
+      } else {
+        markers[0].latitude = lat;
+        markers[0].longitude = lng;
+      }
 
       this.setState({
-        latitude: center.lat,
-        longitude: center.lng,
-        zoom: this.state.map.getZoom()
+        latitude: center.lat(),
+        longitude: center.lng(),
+        markers: markers,
+        zoom: zoom
       });
     }
+  
 
   }
+
 }
 

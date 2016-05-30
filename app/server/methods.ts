@@ -135,7 +135,6 @@ export function setupMeteorMethods() {
     },
 
     'Geolocation.getLocationName'(position: Marker) {
-      console.log("we received the following position", position);
       let entity: GeoNameEntity;
       entity = GeoNameEntityCollection.findOne({
         loc: {
