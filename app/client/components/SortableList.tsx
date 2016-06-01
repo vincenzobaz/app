@@ -31,7 +31,7 @@ interface SortableListState {
   itemHeight?: number[];
   orderedOffset?: number[];
   orderedHeight?: number[];
-  itemComponents?: React.ReactHTMLElement[];
+  itemComponents?: React.ReactHTMLElement<any>[];
 }
 
 export class SortableList extends React.Component<SortableListProps, SortableListState> {
@@ -109,7 +109,7 @@ export class SortableList extends React.Component<SortableListProps, SortableLis
   };
 
   handleMouseDown = (pos, pressY, {pageY}): void => {
-    let topOffset = this.state.itemComponents.map((item: React.ReactHTMLElement) => {
+    let topOffset = this.state.itemComponents.map((item: React.ReactHTMLElement<any>) => {
       return $(item).offset().top;
     });
 
@@ -255,7 +255,7 @@ export class SortableList extends React.Component<SortableListProps, SortableLis
       return;
     }
     if (!this.state.itemComponents[index]) {
-      let items: React.ReactHTMLElement[] = this.state.itemComponents;
+      let items: React.ReactHTMLElement<any>[] = this.state.itemComponents;
       items[index] = itemComponent;
       this.setState({
         itemComponents: items,

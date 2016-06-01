@@ -3,6 +3,7 @@
  * Adapted from react-maps (https://github.com/matnel/react-maps/)
  * by Matti Nelimarkka (matti.nelimarkka@alumni.helsinki.fi)
  */
+/// <reference path="../../../typings/index.d.ts" />
 
 import {randomStr} from '../helpers/randomStr';
 import {encode} from "querystring";

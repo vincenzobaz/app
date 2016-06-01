@@ -4,7 +4,6 @@ import {getQuestionTitleByType} from "../../helpers/getQuestionTitleByType";
 import * as Model from "../../../common/models/questions/geolocation/Marker";
 import {Button} from "react-bootstrap";
 import {QuestionProps} from "./QuestionProps";
-import {ReminisceMap} from "../ReminisceMap";
 import Autosuggest from 'react-autosuggest';
 import * as _ from "lodash";
 import {Location} from "../../../common/models/questions/geolocation/Location";

@@ -1,30 +1,28 @@
 {
   "name": "reminisceme",
-  "ambientDependencies": {
-    "bluebird": "github:DefinitelyTyped/DefinitelyTyped/bluebird/bluebird.d.ts#dd328830dddffbe19e9addd7cf8532cbd3600816",
-    "classnames": "github:DefinitelyTyped/DefinitelyTyped/classnames/classnames.d.ts#dc9dabe74a5be62613b17a3605309783a12ff28a",
-    "cryptojs": "github:DefinitelyTyped/DefinitelyTyped/cryptojs/cryptojs.d.ts#b730a7309e947a59d2d192bf8fef60cf778a6480",
-    "jquery": "github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#dc9dabe74a5be62613b17a3605309783a12ff28a",
-    "leaflet": "registry:dt/leaflet#0.7.3+20160412142116",
-    "lodash": "github:DefinitelyTyped/DefinitelyTyped/lodash/lodash.d.ts#dc9dabe74a5be62613b17a3605309783a12ff28a",
-    "meteor": "github:DefinitelyTyped/DefinitelyTyped/meteor/meteor.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
-    "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#dc9dabe74a5be62613b17a3605309783a12ff28a",
+  "globalDependencies": {
+    "bluebird": "registry:dt/bluebird#2.0.0+20160319051630",
+    "classnames": "registry:dt/classnames#0.0.0+20160316155526",
+    "cryptojs": "registry:dt/cryptojs#3.1.2+20160317120654",
+    "jquery": "registry:dt/jquery#1.10.0+20160417213236",
+    "lodash": "registry:dt/lodash#3.10.0+20160330154726",
+    "meteor": "registry:dt/meteor#1.3.0+20160514174853",
+    "node": "registry:dt/node#6.0.0+20160524002506",
     "notifyjs": "registry:dt/notifyjs#1.2.8+20160317120654",
-    "react": "github:DefinitelyTyped/DefinitelyTyped/react/react.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
-    "react-addons-create-fragment": "github:DefinitelyTyped/DefinitelyTyped/react/react-addons-create-fragment.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
-    "react-addons-css-transition-group": "github:DefinitelyTyped/DefinitelyTyped/react/react-addons-css-transition-group.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
-    "react-addons-linked-state-mixin": "github:DefinitelyTyped/DefinitelyTyped/react/react-addons-linked-state-mixin.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
-    "react-addons-perf": "github:DefinitelyTyped/DefinitelyTyped/react/react-addons-perf.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
-    "react-addons-pure-render-mixin": "github:DefinitelyTyped/DefinitelyTyped/react/react-addons-pure-render-mixin.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
-    "react-addons-test-utils": "github:DefinitelyTyped/DefinitelyTyped/react/react-addons-test-utils.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
-    "react-addons-transition-group": "github:DefinitelyTyped/DefinitelyTyped/react/react-addons-transition-group.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
-    "react-addons-update": "github:DefinitelyTyped/DefinitelyTyped/react/react-addons-update.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
-    "react-bootstrap": "github:DefinitelyTyped/DefinitelyTyped/react-bootstrap/react-bootstrap.d.ts#5f3b413653e738d5d9bfd1575d075e5334b5e564",
-    "react-dom": "github:DefinitelyTyped/DefinitelyTyped/react/react-dom.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
-    "react-global": "github:DefinitelyTyped/DefinitelyTyped/react/react-global.d.ts#fe563dff3428bac1260d1794e2c2ecf8f097535a",
-    "react-mixin": "github:DefinitelyTyped/DefinitelyTyped/react-mixin/react-mixin.d.ts#dc9dabe74a5be62613b17a3605309783a12ff28a"
-  },
-  "dependencies": {
-    "react-router": "registry:npm/react-router#2.0.0+20160214194820"
+    "react": "registry:dt/react#0.14.0+20160526134601",
+    "react-addons-create-fragment": "registry:dt/react-addons-create-fragment#0.14.0+20160316155526",
+    "react-addons-css-transition-group": "registry:dt/react-addons-css-transition-group#0.14.0+20160316155526",
+    "react-addons-linked-state-mixin": "registry:dt/react-addons-linked-state-mixin#0.14.0+20160316155526",
+    "react-addons-perf": "registry:dt/react-addons-perf#0.14.0+20160316155526",
+    "react-addons-pure-render-mixin": "registry:dt/react-addons-pure-render-mixin#0.14.0+20160316155526",
+    "react-addons-test-utils": "registry:dt/react-addons-test-utils#0.14.0+20160427035638",
+    "react-addons-transition-group": "registry:dt/react-addons-transition-group#0.14.0+20160417134118",
+    "react-addons-update": "registry:dt/react-addons-update#0.14.0+20160316155526",
+    "react-bootstrap": "registry:dt/react-bootstrap#0.0.0+20160526141239",
+    "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
+    "react-global": "registry:dt/react-global#0.14.0+20160316155526",
+    "react-mixin": "registry:dt/react-mixin#2.0.2+20160316155526",
+    "react-router": "registry:dt/react-router#2.0.0+20160501155536",
+    "react-router/history": "registry:dt/react-router/history#2.0.0+20160316155526"
   }
 }
