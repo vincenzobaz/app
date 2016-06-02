@@ -15,7 +15,7 @@ export class StartGameModal extends React.Component<StartGameModalProps, {}> {
     const friend = this.props.friend;
 
     return (
-        <Modal show={true} onHide={this.onCancel}>
+        <Modal enforceFocus={false} show={true} onHide={this.onCancel}>
           <Modal.Header>
             <Modal.Title>Do you want to play with {friend.name}?</Modal.Title>
           </Modal.Header>

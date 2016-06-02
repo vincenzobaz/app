@@ -87,27 +87,24 @@ export class TimelineQuestion extends Question {
     return this.answer;
   }
 
-  static timelineFromRaw(data: RawTimelineQuestion) {
-    let subject: Subject = SubjectFactory.fromRaw(data.subject);
-    if (!data._id) {
-      data._id = new Mongo.ObjectID();
-    }
+  static timelineFromRaw(raw: RawTimelineQuestion) {
+    let subject: Subject = SubjectFactory.fromRaw(raw.subject);
     return new TimelineQuestion(
-        data._id,
+        raw._id? raw._id: new Mongo.ObjectID(),
         subject,
-        data.min,
-        data.max,
-        data.initialDate || data['default'],
-        data.unit,
-        data.step,
-        data.threshold,
-        data.answer,
-        data.userAnswer,
-        data.type,
-        data.kind,
-        data.dates,
-        data.before,
-        data.after
+        raw.min,
+        raw.max,
+        raw.initialDate || raw['default'],
+        raw.unit,
+        raw.step,
+        raw.threshold,
+        raw.answer,
+        raw.userAnswer,
+        raw.type,
+        raw.kind,
+        raw.dates,
+        raw.before,
+        raw.after
     );
   };
 }

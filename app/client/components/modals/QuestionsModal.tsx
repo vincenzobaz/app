@@ -18,6 +18,7 @@ import {QuestionTimer} from "../../helpers/QuestionTimer";
 import {QuestionFactory} from "../../../common/models/questions/QuestionFactory";
 import {Button} from 'react-bootstrap';
 import {RunConfig, ENVIRONMENT} from "../../helpers/RunConfig";
+import {StateCollector} from "../../StateCollector";
 // import {Timer} from "timer-machine";
 
 
@@ -82,7 +83,7 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
     if (this.state.step >= this.steps.length) {
       throw new Error(`Invalid step ${this.state.step}. There are only ${this.steps.length} steps.`);
     }
-
+      StateCollector.setQuestion(this.props.questions[this.state.step]);
     return this.steps[this.state.step];
   }
 
@@ -210,7 +211,7 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
     //true indicated the modal can be dismissed if clicked in the background
     const backdrop = RunConfig.env == ENVIRONMENT.Production? "static" :true;
     return (
-        <Modal show={this.state.showModal} onHide={onHide} backdrop={backdrop}>
+        <Modal enforceFocus={false} show={this.state.showModal} onHide={onHide} backdrop={backdrop}>
           <Modal.Header>
             <Modal.Title>{this.renderTitle()}</Modal.Title>
           </Modal.Header>

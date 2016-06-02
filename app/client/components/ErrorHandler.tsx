@@ -86,7 +86,7 @@ export class ErrorHandler extends React.Component<ErrorHandlerProps, ErrorHandle
       return <noscript />;
     }
 
-    return <Modal onRequestHide={this.dismiss} error={this.state.error}/>;
+    return <Modal enforceFocus={false} onRequestHide={this.dismiss} error={this.state.error}/>;
   }
 
 }

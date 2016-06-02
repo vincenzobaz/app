@@ -35,20 +35,20 @@ export class MultipleChoiceQuestion extends Question {
     return this.answer;
   }
 
-  static multipleChoiceFromRaw(data: RawMultipleChoiceQuestion) {
+  static multipleChoiceFromRaw(raw: RawMultipleChoiceQuestion) {
 
-    let choices: Choice[] = _.map(data.choices, c =>
+    let choices: Choice[] = _.map(raw.choices, c =>
         Choice.fromRaw(c)
     );
    
-    let subject: Subject = SubjectFactory.fromRaw(data.subject);
+    let subject: Subject = SubjectFactory.fromRaw(raw.subject);
     return new MultipleChoiceQuestion(
-        data._id,
+        raw._id? raw._id: new Mongo.ObjectID(),
         subject,
-        data.type,
-        data.kind,
-        data.answer,
-        data.userAnswer,
+        raw.type,
+        raw.kind,
+        raw.answer,
+        raw.userAnswer,
         choices
     );
   }

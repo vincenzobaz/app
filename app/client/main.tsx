@@ -8,6 +8,8 @@ import {NotificationStore} from './stores/NotificationStore';
 import {ErrorHandler}      from './components/ErrorHandler';
 import {ModalHandler}      from './components/ModalHandler';
 import {Main}              from './handlers/Main';
+import {Feedback} from "../common/models/Feedback";
+import {StateCollector} from "./StateCollector";
 
 const $$ = document.getElementById.bind(document);
 
@@ -16,7 +18,27 @@ class App {
   boot(): void {
     ErrorStore.register();
     this.subscribe();
-
+      $['feedback']({
+          ajaxURL: 'http://test.url.com/feedback',
+          html2canvasURL: 'js/html2canvas.js',
+          onFeedbackSend: (feedback: Feedback, onSuccess: Function, onFailure: Function) => {
+          console.log(feedback);
+              feedback.userId = Meteor.userId();
+              let {game, tile, question} = StateCollector.getState();
+              feedback.game = game;
+              feedback.tile = tile;
+              feedback.question = question;
+              feedback.creationDate = new Date();
+              Meteor.call('SendFeedback', feedback, (error: Meteor.Error, success) => {
+                  if (!error) {
+                      onSuccess();
+                  } else {
+                      onFailure();
+                  }
+                  
+              })
+      }
+      });
     if (this.isLoggedIn()) {
       this.enableNotifications();
     }

@@ -3,6 +3,7 @@
 
 import {createTiles} from '../helpers/createTiles';
 import {Game} from "../models/Game";
+import {StateCollector} from "../StateCollector";
 
 interface BoardProps {
   game: Game;
@@ -20,6 +21,7 @@ export class Board extends React.Component<BoardProps,{}>{
   }
 
   renderTiles() {
+      StateCollector.setGame(this.props.game);
     return createTiles(this.props.game);
   }
 

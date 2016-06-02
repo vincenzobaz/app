@@ -71,7 +71,7 @@ export class OrderQuestion extends Question {
   static orderQustionFromRaw(raw: RawOrderQuestion) {
     let items = raw.items || OrderQuestion.convertChoices(raw.choices);
     return new OrderQuestion(
-        raw._id,
+        raw._id? raw._id: new Mongo.ObjectID(),
         raw.type,
         raw.kind,
         raw.answer,

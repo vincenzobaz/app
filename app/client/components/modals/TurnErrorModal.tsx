@@ -11,7 +11,7 @@ export class TurnErrorModal extends React.Component<TurnErrorModalProps, {}> {
     const lastPStyle = {marginBottom: 0};
 
     return (
-        <Modal backdrop={true} animation={true} onHide={onRequestHide}>
+        <Modal enforceFocus={false} backdrop={true} animation={true} onHide={onRequestHide}>
           <Modal.Header>
             <span className='close' role='button' data-dismiss='modal' aria-hidden='true' onClick={onRequestHide}>
               <i className='icon-remove-sign icon-2x'></i>

@@ -42,7 +42,7 @@ export class ModalHandler extends React.Component<ModalHandlerProps, ModalHanlde
       const Modal = modal.element;
       const props = modal.props;
       return (
-          <Modal  {...props}/>
+          <Modal enforceFocus={false}  {...props}/>
       );
     } else {
       return <noscript/>;

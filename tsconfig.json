@@ -11,8 +11,6 @@
   },
   "exclude": [
     "node_modules",
-    "meteor_core",
-    "typings/browser",
-    "typings/browser.d.ts"
+    "meteor"
   ]
 }

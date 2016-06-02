@@ -115,7 +115,7 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
 
     return (
         <div>
-          <Modal show={this.state.showAccountSettings} onHide={this.onHide.bind(this)}>
+          <Modal enforceFocus={false}  show={this.state.showAccountSettings} onHide={this.onHide.bind(this)}>
             <Modal.Header closeButton>
               <Modal.Title>Account Settings</Modal.Title>
             </Modal.Header>

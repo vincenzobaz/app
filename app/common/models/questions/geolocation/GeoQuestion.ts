@@ -44,7 +44,7 @@ export class GeoQuestion extends Question {
   static geoQuestionFromRaw(raw: RawGeoQuestion) {
     let subject = SubjectFactory.fromRaw(raw.subject);
     return new GeoQuestion(
-        raw._id, 
+        raw._id? raw._id: new Mongo.ObjectID(), 
         subject,
         raw.type,
         raw.kind,
