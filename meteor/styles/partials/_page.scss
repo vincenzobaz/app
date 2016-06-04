@@ -1,4 +1,3 @@
-
 // Page elements
 
 .dashboard-main {
@@ -52,39 +51,38 @@
 .board {
 
   margin: $baselineheight*2 0;
-/*   border: 1px dotted $lightneutralcolor; */
-
+  /*   border: 1px dotted $lightneutralcolor; */
 
   .cell {
-      position: relative;
+    position: relative;
     text-align: center;
 
-/*     min-height: $baselineheight*7; */
+    /*     min-height: $baselineheight*7; */
     padding: $baselineheight 0;
     float: left;
     width: 33%;
-/*     vertical-align: middle; */
+    /*     vertical-align: middle; */
     @include box-sizing(border-box);
 
     a {
-        color: $tertiarycolor;
-        display: block;
+      color: $tertiarycolor;
+      display: block;
     }
 
     a:hover {
-        color: darken($tertiarycolor, 10);
-        text-decoration: none;
+      color: darken($tertiarycolor, 10);
+      text-decoration: none;
     }
 
     // Icons
     i {
-        position: absolute;
-        z-index: 2;
+      position: absolute;
+      z-index: 2;
 
-        top: 42%;
-        left: 42%;
-        width: 32px;
-        height: 32px;
+      top: 42%;
+      left: 42%;
+      width: 32px;
+      height: 32px;
     }
 
     // &.geo i, &.globe i {
@@ -112,10 +110,10 @@
     }
 
     &.opponent {
-        img {
-            background: transparent url("") center center no-repeat;
-            background-size: 76px 76px;
-        }
+      img {
+        background: transparent url("") center center no-repeat;
+        background-size: 76px 76px;
+      }
     }
 
     &.answered, &.disabled {
@@ -140,11 +138,11 @@
     }
 
     &.win-me {
-      background: lighten(rgba(181,14,17,.1), 20%);
+      background: lighten(rgba(181, 14, 17, .1), 20%);
     }
 
     &.win-opponent {
-      background: lighten(rgba(23,90,130,.1), 20%);
+      background: lighten(rgba(23, 90, 130, .1), 20%);
     }
   }
 
@@ -166,30 +164,29 @@
 }
 
 .modal form {
-    @include zero;
+  @include zero;
 }
 
 .answers {
   @include zero;
 
   list-style: none;
-/*   margin: 0 $gutterwidth; */
+  /*   margin: 0 $gutterwidth; */
 
   li {
-    margin: 0 0  $baselineheight/2 0;
+    margin: 0 0 $baselineheight/2 0;
 
     .btn {
-        width: 100%;
+      width: 100%;
 
     }
   }
 
-/*
-  .modal-footer i {
-    vertical-align: middle;
-  }
-*/
-
+  /*
+    .modal-footer i {
+      vertical-align: middle;
+    }
+  */
 
 }
 
@@ -200,15 +197,14 @@
   }
 
   .modal-footer {
-/*     text-align : left; */
+    /*     text-align : left; */
 
-/*
-    .progress {
-
-    }
-*/
+    /*
+        .progress {
+    
+        }
+    */
   }
-
 
   .modal-header {
     background: $lightneutralcolor;
@@ -229,7 +225,6 @@
 
 }
 
-
 .post-tagged {
   .post-tagged-by {
     span {
@@ -244,7 +239,7 @@
   .picture-caption {
     font-style: italic;
     color: #666;
-    margin-bottom: 15px; 
+    margin-bottom: 15px;
   }
 
   figure {
@@ -256,11 +251,11 @@
   }
 
   .zoomable img {
-      cursor: move;
-      max-height: 350px;
-      &.zoomImg {
-        max-height: none;
-      }
+    cursor: move;
+    max-height: 350px;
+    &.zoomImg {
+      max-height: none;
+    }
   }
 
 }
@@ -276,98 +271,93 @@
 
 .question-reorder {
 
-    .btn {
-        width: 100%;
+  .btn {
+    width: 100%;
 
+  }
+
+  ul.sortable {
+
+    min-height: 188px; /* 4 items */
+
+    li {
+      cursor: ns-resize;
+      padding: $buttonpadding;
+      margin-bottom: 10px;
+      list-style: none;
+      @include font-size($buttonfontsize);
+      line-height: $baselineheight;
+      // color : $white;
+      text-align: center;
+      vertical-align: middle;
+      // background-color : $secondarycolor;
+
+      border: $buttonborderwidth $buttonborderstyle $secondarycolor;
+      border-radius: $buttonborderradius;
+
+      &.item-success {
+        background: $tertiarycolor;
+      }
+      &.item-error {
+        background: $primarycolor;
+      }
+
+      &.sortable-ghost {
+        opacity: 0;
+      }
+
+      .post-page img {
+        height: 50px;
+        margin-right: 10px;
+        max-width: 100px;
+      }
+
+      .post-picture img, .post-video img, .post-link img, .post-text img {
+        height: 100px;
+        max-width: 100px;
+      }
+
+      span {
+        line-height: 50px;
+      }
     }
-
-    ul.sortable  {
-
-        min-height: 188px; /* 4 items */
-
-        li {
-            cursor: ns-resize;
-            padding : $buttonpadding;
-            margin-bottom: 10px;
-            list-style: none;
-            @include font-size($buttonfontsize);
-            line-height : $baselineheight;
-            // color : $white;
-            text-align : center;
-            vertical-align : middle;
-            // background-color : $secondarycolor;
-
-            border : $buttonborderwidth $buttonborderstyle $secondarycolor;
-            border-radius : $buttonborderradius;
-
-            &.item-success {
-                background: $tertiarycolor;
-            }
-            &.item-error {
-                background: $primarycolor;
-            }
-
-            &.sortable-ghost {
-              opacity: 0;
-            }
-
-            .post-page img {
-                height: 50px;
-                margin-right: 10px;
-                max-width: 100px;
-            }
-
-            .post-picture img, .post-video img, .post-link img, .post-text img {
-              height: 100px;
-              max-width: 100px;
-            }
-
-            span {
-              line-height: 50px;
-            }
-        }
-    }
-
+  }
 
 }
 
-
 .avatar-answers {
 
-    @include clearfix;
+  @include clearfix;
 
-    li {
-      float: left;
-      width: 45%;
-      margin-right: 5%;
-      clear: left;
+  li {
+    float: left;
+    width: 45%;
+    margin-right: 5%;
+    clear: left;
 
+    button {
+      @include font-size(14);
+      @include text-overflow;
 
-      button {
-        @include font-size(14);
-        @include text-overflow;
+      text-align: left;
+      display: block;
 
-        text-align: left;
-        display: block;
-
-        .media-object {
-          display: inline;
-          margin-right: $gutterwidth/4;
-          width: 40px;
-          height: 40px;
-        }
-
+      .media-object {
+        display: inline;
+        margin-right: $gutterwidth/4;
+        width: 40px;
+        height: 40px;
       }
-
-      &:nth-child(even) {
-        margin-right: 0;
-        margin-left: 5%;
-        clear: right;
-      }
-
 
     }
 
+    &:nth-child(even) {
+      margin-right: 0;
+      margin-left: 5%;
+      clear: right;
+    }
+
+  }
 
 }
 
@@ -404,24 +394,24 @@
 
 .question-geo {
 
-    // iframe {
-    //   display: block;
-    //   border: $gutterwidth/4 solid $lightneutralcolor;
-    //   margin: 0 auto $baselineheight auto;
-    // }
+  // iframe {
+  //   display: block;
+  //   border: $gutterwidth/4 solid $lightneutralcolor;
+  //   margin: 0 auto $baselineheight auto;
+  // }
 
-    .map {
-      height: auto;
-      width: auto;
-      img {
-         max-width: none;
-      }
+  .map {
+    height: auto;
+    width: auto;
+    img {
+      max-width: none;
     }
+  }
 
-    .btn {
-        width: 100%;
-        margin-top: $baselineheight/2;
-    }
+  .btn {
+    width: 100%;
+    margin-top: $baselineheight/2;
+  }
 
 }
 
@@ -464,34 +454,34 @@
 
 .question-time {
 
-    text-align: center;
+  text-align: center;
 
-    input[type="range"] {
-      @include reverseX();
+  input[type="range"] {
+    @include reverseX();
+  }
+
+  .question-input {
+    input {
+      margin-bottom: 15px;
+    }
+  }
+
+  .post-page {
+    img {
+      height: 100px;
+      margin-right: 10px;
+      max-width: 200px;
     }
 
-    .question-input {
-      input {
-        margin-bottom: 15px;
-      }
+    span {
+      display: block;
+      margin-top: 20px;
     }
+  }
 
-    .post-page {
-      img {
-        height:       100px;
-        margin-right: 10px;
-        max-width:    200px;
-      }
-
-      span {
-        display: block;
-        margin-top: 20px;
-      }
-    }
-
-    .btn {
-      width: 100%;
-    }
+  .btn {
+    width: 100%;
+  }
 }
 
 .question-done {
@@ -511,16 +501,15 @@
   }
 }
 
-
 .timer {
-    text-align: left;
-    span {
-        width: 80px;
-        height: 8px;
-        display: inline-block;
-        margin-left: 9px;
-        background: transparent url(../images/timer.png) left center no-repeat;
-    }
+  text-align: left;
+  span {
+    width: 80px;
+    height: 8px;
+    display: inline-block;
+    margin-left: 9px;
+    background: transparent url(../images/timer.png) left center no-repeat;
+  }
 }
 
 .players {
@@ -546,10 +535,10 @@
   }
 
   .player {
-    padding: 0 0 $baselineheight*2  0;
+    padding: 0 0 $baselineheight*2 0;
 
     &.turn {
-      background: transparent url(../images/arr-red.png) 5%  80px  no-repeat;
+      background: transparent url(../images/arr-red.png) 5% 80px no-repeat;
     }
 
     .avatar {
@@ -562,12 +551,12 @@
     .media-body {
       text-align: right;
       h4 {
-        border-top-color:  $secondarycolor;
+        border-top-color: $secondarycolor;
 
-          span {
-            float: left;
-            color: $secondarycolor;
-          }
+        span {
+          float: left;
+          color: $secondarycolor;
+        }
 
       }
 
@@ -579,85 +568,83 @@
   }
 }
 
-
 .notifications {
-    margin: $baselineheight*2 0 0 0;
+  margin: $baselineheight*2 0 0 0;
 
-    .well {
-      padding: 14px 19px 0px 19px !important;
-    }
+  .well {
+    padding: 14px 19px 0px 19px !important;
+  }
 
-    h4 {
-      text-align: center;
-      text-transform: uppercase;
-      margin-top: 0px;
-    }
+  h4 {
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 0px;
+  }
 }
 
 ul.join-requests, ul.games {
+  @include zero;
+  list-style: none;
+
+  max-height: (60px + 25px) * 4;
+  overflow: auto;
+
+  h5 {
     @include zero;
-    list-style: none;
+  }
 
-    max-height: (60px + 25px) * 4;
-    overflow: auto;
+  li {
+    margin: 0;
+    padding: 10px 0 10px 0;
+    border-top: 1px dotted $neutralcolor;
+  }
 
-    h5 {
-        @include zero;
+  .waiting-actions {
+    margin-top: 5px;
+
+    small a {
+      color: $primarycolor;
     }
+  }
 
-    li {
-      margin:  0;
-      padding: 10px 0 10px 0;
-      border-top: 1px dotted $neutralcolor;
+  .waiting {
+    .pull-left {
+      margin-top: 4px;
     }
+  }
 
-    .waiting-actions {
-      margin-top: 5px;
+  small {
+    text-transform: uppercase;
+  }
 
-      small a {
-        color: $primarycolor;
-      }
-    }
+  b {
+    color: $secondarycolor;
+  }
 
-    .waiting {
-      .pull-left {
-        margin-top: 4px;
-      }
-    }
-
-    small {
-      text-transform: uppercase;
-    }
-
-    b {
-        color: $secondarycolor;
-    }
-
-    b.player {
-        color: $primarycolor;
-    }
+  b.player {
+    color: $primarycolor;
+  }
 
 }
 
 .friends {
+  @include zero;
+
+  h5 {
     @include zero;
+  }
 
-    h5 {
-        @include zero;
-    }
+  li {
 
-    li {
+    margin: $baselineheight/2 0 0 0;
+    padding: $baselineheight/2 0 0 0;
+    border-top: 1px dotted $neutralcolor;
+  }
 
-      margin: $baselineheight/2  0 0 0;
-      padding: $baselineheight/2 0 0 0;
-      border-top: 1px dotted $neutralcolor;
-    }
-
-    li:first-child {
-      padding-top: 0;
-      border-top: none;
-    }
-
+  li:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
 
 }
 
@@ -735,7 +722,7 @@ ul.join-requests, ul.games {
 
     .navbar > .container .navbar-brand,
     .navbar > .container-fluid .navbar-brand {
-        margin-left: 0;
+      margin-left: 0;
     }
   }
 
@@ -842,11 +829,11 @@ $grey-border: #b8b8b8;
 
 .disclaimer {
   margin-top: 20px;
-}  
+}
 
 .facebook-login {
   margin-top: 20px;
-  max-width: 300px;  
+  max-width: 300px;
 }
 
 .account-settings {
@@ -865,7 +852,7 @@ $grey-border: #b8b8b8;
   width: 100%;
 }
 
-.no-left-padding{
+.no-left-padding {
   padding-left: 0;
 }
 
@@ -873,7 +860,6 @@ $grey-border: #b8b8b8;
   align-content: right;
   height: 40px;
 }
-
 
 .copy {
 
@@ -885,32 +871,32 @@ $grey-border: #b8b8b8;
 }
 
 .connect-facebook {
-    text-align: center;
+  text-align: center;
 
-    i {
-        color: $secondarycolor;
-        vertical-align: middle;
-    }
+  i {
+    color: $secondarycolor;
+    vertical-align: middle;
+  }
 }
 
 .call-to-action {
-    text-align: center;
-    .btn {
-      font-size: 1.6em;
-    }
+  text-align: center;
+  .btn {
+    font-size: 1.6em;
+  }
 }
 
 .social-icon {
 
-    color: $midneutralcolor;
+  color: $midneutralcolor;
 
-    &.social-icon-connected {
-        i {
-            color: $secondarycolor;
-        }
+  &.social-icon-connected {
+    i {
+      color: $secondarycolor;
     }
+  }
 
-    text-align: center;
+  text-align: center;
 
 }
 
@@ -988,6 +974,7 @@ $grey-border: #b8b8b8;
   visibility: visible;
 
 }
+
 .demo8-item-static {
   @extend .demo8-item-common;
   visibility: visible;
@@ -1133,12 +1120,14 @@ $grey-border: #b8b8b8;
   fill: $secondarycolor;
 }
 
-#mapid { height: 300px; }
+#mapid {
+  height: 300px;
+}
 
 .location-suggestion {
- .admin {
-   color: darkgray;
- }
+  .admin {
+    color: darkgray;
+  }
 }
 
 @mixin geo($color) {
@@ -1157,7 +1146,7 @@ $grey-border: #b8b8b8;
 .geo-tooltip {
   position: relative;
   display: inline-block;
-  
+
   .tooltiptext {
     width: 180px;
     display: inline-block;
@@ -1175,5 +1164,65 @@ $grey-border: #b8b8b8;
 
     z-index: 1;
   }
+}
+
+.bugboard-button {
+  width: 100%;
+  justify-content: center;
+}
+
+.screenshot-icon {
+  height: 20px;
+}
+
+.feedback-note {
+  text-overflow: ellipsis;
+  max-width: 200px;
+  //display: block;
+  overflow: hidden;
+  white-space: nowrap;
+
+  :hover {
+    color: $secondarycolor;
+  }
+
+}
+
+@mixin feedback-status($color) {
+  @include button-variant(#000000, $color, $grey-border);
+  width: 100px;
+}
+
+.feedback-status-new {
+  @include feedback-status(#ffaca5);
+
+}
+
+.feedback-status-confirmed {
+  @include feedback-status(#b2e9ff);
+}
+
+.feedback-status-inprogress {
+  @include feedback-status(#fffeb3);
+
+}
+
+.feedback-status-done {
+  @include feedback-status($correct-color);
+
+}
+
+.feedback-status-rejected {
+  @include feedback-status(#ffaec4);
+
+}
+
+.feedback-status-all {
+  @include feedback-status(#ffffff);
+
+}
+
+.feedback-menu-buttons {
+  margin-bottom: 30px;
 }
 

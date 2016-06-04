@@ -7,6 +7,29 @@ export interface FBFriend {
   name: string;
 }
 
+export type Role = "administrators" | "developers" | "testers"
+
+export const ROLE = {
+    Admin: "administrators" as Role,
+    Developer: "developers" as Role,
+    Tester: "testers" as Role
+};
+
+interface RolesData {
+    app_id: string;
+    user: string;
+    role: string;
+}
+
+interface Paging {
+    cursors: Cursor;
+}
+
+interface Cursor {
+    beofre: string;
+    after: string;
+}
+
 const DEBUG = false;
 const debug = DEBUG ? (...args) => console.log.apply(console, args) : () => {};
 
@@ -17,7 +40,7 @@ export class _FacebookService {
 
   private appAccessToken: string;
 
-  private static API_VERSION = 'v2.3';
+  private static API_VERSION = 'v2.6';
   private static API_URL     = 'https://graph.facebook.com/';
 
   public userGet(user: MeteorUser, url, options = {}) {
@@ -184,8 +207,24 @@ export class _FacebookService {
 
     return params;
   }
+    
+    public isDeveloper(user: MeteorUser): boolean {
+        if (user == null) {
+            throw new Meteor.Error('500', 'You must specify the current user');
+        }
+        const fbId: string = user.services.facebook.id;
+        const appConfig = this.getAppConfig();
 
+        const params = {
+            access_token: this.fetchAppAccessToken()
+        };
+        const result: {data: RolesData[], paging: Paging} = this.get(`/${appConfig.appId}/roles`, params);
+        
+        const userRole: RolesData = result.data.find((u: RolesData) => u.user == fbId);
+        return userRole != null && userRole.role == (ROLE.Admin || ROLE.Developer);
+    }
 }
+
 
 export const FacebookService = new _FacebookService();
 

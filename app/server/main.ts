@@ -15,7 +15,7 @@ import {GeoNameEntityCollection} from "./collections/GeoNameEntityCollection";
 
 Meteor.startup(() => {
     setupServices();
-
+    
     publishCollections();
     setupMeteorMethods();
 

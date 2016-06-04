@@ -4,6 +4,8 @@ import { GameBoards }    from "./collections/GameBoards";
 import { JoinRequests }  from "./collections/JoinRequests";
 import { Friends }       from "../common/collections/Friends";
 import { Notifications } from "../common/collections/Notifications";
+import {FeedBackCollection} from "../common/collections/FeedbackCollection";
+import {FacebookService} from "./services/FacebookService";
 
 const LOG_PUBLISH = process.env.NODE_ENV === 'development';
 
@@ -51,6 +53,17 @@ export function publishCollections() {
           userId: this.userId,
           shown: false
         });
+    });
+    
+    Meteor.publish('feedback', function() {
+        let user = Meteor.users.findOne(this.userId);
+        let isDeveloper = FacebookService.isDeveloper(user)
+        if(!isDeveloper) {
+            throw new Meteor.Error("User must be a developer or admin to access this collection");
+        }
+        LOG_PUBLISH && console.log(`Publishing feedback for user ${this.userId}... as he is a developer ${isDeveloper}`);
+        return FeedBackCollection.find({});
+
     });
 
 }

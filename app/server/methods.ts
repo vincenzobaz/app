@@ -12,7 +12,7 @@ import {GeoNameEntity} from '../common/models/GeoNameEntity';
 import {GeoNameEntityCollection} from './collections/GeoNameEntityCollection';
 import {Admin1CodeCollection} from './collections/Admin1CodeCollection';
 import {Feedback} from "../common/models/Feedback";
-import {FeedBackCollection} from "./collections/FeedbackCollection";
+import {FeedBackCollection} from "../common/collections/FeedbackCollection";
 var Future = Npm.require('fibers/future');
 
 export function setupMeteorMethods() {
