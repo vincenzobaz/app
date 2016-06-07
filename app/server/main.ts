@@ -37,13 +37,12 @@ Accounts.onLogin(attempt => {
     }
 
     const user = attempt.user;
+    if (user.services && user.services.facebook) {
+      Server.fetchData(user.services.facebook.id);
+      const fbFriends = FacebookService.getFriends(user);
+      FriendRepository.updateFriends(user._id, fbFriends);
+    }
 
-    Server.fetchData(user._id);
-
-    console.log(`Fetching friends for user ${user._id}...`);
-
-    const fbFriends = FacebookService.getFriends(user);
-    FriendRepository.updateFriends(user._id, fbFriends);
     FriendRepository.addBot(user._id, BotService.botAsFriend());
 });
 

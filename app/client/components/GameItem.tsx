@@ -20,7 +20,6 @@ export class GameItem extends React.Component<GameItemProps, {}> {
     const opponentName     = opponent != null ? opponent.name      : 'Loading...';
     const avatarUrl        = opponent != null ? opponent.avatarUrl : '';
     const classNames       = this.getClassNames();
-
     return (
       <li className={classNames.waiting}>
         <div className='media'>

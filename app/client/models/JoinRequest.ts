@@ -21,7 +21,7 @@ export class JoinRequest {
 
 
   get from(): Friend {
-    return Friends.findOne({userId: this.fromId});
+    return Friends.findOne({facebookId: this.fromId});
   }
 
   getOpponent() {

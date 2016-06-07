@@ -15,8 +15,8 @@ import { GameStore }    from '../stores/GameStore';
 import { GAME_STATUS }  from '../../common/models/GameStatus';
 
 import { getAppState, AppState } from '../appState';
+import {FacebookService} from "../../server/services/FacebookService";
 
-const isCurrent = (g: Game) => !g.hasEnded && !g.hasFailed;
 
 interface DashboardParams {
   gameId?: string;
@@ -46,9 +46,7 @@ export class Dashboard extends React.Component<DashboardProps, {}> {
 
     const optGameId = (gameId == null) ? new None() : new Some(gameId);
     const optGame   = optGameId.flatMap(id => GameStore.byId(id));
-
-    const currentGames = games.filter(g => isCurrent(g));
-    const pastGames    = games.filter(g => !isCurrent(g));
+    
 
     const inner = React.cloneElement(this.props.children, {
       game: optGame,
@@ -64,14 +62,7 @@ export class Dashboard extends React.Component<DashboardProps, {}> {
           <div className="grid-25">
             <div id="sidebar" className="notifications">
               <GamesList
-                title="Current games"
-                games={currentGames}
-                className="current-games"
-              />
-              <GamesList
-                title="Past games"
-                games={pastGames}
-                className="past-games"
+                games={games}
               />
             </div>
           </div>

@@ -1,5 +1,4 @@
 
-///<reference path="../../../typings/main/ambient/node/index.d.ts" />
 import {EventEmitter} from 'events';
 
 export class EventType<A> {

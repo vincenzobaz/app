@@ -1152,4 +1152,45 @@ $grey-border: #b8b8b8;
   @include geo($wrong-color);
 }
 
+.centered {
+  align-content: center;
+  text-align: center;
+}
+
+.facebook-done-button {
+  background-color: #4267b2;
+  color: #ffffff;
+  border-color: #4267b2;
+  line-height: 22px;
+  width: 48px;
+  height: 24px;
+  padding: 0;
+  border-radius: 3px;
+  border: 1px solid;
+  box-sizing: content-box;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 12px;
+  -webkit-font-smoothing: antialiased;
+  font-weight: bold;
+  position: relative;
+  text-align: center;
+  vertical-align: middle;
+  
+}
+
+.game-list-title {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.navigation-arrow {
+  &:hover {
+    color:$secondarycolor;
+  }
+}
+
+.navigation-arrow-disabled {
+  color: lightgray;
+}
+
 

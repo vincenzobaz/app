@@ -8,31 +8,30 @@ import {GameBoardRepository} from './repositories/GameBoardRepository';
 import {GameStatus, GAME_STATUS} from '../common/models/GameStatus';
 import {GameFetch} from "./collections/GameFetch";
 import {GameCreatorService} from './services/GameCreatorService';
+import {FacebookService} from "./services/FacebookService";
+import {MeteorUser} from "./MeteorUser";
 
 export const Server = {
 
-  fetchGameBoard(userId: string | Mongo.ObjectID, gameId: string | Mongo.ObjectID, playerNum: number, createFetch: boolean = true) {
-    console.log(`Fetching game board for user ${userId}...`);
-
-
+  fetchGameBoard(fbId: string, gameId: string | Mongo.ObjectID, playerNum: number, createFetch: boolean = true) {
+    console.log(`Fetching game board for user ${fbId}...`);
     const game: Game = Games.findOne(gameId);
     const bot = BotService.bot();
 
     let gameBoard;
 
     try {
-      if (BotService.isBot(userId)) {
-        console.log(`User ${userId} is a bot. Creating bot board...`);
+      if (BotService.isBot(fbId)) {
+        console.log(`User ${fbId} is a bot. Creating bot board...`);
         const botBoard: RawGameBoard = JSON.parse(Assets.getText('json/gameboards/gameboard1.json'));
-        botBoard.userId = userId;
+        botBoard.userId = fbId;
         gameBoard = GameBoard.fromRaw(botBoard);
       }
       else {
-        const user: Meteor.User = Meteor.users.findOne(userId);
-        const fbUserId = user.services.facebook.id;
+        const user: MeteorUser = FacebookService.getUserFromFacebookId(fbId);
         const accessToken = user.services.facebook.accessToken;
-        const rawBoard: RawGameBoard = GameCreatorService.fetchGameboard(fbUserId, accessToken).data;
-        rawBoard.userId = userId;
+        const rawBoard: RawGameBoard = GameCreatorService.fetchGameboard(fbId, accessToken).data;
+        rawBoard.userId = fbId;
 
         gameBoard = GameBoard.fromRaw(rawBoard);
 
@@ -61,12 +60,12 @@ export const Server = {
       console.error(`ERROR: Can't create game board from game creator result.`);
       console.error(`ERROR: ${e.stack}`);
 
-      if (createFetch && !BotService.isBot(userId)) {
-        console.log(`Creating new fetch request as it failed for user ${userId} in game: ${game._id}`);
+      if (createFetch && !BotService.isBot(fbId)) {
+        console.log(`Creating new fetch request as it failed for user ${fbId} in game: ${game._id}`);
         const fetch = new GameFetch(
             new Mongo.ObjectID(),
             game._id,
-            userId,
+            fbId,
             playerNum,
             1
         );
@@ -76,15 +75,13 @@ export const Server = {
     }
   },
 
-  fetchData(userId) {
-    console.log(`Fetching data for user ${userId}...`);
-
-    const user = Meteor.users.findOne(userId);
-    const fbUserId = user.services.facebook.id;
+  fetchData(fbId: string) {
+    console.log(`Fetching data for user ${fbId}...`);
+    const user = FacebookService.getUserFromFacebookId(fbId);
     const accessToken = user.services.facebook.accessToken;
 
     try {
-      const result = GameCreatorService.fetchData(fbUserId, accessToken);
+      const result = GameCreatorService.fetchData(fbId, accessToken);
       console.log(`Game creator replied: ${result.data.message}`);
     }
     catch (e) {

@@ -28,9 +28,6 @@ export function setupMeteorMethods() {
 
     'Account.deleteAllData'() {
       const userId = Meteor.userId();
-
-      console.log(`Deleting data for user: ${userId}`);
-
       const user = Meteor.users.findOne(userId);
       const fbUserId = user.services.facebook.id;
 
@@ -39,8 +36,6 @@ export function setupMeteorMethods() {
       if (result.statusCode == 200) {
         Meteor.users.remove(userId);
       }
-
-      console.log('Data deleted with following result:', result.data.message);
 
       return {
         status: result.statusCode == 200 ? 'success' : 'error',
@@ -57,8 +52,8 @@ export function setupMeteorMethods() {
       return JoinRequestService.accept(requestId);
     },
 
-    'JoinRequest.send'(friendId) {
-      return JoinRequestService.send(this.userId, friendId);
+    'JoinRequest.send'(fbRequest: string, fromFbId: string, toFbId: string) {
+      return JoinRequestService.send(fromFbId, toFbId, fbRequest);
     },
 
     'Game.start'(gameId) {
@@ -135,7 +130,6 @@ export function setupMeteorMethods() {
     },
 
     'Geolocation.getLocationName'(position: Marker) {
-      console.log("we received the following position", position);
       let entity: GeoNameEntity;
       entity = GeoNameEntityCollection.findOne({
         loc: {
@@ -183,8 +177,8 @@ export function setupMeteorMethods() {
       }
 
       GeoNameEntityCollection.rawCollection().find(query,
-          {sort: {population: -1}, limit: 5})
-          .maxTimeMS(1000).toArray(function (err, items) {
+        {sort: {population: -1}, limit: 5})
+        .maxTimeMS(1000).toArray(function (err, items) {
         if (err) {
           future.return([])
         }

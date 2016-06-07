@@ -10,7 +10,7 @@ interface AccountSettingsState {
 export class AccountSettings extends React.Component<{}, AccountSettingsState> {
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       logoutConfirmed: false,
       deleteAllDataConfirmed: false
@@ -75,7 +75,6 @@ export class AccountSettings extends React.Component<{}, AccountSettingsState> {
 
   onLogout(e: React.MouseEvent) {
     e.stopPropagation();
-    console.log("we have the event");
     if (this.state.logoutConfirmed) {
       Meteor.logout();
     }
@@ -98,45 +97,9 @@ export class AccountSettings extends React.Component<{}, AccountSettingsState> {
       deleteAllDataConfirmed: true
     })
   }
-
-  renderInfoForLogout() {
-    // if (this.state.logoutConfirmed) {
-    return (
-      <div className="settings-info">
-        <p>
-          Are you sure?This will log you out of the app.
-          We keep your data safely secured and you can come back
-          any time you want.
-        </p>
-
-        <p>Click again to confirm</p>
-      </div>
-    )
-    // } else {
-    //   return <noscript/>
-    // }
-  }
-
-  renderInfoForDeleteAllData() {
-    if (this.state.deleteAllDataConfirmed) {
-      return (
-        <div className="settings-info grid-100">
-
-          <b>Careful!</b> This will delete everything.
-          All your games played, all data we gathered to create questions,
-          there will be no trace you ever existed.
-
-          Click again to confirm
-        </div>
-      )
-    } else {
-      return <noscript/>
-
-    }
-  }
+  
 
   clickedBackGround() {
-    console.log("clicked background");
     this.setState({
       logoutConfirmed: false,
       deleteAllDataConfirmed: false
@@ -144,23 +107,3 @@ export class AccountSettings extends React.Component<{}, AccountSettingsState> {
   }
 }
 
-      // <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={
-      //   <Popover id="logoutInfo">
-      //   Are you sure?
-      // </Popover>}>
-      //   <Button className="button-wrong prefix-25 grid-50" onClick={this.onLogout.bind(this) }>Log Out</Button>
-
-      // </OverlayTrigger>
-      // <div className="settings-info">
-      //   <p>
-      //     Are you sure?This will log you out of the app.
-      //     We keep your data safely secured and you can come back
-      //     any time you want.
-      //   </p>
-      // </div>
-      // <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={
-      //   <Popover id="logoutInfo">
-      //   Are you sure?
-      // </Popover>}>
-
-      //   <Button className="button-wrong prefix-25 grid-50"onClick={this.onDeleteAllData.bind(this) }>Delete Account</Button>

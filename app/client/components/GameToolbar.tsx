@@ -13,15 +13,26 @@ import {QuitGameModal}    from './modals/QuitGameModal';
 import {StartGameModal}   from './modals/StartGameModal';
 import {FriendsSearchbox} from './FriendsSearchbox';
 import {AccountSettings}  from './AccountSettings';
+import {getConfig} from "../helpers/getConfig";
+import {FacebookService, MeteorUser} from "../../server/MeteorUser";
+import {GameService} from "../../server/services/GameService";
+
+
+interface FBGameRequestResponse {
+  request: string;
+  to: string[];
+}
 
 interface GameToolbarProps {
   game: Game;
 }
 
 interface GameToolbarState {
-  showQuitGameModal: boolean;
-  showAccountSettings: boolean;
+  showQuitGameModal?: boolean;
+  showAccountSettings?: boolean;
+  showGameRequestInfoModal?: boolean;
 }
+
 
 export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarState> {
 
@@ -30,24 +41,38 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
 
     this.state = {
       showQuitGameModal: false,
-      showAccountSettings: false
+      showAccountSettings: false,
+      showGameRequestInfoModal: false
     };
   }
 
   onClickRequestButton() {
-    const p = sendAppRequest({
+    let conf = getConfig('facebook');
+    let requestDialogParams: RequestsDialogParams = {
+      app_id: conf.appId,
+      filters: ["app_users"],
+      method: 'apprequests',
       message: 'Do you want to reminisce with me?',
-      max_recipients: 1
-    });
+      title: 'Select friends you would like to play with',
+      max_recipients: 10
+    };
 
-    p
-      .then((req) => {
-        console.log(req);
-        // FacebookStore.storeRequest(req);
-      })
-      .catch((err) => {
-        console.error(err);
-      })
+    FB.ui(requestDialogParams, (response: FBGameRequestResponse) => {
+        
+        if (response) {
+          const user = Meteor.user() as MeteorUser;
+          const fbUserId = user.services.facebook.id;
+          response.to.forEach(toFbId => {
+            Meteor.call('JoinRequest.send', response.request, fbUserId, toFbId);
+          })
+        } else {
+          this.setState({
+            showGameRequestInfoModal: true
+          })
+        }
+
+      }
+    );
   }
 
   onClickSettingsButton() {
@@ -81,7 +106,7 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
           game={this.props.game}
           onQuit={this.onQuit.bind(this)}
           onResume={this.onResume.bind(this)}
-          onRequestHide={(() => {})} />
+          onRequestHide={(() => {})}/>
       );
     }
 
@@ -104,9 +129,11 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
       <div>
         <Row>
           <div className="game-toolbar">
+            <Button onClick={this.onPlayAgainstBot}> Play Against AI </Button>
             {this.renderRequestButton()}
             {this.renderSettingsButton()}
             {this.renderModal()}
+            {this.renderPleaseClickOnDoneModal()}
           </div>
         </Row>
       </div>
@@ -120,6 +147,10 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
       </Button>
     );
   }
+  
+  onPlayAgainstBot() {
+    GameStore.startBotGame();
+  }
 
   renderSettingsButton() {
     return (
@@ -129,5 +160,18 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
     );
   }
 
+  renderPleaseClickOnDoneModal() {
+    const hideModal = () => {this.setState({showGameRequestInfoModal: false})};
+    return (
+      <div>
+        <Modal show={this.state.showGameRequestInfoModal} backdrop={true} onHide={hideModal.bind(this)}>
+
+          <Modal.Body className="centered" >
+            Please click on <Button className="facebook-done-button">Done</Button> once you selected the friends to invite
+          </Modal.Body>
+        </Modal>
+      </div>
+    );
+  }
 }
 

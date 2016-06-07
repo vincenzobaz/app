@@ -77,6 +77,19 @@ export class _FacebookService {
       return { error: e };
     }
   }
+  
+  public getFacebookId(userId: string | Mongo.ObjectID) {
+    const meteorUser: MeteorUser = Meteor.users.findOne(userId) as MeteorUser;
+    if (meteorUser && meteorUser.services && meteorUser.services.facebook) {
+      return meteorUser.services.facebook.id;
+    } else {
+      return null;
+    }
+  }
+  
+  public getUserFromFacebookId(fbId: string): MeteorUser {
+    return Meteor.users.findOne({'services.facebook.id': fbId});
+  }
 
   public getFriends(user: MeteorUser): FBFriend[] {
     return this.userGet(user, '/me/friends').data;
