@@ -8,17 +8,14 @@ export class StateCollector {
     static _currentQuestion: Question;
 
     static setGame(game: Game) {
-        console.log("current game ", game);
         StateCollector._currentGame = game;
     }
     
     static setTile(tile: Tile) {
-        console.log("current Tile", tile);
         StateCollector._currentTile = tile;
     }
     
     static setQuestion(question: Question) {
-        console.log("current Question", question);
         StateCollector._currentQuestion = question;
     }
     

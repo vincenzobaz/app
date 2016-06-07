@@ -52,7 +52,6 @@ export class GamesList extends React.Component<GamesListProps, GameListState> {
   }
 
   getGameList() {
-    console.log("getting games", this.props.games.filter(g => isPast(g)));
     switch (this.state.gameList) {
       case GAME_LIST.Current:
         return this.props.games.filter(g => isCurrent(g));

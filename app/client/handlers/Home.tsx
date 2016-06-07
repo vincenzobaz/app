@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Carousel, CarouselItem, Navbar, NavItem, Nav, Row, Col} from "react-bootstrap";
-
+import {Routes} from '../../common/Routes';
 import {FacebookStore} from "../stores/FacebookStore";
 
 interface HomeState {
@@ -11,7 +11,6 @@ export class Home extends React.Component<{}, HomeState> {
 
   constructor(props: any) {
     super(props);
-
     this.state = {
       index: 0
     };
@@ -44,7 +43,7 @@ export class Home extends React.Component<{}, HomeState> {
     const brand = (
       <li key={-1}>
         <Navbar.Brand>
-          <img src='images/reminisce-logo-ios.png' alt='Reminisce.me' width='48' height='48' />
+          <img src={Routes.Assets.at('images/reminisce-logo-ios.png')} alt='Reminisce.me' width='48' height='48' />
         </Navbar.Brand>
       </li>
     );
@@ -74,7 +73,7 @@ export class Home extends React.Component<{}, HomeState> {
           <CarouselItem>
             <section title="Intro">
               <div className='logo'>
-                <img src='images/reminisce-logo-big.png' alt='Reminisce.me' width='220' height='216' />
+                <img src={Routes.Assets.at('images/reminisce-logo-big.png')} alt='Reminisce.me' width='220' height='216' />
               </div>
               <h2>
                 Who liked your post?<br />
@@ -101,7 +100,7 @@ export class Home extends React.Component<{}, HomeState> {
           </CarouselItem>
           <CarouselItem>
             <section title="Screen shot">
-              <img src='images/home-1.jpg' alt='' width='650' height='590' />
+              <img src={Routes.Assets.at('images/home-1.jpg')} alt='' width='650' height='590' />
             </section>
           </CarouselItem>
           <CarouselItem>
