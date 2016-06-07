@@ -1,5 +1,5 @@
 import {Games} from "../collections/Games";
-import {GAME_STATUS} from "../../common/models/GameStatus";
+import {GAME_STATUS, GameStatus} from "../../common/models/GameStatus";
 import {JoinRequests} from "../collections/JoinRequests";
 import {JoinRequestService} from "../services/JoinRequestService";
 import {KIND} from "../../common/models/questions/common/Kind";
@@ -38,7 +38,7 @@ export const BotService = {
       this.createBot();
     }
 
-    return Meteor.users.findOne({ username: BOT_USERNAME });
+    return Meteor.users.findOne({username: BOT_USERNAME});
   },
 
   isBot(userId: string) {
@@ -55,7 +55,7 @@ export const BotService = {
   },
 
   botCreated() {
-    return Meteor.users.find({ username: BOT_USERNAME }).count() > 0;
+    return Meteor.users.find({username: BOT_USERNAME}).count() > 0;
   },
 
   createBot(force = false) {
@@ -80,22 +80,23 @@ export const BotService = {
     const query = Games.find(
       {
         $and: [{
-          $or: [{ player1: botId }, { player2: botId  }]
+          $or: [{player1: botId}, {player2: botId}]
         },
           {
-            status: { $in: [GAME_STATUS.Playing, GAME_STATUS.Creating, GAME_STATUS.Waiting] }
+            status: {$in: [GAME_STATUS.Playing, GAME_STATUS.Creating, GAME_STATUS.Waiting]}
           }]
       });
+
+    query.fetch().map((g: Game) => {
+      BotService.observeGame(g._id, botId);
+      if (g.getCurrentPlayer() == botId) {
+        BotService.playTurn(g);
+      }
+    });
 
     const handle = query.observe({
       added(game) {
         BotService.observeGame(game._id, bot._id);
-
-        const request = JoinRequests.findOne({ gameId: game._id });
-        if (request) {
-          JoinRequestService.accept(request._id);
-          console.log(`Bot #1 accepted join request ${request._id}.`);
-        }
       },
 
       removed(game) {
@@ -122,16 +123,16 @@ export const BotService = {
   },
 
   onGameChanged(game: Game, handle?) {
-    if (game.status == GAME_STATUS.Ended || game.status == GAME_STATUS.Waiting) {
+    if (game.status == GAME_STATUS.Waiting) {
       return;
+    }
+    if (handle && game.status == GAME_STATUS.Ended) {
+      handle.stop();
+      BotService.proposeGameToPlayerIfNecessary(game.player2);
     }
 
     const result = BotService.playTurn(game);
-
-    if (handle && (result.win || result.draw)) {
-      handle.stop();
-      console.log(`Game ended. Won: ${result.win}. Draw: ${result.draw}.`);
-    }
+    
   },
 
   playTurn(game: Game) {
@@ -169,8 +170,12 @@ export const BotService = {
           return geoAnswer;
         case KIND.Order:
           const answers: number[] = q.answer;
-          const correctOrder = new OrderAnswer(0, new OrderData(answers.map((id: number) => { return { id: id } })));
-          const incorrectOrder = new OrderAnswer(0, new OrderData(answers.map((id: number) => { return { id: 1 } })));
+          const correctOrder = new OrderAnswer(0, new OrderData(answers.map((id: number) => {
+            return {id: id}
+          })));
+          const incorrectOrder = new OrderAnswer(0, new OrderData(answers.map((id: number) => {
+            return {id: 1}
+          })));
           return _.random(0, 100) < successrate ? correctOrder : incorrectOrder;
         default:
           throw new Meteor.Error('500', `Unknown Question Kind ${q.kind} for Bot`);
@@ -211,7 +216,7 @@ export const BotService = {
   minmax(game: Game, player: number, depth: number) {
     const score = BotService.score(game.boardState, player, depth);
     if (score != 0) {
-      return { move: null, score: score };
+      return {move: null, score: score};
     }
     depth += 1;
     var scores = [];
@@ -219,7 +224,7 @@ export const BotService = {
 
     const possibilities = BotService.getAvailableMoves(game, game.playerTurn);
     if (possibilities.length == 0) {
-      return { move: null, score: 0 };
+      return {move: null, score: 0};
     }
     _.forEach(possibilities, m => {
       const updatedGame: Game = new Game(
@@ -246,11 +251,11 @@ export const BotService = {
     if (game.playerTurn == player) {
       const maxScoreIndex = _.indexOf(scores, _.max(scores));
       const move = moves[maxScoreIndex];
-      return { move: move, score: scores[maxScoreIndex] }
+      return {move: move, score: scores[maxScoreIndex]}
     } else {
       const minScoreIndex = _.indexOf(scores, _.min(scores));
       const move = moves[minScoreIndex];
-      return { move: move, score: scores[minScoreIndex] }
+      return {move: move, score: scores[minScoreIndex]}
     }
   },
   makeMove(game: Game, move: RawAvailableMove, player: number) {
@@ -260,7 +265,7 @@ export const BotService = {
     game.player2AvailableMoves = _.filter(game.player2AvailableMoves, m => {
       return m.row != move.row || m.column != move.column
     });
-    game.boardState[move.row][move.column] = { player: player, score: 3 };
+    game.boardState[move.row][move.column] = {player: player, score: 3};
     game.playerTurn = (player % 2) + 1;
   },
 
@@ -313,6 +318,34 @@ export const BotService = {
       }
     }
     return newObj;
+  },
+
+  proposeGameToPlayerIfNecessary(userFbId: string) {
+    const botId = BotService.getBot()._id.valueOf();
+    const botRequestCount = JoinRequests.find({
+        from: botId,
+        to: userFbId
+      }
+    ).count();
+    const botGamesCount = Games.find({
+      $and: [{
+        $or: [
+          {
+            player1: userFbId,
+            player2: botId
+          }, {
+            player1: botId,
+            player2: userFbId
+          }]
+      },
+        {status: {$ne: "ended"}}]
+    }).count();
+
+    console.log(`We have ${botRequestCount} botrequests and ${botGamesCount} botgames`);
+
+    if (botRequestCount == 0 && botGamesCount == 0) {
+      JoinRequestService.send(botId, userFbId, _.uniqueId());
+    }
   }
 
 

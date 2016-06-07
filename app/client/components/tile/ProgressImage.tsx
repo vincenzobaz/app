@@ -38,9 +38,11 @@ export class ProgressImage extends React.Component<ProgressImageProps, {}> {
               <path
                   d="M59,10.484l0,18.928c-17.539,2.656 -31,17.812 -31,36.088c0,4.743 0.906,9.275 2.556,13.434l-15.69,9.073c-3.184,-6.957 -4.958,-14.691 -4.958,-22.837c0,-28.359 21.51,-51.735 49.092,-54.686Z"
                   className={elementStyles[2]}/>
+              <i className={this.getIconClassNames()}/>
+
             </g>
           </svg>
-          <i className={this.getIconClassNames()}></i>
+          
         </a>
     );
   }

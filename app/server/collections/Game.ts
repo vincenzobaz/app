@@ -5,8 +5,8 @@ import {RawTileState} from "./TileState";
 
 export interface RawGame {
   _id: string | Mongo.ObjectID;
-  player1: string | Mongo.ObjectID;
-  player2: string | Mongo.ObjectID;
+  player1: string;
+  player2: string;
   player1Board: RawGameBoard;
   player2Board: RawGameBoard;
   status: GameStatus;
@@ -24,8 +24,8 @@ export class Game {
 
 
   constructor(public _id: string |  Mongo.ObjectID,
-              public player1: string | Mongo.ObjectID,
-              public player2: string | Mongo.ObjectID,
+              public player1: string,
+              public player2: string,
               public player1Board: GameBoard,
               public player2Board: GameBoard,
               public status: GameStatus,

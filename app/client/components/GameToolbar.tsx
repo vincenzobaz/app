@@ -50,7 +50,7 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
     let conf = getConfig('facebook');
     let requestDialogParams: RequestsDialogParams = {
       app_id: conf.appId,
-      filters: ["app_users"],
+      filters: null,
       method: 'apprequests',
       message: 'Do you want to reminisce with me?',
       title: 'Select friends you would like to play with',
@@ -129,7 +129,6 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
       <div>
         <Row>
           <div className="game-toolbar">
-            <Button onClick={this.onPlayAgainstBot}> Play Against AI </Button>
             {this.renderRequestButton()}
             {this.renderSettingsButton()}
             {this.renderModal()}
@@ -147,10 +146,6 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
       </Button>
     );
   }
-  
-  onPlayAgainstBot() {
-    GameStore.startBotGame();
-  }
 
   renderSettingsButton() {
     return (
@@ -167,7 +162,7 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
         <Modal show={this.state.showGameRequestInfoModal} backdrop={true} onHide={hideModal.bind(this)}>
 
           <Modal.Body className="centered" >
-            Please click on <Button className="facebook-done-button">Done</Button> once you selected the friends to invite
+            Please click on <Button className="facebook-done-button" onClick={hideModal.bind(this)}>Done</Button> once you selected the friends to invite
           </Modal.Body>
         </Modal>
       </div>

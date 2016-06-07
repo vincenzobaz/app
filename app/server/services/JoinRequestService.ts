@@ -28,17 +28,19 @@ export const JoinRequestService = {
     if (!request) {
       throw new Meteor.Error("404", "Request does not exist with id" + requestId);
     }
-    console.log("Implement the new game creation");
     const game: Game = Games.findOne(request.gameId);
-
+    
+    // if (BotService.isBot(game.player1) || BotService.isBot(game.player2)) {
+    //   BotService.observeGame(game._id, BotService.bot()._id);
+    // }
     Server.fetchGameBoard(request.from, game._id, 1);
     Server.fetchGameBoard(request.to, game._id, 2);
 
     JoinRequests.remove(requestId);
-
+    
     const event = new Events.JoinRequestAccepted(request);
     GlobalEventBus.emit(event);
-
+    
     return Games.findOne(game._id);
   },
 

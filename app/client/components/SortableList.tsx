@@ -263,7 +263,7 @@ export class SortableList extends React.Component<SortableListProps, SortableLis
     }
     let itemsHeight: number[] = this.state.itemHeight;
     let height = $(itemComponent).outerHeight(true);
-    let changedHeight = itemsHeight[index] != height;
+    let changedHeight = itemsHeight[index] < height;
 
     if (changedHeight) {
       itemsHeight[index] = height;

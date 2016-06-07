@@ -18,6 +18,7 @@ import { getAppState, AppState } from '../appState';
 import {FacebookService} from "../../server/services/FacebookService";
 import Location = HistoryModule.Location;
 import {FacebookClientService} from "../services/FacebookClientService";
+import {MeteorUser} from "../../server/MeteorUser";
 
 
 interface DashboardParams {
@@ -74,9 +75,8 @@ export class Dashboard extends React.Component<DashboardProps, {}> {
       return <Home />;
     }
 
-    const { user, games, joinRequests } = this.data;
+    const { user, games, joinRequests}: {user: User, games: Game[], joinRequests: JoinRequest[]} = this.data;
     const { gameId }                    = this.props.params;
-
     const optGameId = (gameId == null) ? new None() : new Some(gameId);
     const optGame   = optGameId.flatMap(id => GameStore.byId(id));
     
