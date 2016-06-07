@@ -54,7 +54,7 @@
     "sortablejs": "1.4.2",
     "source-map-support": "^0.4.0",
     "timer-machine": "1.0.1",
-    "typings": "^0.8.1",
+    "typings": "^1.0.4",
     "visibility": "0.0.0"
   },
   "devDependencies": {
