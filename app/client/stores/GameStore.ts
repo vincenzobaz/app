@@ -9,6 +9,7 @@ import { Routes }           from '../../common/Routes';
 import { MeteorPromise }    from '../helpers/meteor';
 import { Game }             from '../models/Game';
 import { Games }            from '../collections/Games';
+import {FacebookService} from "../../server/services/FacebookService";
 
 export module GameStore {
 
@@ -38,13 +39,9 @@ export module GameStore {
     );
   }
 
-  export function start(friendId) {
-    return JoinRequestStore.send(friendId);
-  }
-
   export function startBotGame() {
     const bot: Friend = FriendStore.bot();
-    return JoinRequestStore.send(bot._id);
+    return JoinRequestStore.send(_.uniqueId(), FacebookService.getFacebookId(Meteor.userId()), bot.userId as string);
   }
 
   export function quit(game: Game) {

@@ -5,6 +5,7 @@ import {Score} from "../../common/models/Score";
 import {RawTileState} from "../../server/collections/TileState";
 import {GameBoard, RawGameBoard} from "../../common/models/GameBoard";
 import {Friend} from "../../common/models/Friend";
+import {FacebookService} from "../../server/services/FacebookService";
 
 export interface RawGame {
   _id: string | Mongo.ObjectID;
@@ -38,7 +39,7 @@ export class Game {
 
   get opponent(): Friend {
     const opId = this.opponentId;
-    return FriendStore.byId(opId) || FriendStore.byUserId(opId);
+    return FriendStore.byFacebookId(opId);
   }
 
   get currentPlayerId() {
@@ -50,11 +51,11 @@ export class Game {
   }
 
   get isMyTurnToPlay() {
-    return this.currentPlayerId === Meteor.userId();
+    return this.currentPlayerId == FacebookService.getFacebookId(Meteor.userId());
   }
 
   get myPlayerNumber() {
-    return this.player1 === Meteor.userId() ? 1 : 2;
+    return this.player1 == FacebookService.getFacebookId(Meteor.userId())? 1 : 2;
   }
 
   get hasEnded() {

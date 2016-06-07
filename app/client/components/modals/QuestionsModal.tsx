@@ -345,7 +345,6 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
   }
 
   onAnswerReceived(tile: Tile) {
-    console.log("we received answer", tile, tile.questions);
     this.setState({
       tile: tile
     });

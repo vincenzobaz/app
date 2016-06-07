@@ -69,7 +69,6 @@ export class SortableList extends React.Component<SortableListProps, SortableLis
 
 
   componentDidMount() {
-    console.log("Mounted");
     window.addEventListener('touchmove', this.handleTouchMove);
     window.addEventListener('touchend', this.handleMouseUp);
     window.addEventListener('mousemove', this.handleMouseMove);

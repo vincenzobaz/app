@@ -5,8 +5,8 @@ interface StartGameModalProps {
   onOk: Function;
   onCancel: Function;
   friend: Friend;
+  show: boolean;
 }
-
 
 export class StartGameModal extends React.Component<StartGameModalProps, {}> {
 
@@ -15,7 +15,7 @@ export class StartGameModal extends React.Component<StartGameModalProps, {}> {
     const friend = this.props.friend;
 
     return (
-        <Modal enforceFocus={false} show={true} onHide={this.onCancel}>
+        <Modal enforceFocus={false} show={this.props.show} onHide={this.onCancel}>
           <Modal.Header>
             <Modal.Title>Do you want to play with {friend.name}?</Modal.Title>
           </Modal.Header>
@@ -33,9 +33,9 @@ export class StartGameModal extends React.Component<StartGameModalProps, {}> {
     );
   }
 
-  public onOk = () => {
+  onOk() {
     this.props.onOk();
-  }
+  };
 
   onCancel() {
     this.props.onCancel();

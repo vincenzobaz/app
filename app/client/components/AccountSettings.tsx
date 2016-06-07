@@ -74,12 +74,11 @@ export class AccountSettings extends React.Component<{}, AccountSettingsState> {
         )
     }
 
-    onLogout(e:React.MouseEvent) {
-        e.stopPropagation();
-        console.log("we have the event");
-        if (this.state.logoutConfirmed) {
-            Meteor.logout();
-        }
+  onLogout(e: React.MouseEvent) {
+    e.stopPropagation();
+    if (this.state.logoutConfirmed) {
+      Meteor.logout();
+    }
 
         this.setState({
             logoutConfirmed: true,
@@ -112,10 +111,7 @@ export class AccountSettings extends React.Component<{}, AccountSettingsState> {
 
                 <p>Click again to confirm</p>
             </div>
-        )
-        // } else {
-        //   return <noscript/>
-        // }
+        );
     }
 
     renderInfoForDeleteAllData() {

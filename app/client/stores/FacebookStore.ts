@@ -3,13 +3,14 @@ import {getConfig} from "../helpers/getConfig";
 
 export module FacebookStore {
 
-  export function login(cb = () => {
-  }) {
+  export function login(cb = () => {}) {
     const conf = getConfig('facebook');
+
     if (conf == null) {
       console.error("Facebook config is", conf);
       return;
     }
+
     Meteor.loginWithFacebook({
       requestPermissions: conf.scope
     }, cb);
@@ -32,6 +33,4 @@ export module FacebookStore {
   }
 
 }
-;
-
 

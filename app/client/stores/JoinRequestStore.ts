@@ -15,8 +15,9 @@ export module JoinRequestStore {
     return Meteor.call('JoinRequest.decline', joinRequest._id);
   }
 
-  export function send(friendId: string | Mongo.ObjectID) {
-    return Meteor.call('JoinRequest.send', friendId);
+  export function send(fbRequest: string, fromFbId: string, toFbId: string) {
+    console.log("we are seding a join request");
+    return Meteor.call('JoinRequest.send', fbRequest, fromFbId, toFbId);
   }
 
 };

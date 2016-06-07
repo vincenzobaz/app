@@ -59,9 +59,13 @@ export function setupMeteorMethods() {
             return JoinRequestService.accept(requestId);
         },
 
-        'JoinRequest.send'(friendId) {
-            return JoinRequestService.send(this.userId, friendId);
-        },
+    'JoinRequest.send'(fbRequest: string, fromFbId: string, toFbId: string) {
+      return JoinRequestService.send(fromFbId, toFbId, fbRequest);
+    },
+    
+    'FBJoinRequests.delete'(fbRequestIds: string[]) {
+      return FacebookService.deleteRequests(fbRequestIds, FacebookService.getFacebookId(Meteor.userId()));
+    },
 
         'Game.start'(gameId) {
             return GameService.start(gameId);

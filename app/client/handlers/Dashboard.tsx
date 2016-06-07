@@ -15,8 +15,10 @@ import { GameStore }    from '../stores/GameStore';
 import { GAME_STATUS }  from '../../common/models/GameStatus';
 
 import { getAppState, AppState } from '../appState';
+import {FacebookService} from "../../server/services/FacebookService";
+import Location = HistoryModule.Location;
+import {FacebookClientService} from "../services/FacebookClientService";
 
-const isCurrent = (g: Game) => !g.hasEnded && !g.hasFailed;
 
 interface DashboardParams {
   gameId?: string;
@@ -25,15 +27,46 @@ interface DashboardParams {
 interface DashboardProps {
   params: DashboardParams;
   children?: any;
+  location?: Location
+}
+
+interface RequestQuery {
+  app_request_type?: 'user_touser';
+  request_ids?: string;
+  fb_source?: 'notification';
+  
 }
 
 @decorate(ReactMeteorData)
 export class Dashboard extends React.Component<DashboardProps, {}> {
 
+  
+  constructor(props: DashboardProps) {
+    super(props);
+    this.deleteFBRequests();
+  }
   data: AppState;
 
   getMeteorData() {
     return getAppState();
+  }
+  
+  componentDidReceiveProps(props) {
+    this.props = props;
+    this.deleteFBRequests();
+  }
+  
+  deleteFBRequests() {
+    const location: Location = this.props.location;
+    if (location) {
+      if (location.query) {
+        const query: RequestQuery = location.query as RequestQuery;
+        if (query.request_ids){
+          const requestIds = query.request_ids.split(',');
+          Meteor.call('FBJoinRequests.delete', requestIds)
+        }
+      }
+    }
   }
 
   render() {
@@ -46,9 +79,7 @@ export class Dashboard extends React.Component<DashboardProps, {}> {
 
     const optGameId = (gameId == null) ? new None() : new Some(gameId);
     const optGame   = optGameId.flatMap(id => GameStore.byId(id));
-
-    const currentGames = games.filter(g => isCurrent(g));
-    const pastGames    = games.filter(g => !isCurrent(g));
+    
 
     const inner = React.cloneElement(this.props.children, {
       game: optGame,
@@ -64,14 +95,7 @@ export class Dashboard extends React.Component<DashboardProps, {}> {
           <div className="grid-25">
             <div id="sidebar" className="notifications">
               <GamesList
-                title="Current games"
-                games={currentGames}
-                className="current-games"
-              />
-              <GamesList
-                title="Past games"
-                games={pastGames}
-                className="past-games"
+                games={games}
               />
             </div>
           </div>
@@ -90,6 +114,7 @@ export class Dashboard extends React.Component<DashboardProps, {}> {
       </div>
     );
   }
+  
 
 }
 

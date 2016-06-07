@@ -4,11 +4,12 @@ import {RawTileState} from "../../server/collections/TileState";
 import {RawGameBoard, GameBoard} from "../../common/models/GameBoard";
 import * as ServerCollection from "../../server/collections/Game";
 import {Score} from "../../common/models/Score";
+import {FacebookClientService} from "../services/FacebookClientService";
 
 
 export const Games = new Mongo.Collection('games', {
   transform(doc: ServerCollection.RawGame) {
-    const isPlayer1 = doc.player1 == Meteor.userId();
+    const isPlayer1 = doc.player1 == FacebookClientService.getFacebookId(Meteor.userId());
     let board: RawGameBoard = null;
     if (isPlayer1 && doc.player1Board) {
       board = GameBoards.findOne(doc.player1Board._id, {transform: null}) as RawGameBoard;

@@ -1,27 +1,38 @@
 import {Row, Col, Button, Modal} from 'react-bootstrap';
 import {browserHistory}          from 'react-router';
 
+import {sendAppRequest}   from '../helpers/facebook/appRequest';
+
 import {Game}             from '../models/Game';
 import {Routes}           from '../../common/Routes';
 import {Friend}           from '../../common/models/Friend';
 import {Friends}          from '../../common/collections/Friends';
 import {GameStore}        from '../stores/GameStore';
+import {JoinRequestStore} from '../stores/JoinRequestStore';
 import {QuitGameModal}    from './modals/QuitGameModal';
 import {StartGameModal}   from './modals/StartGameModal';
 import {FriendsSearchbox} from './FriendsSearchbox';
 import {AccountSettings}  from './AccountSettings';
+import {getConfig} from "../helpers/getConfig";
+import {FacebookService, MeteorUser} from "../../server/MeteorUser";
+import {GameService} from "../../server/services/GameService";
 
+
+interface FBGameRequestResponse {
+  request: string;
+  to: string[];
+}
 
 interface GameToolbarProps {
   game: Game;
 }
 
 interface GameToolbarState {
-  friend: Friend;
-  showStartGameModal: boolean;
-  showQuitGameModal: boolean;
-  showAccountSettings: boolean;
+  showQuitGameModal?: boolean;
+  showAccountSettings?: boolean;
+  showGameRequestInfoModal?: boolean;
 }
+
 
 export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarState> {
 
@@ -29,55 +40,45 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
     super(props);
 
     this.state = {
-      friend: null,
-      showStartGameModal: false,
       showQuitGameModal: false,
-      showAccountSettings: false
+      showAccountSettings: false,
+      showGameRequestInfoModal: false
     };
   }
 
-  onFriendSelect(friend) {
-    this.setState({
-      friend: friend,
-      showStartGameModal: true,
-      showQuitGameModal: false,
-      showAccountSettings: false
+  onClickRequestButton() {
+    let conf = getConfig('facebook');
+    let requestDialogParams: RequestsDialogParams = {
+      app_id: conf.appId,
+      filters: ["app_users"],
+      method: 'apprequests',
+      message: 'Do you want to reminisce with me?',
+      title: 'Select friends you would like to play with',
+      max_recipients: 10
+    };
 
-    });
+    FB.ui(requestDialogParams, (response: FBGameRequestResponse) => {
+        
+        if (response) {
+          const user = Meteor.user() as MeteorUser;
+          const fbUserId = user.services.facebook.id;
+          response.to.forEach(toFbId => {
+            Meteor.call('JoinRequest.send', response.request, fbUserId, toFbId);
+          })
+        } else {
+          this.setState({
+            showGameRequestInfoModal: true
+          })
+        }
+
+      }
+    );
   }
 
-  onClickQuitGameButton() {
-
+  onClickSettingsButton() {
     this.setState({
-      friend: this.state.friend,
-      showStartGameModal: this.state.showStartGameModal,
       showQuitGameModal: this.state.showQuitGameModal,
       showAccountSettings: true
-    });
-
-  }
-
-  startGame(friend) {
-    GameStore.start(friend._id);
-  }
-
-  onStart() {
-    this.setState({
-      friend: this.state.friend,
-      showStartGameModal: false,
-      showQuitGameModal: false,
-      showAccountSettings: false
-    });
-
-    this.startGame(this.state.friend);
-  }
-
-  onAbortStart() {
-    this.setState({
-      showStartGameModal: false,
-      showQuitGameModal: false,
-      friend: null,
-      showAccountSettings: false
     });
   }
 
@@ -90,76 +91,87 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
 
   }
 
-  renderModal() {
-    if (this.state.showStartGameModal && this.state.friend) {
-      return (
-          <StartGameModal
-              friend={this.state.friend}
-              onOk={this.onStart.bind(this)}
-              onCancel={this.onAbortStart.bind(this)} />
-      );
-    }
-
-    if (this.state.showQuitGameModal && this.props.game) {
-      return (
-          <QuitGameModal
-              game={this.props.game}
-              onQuit={this.onQuit.bind(this)}
-              onResume={this.onResume.bind(this)}
-              onRequestHide={(() => {})} />
-      );
-    }
-  }
-
-  render() {
-
-    return (
-        <div>
-          <Modal enforceFocus={false}  show={this.state.showAccountSettings} onHide={this.onHide.bind(this)}>
-            <Modal.Header closeButton>
-              <Modal.Title>Account Settings</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <AccountSettings />
-            </Modal.Body>
-          </Modal>
-          <Row>
-            <div className="game-toolbar">
-              <Col sm={3} xsHidden className="start-game" >
-                Start new game with
-              </Col>
-              <Col xs={11} sm={8} className="no-left-padding">
-                <FriendsSearchbox onSelect={this.onFriendSelect.bind(this)} />
-
-              </Col>
-              <Col xs={1} className="no-left-padding">
-                {this.renderQuitGameButton()}
-              </Col>
-              {this.renderModal()}
-            </div>
-
-          </Row>
-
-        </div>
-    );
-  }
-
-  renderQuitGameButton() {
-    return (
-        <Button className="settings-button" onClick={this.onClickQuitGameButton.bind(this)}>
-          <i className='fa fa-cog fa-2x'></i>
-        </Button>
-    );
-  }
-  
-  onHide() {
+  onHideAccountModal() {
     this.setState({
-      friend: this.state.friend,
-      showStartGameModal: this.state.showStartGameModal,
       showQuitGameModal: this.state.showQuitGameModal,
       showAccountSettings: false
     })
   }
 
+  renderModal() {
+    if (this.state.showQuitGameModal && this.props.game) {
+      return (
+        <QuitGameModal
+          show={this.state.showQuitGameModal && this.props.game != null}
+          game={this.props.game}
+          onQuit={this.onQuit.bind(this)}
+          onResume={this.onResume.bind(this)}
+          onRequestHide={(() => {})}/>
+      );
+    }
+
+    if (this.state.showAccountSettings) {
+      return (
+        <Modal show={this.state.showAccountSettings} onHide={this.onHideAccountModal.bind(this)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Account Settings</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <AccountSettings />
+          </Modal.Body>
+        </Modal>
+      );
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <Row>
+          <div className="game-toolbar">
+            <Button onClick={this.onPlayAgainstBot}> Play Against AI </Button>
+            {this.renderRequestButton()}
+            {this.renderSettingsButton()}
+            {this.renderModal()}
+            {this.renderPleaseClickOnDoneModal()}
+          </div>
+        </Row>
+      </div>
+    );
+  }
+
+  renderRequestButton() {
+    return (
+      <Button className="request-button" onClick={this.onClickRequestButton.bind(this)}>
+        Play with a friend
+      </Button>
+    );
+  }
+  
+  onPlayAgainstBot() {
+    GameStore.startBotGame();
+  }
+
+  renderSettingsButton() {
+    return (
+      <Button className="settings-button" onClick={this.onClickSettingsButton.bind(this)}>
+        <i className='fa fa-cog fa-2x'></i>
+      </Button>
+    );
+  }
+
+  renderPleaseClickOnDoneModal() {
+    const hideModal = () => {this.setState({showGameRequestInfoModal: false})};
+    return (
+      <div>
+        <Modal show={this.state.showGameRequestInfoModal} backdrop={true} onHide={hideModal.bind(this)}>
+
+          <Modal.Body className="centered" >
+            Please click on <Button className="facebook-done-button">Done</Button> once you selected the friends to invite
+          </Modal.Body>
+        </Modal>
+      </div>
+    );
+  }
 }
 

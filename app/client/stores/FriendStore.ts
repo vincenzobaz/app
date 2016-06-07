@@ -7,6 +7,9 @@ export module FriendStore {
     return Friends.findOne(id);
   }
 
+  export function byFbId(fbId): Friend {
+    return Friends.findOne({facebookId: fbId})
+  }
   export function byUserId(userId): Friend {
     return Friends.findOne({userId: userId});
   }

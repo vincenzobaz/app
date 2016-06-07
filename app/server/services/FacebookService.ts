@@ -30,7 +30,7 @@ interface Cursor {
     after: string;
 }
 
-const DEBUG = false;
+const DEBUG = process.env.NODE_ENV === 'development';
 const debug = DEBUG ? (...args) => console.log.apply(console, args) : () => {};
 
 export class _FacebookService {
@@ -63,12 +63,10 @@ export class _FacebookService {
     try {
       const fullUrl = this.buildUrl(url);
 
-      debug(`[FacebookService] GET ${fullUrl}`, params);
+      console.log(`[FacebookService] GET ${fullUrl}`, params);
 
       const res = HTTP.get(fullUrl, { params });
-
-      debug(res);
-
+      
       if (res.statusCode !== 200) {
         // TODO: Handle errors.
       }
@@ -76,6 +74,7 @@ export class _FacebookService {
       return res.data;
     }
     catch (e) {
+      debug("GET to FB received the error:", e);
       return { error: e };
     }
   }
@@ -87,9 +86,7 @@ export class _FacebookService {
       debug(`[FacebookService] POST ${fullUrl}`, params);
 
       const res = HTTP.post(fullUrl, { params });
-
-      debug(res);
-
+      
       if (res.statusCode !== 200) {
         // TODO: Handle errors.
       }
@@ -97,8 +94,44 @@ export class _FacebookService {
       return res.data;
     }
     catch (e) {
+      debug("POST to FB received the error:", e);
       return { error: e };
     }
+  }
+  
+  private graphApiDelete(url: string, params: any = {}) {
+    try {
+      const fullUrl = this.buildUrl(url);
+
+      debug(`[FacebookService] DEL ${fullUrl}`, params);
+
+      const res = HTTP.del(fullUrl, { params });
+
+      debug(res);
+
+      if (res.statusCode !== 200) {
+        // TODO: Handle errors.
+        debug("Status code wasn't 200", res);
+      }
+      return res.data;
+    }
+    catch (e) {
+      debug("DELETE to FB received the error:", e);
+      return { error: e };
+    }
+  }
+  
+  public getFacebookId(userId: string | Mongo.ObjectID) {
+    const meteorUser: MeteorUser = Meteor.users.findOne(userId) as MeteorUser;
+    if (meteorUser && meteorUser.services && meteorUser.services.facebook) {
+      return meteorUser.services.facebook.id;
+    } else {
+      return null;
+    }
+  }
+  
+  public getUserFromFacebookId(fbId: string): MeteorUser {
+    return Meteor.users.findOne({'services.facebook.id': fbId});
   }
 
   public getFriends(user: MeteorUser): FBFriend[] {
@@ -223,6 +256,13 @@ export class _FacebookService {
         const userRole: RolesData = result.data.find((u: RolesData) => u.user == fbId);
         return userRole != null && userRole.role == (ROLE.Admin || ROLE.Developer);
     }
+  
+  public deleteRequests(requestIds: string[], userFbId) {
+    return requestIds.map(r => {
+      this.graphApiDelete(`/${r}_${userFbId}`, {access_token: this.fetchAppAccessToken()});
+    })
+  }
+
 }
 
 

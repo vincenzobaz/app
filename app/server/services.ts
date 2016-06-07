@@ -67,6 +67,7 @@ function setupGoogleMaps() {
 function setupNotifications() {
   const isDev = process.env.NODE_ENV === 'development';
 
+  //FIXME: Sending too many Facebook Notifications is dangerous and can get the app banned
   const services = [
     new DesktopNotificationService(isDev),
     new FacebookNotificationService(isDev)

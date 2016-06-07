@@ -24,7 +24,7 @@ import {OrderAnswer} from "../../common/models/questions/answers/OrderAnswer";
 import {Location} from "../../common/models/questions/geolocation/Location";
 
 
-const BOT_USERNAME = 'bot';
+export const BOT_USERNAME = 'bot';
 
 
 export const BotService = {
@@ -41,8 +41,8 @@ export const BotService = {
     return Meteor.users.findOne({ username: BOT_USERNAME });
   },
 
-  isBot(userId: string | Mongo.ObjectID) {
-    return BotService.getBot()._id == userId;
+  isBot(userId: string) {
+    return BotService.getBot()._id.valueOf() == userId;
   },
 
   botAsFriend() {
@@ -75,11 +75,12 @@ export const BotService = {
 
   observeGameCreation() {
     const bot = BotService.bot();
-
+    const botId = bot._id.valueOf();
+    console.log("botid:  ", botId);
     const query = Games.find(
       {
         $and: [{
-          $or: [{ player1: bot._id }, { player2: bot._id }]
+          $or: [{ player1: botId }, { player2: botId  }]
         },
           {
             status: { $in: [GAME_STATUS.Playing, GAME_STATUS.Creating, GAME_STATUS.Waiting] }
@@ -103,11 +104,11 @@ export const BotService = {
     });
   },
 
-  observeGame(gameId: string | Mongo.ObjectID, botId: string | Mongo.ObjectID) {
+  observeGame(gameId: string | Mongo.ObjectID, botId: Mongo.ObjectID) {
     const TIMEOUT = 3 * 1000;
     const query = Games.find(gameId);
     const game = Games.findOne(gameId);
-    const botTurn = game.player1 == botId ? 1 : 2;
+    const botTurn = game.player1 == botId.valueOf() ? 1 : 2;
     const handle = query.observe({
       changed(newGame, oldGame) {
         if (BotService.isBot(newGame.getCurrentPlayer())) {
@@ -217,9 +218,7 @@ export const BotService = {
     var moves = [];
 
     const possibilities = BotService.getAvailableMoves(game, game.playerTurn);
-    // console.log("the possibilities", possibilities);
     if (possibilities.length == 0) {
-      // console.log("We are done", moves);
       return { move: null, score: 0 };
     }
     _.forEach(possibilities, m => {

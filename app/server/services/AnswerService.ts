@@ -69,7 +69,6 @@ export module AnswerService {
 
     tile.disabled = true;
     GameBoardRepository.save(board);
-    console.log("the modified tile looks like this: ", tile);
 
     const currentPlayer = game.playerTurn;
     const boardService = new BoardStateService(game.boardState, currentPlayer);
@@ -174,7 +173,6 @@ export module AnswerService {
       game.wonBy = 0;
       game.status = GAME_STATUS.Ended;
     }
-    console.log("the modified tile looks like this: ", (tile.question1.userAnswer as GeoAnswer).data);
 
     game.nextTurn();
     Games.update(game._id, game);

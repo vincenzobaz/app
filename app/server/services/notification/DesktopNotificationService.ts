@@ -5,6 +5,7 @@ import { NotificationRepository } from '../../repositories/NotificationRepositor
 import { NotificationService }    from './NotificationService';
 
 import { MeteorUser }             from '../../MeteorUser';
+import {BOT_USERNAME} from "../BotService";
 
 export class DesktopNotificationService extends NotificationService {
 
@@ -13,11 +14,13 @@ export class DesktopNotificationService extends NotificationService {
   }
 
   public mentionUser(user: MeteorUser): string {
-    if (user.services.facebook != null) {
+    if (user && user.services && user.services.facebook != null) {
       return user.services.facebook.name;
+    } else if (user && user.profile && user.profile.name) {
+      return user.profile.name;
     }
 
-    return user.profile.name;
+    return BOT_USERNAME;
   }
 
   public sendTo(userId: string | Mongo.ObjectID, message: string): void {
