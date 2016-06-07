@@ -16,6 +16,8 @@ import { GAME_STATUS }  from '../../common/models/GameStatus';
 
 import { getAppState, AppState } from '../appState';
 import {FacebookService} from "../../server/services/FacebookService";
+import Location = HistoryModule.Location;
+import {FacebookClientService} from "../services/FacebookClientService";
 
 
 interface DashboardParams {
@@ -25,15 +27,46 @@ interface DashboardParams {
 interface DashboardProps {
   params: DashboardParams;
   children?: any;
+  location?: Location
+}
+
+interface RequestQuery {
+  app_request_type?: 'user_touser';
+  request_ids?: string;
+  fb_source?: 'notification';
+  
 }
 
 @decorate(ReactMeteorData)
 export class Dashboard extends React.Component<DashboardProps, {}> {
 
+  
+  constructor(props: DashboardProps) {
+    super(props);
+    this.deleteFBRequests();
+  }
   data: AppState;
 
   getMeteorData() {
     return getAppState();
+  }
+  
+  componentDidReceiveProps(props) {
+    this.props = props;
+    this.deleteFBRequests();
+  }
+  
+  deleteFBRequests() {
+    const location: Location = this.props.location;
+    if (location) {
+      if (location.query) {
+        const query: RequestQuery = location.query as RequestQuery;
+        if (query.request_ids){
+          const requestIds = query.request_ids.split(',');
+          Meteor.call('FBJoinRequests.delete', requestIds)
+        }
+      }
+    }
   }
 
   render() {
@@ -81,6 +114,7 @@ export class Dashboard extends React.Component<DashboardProps, {}> {
       </div>
     );
   }
+  
 
 }
 

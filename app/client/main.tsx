@@ -8,6 +8,7 @@ import {NotificationStore} from './stores/NotificationStore';
 import {ErrorHandler}      from './components/ErrorHandler';
 import {ModalHandler}      from './components/ModalHandler';
 import {Main}              from './handlers/Main';
+import {FacebookClientService} from "./services/FacebookClientService";
 
 const $$ = document.getElementById.bind(document);
 
