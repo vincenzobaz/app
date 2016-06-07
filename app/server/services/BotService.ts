@@ -76,7 +76,6 @@ export const BotService = {
   observeGameCreation() {
     const bot = BotService.bot();
     const botId = bot._id.valueOf();
-    console.log("botid:  ", botId);
     const query = Games.find(
       {
         $and: [{
@@ -86,13 +85,7 @@ export const BotService = {
             status: {$in: [GAME_STATUS.Playing, GAME_STATUS.Creating, GAME_STATUS.Waiting]}
           }]
       });
-
-    query.fetch().map((g: Game) => {
-      BotService.observeGame(g._id, botId);
-      if (g.getCurrentPlayer() == botId) {
-        BotService.playTurn(g);
-      }
-    });
+    
 
     const handle = query.observe({
       added(game) {
@@ -101,6 +94,7 @@ export const BotService = {
 
       removed(game) {
         console.log(`Game ${game._id} that bot #1 was playing has been removed.`);
+        BotService.proposeGameToPlayerIfNecessary(game.player1);
       }
     });
   },
