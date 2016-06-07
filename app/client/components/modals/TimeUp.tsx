@@ -9,22 +9,22 @@ interface TimeUpProps {
   onSendError?: Function;
 }
 
-export class TimeUp extends React.Component<TimeUpProps, {}>{
+export class TimeUp extends React.Component<TimeUpProps, {}> {
 
-  getDefaultProps() {
-    return {
-      onSent: () => {
-      },
-      onSendError: () => {
-      }
-    };
-  }
-
-  getInitialState() {
-    return {
+  
+  static getDefaultProps = {
+    onSent: () => {
+    },
+    onSendError: () => {
+    }
+  };
+  
+  constructor(props: TimeUpProps) {
+    super(props);
+    this.state = {
       sent: false,
       error: null
-    };
+    }
   }
 
   componentDidMount() {
@@ -33,31 +33,33 @@ export class TimeUp extends React.Component<TimeUpProps, {}>{
 
   sendTimeUp() {
     AnswerStore
-        .timeOut(this.props.game, this.props.tile)
-        .then(res => {
-          if (!res || res.status !== "success") {
-            this.setState({
-              sent: true,
-              error: false,
-              results: null
-            });
-
-            return;
-          }
-
+      .timeOut(this.props.game, this.props.tile)
+      .then((res: {status: string, message: string}) => {
+        console.log("we have the timeup res", res);
+        if (!res || res.status !== "success") {
           this.setState({
             sent: true,
-            error: false,
-            results: res.data
+            error: true,
+            results: res.message
           });
 
-          this.props.onSent();
+          return;
+        }
+
+        this.setState({
+          sent: true,
+          error: false,
+          results: res.message
         });
+        if (this.props.onSent) {
+          this.props.onSent();
+        }
+      });
   }
 
   render() {
     return (
-        <div>Sorry your time is up!</div>
+      <div>Sorry your time is up!</div>
     );
   }
 

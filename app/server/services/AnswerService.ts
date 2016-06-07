@@ -23,6 +23,8 @@ import {OrderItem} from "../../common/models/questions/answers/OrderItem";
 import {OrderAnswer} from "../../common/models/questions/answers/OrderAnswer";
 import {Location} from "../../common/models/questions/geolocation/Location";
 import {GeoQuestion} from "../../common/models/questions/geolocation/GeoQuestion";
+import {Option, None, Some} from "option-t";
+import {Board} from "../../client/components/Board";
 
 interface QuestionAnswer {
   question: Question;
@@ -31,45 +33,63 @@ interface QuestionAnswer {
 
 export module AnswerService {
 
-  export function timeOut(gameId: string, tileId: string) {
 
+  function _setCurrentPlayerScore(gameId: string, tileId: string, score: number): Option<{game: Game, board: GameBoard}> {
+
+    let game: Game = Games.findOne(gameId);
+    if (!game) {
+      console.log("Could not find game with id", gameId);
+      return new None<{game: Game, board: GameBoard}> ();
+    }
+    const board = game.getCurrentBoard();
+    const tiles = board.tiles;
+
+    if (!board) {
+      console.log("Could not find board for game", game._id);
+      return new None<{game: Game, board: GameBoard}> ();
+    }
+
+    const tile: Tile = board.getTileById(tileId);
+
+    if (!tile) {
+      console.log(`Could not find tile: ${tileId} for board ${board._id}`);
+      return new None<{game: Game, board: GameBoard}>();
+    }
+
+    const index = findIndex(tiles, (t: Tile) => t._id.toString() == tileId.toString());
+    const row = Math.floor(index / 3);
+    const col = index % 3;
+    tile.disabled = true;
+    if (game.playerTurn == 1) {
+      game.boardState[row][col].player1Score = score;
+    } else {
+      game.boardState[row][col].player2Score = score;
+    }
+    return new Some({game: game, board: board});
+  }
+  
+  export function timeOut(gameId: string, tileId: string): {status: string, message: string} {
+
+ 
     if (gameId == null || tileId == null) {
       return {
         status: 'error',
         message: `Missing arguments for AnswerService.timeOut`
       };
     }
-
-    const game: Game = <Game>Games.findOne(gameId);
-
-    if (!game) {
+    
+    const result = _setCurrentPlayerScore(gameId, tileId, 0);
+    
+    if (result.isNone) {
       return {
         status: 'error',
-        message: `Cannot find game with id ${gameId}`
+        message: ``
       };
     }
 
-    const board = game.getCurrentBoard();
+    let {game, board} = result.unwrap();
 
-    if (!board) {
-      return {
-        status: 'error',
-        message: `Cannot find board for current player`
-      };
-    }
-
-    const tile: Tile = board.getTileById(tileId);
-
-    if (!tile) {
-      return {
-        status: 'error',
-        message: `Cannot find tile with id ${tileId}`
-      };
-    }
-
-    tile.disabled = true;
     GameBoardRepository.save(board);
-
     const currentPlayer = game.playerTurn;
     const boardService = new BoardStateService(game.boardState, currentPlayer);
     const wins = boardService.playerWins();
@@ -85,8 +105,7 @@ export module AnswerService {
     }
 
     game.nextTurn();
-    //FIXME: for debuggin:
-    //Games.update(game._id, game);
+    Games.update(game._id, game);
 
     return {
       status: 'success',

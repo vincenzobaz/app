@@ -78,7 +78,7 @@ export function setupMeteorMethods() {
             };
         },
 
-        'Answer.timeOut'(gameId, tileId) {
+        'Answer.timeOut'(gameId, tileId): {status: string, message: string}  {
             check(gameId, Mongo.ObjectID);
             check(tileId, Mongo.ObjectID);
 
