@@ -43,6 +43,7 @@ interface QuestionModalState {
   done?: boolean;
   showModal?: boolean;
   tile?: Tile;
+  lookingAtAnswers?: boolean;
 }
 
 
@@ -66,7 +67,8 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
       step: -1,
       answers: [],
       showModal: true,
-      tile: props.tile
+      tile: props.tile,
+      lookingAtAnswers: props.tile.answered
     };
   }
 
@@ -83,7 +85,7 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
     if (this.state.step >= this.steps.length) {
       throw new Error(`Invalid step ${this.state.step}. There are only ${this.steps.length} steps.`);
     }
-      StateCollector.setQuestion(this.props.questions[this.state.step]);
+    StateCollector.setQuestion(this.props.questions[this.state.step]);
     return this.steps[this.state.step];
   }
 
@@ -108,7 +110,7 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
 
   getSteps() {
     return this.state.tile.questions.map(this.questionToStep.bind(this))
-        .filter(q => q != null);
+      .filter(q => q != null);
   }
 
   questionToStep(question: Question) {
@@ -156,7 +158,8 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
   nextQuestion() {
     if (this.state.step == this.state.tile.questions.length - 1) {
       this.setState({
-        done: true
+        done: true,
+        step: 0
       });
     } else {
       this.timers[this.state.step + 1].start();
@@ -202,37 +205,37 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
     });
 
     this.nextQuestion();
-    
+
   }
 
   render() {
     const onHide = this.props.onRequestHide ? this.props.onRequestHide.bind(this) : this.onClose.bind(this);
     const footer = this.state.tile.answered ? this.renderDoneFooter() : this.renderFooter();
     //true indicated the modal can be dismissed if clicked in the background
-    const backdrop = RunConfig.env == ENVIRONMENT.Production? "static" :true;
+    const backdrop = RunConfig.env == ENVIRONMENT.Production && !this.state.lookingAtAnswers ? "static" : true;
     return (
-        <Modal enforceFocus={false} show={this.state.showModal} onHide={onHide} backdrop={backdrop}>
-          <Modal.Header>
-            <Modal.Title>{this.renderTitle()}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            {this.renderBody()}
-          </Modal.Body>
-          <Modal.Footer>
-            {footer}
-          </Modal.Footer>
-        </Modal>
+      <Modal enforceFocus={false} show={this.state.showModal} onHide={onHide} backdrop={backdrop}>
+        <Modal.Header closeButton={this.state.lookingAtAnswers}>
+          <Modal.Title>{this.renderTitle()}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {this.renderBody()}
+        </Modal.Body>
+        <Modal.Footer>
+          {footer}
+        </Modal.Footer>
+      </Modal>
     );
   }
 
   renderCloseButton() {
     if (!this.isDone() && !this.isTimeUp()) {
-      return <span></span>;
+      return <span/>;
     }
 
     return (
-        <span className='close' role='button' data-dismiss='modal' aria-hidden='true'
-              onClick={this.props.onRequestHide}>
+      <span className='close' role='button' data-dismiss='modal' aria-hidden='true'
+            onClick={this.props.onRequestHide}>
         <i className='icon-remove-sign icon-2x'></i>
       </span>
     );
@@ -252,16 +255,16 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
     }
 
     if (this.isDone()) {
-      const onREquestHide = this.onClose.bind(this);
+      const onRequestHide = this.onClose.bind(this);
       return (
-          <Done game={this.props.game}
-                tile={this.state.tile}
-                answers={this.state.answers}
-                onSent={this.onAnswerReceived.bind(this)}
-                onSendError={this.props.onSendError}
-                onClose={onREquestHide}
-                onClickPrevious={this.onClickPrevious.bind(this)}
-          />
+        <Done game={this.props.game}
+              tile={this.state.tile}
+              answers={this.state.answers}
+              onSent={this.onAnswerReceived.bind(this)}
+              onSendError={this.props.onSendError}
+              onClose={onRequestHide}
+              onClickPrevious={this.onClickPrevious.bind(this)}
+        />
       );
     }
 
@@ -274,23 +277,23 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
     }
 
     return (
-        <TimeLeft maxTime={this.maxTime}
-                  onTimeUp={this.onTimeUp.bind(this)}/>
+      <TimeLeft maxTime={this.maxTime}
+                onTimeUp={this.onTimeUp.bind(this)}/>
     );
   }
 
   renderFooter() {
     return (
-        <div className='grid-container'>
-          <div className='grid-25'>
-            {this.renderTimeLeft(this.isDone())}
-          </div>
-
-
-          <div className='grid-25' style={{textAlign: 'right'}}>
-            <img src={progressImage(this.state.step + 1, 'red')} alt='' width='22' height='22'/>
-          </div>
+      <div className='grid-container'>
+        <div className='grid-25'>
+          {this.renderTimeLeft(this.isDone())}
         </div>
+
+
+        <div className='grid-25' style={{textAlign: 'right'}}>
+          <img src={progressImage(this.state.step + 1, 'red')} alt='' width='22' height='22'/>
+        </div>
+      </div>
     );
   }
 
@@ -298,13 +301,21 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
     let previousDisabled = this.state.step == 0;
     let nextDisabled = this.state.step >= this.steps.length - 1;
     let nextButton = <noscript/>;
-    let previousButtonText = "Previous";
+    let leftButton = <noscript />;
     if (this.state.done) {
-      previousButtonText = "See answers";
+      leftButton = <Button className="question-navigation-button" onClick={this.onClickSeeAnswers.bind(this)}>
+        See Answers
+      </Button>
+    } else {
+      leftButton = <Button className="question-navigation-button" disabled={previousDisabled} onClick={this.onClickPrevious.bind(this)}>
+        Previous
+      </Button>
     }
+
+
     if (nextDisabled) {
       nextButton = <Button className="question-navigation-button"
-                                     onClick={this.onClose.bind(this)}>
+                           onClick={this.onClose.bind(this)}>
         Close
       </Button>;
 
@@ -313,19 +324,24 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
         Next
       </Button>
     }
-    
-    return (
-        <div className='grid-container'>
 
-          <div className="grid-100 question-navigation">
-            <Button className="question-navigation-button" disabled={previousDisabled}
-                    onClick={this.onClickPrevious.bind(this)}>
-              {previousButtonText}
-            </Button>
-            {nextButton}
+    return (
+      <div className='grid-container'>
+        <div className="grid-100 question-navigation">
+        {leftButton}
+        {nextButton}
           </div>
-        </div>
+      </div>
     )
+  }
+
+
+  onClickSeeAnswers() {
+    this.setState({
+      step: 0,
+      done: false,
+      lookingAtAnswers: true
+    });
   }
 
   onClickNext() {
@@ -334,7 +350,6 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
 
   onClickPrevious() {
     this.previousStep();
-    this.state.done = false;
   }
 
   onClose(event: React.MouseEvent) {
