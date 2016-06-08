@@ -211,10 +211,11 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
   render() {
     const onHide = this.props.onRequestHide ? this.props.onRequestHide.bind(this) : this.onClose.bind(this);
     const footer = this.state.tile.answered ? this.renderDoneFooter() : this.renderFooter();
+    const allowClosing = RunConfig.env != ENVIRONMENT.Production || this.state.lookingAtAnswers;
     //true indicated the modal can be dismissed if clicked in the background
-    const backdrop = RunConfig.env == ENVIRONMENT.Production && !this.state.lookingAtAnswers ? "static" : true;
+    const backdrop = allowClosing ? true: "static" ;
     return (
-      <Modal enforceFocus={false} show={this.state.showModal} onHide={onHide} backdrop={backdrop}>
+      <Modal enforceFocus={false} show={this.state.showModal} onHide={onHide} backdrop={backdrop} keyboard={allowClosing}>
         <Modal.Header closeButton={this.state.lookingAtAnswers}>
           <Modal.Title>{this.renderTitle()}</Modal.Title>
         </Modal.Header>
