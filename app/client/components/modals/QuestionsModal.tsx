@@ -16,14 +16,11 @@ import {Tile} from "../../../common/models/Tile";
 import {KIND} from "../../../common/models/questions/common/Kind";
 import {QuestionTimer} from "../../helpers/QuestionTimer";
 import {QuestionFactory} from "../../../common/models/questions/QuestionFactory";
-import {Button} from 'react-bootstrap';
+import {Button, Row, Col} from 'react-bootstrap';
 import {RunConfig, ENVIRONMENT} from "../../helpers/RunConfig";
 import {StateCollector} from "../../StateCollector";
-// import {Timer} from "timer-machine";
 
 
-var nop = () => {
-};
 
 interface QuestionsModalProps {
   game: Game;
@@ -44,6 +41,7 @@ interface QuestionModalState {
   showModal?: boolean;
   tile?: Tile;
   lookingAtAnswers?: boolean;
+  timeIsUp?: boolean;
 }
 
 
@@ -68,7 +66,8 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
       answers: [],
       showModal: true,
       tile: props.tile,
-      lookingAtAnswers: props.tile.answered
+      lookingAtAnswers: props.tile.answered,
+      timeIsUp: false
     };
   }
 
@@ -90,11 +89,9 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
   }
 
   nextStep() {
-
     this.setState({
       step: Math.min(this.state.step + 1, this.state.tile.questions.length),
     });
-
   }
 
   previousStep() {
@@ -182,7 +179,8 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
       timeUp: true,
       step: this.state.step,
       answers: this.state.answers,
-      done: this.state.done
+      done: this.state.done,
+      timeIsUp: true
     });
   }
 
@@ -211,12 +209,13 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
   render() {
     const onHide = this.props.onRequestHide ? this.props.onRequestHide.bind(this) : this.onClose.bind(this);
     const footer = this.state.tile.answered ? this.renderDoneFooter() : this.renderFooter();
-    const allowClosing = RunConfig.env != ENVIRONMENT.Production || this.state.lookingAtAnswers;
+    const allowClosing = RunConfig.env != ENVIRONMENT.Production || this.state.lookingAtAnswers || this.state.timeIsUp;
     //true indicated the modal can be dismissed if clicked in the background
-    const backdrop = allowClosing ? true: "static" ;
+    const backdrop = allowClosing ? true : "static";
     return (
-      <Modal enforceFocus={false} show={this.state.showModal} onHide={onHide} backdrop={backdrop} keyboard={allowClosing}>
-        <Modal.Header closeButton={this.state.lookingAtAnswers}>
+      <Modal enforceFocus={false} show={this.state.showModal} onHide={onHide} backdrop={backdrop}
+             keyboard={allowClosing}>
+        <Modal.Header closeButton={allowClosing}>
           <Modal.Title>{this.renderTitle()}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -284,18 +283,31 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
   }
 
   renderFooter() {
-    return (
-      <div className='grid-container'>
-        <div className='grid-25'>
-          {this.renderTimeLeft(this.isDone())}
-        </div>
+    const onHide = this.props.onRequestHide ? this.props.onRequestHide.bind(this) : this.onClose.bind(this);
 
 
-        <div className='grid-25' style={{textAlign: 'right'}}>
-          <img src={progressImage(this.state.step + 1, 'red')} alt='' width='22' height='22'/>
+    if (this.state.timeIsUp) {
+      return (
+        <Row>
+          <Col xsOffset={5} xs={2} >
+            <Button className="centered" onClick={onHide} block>OK </Button>
+            </Col>
+        </Row>
+      );
+    } else {
+      return (
+        <div className='grid-container'>
+          <div className='grid-25'>
+            {this.renderTimeLeft(this.isDone())}
+          </div>
+
+
+          <div className='grid-25' style={{textAlign: 'right'}}>
+            <img src={progressImage(this.state.step + 1, 'red')} alt='' width='22' height='22'/>
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 
   renderDoneFooter() {
@@ -308,7 +320,8 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
         See Answers
       </Button>
     } else {
-      leftButton = <Button className="question-navigation-button" disabled={previousDisabled} onClick={this.onClickPrevious.bind(this)}>
+      leftButton =<Button className="question-navigation-button" disabled={previousDisabled}
+                          onClick={this.onClickPrevious.bind(this)}>
         Previous
       </Button>
     }
@@ -329,9 +342,9 @@ export class QuestionsModal extends React.Component<QuestionsModalProps, Questio
     return (
       <div className='grid-container'>
         <div className="grid-100 question-navigation">
-        {leftButton}
-        {nextButton}
-          </div>
+          {leftButton}
+          {nextButton}
+        </div>
       </div>
     )
   }
