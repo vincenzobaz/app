@@ -1,9 +1,9 @@
+import {Option}        from 'option-t';
 
-import { Option  }        from 'option-t';
-
-import { Board }          from '../components/Board';
-import { GameResult }     from '../components/GameResult';
-import { Game }           from '../models/Game';
+import {Board}          from '../components/Board';
+import {GameResult}     from '../components/GameResult';
+import {Game}           from '../models/Game';
+import {Well} from 'react-bootstrap';
 
 interface PlayGameProps {
   game: Option<Game>;
@@ -12,14 +12,14 @@ interface PlayGameProps {
 export class PlayGame extends React.Component<PlayGameProps, {}> {
 
   render() {
-    const { game } = this.props;
-
-    return game.map(game => {
+    const {game} = this.props;
+    console.log("rendering game");
+    return game.map((game: Game) => {
       if (game.hasEnded) {
         return (
           <div className="play-game play-game-ended">
-            <GameResult game={game} />
-            <Board      game={game} />
+            <GameResult game={game}/>
+            <Board game={game}/>
           </div>
         );
       }
@@ -27,7 +27,7 @@ export class PlayGame extends React.Component<PlayGameProps, {}> {
       if (game.isPlaying) {
         return (
           <div className="play-game play-game-playing">
-            <Board game={game} />
+            <Board game={game}/>
           </div>
         );
       }
@@ -35,7 +35,7 @@ export class PlayGame extends React.Component<PlayGameProps, {}> {
       if (game.isWaiting) {
         return (
           <div className="play-game play-game-waiting">
-            {this.renderWaiting()}
+            {this.renderWaiting() }
           </div>
         );
       }
@@ -43,7 +43,15 @@ export class PlayGame extends React.Component<PlayGameProps, {}> {
       if (game.isCreating) {
         return (
           <div className="play-game play-game-creating">
-            {this.renderCreating()}
+            {this.renderCreating() }
+          </div>
+        );
+      }
+
+      if (game.hasFailed) {
+        return (
+          <div className="play-game play-game-failing">
+            {this.renderFailed()}
           </div>
         );
       }
@@ -51,6 +59,7 @@ export class PlayGame extends React.Component<PlayGameProps, {}> {
   }
 
   renderNoGame() {
+    console.log("rendering no game");
     const style = {
       textAlign: 'center',
       lineHeight: '2em',
@@ -89,6 +98,22 @@ export class PlayGame extends React.Component<PlayGameProps, {}> {
       <p style={style}>
         We are still waiting for your opponent to accept your join request.
       </p>
+    );
+  }
+
+  renderFailed() {
+    const style = {
+      textAlign: 'center',
+      lineHeight: '2em',
+      marginTop: '3em'
+    };
+
+    return (
+      <Well>
+        <p style={style}>
+          Unfortunately the game could not be created due to the lack of activity on facebook from one of players
+        </p>
+      </Well>
     );
   }
 
