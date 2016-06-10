@@ -7,6 +7,8 @@ import {Page}       from "./Page";
 import {Text}       from "./Text";
 import {Comment}    from "./Comment";
 import {TaggedPost} from "./TaggedPost";
+import * as _ from 'lodash';
+
 
 export class None extends React.Component<{}, {}>{
   render() {

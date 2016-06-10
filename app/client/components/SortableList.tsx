@@ -1,6 +1,8 @@
 import {Item} from "../../common/models/questions/common/Item";
 import {Motion, spring} from 'react-motion';
 import {SpringHelperConfig} from "react-motion";
+import * as _ from 'lodash';
+
 
 const defaultItemHeight = 30;
 

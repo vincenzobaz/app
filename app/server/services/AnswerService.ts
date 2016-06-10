@@ -1,18 +1,17 @@
 ///<reference path="../../common/models/questions/answers/Answer.ts"/>
 
-import { findIndex, zip } from "lodash";
+import {findIndex} from "lodash";
 import Question from "../../common/models/Question";
-import { AnswerVerificationService } from "./verification/AnswerVerificationService";
-import { Game } from "../collections/Game";
-import { Games } from "../collections/Games";
-import { Tile } from "../../common/models/Tile";
-import { GameBoardRepository } from "../repositories/GameBoardRepository";
-import { BoardStateService } from "./BoardStateService";
-import {GameStatus, GAME_STATUS} from "../../common/models/GameStatus";
-import { GameBoard } from "../../common/models/GameBoard";
-import { KIND } from "../../common/models/questions/common/Kind";
-import { Marker } from "../../common/models/questions/geolocation/Marker";
-import { QuestionFactory } from "../../common/models/questions/QuestionFactory";
+import {AnswerVerificationService} from "./verification/AnswerVerificationService";
+import {Game} from "../collections/Game";
+import {Games} from "../collections/Games";
+import {Tile} from "../../common/models/Tile";
+import {GameBoardRepository} from "../repositories/GameBoardRepository";
+import {BoardStateService} from "./BoardStateService";
+import {GAME_STATUS} from "../../common/models/GameStatus";
+import {GameBoard} from "../../common/models/GameBoard";
+import {KIND} from "../../common/models/questions/common/Kind";
+import {QuestionFactory} from "../../common/models/questions/QuestionFactory";
 import {MultipleChoiceData, MultipleChoiceAnswer} from "./verification/services/MultipleChoiceVerificationService";
 import {TimelineData} from "../../common/models/questions/answers/TimelineData";
 import {TimelineAnswer} from "../../common/models/questions/answers/TimelineAnswer";
@@ -21,10 +20,9 @@ import {Answer} from "./../../common/models/questions/answers/Answer";
 import {OrderData} from "../../common/models/questions/answers/OrderData";
 import {OrderItem} from "../../common/models/questions/answers/OrderItem";
 import {OrderAnswer} from "../../common/models/questions/answers/OrderAnswer";
-import {Location} from "../../common/models/questions/geolocation/Location";
-import {GeoQuestion} from "../../common/models/questions/geolocation/GeoQuestion";
 import {Option, None, Some} from "option-t";
-import {Board} from "../../client/components/Board";
+import * as _ from 'lodash';
+
 
 interface QuestionAnswer {
   question: Question;
@@ -39,14 +37,14 @@ export module AnswerService {
     let game: Game = Games.findOne(gameId);
     if (!game) {
       console.log("Could not find game with id", gameId);
-      return new None<{game: Game, board: GameBoard}> ();
+      return new None<{game: Game, board: GameBoard}>();
     }
     const board = game.getCurrentBoard();
     const tiles = board.tiles;
 
     if (!board) {
       console.log("Could not find board for game", game._id);
-      return new None<{game: Game, board: GameBoard}> ();
+      return new None<{game: Game, board: GameBoard}>();
     }
 
     const tile: Tile = board.getTileById(tileId);
@@ -67,19 +65,19 @@ export module AnswerService {
     }
     return new Some({game: game, board: board});
   }
-  
+
   export function timeOut(gameId: string, tileId: string): {status: string, message: string} {
 
- 
+
     if (gameId == null || tileId == null) {
       return {
         status: 'error',
         message: `Missing arguments for AnswerService.timeOut`
       };
     }
-    
+
     const result = _setCurrentPlayerScore(gameId, tileId, 0);
-    
+
     if (result.isNone) {
       return {
         status: 'error',
@@ -92,10 +90,10 @@ export module AnswerService {
     GameBoardRepository.save(board);
     const currentPlayer = game.playerTurn;
     const boardService = new BoardStateService(game.boardState, currentPlayer);
-    const wins = boardService.playerWins();
+    const winningTiles: number[] = boardService.playerWins();
     const draw = boardService.isDraw(game);
 
-    if (wins) {
+    if (!_.isEmpty(winningTiles)) {
       game.wonBy = currentPlayer;
       game.status = GAME_STATUS.Ended;
     }
@@ -146,7 +144,7 @@ export module AnswerService {
 
 
     const scores = questions.map((q: Question, i: number) => {
-      return { questionId: q._id, score: result[i] };
+      return {questionId: q._id, score: result[i]};
     });
 
 
@@ -181,25 +179,14 @@ export module AnswerService {
 
     this.updateMoves(game, newScore, currentPlayer, filterMoves);
 
-    const wins = boardService.playerWinsForRowAndColumn(currentPlayer, row, col);
-    const draw = boardService.isDraw(game);
-
-
-    if (wins) {
-      game.wonBy = currentPlayer;
-      game.status = GAME_STATUS.Ended;
-    } else if (draw) {
-      game.wonBy = 0;
-      game.status = GAME_STATUS.Ended;
-    }
-
+    const {win, draw} = resolveGameEnded(currentPlayer, boardService, game);
     game.nextTurn();
     Games.update(game._id, game);
     GameBoardRepository.save(board);
 
     const returnValue = {
       status: 'success',
-      win: wins,
+      win: win,
       draw: draw,
       correct: correctAnswersNum,
       wrong: wrongAnswersNum,
@@ -210,6 +197,28 @@ export module AnswerService {
 
     return returnValue;
   }
+  
+  function resolveGameEnded(currentPlayer: number, boardService: BoardStateService, game: Game): {win: boolean, draw: boolean} {
+    const winningTiles: number[] = boardService.playerWins();
+    const draw = boardService.isDraw(game);
+    
+    winningTiles.map(i => {
+      const row = Math.floor(i / 3);
+      const col = i % 3;
+        game.boardState[row][col].winningTile = true;
+    });
+      
+
+    if (!_.isEmpty(winningTiles)) {
+      game.wonBy = currentPlayer;
+      game.status = GAME_STATUS.Ended;
+    } else if (draw) {
+      game.wonBy = 0;
+      game.status = GAME_STATUS.Ended;
+    }
+    
+    return {win: !_.isEmpty(winningTiles), draw: draw};
+}
 
   export function typeAnswers(tile: Tile, answers: Answer[]) {
     const questions: Question[] = tile.questions;
@@ -217,7 +226,7 @@ export module AnswerService {
 
 
     for (let i: number = 0; i < questions.length; i++) {
-      questionAnswer[i] = { question: QuestionFactory.questionFromRaw(questions[i]), answer: answers[i] };
+      questionAnswer[i] = {question: QuestionFactory.questionFromRaw(questions[i]), answer: answers[i]};
 
     }
     return questionAnswer.map((entry: QuestionAnswer) => this.typeAnswer(entry.question, entry.answer));

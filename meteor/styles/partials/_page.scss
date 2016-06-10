@@ -810,6 +810,25 @@ $grey-border: #b8b8b8;
   stroke-miterlimit: 1.41421;
 }
 
+@mixin trigger-full($color) {
+  fill:none;
+  stroke-width:21px;
+  stroke:$color;
+  fill-rule:evenodd;
+  clip-rule:evenodd;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-miterlimit:1.41421;
+}
+
+.trigger-full-user-conquered {
+  @include trigger-full($primarycolor)
+}
+
+.trigger-full-enemy-conquered {
+  @include trigger-full($secondarycolor)
+}
+
 .trigger-ring-element-empty {
   fill: $empty-color;
 }
@@ -825,6 +844,8 @@ $grey-border: #b8b8b8;
 .trigger-ring-element-both {
   fill: $secondarycolor;
 }
+
+
 
 .disclaimer {
   margin-top: 20px;

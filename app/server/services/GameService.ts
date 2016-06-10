@@ -2,6 +2,7 @@ import {Games} from '../collections/Games';
 import {GameStatus, GAME_STATUS} from  '../../common/models/GameStatus';
 import {Game} from "../collections/Game";
 import {RawTileState} from "../collections/TileState";
+import * as _ from 'lodash';
 
 export const GameService = {
   start(gameId) {

@@ -45,6 +45,7 @@ const createTile = (game: Game, tile: Tile, tileNum: number) => {
                     questionModal={modal}
                     disabled={disabled}
                     answered={tile.answered}
+                    winningTile={tileState.winningTile}
     />
 
   );

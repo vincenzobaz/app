@@ -1,3 +1,4 @@
+
 import {Games} from "../collections/Games";
 import {GAME_STATUS, GameStatus} from "../../common/models/GameStatus";
 import {JoinRequests} from "../collections/JoinRequests";
@@ -266,11 +267,11 @@ export const BotService = {
   score(boardState: RawTileState[][], currentPlayer, depth) {
     const boardStateService = new BoardStateService(boardState, currentPlayer);
 
-    if (boardStateService.playerWins()) {
+    if (!_.isEmpty(boardStateService.playerWins())) {
       return 10 - depth;
     }
 
-    if (boardStateService.playerWins((currentPlayer % 2) + 1)) {
+    if (!_.isEmpty(boardStateService.playerWins((currentPlayer % 2) + 1))) {
       return depth - 10;
     }
 

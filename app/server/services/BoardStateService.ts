@@ -1,6 +1,7 @@
 
 import { RawTileState } from "app/server/collections/TileState";
 import { Game } from "app/server/collections/Game";
+import * as _ from 'lodash';
 
 export class BoardStateService
 {
@@ -9,67 +10,65 @@ export class BoardStateService
   {
   }
 
-  playerWins(player = this.playerNum)
+  playerWins(player = this.playerNum): number[]
   {
-    if (this.verifyWonDiagonal(player) || this.verifyWonAntiDiagonal(player)) {
-      return true;
-    }
-
-    for (let i = 0; i < 3; i += 1) {
-      if (this.verifyWonRow(i, player) || this.verifyWonColumn(i, player)) {
-        return true;
-      }
-    }
-
-    return false;
+    
+    return _.uniq(_.concat(
+      this.verifyWonDiagonal(player),
+      this.verifyWonAntiDiagonal(player),
+      _.flatMap(_.range(0,3), i => this.verifyWonRow(i, player).concat(this.verifyWonColumn(i, player)))
+    ));
   }
 
-  playerWinsForRowAndColumn(player, row, column)
+  playerWinsForRowAndColumn(player, row, column): number[]
   {
-    return (
-      this.verifyWonRow(row, player) ||
-      this.verifyWonColumn(column, player) ||
-      this.verifyWonDiagonal(player) ||
-      this.verifyWonAntiDiagonal(player)
-    );
+    return _.uniq(
+    this.verifyWonRow(row, player).concat(
+        this.verifyWonColumn(column, player),
+        this.verifyWonDiagonal(player),
+        this.verifyWonAntiDiagonal(player)
+      ));
+    
   }
 
-  verifyWonRow(row, player = this.playerNum)
+  verifyWonRow(row, player = this.playerNum): number[]
   {
     for (let i = 0; i < 3; i += 1) {
       if (this.board[row][i].player != player || this.board[row][i].score == 0) {
-        return false;
+        return [];
       }
     }
-
-    return true;
+    const base = row * 3;
+    return [base, base + 1, base + 2];
   }
 
-  verifyWonColumn(column, player = this.playerNum)
+  verifyWonColumn(column, player = this.playerNum): number[]
   {
     for (let j = 0; j < 3; j += 1) {
       if (this.board[j][column].player != player || this.board[j][column].score == 0) {
-        return false;
+        return [];
       }
     }
 
-    return true;
+    return [column, column + 3, column + 6];
   }
 
-  verifyWonDiagonal(player = this.playerNum)
+  verifyWonDiagonal(player = this.playerNum): number[]
   {
     for (let i = 0; i < 3; i += 1) {
       const cell = this.board[i][i];
 
       if (cell.player != player || cell.score == 0) {
-        return false;
+        return [];
       }
     }
+    
+    
 
-    return true;
+    return [0, 4, 8];
   }
 
-  verifyWonAntiDiagonal(player = this.playerNum)
+  verifyWonAntiDiagonal(player = this.playerNum): number[]
   {
     var y = 2;
 
@@ -77,13 +76,13 @@ export class BoardStateService
       const cell = this.board[y][x];
 
       if (cell.player != player || cell.score == 0) {
-        return false;
+        return [];
       }
 
       y -= 1;
     }
 
-    return true;
+    return [2, 4, 6];
   }
 
   isDraw(game: Game)

@@ -1,4 +1,4 @@
-
+import * as _ from 'lodash';
 import {RawTile, Tile} from "./Tile";
 
 export interface RawGameBoard {

@@ -6,7 +6,6 @@
     "cryptojs": "registry:dt/cryptojs#3.1.2+20160317120654",
     "fbsdk": "registry:dt/fbsdk#0.0.0+20160316155526",
     "jquery": "registry:dt/jquery#1.10.0+20160417213236",
-    "lodash": "registry:dt/lodash#3.10.0+20160330154726",
     "meteor": "registry:dt/meteor#1.3.0+20160514174853",
     "node": "registry:dt/node#6.0.0+20160524002506",
     "notifyjs": "registry:dt/notifyjs#1.2.8+20160317120654",
@@ -25,5 +24,8 @@
     "react-mixin": "registry:dt/react-mixin#2.0.2+20160316155526",
     "react-router": "registry:dt/react-router#2.0.0+20160501155536",
     "react-router/history": "registry:dt/react-router/history#2.0.0+20160316155526"
+  },
+  "dependencies": {
+    "lodash": "registry:npm/lodash#4.0.0+20160416211519"
   }
 }

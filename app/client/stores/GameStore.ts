@@ -10,6 +10,8 @@ import { MeteorPromise }    from '../helpers/meteor';
 import { Game }             from '../models/Game';
 import { Games }            from '../collections/Games';
 import {FacebookService} from "../../server/services/FacebookService";
+import * as _ from 'lodash';
+
 
 export module GameStore {
 

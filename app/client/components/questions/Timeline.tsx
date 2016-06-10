@@ -5,6 +5,8 @@ import {Button, ButtonGroup} from "react-bootstrap";
 import {QuestionProps} from "./QuestionProps";
 import {Moment} from "moment/moment";
 import {TimelineAnswer} from "../../../common/models/questions/answers/TimelineAnswer";
+import * as _ from 'lodash';
+
 const moment = require('moment');
 
 

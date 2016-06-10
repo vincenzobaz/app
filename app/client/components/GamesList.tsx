@@ -1,6 +1,8 @@
 import {GameItem, None} from './GameItem';
 import {Game} from "../models/Game";
 import {Glyphicon, Button} from "react-bootstrap";
+import * as _ from 'lodash';
+
 
 const isCurrent = (g: Game) => !g.hasEnded && !g.hasFailed && !g.isWaiting;
 const isWaiting = (g: Game) => g.isWaiting;

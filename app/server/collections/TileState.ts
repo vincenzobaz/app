@@ -7,4 +7,5 @@ export interface RawTileState {
   player1Score?: number;
   //- 1 indicated the tile hasn't been tried yet
   player2Score?: number;
+  winningTile?: boolean;
 }

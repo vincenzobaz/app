@@ -9,6 +9,8 @@ import {QuestionProps} from "./QuestionProps";
 import {OrderAnswer} from "../../../common/models/questions/answers/OrderAnswer";
 import {OrderItem} from "../../../common/models/questions/answers/OrderItem";
 import {OrderChoice} from "../../../common/models/questions/order/OrderChoice";
+import * as _ from 'lodash';
+
 
 
 interface ReorderProps extends QuestionProps {

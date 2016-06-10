@@ -4,6 +4,8 @@ import {Kind} from "../common/Kind";
 import {Item} from "../common/Item";
 import {SUBJECT_TYPE} from "../common/SubjectType";
 import Question, {RawQuestion} from "../../Question";
+import * as _ from 'lodash';
+
 
 export interface RawOrderQuestion extends RawQuestion{
     _id: string | Mongo.ObjectID;

@@ -1,3 +1,6 @@
+import * as _ from 'lodash';
+
+
 export interface Entry<A> {
   index: number;
   element: A;

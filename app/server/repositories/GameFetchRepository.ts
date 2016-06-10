@@ -1,4 +1,5 @@
 import {GameFetches} from '../collections/GameFetches';
+import * as _ from 'lodash';
 
 export const GameFetchRepository = {
 
