@@ -50,9 +50,9 @@ export const NotificationStore = {
   showInPageNotif(note: Notification): void {
     Alertify
       .maxLogItems(5)
-      .delay(5 * 1000) // milliseconds
+      .delay(30 * 1000) // milliseconds
       .closeLogOnClick(true)
-      .logPosition('top right')
+      .logPosition('top left')
       .log(note.message);
   },
 
