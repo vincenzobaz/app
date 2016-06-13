@@ -22,6 +22,10 @@ import {OrderItem} from "../../common/models/questions/answers/OrderItem";
 import {OrderAnswer} from "../../common/models/questions/answers/OrderAnswer";
 import {Option, None, Some} from "option-t";
 import * as _ from 'lodash';
+import {Notification} from "../../common/models/Notification";
+import {FacebookService} from "./FacebookService";
+import {NotificationRepository} from "../repositories/NotificationRepository";
+import {BotService} from "./BotService";
 
 
 interface QuestionAnswer {
@@ -135,6 +139,8 @@ export module AnswerService {
 
     const boardState = game.boardState;
     const currentPlayer: number = game.playerTurn;
+    const currentPlayerFbId = currentPlayer == 1? game.player1: game.player2;
+    const opponentFbId = currentPlayer == 1? game.player2: game.player1;
     const boardService = new BoardStateService(boardState, currentPlayer);
 
     const typedAnswers = this.typeAnswers(tile, answers);
@@ -194,6 +200,14 @@ export module AnswerService {
     };
 
     console.log(`Result of player ${currentPlayer} row: ${row}, column: ${col}`, _.omit(returnValue, 'tile'));
+    
+    const opponent = FacebookService.getUserFromFacebookId(opponentFbId);
+    const opponentId = opponent? opponent._id: BotService.bot()._id;
+    const currentUser= FacebookService.getUserFromFacebookId(currentPlayerFbId);
+    const currentUserName = currentUser? currentUser.services.facebook.name: "Bot";
+    const notification = new Notification(new Mongo.ObjectID(), opponentId, `${currentUserName} just played his turn`);
+    
+    NotificationRepository.save(notification);
 
     return returnValue;
   }
