@@ -97,7 +97,9 @@ export class GamesList extends React.Component<GamesListProps, GameListState> {
   }
 
   sortGames(games: Game[]) {
-    return _.sortBy(games, (g: Game) => g.creationTime).reverse();
+    const yourTurnGames = _.sortBy( _.filter(games, (g: Game) => g.isMyTurnToPlay), (g: Game) => g.creationTime).reverse();
+    const nonTurnGames = _.sortBy( _.filter(games, (g: Game) => !g.isMyTurnToPlay), (g: Game) => g.creationTime).reverse();
+    return _.concat(yourTurnGames, nonTurnGames);
   }
 
   renderPreviousNavigation() {
