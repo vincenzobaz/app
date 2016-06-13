@@ -14,12 +14,15 @@ import {MeteorUser} from "./MeteorUser";
 export const Server = {
 
   fetchGameBoard(fbId: string, gameId: string | Mongo.ObjectID, playerNum: number, createFetch: boolean = true) {
-    console.log(`Fetching game board for user ${fbId}...`);
+    console.log(`Fetching game board for user ${fbId}... and game ${gameId}`);
     const game: Game = Games.findOne(gameId);
     const bot = BotService.bot();
 
     let gameBoard;
 
+    if (!game) {
+      return;
+    }
     try {
       if (BotService.isBot(fbId)) {
         console.log(`User ${fbId} is a bot. Creating bot board...`);
@@ -121,12 +124,13 @@ export const Server = {
 
     if (fetch.tries >= 10) {
       const failedGame: Game = Games.findOne(fetch.gameId);
-      failedGame.status = GAME_STATUS.Failed;
-      Games.update(failedGame._id, failedGame);
-
+      if (failedGame) {
+        failedGame.status = GAME_STATUS.Failed;
+        Games.update(failedGame._id, failedGame);
+        console.log(`Server: Maximum number of tries for game ${failedGame._id} reached`);
+      }
       GameFetches.remove(fetch._id);
 
-      console.log(`Server: Maximum number of tries for game ${failedGame._id} reached`);
     }
     else {
       GameFetchRepository.save(fetch);
