@@ -333,7 +333,7 @@ export const BotService = {
             player2: userFbId
           }]
       },
-        {status: {$nin: [GAME_STATUS.Ended, GAME_STATUS.Failed]}}]
+        {status: {$nin: [GAME_STATUS.Ended, GAME_STATUS.Failed, GAME_STATUS.Waiting]}}]
     }).count();
 
     console.log(`We have ${botRequestCount} botrequests and ${botGamesCount} botgames`);
