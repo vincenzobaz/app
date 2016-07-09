@@ -1,34 +1,35 @@
-import {GenericErrorModal} from './modals/GenericErrorModal';
-import {NetworkErrorModal} from './modals/NetworkErrorModal';
-import {_ErrorStore} from "../stores/ErrorStore";
 
+import {GenericErrorModal} from './modals/GenericErrorModal';
+import {TurnErrorModal}    from './modals/TurnErrorModal';
+import {NetworkErrorModal} from './modals/NetworkErrorModal';
+import {ErrorStore}        from '../stores/ErrorStore';
 
 interface ErrorHandlerProps {
-  store: _ErrorStore;
+  store: ErrorStore;
 }
 
 interface ErrorHandlerState {
-  error: _ErrorStore;
+  currentError: any,
   pendingErrors?: any[];
   isModalOpen: boolean;
 }
 
 export class ErrorHandler extends React.Component<ErrorHandlerProps, ErrorHandlerState> {
 
-  interval: number;
-  modals: any[];
-
-  // modals: {
-  //   Generic: GenericErrorModal,
-  //   Network: NetworkErrorModal
-  // },
+  interval: any;
+  modals: any;
 
   constructor(props: ErrorHandlerProps) {
     super(props);
-    this.modals = [GenericErrorModal, NetworkErrorModal];
+
+    this.modals = {
+      Turn:    TurnErrorModal,
+      Generic: GenericErrorModal,
+      Network: NetworkErrorModal
+    };
 
     this.state = {
-      error: props.store,
+      currentError: null,
       pendingErrors: [],
       isModalOpen: false
     };
@@ -36,8 +37,7 @@ export class ErrorHandler extends React.Component<ErrorHandlerProps, ErrorHandle
 
   componentWillMount() {
     this.props.store.on('error', this.onNewError.bind(this));
-    //FIXME: uncertain if interval should be from es6 or from node
-    // this.interval = setInterval(this.showNextError, 1000);
+    this.interval = setInterval(this.showNextError, 1000);
   }
 
   componentWillUnmount() {
@@ -54,7 +54,7 @@ export class ErrorHandler extends React.Component<ErrorHandlerProps, ErrorHandle
     if (!this.state.isModalOpen && this.hasPending()) {
       var error = this.state.pendingErrors.shift();
       this.setState({
-        error: error,
+        currentError: error,
         isModalOpen: true
       });
     }
@@ -62,7 +62,7 @@ export class ErrorHandler extends React.Component<ErrorHandlerProps, ErrorHandle
 
   dismiss() {
     this.setState({
-      error: null,
+      currentError: null,
       isModalOpen: false
     });
   }
@@ -72,22 +72,22 @@ export class ErrorHandler extends React.Component<ErrorHandlerProps, ErrorHandle
   }
 
   render() {
-    return <noscript />;
-  }
-
-  renderOverlay() {
     if (!this.state.isModalOpen) {
-      return <noscript />;
+      return null;
     }
 
-    var Modal = this.modals[this.state.error.type];
+    var Modal = this.modals[this.state.currentError.type];
 
     if (typeof Modal !== 'function') {
-      return <noscript />;
+      Modal = GenericErrorModal;
     }
 
-    return <Modal enforceFocus={false} onRequestHide={this.dismiss} error={this.state.error}/>;
+    return (
+      <Modal enforceFocus={false}
+             onRequestHide={this.dismiss.bind(this)}
+             error={this.state.currentError} />
+    );
   }
 
 }
- 
+
