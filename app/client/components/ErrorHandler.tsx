@@ -37,7 +37,7 @@ export class ErrorHandler extends React.Component<ErrorHandlerProps, ErrorHandle
 
   componentWillMount() {
     this.props.store.on('error', this.onNewError.bind(this));
-    this.interval = setInterval(this.showNextError, 1000);
+    this.interval = setInterval(this.showNextError.bind(this), 1000);
   }
 
   componentWillUnmount() {
