@@ -1,24 +1,22 @@
-'use strict';
 
-import {ErrorStore} from '../../stores/ErrorStore';
-import {progressImage} from '../../helpers/progressImage';
-import {TimeLeft} from '../TimeLeft';
-import {MultipleChoice} from '../questions/MultipleChoice';
-import {Timeline} from '../questions/Timeline';
-import {Geo} from '../questions/Geo';
-import {Reorder} from '../questions/Reorder';
-import {Game} from "../../models/Game";
-import Question from "../../../common/models/Question";
-import {Modal} from 'react-bootstrap';
-import {TimeUp} from "./TimeUp";
-import {Done} from "./Done";
-import {Tile} from "../../../common/models/Tile";
-import {KIND} from "../../../common/models/questions/common/Kind";
-import {QuestionTimer} from "../../helpers/QuestionTimer";
-import {QuestionFactory} from "../../../common/models/questions/QuestionFactory";
-import {Button, Row, Col} from 'react-bootstrap';
-import {RunConfig, ENVIRONMENT} from "../../helpers/RunConfig";
-import {StateCollector} from "../../StateCollector";
+import {progressImage}          from '../../helpers/progressImage';
+import {TimeLeft}               from '../TimeLeft';
+import {MultipleChoice}         from '../questions/MultipleChoice';
+import {Timeline}               from '../questions/Timeline';
+import {Geo}                    from '../questions/Geo';
+import {Reorder}                from '../questions/Reorder';
+import {Game}                   from '../../models/Game';
+import Question                 from '../../../common/models/Question';
+import {Modal}                  from 'react-bootstrap';
+import {TimeUp}                 from './TimeUp';
+import {Done}                   from './Done';
+import {Tile}                   from '../../../common/models/Tile';
+import {KIND}                   from '../../../common/models/questions/common/Kind';
+import {QuestionTimer}          from '../../helpers/QuestionTimer';
+import {QuestionFactory}        from '../../../common/models/questions/QuestionFactory';
+import {Button, Row, Col}       from 'react-bootstrap';
+import {RunConfig, ENVIRONMENT} from '../../helpers/RunConfig';
+import {StateCollector}         from '../../StateCollector';
 
 interface Props {
   game: Game;
@@ -131,7 +129,6 @@ export class QuestionsModal extends React.Component<Props, State> {
 
     if (!QuestionFactory.doesQuestionExist(kind)) {
       console.error(`Unknown question kind: ${kind}. Available kinds:` + KIND);
-      ErrorStore.emitError(new Error(`Unknown question kind: ${kind}`));
       return null;
     }
 
