@@ -205,7 +205,7 @@ export module AnswerService {
     const opponentId = opponent? opponent._id: BotService.bot()._id;
     const currentUser= FacebookService.getUserFromFacebookId(currentPlayerFbId);
     const currentUserName = currentUser? currentUser.services.facebook.name: "Bot";
-    const notification = new Notification(new Mongo.ObjectID(), opponentId, `${currentUserName} just played his turn`);
+    const notification = new Notification(new Mongo.ObjectID(), opponentId, `${currentUserName} just played their turn`);
     
     NotificationRepository.save(notification);
 
