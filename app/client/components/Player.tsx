@@ -5,6 +5,8 @@ interface PlayerProps {
   isOpponent: boolean;
   isTurn: boolean;
   waiting: boolean;
+  ended: boolean;
+  isWinner: boolean;
   score: number;
 }
 
@@ -34,6 +36,10 @@ export class Player extends React.Component<PlayerProps, {}> {
   }
 
   renderTurnText() {
+    if (this.props.ended) {
+      return (this.props.isWinner) ? 'Winner' : '';
+    }
+
     if (this.props.waiting || !this.props.isTurn) {
       return 'Waiting';
     }

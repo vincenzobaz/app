@@ -38,6 +38,8 @@ export class Players extends React.Component<PlayersProps, {}> {
       return <AbsentPlayer />;
     }
 
+    const waiting = game.isWaiting || game.isCreating || game.hasFailed;
+
     return (
       <div>
         <Player name={myName}
@@ -45,14 +47,18 @@ export class Players extends React.Component<PlayersProps, {}> {
                 isOpponent={false}
                 isTurn={game.isMyTurnToPlay}
                 score={game.score.me}
-                waiting={game.isWaiting} />
+                ended={game.hasEnded}
+                waiting={waiting}
+                isWinner={game.isWon} />
 
         <Player name={opponent.name}
                 avatarUrl={opponent.avatarUrl}
                 isTurn={!game.isMyTurnToPlay}
                 isOpponent={true}
                 score={game.score.them}
-                waiting={game.isWaiting} />
+                ended={game.hasEnded}
+                waiting={waiting}
+                isWinner={!game.isWon} />
       </div>
     );
   }
