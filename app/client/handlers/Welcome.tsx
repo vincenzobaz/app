@@ -3,8 +3,10 @@ import {JoinRequest} from "../models/JoinRequest";
 import {Game} from "../models/Game";
 import {User} from "../models/User";
 import {TrainingStatus} from "../models/TrainingStatus";
-import construct = Reflect.construct;
 
+const isCurrent = (g: Game) => !g.hasEnded && !g.hasFailed && !g.isWaiting;
+const isWaiting = (g: Game) => g.isWaiting;
+const isPast    = (g: Game) => g.hasEnded || g.hasFailed;
 
 interface WelcomeProps {
   user: User;
@@ -68,7 +70,7 @@ export class Welcome extends React.Component<WelcomeProps, {}> {
     }
 
     return (
-      <p>You have {requestsNum} join requests!</p>
+      <p>You have {requestsNum} pending join requests!</p>
     );
   }
 
@@ -77,15 +79,13 @@ export class Welcome extends React.Component<WelcomeProps, {}> {
       return null;
     }
 
-    const gamesNum = this.props.games.filter(g => !g.hasEnded).length;
-
-    if (!gamesNum) {
-      return null;
-    }
+    const curGames     = this.props.games.filter(isCurrent).length;
+    const waitingGames = this.props.games.filter(isWaiting).length;
 
     return (
-      <p>You have {gamesNum} current games!</p>
+      <p>You have {curGames} current game(s), and {waitingGames} game(s) waiting.</p>
     );
   }
 
 }
+
