@@ -3,8 +3,6 @@ import {GameStatus} from "../../common/models/GameStatus";
 import {RawTileState} from "./TileState";
 import * as _ from 'lodash';
 
-
-
 export interface RawGame {
   _id: string | Mongo.ObjectID;
   player1: string;
@@ -20,33 +18,32 @@ export interface RawGame {
   player2AvailableMoves: RawAvailableMove[];
   wonBy: number;
   creationTime: Date;
+  isBotGame: boolean;
 }
 
 export class Game {
 
-
-  constructor(public _id: string |  Mongo.ObjectID,
-              public player1: string,
-              public player2: string,
-              public player1Board: GameBoard,
-              public player2Board: GameBoard,
-              public status: GameStatus,
-              public playerTurn: number,
-              public player1Score: number,
-              public player2Score: number,
-              public boardState: RawTileState[][],
-              public player1AvailableMoves: RawAvailableMove[],
-              public player2AvailableMoves: RawAvailableMove[],
-              public wonBy: number,
-              public creationTime: Date) {
-
-  }
-
+  constructor(
+    public _id: string |  Mongo.ObjectID,
+    public player1: string,
+    public player2: string,
+    public player1Board: GameBoard,
+    public player2Board: GameBoard,
+    public status: GameStatus,
+    public playerTurn: number,
+    public player1Score: number,
+    public player2Score: number,
+    public boardState: RawTileState[][],
+    public player1AvailableMoves: RawAvailableMove[],
+    public player2AvailableMoves: RawAvailableMove[],
+    public wonBy: number,
+    public creationTime: Date,
+    public isBotGame: boolean
+  ) {}
 
   getCurrentBoard(): GameBoard {
     return this.getPlayerBoard(this.playerTurn);
   }
-
 
   nextTurn() {
     this.playerTurn = this.playerTurn == 1 ? 2 : 1;
@@ -58,7 +55,6 @@ export class Game {
     }
     return this.player2;
   }
-
 
   incrementCurrentPlayerScore(value) {
     this['player' + this.playerTurn + 'Scores'] += value;
@@ -79,7 +75,6 @@ export class Game {
     }
     return this.player1;
   }
-
 
   getCurrentPlayerAvailableMoves(): RawAvailableMove[] {
     if (this.playerTurn == 1) {
@@ -131,10 +126,9 @@ export class Game {
         raw.player1AvailableMoves,
         raw.player2AvailableMoves,
         raw.wonBy,
-        raw.creationTime
+        raw.creationTime,
+        raw.isBotGame
     );
   }
-  
-
 
 }

@@ -9,9 +9,8 @@ import { Routes }           from '../../common/Routes';
 import { MeteorPromise }    from '../helpers/meteor';
 import { Game }             from '../models/Game';
 import { Games }            from '../collections/Games';
-import {FacebookService} from "../../server/services/FacebookService";
-import * as _ from 'lodash';
 
+import * as _               from 'lodash';
 
 export module GameStore {
 
@@ -42,12 +41,16 @@ export module GameStore {
   }
 
   export function startBotGame() {
-    const bot: Friend = FriendStore.bot();
-    return JoinRequestStore.send(_.uniqueId(), FacebookService.getFacebookId(Meteor.userId()), bot.userId as string);
+    MeteorPromise.call('Game.createBotGame').then(res => {
+      console.log(res);
+      if (res.status === 'success') {
+        browserHistory.push(Routes.Page.playGameId(res.gameId));
+      }
+    });
   }
 
   export function quit(game: Game) {
-    MeteorPromise.call('Game.quit', game._id, () => {
+    MeteorPromise.call('Game.quit', game._id).then(() => {
       browserHistory.push(Routes.Page.home());
     });
   }

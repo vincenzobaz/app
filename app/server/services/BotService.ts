@@ -3,6 +3,7 @@ import {Games} from "../collections/Games";
 import {GAME_STATUS, GameStatus} from "../../common/models/GameStatus";
 import {JoinRequests} from "../collections/JoinRequests";
 import {JoinRequestService} from "../services/JoinRequestService";
+import {GameService} from "../services/GameService";
 import {KIND} from "../../common/models/questions/common/Kind";
 import {BoardStateService} from "./BoardStateService";
 import {AnswerService} from "./AnswerService";
@@ -24,9 +25,20 @@ import {OrderData} from "../../common/models/questions/answers/OrderData";
 import {OrderAnswer} from "../../common/models/questions/answers/OrderAnswer";
 import {Location} from "../../common/models/questions/geolocation/Location";
 
+function cloneArray(existingArray: any): any {
+  var newObj = (existingArray instanceof Array) ? [] : {};
+  for (var i in existingArray) {
+    if (i == 'clone') continue;
+    if (existingArray[i] && typeof existingArray[i] == "object") {
+      newObj[i] = cloneArray(existingArray[i]);
+    } else {
+      newObj[i] = existingArray[i]
+    }
+  }
+  return newObj;
+}
 
 export const BOT_USERNAME = 'bot';
-
 
 export const BotService = {
 
@@ -74,25 +86,26 @@ export const BotService = {
     }
   },
 
-  observeGameCreation() {
-    const bot = BotService.bot();
+  createBotGame(userFbId: string) {
+    const bot  = BotService.bot();
+    const game = GameService.createGame(userFbId, bot._id, true);
+
+    Games.insert(game);
+    BotService.observeGame(game._id);
+    GameService.fetchBoards(game);
+
+    return {
+      status: 'success',
+      gameId: game._id
+    };
+  },
+
+  observeGames() {
+    const bot   = BotService.bot();
     const botId = bot._id.valueOf();
-    const query = Games.find(
-      {
-        $and: [{
-          $or: [{player1: botId}, {player2: botId}]
-        },
-          {
-            status: {$in: [GAME_STATUS.Playing, GAME_STATUS.Creating, GAME_STATUS.Waiting]}
-          }]
-      });
-    
+    const query = GameService.findBotGames();
 
-    const handle = query.observe({
-      added(game) {
-        BotService.observeGame(game._id, bot._id);
-      },
-
+    query.observe({
       removed(game) {
         console.log(`Game ${game._id} that bot #1 was playing has been removed.`);
         BotService.proposeGameToPlayerIfNecessary(game.player1);
@@ -100,11 +113,16 @@ export const BotService = {
     });
   },
 
-  observeGame(gameId: string | Mongo.ObjectID, botId: Mongo.ObjectID) {
+  observeGame(gameId: string | Mongo.ObjectID) {
+    console.log(`Observing game ${gameId}`);
+
     const TIMEOUT = 3 * 1000;
-    const query = Games.find(gameId);
-    const game = Games.findOne(gameId);
-    const botTurn = game.player1 == botId.valueOf() ? 1 : 2;
+    const query   = Games.find(gameId);
+    const game    = Games.findOne(gameId);
+    const bot     = BotService.bot();
+    const botId   = bot._id.valueOf();
+    const botTurn = (game.player1 == botId) ? 1 : 2;
+
     const handle = query.observe({
       changed(newGame, oldGame) {
         if (BotService.isBot(newGame.getCurrentPlayer())) {
@@ -121,13 +139,13 @@ export const BotService = {
     if (game.status == GAME_STATUS.Waiting) {
       return;
     }
+
     if (handle && game.status == GAME_STATUS.Ended) {
       handle.stop();
       BotService.proposeGameToPlayerIfNecessary(game.player2);
     }
 
-    const result = BotService.playTurn(game);
-    
+    BotService.playTurn(game);
   },
 
   playTurn(game: Game) {
@@ -218,25 +236,29 @@ export const BotService = {
     var moves = [];
 
     const possibilities = BotService.getAvailableMoves(game, game.playerTurn);
+
     if (possibilities.length == 0) {
       return {move: null, score: 0};
     }
-    _.forEach(possibilities, m => {
-      const updatedGame: Game = new Game(
-        game._id,
-        game.player1,
-        game.player2,
-        game.player1Board,
-        game.player2Board,
-        game.status,
-        game.playerTurn,
-        game.player1Score,
-        game.player1Score,
-        BotService.highPerformanceArrayCloining(game.boardState) as RawTileState[][],
-        game.player1AvailableMoves,
-        game.player2AvailableMoves,
-        game.wonBy, game.creationTime
-      );
+
+    possibilities.forEach(m => {
+      const updatedGame = Game.fromRaw({
+        _id: game._id,
+        player1: game.player1,
+        player2: game.player2,
+        player1Board: game.player1Board,
+        player2Board: game.player2Board,
+        status: game.status,
+        playerTurn: game.playerTurn,
+        player1Score: game.player1Score,
+        player2Score: game.player2Score,
+        boardState: cloneArray(game.boardState) as RawTileState[][],
+        player1AvailableMoves: game.player1AvailableMoves,
+        player2AvailableMoves: game.player2AvailableMoves,
+        wonBy: game.wonBy,
+        creationTime: game.creationTime,
+        isBotGame: game.isBotGame
+      });
 
       BotService.makeMove(updatedGame, m, updatedGame.playerTurn);
       scores.push(BotService.minmax(updatedGame, player, depth).score);
@@ -302,19 +324,6 @@ export const BotService = {
     }
   },
 
-  highPerformanceArrayCloining(existingArray) {
-    var newObj = (existingArray instanceof Array) ? [] : {};
-    for (var i in existingArray) {
-      if (i == 'clone') continue;
-      if (existingArray[i] && typeof existingArray[i] == "object") {
-        newObj[i] = BotService.highPerformanceArrayCloining(existingArray[i]);
-      } else {
-        newObj[i] = existingArray[i]
-      }
-    }
-    return newObj;
-  },
-
   proposeGameToPlayerIfNecessary(userFbId: string) {
     const botId = BotService.getBot()._id.valueOf();
     const botRequestCount = JoinRequests.find({
@@ -342,7 +351,6 @@ export const BotService = {
       JoinRequestService.send(botId, userFbId, _.uniqueId());
     }
   }
-
 
 };
 

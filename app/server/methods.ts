@@ -1,4 +1,5 @@
 import {JoinRequestService} from './services/JoinRequestService';
+import {BotService} from './services/BotService';
 import {GameService} from './services/GameService';
 import {AnswerService} from './services/AnswerService';
 import {GameCreatorService} from './services/GameCreatorService';
@@ -18,7 +19,7 @@ var Future = Npm.require('fibers/future');
 export function setupMeteorMethods() {
     Meteor.methods({
 
-        fetchData(userId) {
+        'fetchData'(userId) {
             check(userId, String);
 
             Server.fetchData(userId);
@@ -55,24 +56,29 @@ export function setupMeteorMethods() {
         },
 
         'JoinRequest.accept'(requestId) {
-
             return JoinRequestService.accept(requestId);
         },
 
-    'JoinRequest.send'(fbRequest: string, fromFbId: string, toFbId: string) {
-      return JoinRequestService.send(fromFbId, toFbId, fbRequest);
-    },
-    
-    'FBJoinRequests.delete'(fbRequestIds: string[]) {
-      return FacebookService.deleteRequests(fbRequestIds, FacebookService.getFacebookId(Meteor.userId()));
-    },
+        'JoinRequest.send'(fbRequest: string, fromFbId: string, toFbId: string) {
+          return JoinRequestService.send(fromFbId, toFbId, fbRequest);
+        },
+
+        'FBJoinRequests.delete'(fbRequestIds: string[]) {
+          return FacebookService.deleteRequests(fbRequestIds, FacebookService.getFacebookId(Meteor.userId()));
+        },
 
         'Game.start'(gameId) {
             return GameService.start(gameId);
         },
 
+        'Game.createBotGame'() {
+          const fbId = FacebookService.getFacebookId(this.userId);
+          return BotService.createBotGame(fbId);
+        },
+
         'Game.quit'(gameId) {
             console.error('Method Game.quit is not implemented yet.');
+
             return {
                 status: 'success'
             };

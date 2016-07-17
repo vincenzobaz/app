@@ -33,8 +33,7 @@ export const JoinRequestService = {
     // if (BotService.isBot(game.player1) || BotService.isBot(game.player2)) {
     //   BotService.observeGame(game._id, BotService.bot()._id);
     // }
-    Server.fetchGameBoard(request.from, game._id, 1);
-    Server.fetchGameBoard(request.to, game._id, 2);
+    GameService.fetchBoards(game);
 
     JoinRequests.remove(requestId);
     

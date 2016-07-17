@@ -4,8 +4,8 @@ import {EventEmitter} from 'events';
 export class ErrorStore extends EventEmitter {
 
   public register() {
-    window.onerror = this.onGlobalError.bind(this);
-    Promise.onPossiblyUnhandledRejection(this.onPromiseError.bind(this));
+    // window.onerror = this.onGlobalError.bind(this);
+    // Promise.onPossiblyUnhandledRejection(this.onPromiseError.bind(this));
   }
 
   public emitTurnError(error): void {

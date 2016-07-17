@@ -65,10 +65,8 @@ export class _FacebookService {
     try {
       const fullUrl = this.buildUrl(url);
 
-      console.log(`[FacebookService] GET ${fullUrl}`, params);
-
       const res = HTTP.get(fullUrl, { params });
-      
+
       if (res.statusCode !== 200) {
         // TODO: Handle errors.
       }

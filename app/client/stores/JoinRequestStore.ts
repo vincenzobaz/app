@@ -16,7 +16,6 @@ export module JoinRequestStore {
   }
 
   export function send(fbRequest: string, fromFbId: string, toFbId: string) {
-    console.log("we are seding a join request");
     return Meteor.call('JoinRequest.send', fbRequest, fromFbId, toFbId);
   }
 

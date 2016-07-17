@@ -17,7 +17,7 @@ Meteor.startup(() => {
   setupMeteorMethods();
 
   BotService.createBot();
-  BotService.observeGameCreation();
+  BotService.observeGames();
 
   if (process.env.TIMEOUT_BETWEEN_FETCHES == null) {
     throw new Error("Missing environment variable: TIMEOUT_BETWEEN_FETCHES");

@@ -17,6 +17,10 @@ export module Routes {
       return `/play/${game._id}`;
     }
 
+    export function playGameId(gameId: any) {
+      return `/play/${gameId}`;
+    }
+
     export function about() {
       return '/about';
     }

@@ -11,7 +11,6 @@ interface BoardProps {
 
 export class Board extends React.Component<BoardProps,{}>{
 
-
   render() {
     return (
       <div className='board'>

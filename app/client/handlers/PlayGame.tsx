@@ -12,8 +12,8 @@ interface PlayGameProps {
 export class PlayGame extends React.Component<PlayGameProps, {}> {
 
   render() {
-    const {game} = this.props;
-    console.log("rendering game");
+    const { game } = this.props;
+
     return game.map((game: Game) => {
       if (game.hasEnded) {
         return (

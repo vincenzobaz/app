@@ -15,7 +15,7 @@ export function publishCollections() {
         const fbId = FacebookService.getFacebookId(this.userId);
         return Games.find({
             $or: [
-                { player1:  fbId},
+                { player1: fbId },
                 { player2: fbId }
             ]
         });
@@ -61,7 +61,7 @@ export function publishCollections() {
         if(!isDeveloper) {
             throw new Meteor.Error("User must be a developer or admin to access this collection");
         }
-        LOG_PUBLISH && console.log(`Publishing feedback for user ${this.userId}... as he is a developer ${isDeveloper}`);
+        LOG_PUBLISH && console.log(`Publishing feedback for user ${this.userId}...`);
         return FeedBackCollection.find({});
 
     });
