@@ -3,12 +3,6 @@ import {EventEmitter} from 'events';
 
 export class ErrorStore extends EventEmitter {
 
-  constructor() {
-    super();
-
-    this.register();
-  }
-
   public register() {
     window.onerror = this.onGlobalError.bind(this);
     Promise.onPossiblyUnhandledRejection(this.onPromiseError.bind(this));
@@ -41,16 +35,6 @@ export class ErrorStore extends EventEmitter {
 
   public off(event: string, listener: Function): void {
     console.error('ErrorStore.off is not implemented yet');
-  }
-
-  private static _instance: ErrorStore = null;
-
-  public static getInstance(): ErrorStore {
-    if (ErrorStore._instance == null) {
-      ErrorStore._instance = new ErrorStore();
-    }
-
-    return ErrorStore._instance;
   }
 
 }

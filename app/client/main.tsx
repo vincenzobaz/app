@@ -25,17 +25,21 @@ class App {
     }
   }
 
-  render():void {
-      ReactDOM.render(<ErrorHandler store={ErrorStore.getInstance()}/>, $$('error'));
+  render(): void {
+      const errorStore = new ErrorStore();
+
+      ReactDOM.render(<ErrorHandler store={errorStore}/>, $$('error'));
       ReactDOM.render(<ModalHandler store={ModalStore}/>, $$('modal'));
       ReactDOM.render(<Main />, $$('app'));
+
+      errorStore.register();
   }
 
-  isLoggedIn():boolean {
+  isLoggedIn(): boolean {
       return Meteor.userId() != null;
   }
 
-  subscribe():void {
+  subscribe(): void {
       console.log('Subscribing to Meteor channels...');
 
       Meteor.subscribe('games');
