@@ -537,7 +537,7 @@
     padding: 0 0 $baselineheight*2 0;
 
     &.turn {
-      background: transparent url(../images/arr-red.png) 5% 80px no-repeat;
+      background: transparent url(../images/arr-blue.png) 5% 80px no-repeat;
     }
 
     .avatar {
@@ -562,7 +562,7 @@
     }
 
     &.turn {
-      background: transparent url(../images/arr-blue.png) 95% 80px no-repeat;
+      background: transparent url(../images/arr-red.png) 95% 80px no-repeat;
     }
   }
 }
