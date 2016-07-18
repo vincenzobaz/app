@@ -11,3 +11,4 @@ typings/*
 !typings/custom/
 webpack/assets/*
 .vscode
+mongo-seed/data/*
