@@ -1,3 +1,4 @@
+
 import * as React     from 'react';
 import * as ReactDOM  from 'react-dom';
 
@@ -6,10 +7,10 @@ import {ModalStore}                from './stores/ModalStore';
 import {NotificationStore}         from './stores/NotificationStore';
 import {ErrorHandler}              from './components/ErrorHandler';
 import {ModalHandler}              from './components/ModalHandler';
-import {Main}                      from './handlers/Main';
+import {Main}                      from './pages/Main';
 import {FacebookClientService}     from './services/FacebookClientService';
-import {Feedback, FEEDBACK_STATUS} from '../common/models/Feedback';
 import {StateCollector}            from './StateCollector';
+import {Feedback, FEEDBACK_STATUS} from '../common/models/Feedback';
 
 const $$ = document.getElementById.bind(document);
 

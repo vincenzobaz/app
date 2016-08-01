@@ -1,13 +1,18 @@
-import {decorate} from 'react-mixin';
-import {Router, Route, IndexRoute, browserHistory} from 'react-router'
 
-import {Welcome}    from './Welcome';
-import {About}      from './About';
-import {Account}    from './Account';
-import {PlayGame}   from './PlayGame';
-import {Home}       from './Home';
-import {Dashboard} from './Dashboard';
-import {BugBoard} from "../components/BugBoard";
+import {
+  Router,
+  Route,
+  IndexRoute,
+  browserHistory
+} from 'react-router';
+
+import { Welcome }    from './Welcome';
+import { About }      from './About';
+import { Account }    from './Account';
+import { PlayGame }   from './PlayGame';
+import { Home }       from './Home';
+import { Dashboard }  from './Dashboard';
+import { BugBoard }   from './BugBoard';
 
 const router = (
   <Router history={browserHistory}>

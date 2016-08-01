@@ -1,19 +1,24 @@
-import {Modal, Button, Table, Well, Panel, Row, Col, ButtonGroup, DropdownButton, MenuItem, Pager, PageItem} from 'react-bootstrap';
+
+import {
+  Modal, Button, Table,
+  Well, Panel, Row, Col,
+  ButtonGroup, DropdownButton,
+  MenuItem, Pager, PageItem
+} from 'react-bootstrap';
+
+import {decorate} from 'react-mixin';
 import {Feedback, FeedbackStatus, FEEDBACK_STATUS} from "../../common/models/Feedback";
-import {FeedBackCollection} from "../../common/collections/FeedbackCollection";
-import {decorate}           from 'react-mixin';
-import {Routes} from "../../common/Routes";
-import {Link} from "./facebook/Link";
-import {Game} from "../models/Game";
-import {Tile} from "../../common/models/Tile";
-import Question from "../../common/models/Question";
+import {FeedBackCollection}                        from "../../common/collections/FeedbackCollection";
+import {Routes}                                    from "../../common/Routes";
+import {Tile}                                      from "../../common/models/Tile";
+import Question                                    from "../../common/models/Question";
+import {Game}                                      from "../models/Game";
+import {Link}                                      from "../components/facebook/Link";
+
 const moment = require('moment');
-
-
 const format = "MMMM Do YYYY, k:mm:ss";
 
 export type SortingOptions = "DateMostRecentFirst" | "DateMostRecentLast"
-
 
 export const SORTING_OPTIONS = {
     DateMostRecentFirst: 'DateMostRecentFirst' as SortingOptions,
@@ -254,5 +259,5 @@ export class BugBoard extends React.Component<BugBoardProps, BugBoardState> {
         console.log("Note: ", note);
     }
 
-
 }
+
