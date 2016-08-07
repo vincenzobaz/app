@@ -240,27 +240,42 @@ export class _FacebookService {
 
     return params;
   }
-    
-    public isDeveloper(user: MeteorUser): boolean {
-        if (user == null) {
-            throw new Meteor.Error('500', 'You must specify the current user');
-        }
-        const fbId: string = user.services.facebook.id;
-        const appConfig = this.getAppConfig();
 
-        const params = {
-            access_token: this.fetchAppAccessToken()
-        };
-        const result: {data: RolesData[], paging: Paging} = this.get(`/${appConfig.appId}/roles`, params);
-        
-        const userRole: RolesData = result.data.find((u: RolesData) => u.user == fbId);
-        return userRole != null && userRole.role == (ROLE.Admin || ROLE.Developer);
-    }
-  
+  public getRoles(): RolesData[] {
+      const appConfig = this.getAppConfig();
+
+      const params = {
+          access_token: this.fetchAppAccessToken()
+      };
+
+      const result: { data: RolesData[] } = this.get(`/${appConfig.appId}/roles`, params);
+
+      if (result.data == null) {
+        throw new Meteor.Error('500', 'Cannot get FB app roles');
+      }
+
+      return result.data;
+  }
+
+  public isDeveloper(user: MeteorUser): boolean {
+      if (user == null) {
+          throw new Meteor.Error('500', 'You must specify the current user');
+      }
+
+      const fbId: string = user.services.facebook.id;
+      const rolesData = this.getRoles();
+
+      const userRole = rolesData.find(role => role.user == fbId);
+
+      return userRole.role == ROLE.Admin || userRole.role == ROLE.Developer;
+  }
+
   public deleteRequests(requestIds: string[], userFbId) {
-    return requestIds.map(r => {
-      this.graphApiDelete(`/${r}_${userFbId}`, {access_token: this.fetchAppAccessToken()});
-    })
+    return requestIds.map(requestId => {
+      this.graphApiDelete(`/${requestId}_${userFbId}`, {
+        access_token: this.fetchAppAccessToken()
+      });
+    });
   }
 
 }
