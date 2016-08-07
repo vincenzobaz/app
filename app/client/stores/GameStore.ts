@@ -12,7 +12,7 @@ import { Games }            from '../collections/Games';
 
 import * as _               from 'lodash';
 
-export module GameStore {
+export const GameStore = {
 
   // FIXME: Games.findOne always returns null
   // export function byId(gameId: Mongo.ObjectID | string): Option<Game> {
@@ -21,7 +21,7 @@ export module GameStore {
   //   return (game == null) ? new None<Game>() : new Some<Game>(game);
   // }
 
-  export function byId(gameId: Mongo.ObjectID | string): Option<Game> {
+  byId(gameId: Mongo.ObjectID | string): Option<Game> {
     const games = GameStore.list();
     for (let i = 0; i < games.length; i += 1) {
       if (`${games[i]._id}` == `${gameId}`) {
@@ -30,26 +30,26 @@ export module GameStore {
     }
 
     return new None<Game>();
-  }
+  },
 
-  export function list(): Game[] {
+  list(): Game[] {
     return <Game[]>(
       Games
         .find({}, { sort: { creationTime: -1 } })
         .fetch()
     );
-  }
+  },
 
-  export function startBotGame() {
+  startBotGame() {
     MeteorPromise.call('Game.createBotGame').then(res => {
       console.log(res);
       if (res.status === 'success') {
         browserHistory.push(Routes.Page.playGameId(res.gameId));
       }
     });
-  }
+  },
 
-  export function quit(game: Game) {
+  quit(game: Game) {
     MeteorPromise.call('Game.quit', game._id).then(() => {
       browserHistory.push(Routes.Page.home());
     });
