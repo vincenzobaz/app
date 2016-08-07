@@ -8,7 +8,7 @@ interface JoinRequestProps {
   request: Model.JoinRequest;
 }
 
-export class JoinRequest extends React.Component<JoinRequestProps, {}> {
+export class JoinRequestItem extends React.Component<JoinRequestProps, {}> {
 
   constructor(props: JoinRequestProps) {
     super(props);
@@ -51,7 +51,7 @@ export class JoinRequest extends React.Component<JoinRequestProps, {}> {
 
 }
 
-export class None extends React.Component<any, any> {
+export class NoJoinRequests extends React.Component<any, any> {
   render() {
     var center = {textAlign: 'center'};
     return (

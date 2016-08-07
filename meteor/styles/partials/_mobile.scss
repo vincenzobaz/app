@@ -1,7 +1,17 @@
 
-@media only screen
-  and (min-device-width: 320px)
-  and (max-device-width: 568px) {
+$mobile-screen-max: 768px;
+
+.mobile-only-block,
+.mobile-only-inline,
+.mobile-only-inline-block {
+  display: none;
+}
+
+@media (max-width: $mobile-screen-max) {
+
+  body {
+    overflow: hidden;
+  }
 
   p, .p {
     font-size: 1.4rem;
@@ -136,5 +146,75 @@
     }
   }
 
+  .players > div {
+    width: 50%;
+    float: left;
+  }
+
+  .dashboard-main {
+    margin: 0
+  }
+
+  .board {
+    margin: 0;
+  }
+
+  #footer {
+    height: 50px;
+    padding: 0;
+    border-top: 1px solid #ccc;
+
+    .navbar-nav {
+      margin: 0;
+
+      li {
+        margin: 0;
+        padding: 0;
+        width: 25%;
+        float: left;
+        text-align: center;
+
+        a {
+          display: block;
+          padding: 0;
+          height: 50px;
+          line-height: 50px;
+          font-size: 9px;
+
+          .glyphicon {
+            display: block;
+            padding-top: 8px;
+            font-size: 18px;
+          }
+
+          span {
+            display: block;
+            margin-top: -14px;
+          }
+        }
+      }
+    }
+  }
+
+  .feedback-btn {
+    display: none;
+  }
+
+  .desktop-only {
+    display: none;
+  }
+
+  .mobile-only-block {
+    display: block;
+  }
+
+  .mobile-only-inline {
+    display: inline;
+  }
+
+  .mobile-only-inline-block {
+    display: inline-block;
+  }
 
 }
+

@@ -36,7 +36,7 @@ export class Tile extends React.Component<TileProps, {}> {
 
   render() {
       return (
-        <div className={this.getCellClassNames()+ ", " + this.tileBackgroundStyle(this.props.score)}>
+        <div className={this.getCellClassNames()}>
           <Tooltip title={this.props.title} placement={this.props.placement}>
             <ProgressImage type={this.props.type} score={this.props.score} winningTile={this.props.winningTile} onClick={this.onClick.bind(this)}/>
           </Tooltip>
@@ -63,7 +63,8 @@ export class Tile extends React.Component<TileProps, {}> {
       'cell',
       `cell-${this.props.number}`,
       this.isDisabled() ? 'disabled' : '',
-      this.props.type
+      this.props.type,
+      this.tileBackgroundStyle(this.props.score)
     ].join(' ');
   }
 

@@ -1,27 +1,19 @@
 
-import {Option} from 'option-t';
+import { Option } from 'option-t';
 
-import {Player} from './Player';
-import {Game} from "../models/Game";
-import {User} from "../models/User";
-import {Routes} from "../../common/Routes";
+import { Player } from './Player';
+import { Game }   from '../models/Game';
+import { User }   from '../models/User';
+import { Routes } from '../../common/Routes';
 
 interface PlayersProps {
   game: Option<Game>;
   user?: User;
 }
 
-export class Players extends React.Component<PlayersProps, {}> {
+export class Players extends React.Component<PlayersProps, void> {
 
   render() {
-    return (
-      <div className="players">
-        {this.renderPlayers()}
-      </div>
-    );
-  }
-
-  renderPlayers() {
     const optGame = this.props.game;
 
     if (optGame.isNone) {
@@ -41,7 +33,7 @@ export class Players extends React.Component<PlayersProps, {}> {
     const waiting = game.isWaiting || game.isCreating || game.hasFailed;
 
     return (
-      <div>
+      <div className="players">
         <Player name={myName}
                 avatarUrl={myAvatarUrl}
                 isOpponent={false}

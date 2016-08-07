@@ -10,10 +10,18 @@ interface PlayerProps {
   score: number;
 }
 
-export class Player extends React.Component<PlayerProps, {}> {
+function getClassNames(props: PlayerProps) {
+  return {
+    pull: 'avatar pull-' + (props.isOpponent ? 'right' : 'left'),
+    prefix: 'grid-30' + (props.isOpponent ? '' : ' prefix-20'),
+    player: 'player' + (props.isTurn ? ' turn' : '') + (props.isOpponent ? ' opponent' : '')
+  };
+}
+
+export class Player extends React.Component<PlayerProps, void> {
 
   render() {
-    const classNames = this.getClassNames();
+    const classNames = getClassNames(this.props);
 
     return (
       <div className={classNames.prefix}>
@@ -47,12 +55,5 @@ export class Player extends React.Component<PlayerProps, {}> {
     return this.props.isOpponent ? 'Their turn' : 'Your turn';
   }
 
-  getClassNames() {
-    return {
-      pull: 'avatar pull-' + (this.props.isOpponent ? 'right' : 'left'),
-      prefix: 'grid-30' + (this.props.isOpponent ? '' : ' prefix-20'),
-      player: 'player' + (this.props.isTurn ? ' turn' : '') + (this.props.isOpponent ? ' opponent' : '')
-    };
-  }
-
 }
+

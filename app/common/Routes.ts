@@ -21,9 +21,22 @@ export module Routes {
       return `/play/${gameId}`;
     }
 
+    export function account() {
+      return '/account';
+    }
+
     export function about() {
       return '/about';
     }
+
+    export function games() {
+      return '/games';
+    }
+
+    export function joinRequests() {
+      return '/requests';
+    }
+
   }
 
   export module Assets {
