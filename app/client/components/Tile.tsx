@@ -1,11 +1,10 @@
-import {Tooltip} from "./bootstrap/Tooltip";
+import {Tooltip} from "react-bootstrap";
 import {ModalStore} from "../stores/ModalStore";
 import {Score} from "../../common/models/Score";
 import {Kind} from "../../common/models/questions/common/Kind";
 import {ProgressImage} from "./tile/ProgressImage";
 import {StateCollector} from "../StateCollector";
 import {ModalDescProps} from "../helpers/shapes/ModalDescProps";
-import CSSProperties = __React.CSSProperties;
 
 const icons = {
   Order: 'sort', // 'sort-up'
@@ -15,6 +14,9 @@ const icons = {
   Misc: 'question'
 };
 
+function typeToIcon(type) {
+  return icons[type] || icons.Misc;
+}
 
 interface TileProps {
   title: string;
@@ -29,19 +31,17 @@ interface TileProps {
   enemyAnswered?: boolean;
   answered?: boolean;
   winningTile?: boolean
-
 }
 
 export class Tile extends React.Component<TileProps, {}> {
 
   render() {
-      return (
-        <div className={this.getCellClassNames()}>
-          <Tooltip title={this.props.title} placement={this.props.placement}>
-            <ProgressImage type={this.props.type} score={this.props.score} winningTile={this.props.winningTile} onClick={this.onClick.bind(this)}/>
-          </Tooltip>
-        </div>
-      );
+    return (
+      <a role='button' href='#' onClick={this.onClick.bind(this)}>
+        <ProgressImage type={this.props.type} score={this.props.score} winningTile={this.props.winningTile} onClick={this.onClick.bind(this)} />
+        <i className={this.getIconClassNames()} />
+      </a>
+    );
   }
 
   onClick(e) {
@@ -79,6 +79,13 @@ export class Tile extends React.Component<TileProps, {}> {
       return ""
     }
 
+  }
+
+  getIconClassNames() {
+    return [
+      `icon-${typeToIcon(this.props.type)}`,
+      'icon-2x'
+    ].join(' ');
   }
 
 }

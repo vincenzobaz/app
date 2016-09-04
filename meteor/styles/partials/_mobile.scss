@@ -156,7 +156,11 @@ $mobile-screen-max: 768px;
   }
 
   .board {
-    margin: 0;
+    margin: 2em 0;
+
+    .square-col i {
+      font-size: 2em;
+    }
   }
 
   #footer {

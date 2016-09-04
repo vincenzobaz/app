@@ -3,11 +3,10 @@
 import {QuestionsModal} from "../components/modals/QuestionsModal";
 import {Game} from "../models/Game";
 import {Tile} from "../../common/models/Tile";
-import * as Component from "../components/Tile";
+import {Tile as TileComponent } from "../components/Tile";
 import {RawTileState} from "../../server/collections/TileState";
 import {Kind} from "../../common/models/questions/common/Kind";
 import {Score, CONQUERER_TYPE, ConquererType, getConquerorType} from "../../common/models/Score";
-
 
 export const createTiles = (game: Game) =>
   game.board.tiles.map((tile, n) =>
@@ -36,17 +35,17 @@ const createTile = (game: Game, tile: Tile, tileNum: number) => {
     game.hasEnded || !game.isMyTurnToPlay;
 
   return (
-    <Component.Tile key={'tile-' + tile._id}
-                    title={''}
-                    type={type}
-                    placement={placement}
-                    number={tileNum}
-                    score={score}
-                    questionModal={modal}
-                    disabled={disabled}
-                    answered={tile.answered}
-                    winningTile={tileState.winningTile}
-    />
+    <TileComponent
+      key={'tile-' + tile._id}
+      title={''}
+      type={type}
+      placement={placement}
+      number={tileNum}
+      score={score}
+      questionModal={modal}
+      disabled={disabled}
+      answered={tile.answered}
+      winningTile={tileState.winningTile} />
 
   );
 };
