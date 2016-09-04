@@ -11,6 +11,19 @@ interface PlayGameProps {
 
 export class PlayGame extends React.Component<PlayGameProps, {}> {
 
+  componentDidMount() {
+    this.storeLastGameId(this.props.game);
+  }
+
+  componentWillReceiveProps(nextProps: PlayGameProps) {
+    this.storeLastGameId(nextProps.game);
+  }
+
+  storeLastGameId(game: Option<Game>) {
+    const gameId = game.mapOrElse(() => null, g => `${g._id}`);
+    Session.set("lastGameId", gameId);
+  }
+
   render() {
     const { game } = this.props;
 
@@ -59,7 +72,6 @@ export class PlayGame extends React.Component<PlayGameProps, {}> {
   }
 
   renderNoGame() {
-    console.log("rendering no game");
     const style = {
       textAlign: 'center',
       lineHeight: '2em',

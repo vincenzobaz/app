@@ -2,19 +2,17 @@
 import { decorate }              from 'react-mixin';
 
 import { GamesList }             from '../components/GamesList';
+import { Game }                  from '../models/Game';
 import { getAppState, AppState } from '../appState';
 
-@decorate(ReactMeteorData)
-export class Games extends React.Component<{}, {}> {
+interface Props {
+  games: Array<Game>;
+}
 
-  data: AppState;
-
-  getMeteorData() {
-    return getAppState();
-  }
+export class Games extends React.Component<Props, {}> {
 
   render() {
-    return <GamesList games={this.data.games} />;
+    return <GamesList games={this.props.games} />;
   }
 
 }

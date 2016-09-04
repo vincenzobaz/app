@@ -10,6 +10,7 @@ import { Welcome }    from './Welcome';
 import { About }      from './About';
 import { Account }    from './Account';
 import { PlayGame }   from './PlayGame';
+import { PlayLast }   from './PlayLast';
 import { Home }       from './Home';
 import { Games }      from './Games';
 import { Requests }   from './Requests';
@@ -25,6 +26,7 @@ const router = (
           <Route path="account"      component={Account}/>
           <Route path="games"        component={Games} />
           <Route path="requests"     component={Requests} />
+          <Route path="play"         component={PlayLast} />
           <Route path="play/:gameId" component={PlayGame} />
       </Route>
       <Route path="bugboard" component={BugBoard}/>

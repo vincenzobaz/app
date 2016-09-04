@@ -12,6 +12,10 @@ export module Routes {
       return '/';
     }
 
+    export function playLast() {
+      return '/play';
+    }
+
     // FIXME: Type game to Game
     export function playGame(game: any) {
       return `/play/${game._id}`;

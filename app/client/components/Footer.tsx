@@ -11,18 +11,26 @@ import { responsiveComponent }  from '../helpers/responsive';
 
 interface FooterProps {
   currentGame?: Game;
+  location: HistoryModule.Location;
 }
 
 interface NavLinkProps {
   url: string;
   title: string;
   glyph: string;
+  activeOn?: (url: string) => boolean;
 }
 
-class NavLink extends React.Component<NavLinkProps, void> {
+interface NavLinkPropsFull extends NavLinkProps {
+  location: HistoryModule.Location;
+}
+
+class NavLink extends React.Component<NavLinkPropsFull, void> {
 
   context: {
-    router: { isActive: Function }
+    router: {
+      isActive: Function
+    }
   };
 
   static contextTypes = {
@@ -30,14 +38,22 @@ class NavLink extends React.Component<NavLinkProps, void> {
   };
 
   render() {
-    const isActive  = this.context.router.isActive(this.props.url, true);
+    const { router } = this.context;
+    const { url, title, glyph, location, activeOn } = this.props;
+
+    let isActive = router.isActive(url, true);
+
+    if (!isActive && activeOn != null) {
+      isActive = activeOn(location.pathname);
+    }
+
     const className = isActive ? 'active' : '';
 
     return (
       <li className={className}>
-        <Link to={this.props.url}>
-          <i className={`glyphicon glyphicon-${this.props.glyph}`}></i>
-          <span>{this.props.title}</span>
+        <Link to={url}>
+          <i className={`glyphicon glyphicon-${glyph}`}></i>
+          <span>{title}</span>
         </Link>
       </li>
     );
@@ -59,7 +75,8 @@ export class MobileFooter extends React.Component<FooterProps, void> {
       title: 'Join Requests'
     },
     {
-      url: '/play',
+      url: Routes.Page.playLast(),
+      activeOn: url => url.indexOf('/play') === 0,
       glyph: 'play-circle',
       title: 'Play'
     },
@@ -86,7 +103,7 @@ export class MobileFooter extends React.Component<FooterProps, void> {
 
   renderLinks() {
     return this.links.map(link =>
-      <NavLink key={link.title} {...link} />
+      <NavLink key={link.title} location={this.props.location} {...link} />
     );
   }
 
