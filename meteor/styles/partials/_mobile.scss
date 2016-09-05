@@ -14,7 +14,7 @@ $mobile-screen-max: 768px;
   }
 
   p, .p {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     line-height: 1.3em;
   }
 
@@ -32,6 +32,10 @@ $mobile-screen-max: 768px;
 
   input.search-query {
     padding: 0;
+  }
+
+  .welcome {
+    margin: 19px 5px;
   }
 
   .board .cell i {
