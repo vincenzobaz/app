@@ -135,10 +135,6 @@ export class DesktopFooter extends React.Component<FooterProps, void> {
   }
 
   renderGameToolbar() {
-    if (this.props.currentGame == null) {
-      return null;
-    }
-
     return (
       <div className='col-xs-8 col-sm-6 pull-right text-right'>
         <GameToolbar game={this.props.currentGame} />

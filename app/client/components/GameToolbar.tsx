@@ -24,7 +24,7 @@ interface FBGameRequestResponse {
 }
 
 interface GameToolbarProps {
-  game: Game;
+  game?: Game;
 }
 
 interface GameToolbarState {
