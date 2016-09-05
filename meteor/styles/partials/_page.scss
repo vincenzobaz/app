@@ -584,12 +584,9 @@
   }
 }
 
-.notifications {
-  margin: $baselineheight*2 0 0 0;
-
-  .well {
-    padding: 14px 19px 0px 19px !important;
-  }
+.well {
+  margin: 19px 0 0 0;
+  padding: 14px 19px 14px 19px !important;
 
   h4 {
     text-align: center;

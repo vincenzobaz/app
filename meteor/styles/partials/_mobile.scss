@@ -46,6 +46,21 @@ $mobile-screen-max: 768px;
 
   }
 
+  .well {
+    position: absolute;
+    top: 0;
+    left: 14px;
+    right: 14px;
+    bottom: 64px;
+    overflow: hidden;
+    margin: 14px 0 0 0;
+    padding: 14px;
+
+    ul.games, ul.join-requests {
+      max-height: 94%;
+    }
+  }
+
   .well p, .players p {
     font-size: 1.4rem;
   }
@@ -67,9 +82,13 @@ $mobile-screen-max: 768px;
     }
   }
 
-  ul.join-requests li, ul.games li {
-    padding: 5px 0 0 0;
-    margin: 5px 0 0 0;
+  ul.join-requests, ul.games {
+    max-height: 100%;
+
+    li {
+      padding: 5px 0 0 0;
+      margin: 5px 0 0 0;
+    }
   }
 
   .notifications {
