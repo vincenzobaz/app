@@ -15,10 +15,10 @@ export class SquareGrid extends React.Component<Props, void> {
     return (
       <div className="square-container">
         <div className="square-content">
-          {rows.map(cols =>
-            <div className="square-row">
-              {cols.map(col =>
-                <div className="square-col">
+          {rows.map((cols, i) =>
+            <div key={i} className="square-row">
+              {cols.map((col, j) =>
+                <div key={j} className="square-col">
                   {col}
                 </div>
               )}
