@@ -1,15 +1,16 @@
-import {GameFetches} from "./collections/GameFetches";
-import {GameFetchRepository} from './repositories/GameFetchRepository';
-import {BotService} from './services/BotService';
-import {Games} from './collections/Games';
-import {Game} from './collections/Game';
+
+import {GameFetches}             from './collections/GameFetches';
+import {GameFetchRepository}     from './repositories/GameFetchRepository';
+import {BotService}              from './services/BotService';
+import {Games}                   from './collections/Games';
+import {Game}                    from './collections/Game';
 import {GameBoard, RawGameBoard} from '../common/models/GameBoard';
-import {GameBoardRepository} from './repositories/GameBoardRepository';
+import {GameBoardRepository}     from './repositories/GameBoardRepository';
 import {GameStatus, GAME_STATUS} from '../common/models/GameStatus';
-import {GameFetch} from "./collections/GameFetch";
-import {GameCreatorService} from './services/GameCreatorService';
-import {FacebookService} from "./services/FacebookService";
-import {MeteorUser} from "./MeteorUser";
+import {GameFetch}               from './collections/GameFetch';
+import {GameCreatorService}      from './services/GameCreatorService';
+import {FacebookService}         from './services/FacebookService';
+import {MeteorUser}              from '../common/collections/MeteorUser';
 
 export const Server = {
 

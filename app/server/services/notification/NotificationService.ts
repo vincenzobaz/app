@@ -1,5 +1,5 @@
 
-import { MeteorUser }             from '../../MeteorUser';
+import { MeteorUser }             from '../../common/collections/MeteorUser';
 import { Events, EventTypes }     from '../../events';
 import { EventBus }               from '../../events/EventBus';
 

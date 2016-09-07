@@ -1,11 +1,10 @@
 
 import { Notification }           from '../../../common/models/Notification';
 import { Notifications }          from '../../../common/collections/Notifications';
+import { MeteorUser }             from '../../../common/collections/MeteorUser';
 import { NotificationRepository } from '../../repositories/NotificationRepository';
 import { NotificationService }    from './NotificationService';
-
-import { MeteorUser }             from '../../MeteorUser';
-import {BOT_USERNAME} from "../BotService";
+import { BOT_USERNAME }           from '../BotService';
 
 export class DesktopNotificationService extends NotificationService {
 

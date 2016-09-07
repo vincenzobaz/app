@@ -1,5 +1,5 @@
 
-import { MeteorUser } from '../MeteorUser';
+import { MeteorUser } from '../../common/collections/MeteorUser';
 
 export const JoinRequestProps = ['_id', 'from', 'to', 'gameId'];
 

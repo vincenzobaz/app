@@ -1,7 +1,7 @@
 
 import { MeteorPromise }    from "../helpers/meteor";
 import { getConfig }        from "../helpers/getConfig";
-import { MeteorUser }       from "../../server/MeteorUser";
+import { MeteorUser }       from "../../common/collections/MeteorUser";
 import { JoinRequestStore } from "./JoinRequestStore";
 
 interface FBGameRequestResponse {

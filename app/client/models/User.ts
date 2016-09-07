@@ -1,6 +1,7 @@
-import {Services, FacebookService} from "../../server/MeteorUser";
-import {TrainingStatus} from "./TrainingStatus";
-import {Routes} from "../../common/Routes";
+
+import {Services, FacebookService} from "../../common/collections/MeteorUser";
+import {TrainingStatus}            from "./TrainingStatus";
+import {Routes}                    from "../../common/Routes";
 
 interface Profile {
   name: string

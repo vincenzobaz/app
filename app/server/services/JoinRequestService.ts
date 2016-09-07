@@ -3,6 +3,7 @@ import {BotService}                   from './BotService';
 import {GameService}                  from './GameService';
 
 import {Friends}                      from '../../common/collections/Friends';
+import {MeteorUser}                   from "../../common/collections/MeteorUser";
 import {GameStatus, GAME_STATUS}      from "../../common/models/GameStatus";
 import {Friend}                       from "../../common/models/Friend";
 
@@ -17,9 +18,7 @@ import {UserRepository}              from "../repositories/UserRepository";
 
 import {GlobalEventBus, Events}       from '../events';
 
-import {MeteorUser}                  from "../MeteorUser";
-
-import User                             = Meteor.User;
+import User = Meteor.User;
 
 export const JoinRequestService = {
 
