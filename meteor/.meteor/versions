@@ -88,13 +88,13 @@ routepolicy@1.0.6
 sanjo:long-running-child-process@1.1.5
 sanjo:meteor-files-helpers@1.2.0_1
 sanjo:meteor-version@1.0.0
+seba:minifiers-autoprefixer@0.0.2
 service-configuration@1.0.5
 session@1.1.1
 sha@1.0.4
 spacebars@1.0.7
 spacebars-compiler@1.0.7
 srp@1.0.4
-standard-minifiers@1.0.2
 static-html@1.0.3
 templating@1.1.5
 templating-tools@1.0.0

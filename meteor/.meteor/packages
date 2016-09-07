@@ -11,7 +11,6 @@ jparker:crypto-sha256
 jparker:crypto-hmac
 mvrx:bluebird
 momentjs:moment
-standard-minifiers
 meteor-base
 mobile-experience
 mongo
@@ -38,3 +37,4 @@ accounts-password
 npm-container
 matb33:collection-hooks
 velocity:console-reporter
+seba:minifiers-autoprefixer
