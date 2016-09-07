@@ -1,27 +1,14 @@
 import {Row, Col, Button, Modal} from 'react-bootstrap';
 import {browserHistory}          from 'react-router';
 
-import {sendAppRequest}   from '../helpers/facebook/appRequest';
-
 import {Game}             from '../models/Game';
 import {Routes}           from '../../common/Routes';
 import {Friend}           from '../../common/models/Friend';
 import {Friends}          from '../../common/collections/Friends';
 import {GameStore}        from '../stores/GameStore';
-import {JoinRequestStore} from '../stores/JoinRequestStore';
+import {FacebookStore}    from '../stores/FacebookStore';
 import {QuitGameModal}    from './modals/QuitGameModal';
-import {StartGameModal}   from './modals/StartGameModal';
-import {FriendsSearchbox} from './FriendsSearchbox';
 import {AccountSettings}  from './AccountSettings';
-import {getConfig} from "../helpers/getConfig";
-import {FacebookService, MeteorUser} from "../../server/MeteorUser";
-import {GameService} from "../../server/services/GameService";
-
-
-interface FBGameRequestResponse {
-  request: string;
-  to: string[];
-}
 
 interface GameToolbarProps {
   game?: Game;
@@ -32,7 +19,6 @@ interface GameToolbarState {
   showAccountSettings?: boolean;
   showGameRequestInfoModal?: boolean;
 }
-
 
 export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarState> {
 
@@ -47,32 +33,13 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
   }
 
   onClickRequestButton() {
-    let conf = getConfig('facebook');
-    let requestDialogParams: RequestsDialogParams = {
-      app_id: conf.appId,
-      filters: null,
-      method: 'apprequests',
-      message: 'Do you want to reminisce with me?',
-      title: 'Select friends you would like to play with',
-      max_recipients: 10
-    };
-
-    FB.ui(requestDialogParams, (response: FBGameRequestResponse) => {
-        
-        if (response) {
-          const user = Meteor.user() as MeteorUser;
-          const fbUserId = user.services.facebook.id;
-          response.to.forEach(toFbId => {
-            Meteor.call('JoinRequest.send', response.request, fbUserId, toFbId);
-          })
-        } else {
-          this.setState({
-            showGameRequestInfoModal: true
-          })
-        }
-
+    FacebookStore.showInviteDialog().then(res => {
+      if (!res) {
+        this.setState({
+          showGameRequestInfoModal: true
+        });
       }
-    );
+    });
   }
 
   onClickSettingsButton() {
