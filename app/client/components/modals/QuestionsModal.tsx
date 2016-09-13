@@ -198,8 +198,10 @@ export class QuestionsModal extends React.Component<Props, State> {
     // true indicated the modal can be dismissed if clicked in the background
     const backdrop = allowClosing ? true : "static";
     return (
-      <Modal enforceFocus={false} show={this.state.showModal} onHide={onHide} backdrop={backdrop}
-             keyboard={allowClosing}>
+      <Modal enforceFocus={false} show={this.state.showModal}
+             onHide={onHide} backdrop={backdrop}
+             keyboard={allowClosing}
+             className="fullscreen">
         <Modal.Header closeButton={allowClosing}>
           <Modal.Title>{this.renderTitle()}</Modal.Title>
         </Modal.Header>

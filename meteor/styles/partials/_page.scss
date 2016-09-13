@@ -56,15 +56,7 @@
 
   margin: $baselineheight*2 0;
 
-  .square-col {
-
     a {
-      display: block;
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      position: relative;
-
       color: $tertiarycolor;
       &:hover {
         color: darken($tertiarycolor, 10);
@@ -74,7 +66,6 @@
 
     i {
       display: block;
-      position: absolute;
       z-index: 2;
       margin-top: 1px;
       font-size: 2.5em;
@@ -126,7 +117,6 @@
 
   .square-col:not(:last-child) {
     border-right: 2px solid $lightneutralcolor;
-  }
 
 }
 
@@ -170,6 +160,8 @@
   display: flex;
 
   .square-col {
+    position: relative;
+
     -webkit-box-flex: 1;
         -ms-flex: 1;
             flex: 1;
@@ -186,6 +178,14 @@
     text-align: center;
 
     a {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;

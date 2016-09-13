@@ -41,6 +41,7 @@ export class ModalHandler extends React.Component<ModalHandlerProps, ModalHanlde
       modal.props.onRequestHide = this.dismiss.bind(this);
       const Modal = modal.element;
       const props = modal.props;
+      props.className = (props.className ? props.className : '') + ' fullscreen';
       return (
           <Modal enforceFocus={false}  {...props}/>
       );

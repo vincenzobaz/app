@@ -15,7 +15,7 @@ export class ErrorModal extends React.Component<ErrorModalProps, {}> {
     var onRequestHide = this.props.onRequestHide || nop;
 
     return (
-      <Modal enforceFocus={false} backdrop={true} animation={true}  onHide={onRequestHide as Function}>
+      <Modal enforceFocus={false} backdrop={true} animation={true} onHide={onRequestHide as Function} className="fullscreen">
         <Modal.Header className='error'>
           <span className='close' role='button' data-dismiss='modal' aria-hidden='true' onClick={onRequestHide as React.MouseEventHandler}>
             <i className='icon-remove-sign icon-2x'></i>

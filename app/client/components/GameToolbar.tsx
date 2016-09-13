@@ -79,7 +79,9 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
 
     if (this.state.showAccountSettings) {
       return (
-        <Modal show={this.state.showAccountSettings} onHide={this.onHideAccountModal.bind(this)}>
+        <Modal show={this.state.showAccountSettings}
+               onHide={this.onHideAccountModal.bind(this)}
+               className="fullscreen">
           <Modal.Header closeButton>
             <Modal.Title>Account Settings</Modal.Title>
           </Modal.Header>

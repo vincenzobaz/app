@@ -85,7 +85,9 @@ export class ErrorHandler extends React.Component<ErrorHandlerProps, ErrorHandle
     return (
       <Modal enforceFocus={false}
              onRequestHide={this.dismiss.bind(this)}
-             error={this.state.currentError} />
+             error={this.state.currentError}
+             className="fullscreen"
+             />
     );
   }
 

@@ -179,7 +179,7 @@ export class BugBoard extends React.Component<BugBoardProps, BugBoardState> {
 
     renderScreenshot() {
         return (
-            <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
+            <Modal show={this.state.showModal} onHide={this.close.bind(this)} className="fullscreen">
                 <Modal.Header closeButton>
                     <Modal.Title>Modal heading</Modal.Title>
                 </Modal.Header>
