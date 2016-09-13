@@ -8,7 +8,19 @@ const Visibility = require('visibility')();
 
 export const NotificationStore = {
 
+  desktopSupported: false,
+
   requestPermissionIfNeeded(): void {
+    try {
+      this.desktopSupported = Notify.isSupported();
+    } catch (e) {
+      this.desktopSupported = true;
+    }
+
+    if (!this.desktopSupported) {
+      return;
+    }
+
     if (Notify.needsPermission) {
       Notify.requestPermission(
         this.onPermissionGranted.bind(this),
@@ -39,7 +51,7 @@ export const NotificationStore = {
   },
 
   showNotif(note: Notification): void {
-    if (Visibility.visible()) {
+    if (!this.desktopSupported || Visibility.visible()) {
       this.showInPageNotif(note);
     }
     else {
