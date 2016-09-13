@@ -11,8 +11,7 @@ interface TimeUpProps {
 
 export class TimeUp extends React.Component<TimeUpProps, {}> {
 
-  
-  static getDefaultProps = {
+  static defaultProps = {
     onSent: () => {
     },
     onSendError: () => {
