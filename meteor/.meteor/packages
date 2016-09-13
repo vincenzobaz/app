@@ -37,4 +37,4 @@ accounts-password
 npm-container
 matb33:collection-hooks
 velocity:console-reporter
-seba:minifiers-autoprefixer
+standard-minifiers
