@@ -65,6 +65,12 @@ export class MobileFooter extends React.Component<FooterProps, void> {
 
   links: NavLinkProps[] = [
     {
+      url: Routes.Page.home(),
+      activeOn: url => url === '/' || url.indexOf('/play') === 0,
+      glyph: 'play-circle',
+      title: 'Play'
+    },
+    {
       url: Routes.Page.games(),
       glyph: 'king',
       title: 'Games'
@@ -73,12 +79,6 @@ export class MobileFooter extends React.Component<FooterProps, void> {
       url: Routes.Page.joinRequests(),
       glyph: 'inbox',
       title: 'Join Requests'
-    },
-    {
-      url: Routes.Page.playLast(),
-      activeOn: url => url.indexOf('/play') === 0,
-      glyph: 'play-circle',
-      title: 'Play'
     },
     {
       url: Routes.Page.account(),

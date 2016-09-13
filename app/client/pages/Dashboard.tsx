@@ -73,12 +73,7 @@ export class Dashboard extends React.Component<DashboardProps, {}> {
       return <Home />;
     }
 
-    const {
-      user,
-      games,
-      joinRequests,
-      lastGameId
-    } = this.data;
+    const { user, games, joinRequests } = this.data;
 
     const { gameId } = this.props.params;
 
@@ -86,11 +81,7 @@ export class Dashboard extends React.Component<DashboardProps, {}> {
     const game      = optGameId.flatMap(id => GameStore.byId(id));
 
     const inner = React.cloneElement(this.props.children, {
-      game,
-      user,
-      games,
-      joinRequests,
-      lastGameId
+      game, user, games, joinRequests
     });
 
     return (

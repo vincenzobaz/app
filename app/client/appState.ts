@@ -15,7 +15,6 @@ export interface AppState {
   games        : Game[];
   friends      : Friend[];
   joinRequests : JoinRequest[];
-  lastGameId   : string;
 }
 
 export function getAppState(): AppState {
@@ -24,8 +23,7 @@ export function getAppState(): AppState {
     user         : UserStore.current()     || null,
     games        : GameStore.list()        || [],
     friends      : FriendStore.list()      || [],
-    joinRequests : JoinRequestStore.list() || [],
-    lastGameId   : Session.get("lastGameId")
+    joinRequests : JoinRequestStore.list() || []
   };
 }
 

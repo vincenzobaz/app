@@ -1,8 +1,13 @@
-import {GameStore} from '../stores/GameStore';
-import {JoinRequest} from "../models/JoinRequest";
-import {Game} from "../models/Game";
-import {User} from "../models/User";
-import {TrainingStatus} from "../models/TrainingStatus";
+import {Button, ButtonGroup, Modal} from 'react-bootstrap';
+
+import {GameStore}      from '../stores/GameStore';
+import {FacebookStore}  from '../stores/FacebookStore';
+import {JoinRequest}    from '../models/JoinRequest';
+import {Game}           from '../models/Game';
+import {User}           from '../models/User';
+import {TrainingStatus} from '../models/TrainingStatus';
+
+import { Routes }       from '../../common/Routes';
 
 const isCurrent = (g: Game) => !g.hasEnded && !g.hasFailed && !g.isWaiting;
 const isWaiting = (g: Game) => g.isWaiting;
@@ -14,7 +19,19 @@ interface WelcomeProps {
   games: Game[];
 }
 
-export class Welcome extends React.Component<WelcomeProps, {}> {
+interface WelcomeState {
+  showGameRequestInfoModal: boolean;
+}
+
+export class Welcome extends React.Component<WelcomeProps, WelcomeState> {
+
+  constructor(props: WelcomeProps) {
+    super(props);
+
+    this.state = {
+      showGameRequestInfoModal: false
+    };
+  }
 
   switchToTraining(e) {
     e.preventDefault();
@@ -29,11 +46,21 @@ export class Welcome extends React.Component<WelcomeProps, {}> {
   render() {
     return (
       <div className='welcome'>
+        {this.renderHeader()}
         {this.renderWelcomeText()}
-        {/* this.renderTrainingText() */}
         {this.renderJoinRequestsText()}
         {this.renderCurrentGamesText()}
+        {this.renderRequestButton()}
+        {this.renderPleaseClickOnDoneModal()}
       </div>
+    );
+  }
+
+  renderHeader() {
+    return (
+      <div className='welcome-header'>
+        <img src={Routes.Assets.at('images/reminisce-logo-ios.png')} alt='Reminisce' width='48' height='48' />
+    </div>
     );
   }
 
@@ -42,7 +69,6 @@ export class Welcome extends React.Component<WelcomeProps, {}> {
     return (
       <p>
         Welcome{!user.firstTime ? ' back' : ''}, {user.firstName}!<br /><br />
-        How about <a href="#" onClick={this.startBotGame}>playing a game with one of our bot?</a>
       </p>
     );
   }
@@ -66,11 +92,24 @@ export class Welcome extends React.Component<WelcomeProps, {}> {
     var requestsNum = this.props.joinRequests && this.props.joinRequests.length || 0;
 
     if (!requestsNum) {
-      return <span></span>;
+      return null;
     }
 
     return (
       <p>You have {requestsNum} pending join requests!</p>
+    );
+  }
+
+  renderRequestButton() {
+    return (
+      <ButtonGroup bsSize="large" className="request-buttons">
+        <Button bsStyle="primary" className="request-button" onClick={this.onClickRequestButton.bind(this)}>
+          Play with a friend
+        </Button>
+        <Button onClick={this.startBotGame}>
+          Play with a bot
+        </Button>
+      </ButtonGroup>
     );
   }
 
@@ -84,6 +123,30 @@ export class Welcome extends React.Component<WelcomeProps, {}> {
 
     return (
       <p>You have {curGames} current game(s), and {waitingGames} game(s) waiting.</p>
+    );
+  }
+
+  onClickRequestButton() {
+    FacebookStore.showInviteDialog().then(res => {
+      if (!res) {
+        this.setState({
+          showGameRequestInfoModal: true
+        });
+      }
+    });
+  }
+
+  renderPleaseClickOnDoneModal() {
+    const hideModal = () => {this.setState({showGameRequestInfoModal: false})};
+    return (
+      <div>
+        <Modal show={this.state.showGameRequestInfoModal} backdrop={true} onHide={hideModal.bind(this)}>
+
+          <Modal.Body className="centered" >
+            Please click on <Button className="facebook-done-button" onClick={hideModal.bind(this)}>Done</Button> once you selected the friends to invite
+          </Modal.Body>
+        </Modal>
+      </div>
     );
   }
 
