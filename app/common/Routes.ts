@@ -56,12 +56,12 @@ export module Routes {
 
     export module avatars {
       export function unknown(): string {
-        return 'images/avatar-default.png';
+        return '/images/avatar-default.png';
       }
 
       // TODO: Add proper profile pictures to bots
       export function bot(): string {
-        return 'http://www.distilnetworks.com/wp-content/themes/distil/images/theft-bot-home.png';
+        return '/images/bot-avatar.png';
       }
 
       export function facebook(facebookId: string | number, query: any = ''): string {
