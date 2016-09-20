@@ -13,6 +13,8 @@ function callFBUI(...args: any[]): Promise<any> {
   return Promise.promisify(FB.ui, FB).apply(FB, args);
 }
 
+declare var facebookConnectPlugin: { login: Function };
+
 export module FacebookStore {
 
   export function login(cb = () => {}): void {
@@ -23,6 +25,9 @@ export module FacebookStore {
       return;
     }
 
+    if (Meteor.isCordova) {
+      facebookConnectPlugin.login(conf.scope, cb);
+    }
     Meteor.loginWithFacebook({
       requestPermissions: conf.scope
     }, cb);
