@@ -4,12 +4,16 @@
 
 ## Installation
 
+Install Node.js, NPM, TypeScript, Typings.
+
 First, start the [game creator](https://github.com/reminisceme/game-creator).
 
 Then clone the repository somewhere:
 
     $ git clone git@github.com:reminisceme/app.git
     $ cd app
+    $ npm install
+    $ typings install
 
 Define the following environment variables in `env/dev.sh`:
 
@@ -25,7 +29,7 @@ export GMAPS_KEY=...
 ```
 
     $ source env/dev.sh
-    $ meteor
+    $ npm start
 
     open http://local.reminisce.me
 
