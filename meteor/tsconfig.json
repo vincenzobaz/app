@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "target": "es5",
+    "declaration": false,
+    "module": "commonjs",
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "noLib": false
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "files": [
+    "./typings/index.d.ts"
+  ]
+}

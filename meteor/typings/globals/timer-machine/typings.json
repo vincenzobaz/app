@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "/Users/romac/Code/reminisce.me/app/meteor/typings/custom/timer-machine.d.ts",
+    "raw": "file:./typings/custom/timer-machine.d.ts",
+    "typings": "/Users/romac/Code/reminisce.me/app/meteor/typings/custom/timer-machine.d.ts"
+  }
+}

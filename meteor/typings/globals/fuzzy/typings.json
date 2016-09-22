@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "/Users/romac/Code/reminisce.me/app/meteor/typings/custom/fuzzy.d.ts",
+    "raw": "file:./typings/custom/fuzzy.d.ts",
+    "typings": "/Users/romac/Code/reminisce.me/app/meteor/typings/custom/fuzzy.d.ts"
+  }
+}
