@@ -67,12 +67,17 @@
 
   margin: $baselineheight*2 0;
 
-    a {
-      color: $tertiarycolor;
-      &:hover {
-        color: darken($tertiarycolor, 10);
-        text-decoration: none;
-      }
+  a {
+    color: $tertiarycolor;
+
+    &:hover {
+      cursor: pointer;
+      color: darken($tertiarycolor, 10);
+      text-decoration: none;
+    }
+
+    svg {
+      cursor: pointer;
     }
 
     i {
@@ -82,10 +87,6 @@
       font-size: 2.5em;
     }
 
-    img {
-      cursor: pointer;
-    }
-
     &.opponent {
       img {
         background: transparent url("") center center no-repeat;
@@ -93,18 +94,11 @@
       }
     }
 
-    &.answered, &.disabled {
-      a:hover {
-        cursor: default;
+    &.disabled {
+      &:hover {
         color: $tertiarycolor;
       }
-      img {
-        cursor: default;
-      }
-    }
-
-    &.disabled {
-      &, i, img {
+      &, &:hover, i, svg {
         cursor: not-allowed;
       }
     }
@@ -121,13 +115,6 @@
       background: lighten(rgba(23, 90, 130, .1), 20%);
     }
   }
-
-  .square-row:not(:last-child) {
-    border-bottom: 2px solid $lightneutralcolor;
-  }
-
-  .square-col:not(:last-child) {
-    border-right: 2px solid $lightneutralcolor;
 
 }
 
@@ -220,6 +207,14 @@
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
+}
+
+.square-row:not(:last-child) {
+  border-bottom: 2px solid $lightneutralcolor;
+}
+
+.square-col:not(:last-child) {
+  border-right: 2px solid $lightneutralcolor;
 }
 
 .modal form {

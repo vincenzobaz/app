@@ -37,7 +37,7 @@ export class Tile extends React.Component<TileProps, {}> {
 
   render() {
     return (
-      <a role='button' href='#' onClick={this.onClick.bind(this)}>
+      <a className={this.getCellClassNames()} onClick={this.onClick.bind(this)}>
         <ProgressImage type={this.props.type} score={this.props.score} winningTile={this.props.winningTile} onClick={this.onClick.bind(this)} />
         <i className={this.getIconClassNames()} />
       </a>
