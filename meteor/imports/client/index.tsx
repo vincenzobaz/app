@@ -2,9 +2,6 @@
 import * as React     from 'react';
 import * as ReactDOM  from 'react-dom';
 
-import './vendor/feedback.js';
-import './vendor/html2canvas.js';
-
 import {ErrorStore}                from './stores/ErrorStore';
 import {ModalStore}                from './stores/ModalStore';
 import {NotificationStore}         from './stores/NotificationStore';
@@ -14,6 +11,8 @@ import {Main}                      from './pages/Main';
 import {FacebookClientService}     from './services/FacebookClientService';
 import {StateCollector}            from './StateCollector';
 import {Feedback, FEEDBACK_STATUS} from '../common/models/Feedback';
+
+import './vendor/feedback.js';
 
 export class App {
 
@@ -99,7 +98,7 @@ export class App {
   enableFeedback() {
     $['feedback']({
       ajaxURL: 'http://test.url.com/feedback',
-      html2canvasURL: 'js/html2canvas.js',
+      html2canvasURL: 'https://cdn.rawgit.com/ivoviz/feedback/14bd1fe/development/html2canvas.min.js',
       onFeedbackSend: (feedback: Feedback, onSuccess: Function, onFailure: Function) => {
         const { game, tile, question } = StateCollector.getState();
 
