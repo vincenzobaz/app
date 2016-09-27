@@ -11,6 +11,9 @@
     "typescript",
     "react"
   ],
+  "scripts": {
+    "debug": "env NODE_OPTIONS='--debug' meteor run"
+  },
   "author": "reminisce.me",
   "license": "MIT",
   "private": true,
