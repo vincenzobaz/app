@@ -92,9 +92,6 @@ export function setupMeteorMethods() {
         },
 
         'Answer.post'(gameId, tileId, answers) {
-          console.log(gameId);
-          console.log(tileId);
-          console.log(answers);
             check(gameId, Mongo.ObjectID);
             check(tileId, Mongo.ObjectID);
 

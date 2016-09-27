@@ -3,6 +3,15 @@ import {GameStatus} from "../../common/models/GameStatus";
 import {RawTileState} from "./TileState";
 import * as _ from 'lodash';
 
+interface TileScore {
+  questionId: string;
+  score: number;
+}
+
+interface TileScores {
+  [key: string]: TileScore[];
+}
+
 interface RawAvailableMove {
   row: number;
   column: number;
@@ -18,6 +27,8 @@ export interface RawGame {
   playerTurn: number;
   player1Score: number;
   player2Score: number;
+  player1TileScores: TileScores,
+  player2TileScores: TileScores,
   boardState: RawTileState[][];
   player1AvailableMoves: RawAvailableMove[];
   player2AvailableMoves: RawAvailableMove[];
@@ -38,13 +49,23 @@ export class Game {
     public playerTurn: number,
     public player1Score: number,
     public player2Score: number,
+    public player1TileScores: TileScores,
+    public player2TileScores: TileScores,
     public boardState: RawTileState[][],
     public player1AvailableMoves: RawAvailableMove[],
     public player2AvailableMoves: RawAvailableMove[],
     public wonBy: number,
     public creationTime: Date,
     public isBotGame: boolean
-  ) {}
+  ) {
+      if (typeof this.player1TileScores !== 'object') {
+        this.player1TileScores = {};
+      }
+
+      if (typeof this.player1TileScores !== 'object') {
+        this.player1TileScores = {};
+      }
+  }
 
   getCurrentBoard(): GameBoard {
     return this.getPlayerBoard(this.playerTurn);
@@ -54,15 +75,32 @@ export class Game {
     this.playerTurn = this.playerTurn == 1 ? 2 : 1;
   }
 
-  getCurrentPlayer(): string | Mongo.ObjectID {
+  getCurrentPlayer(): string {
     if (this.playerTurn === 1) {
       return this.player1;
     }
-    return this.player2;
+    else if (this.playerTurn === 2) {
+      return this.player2;
+    }
   }
 
-  incrementCurrentPlayerScore(value) {
-    this['player' + this.playerTurn + 'Scores'] += value;
+  setCurrentPlayerTileScores(tileId: string | Mongo.ObjectID, scores: TileScore[]): void {
+    const key= <string>tileId.valueOf();
+
+    if (this.playerTurn === 1) {
+      this.player1TileScores[key] = scores;
+    }
+    else if (this.playerTurn === 2) {
+      this.player2TileScores[key] = scores;
+    }
+  }
+
+  incrementCurrentPlayerScore(value: number) {
+    if (this.playerTurn === 1) {
+      this.player1Score += value;
+    } else if (this.playerTurn === 2) {
+      this.player2Score += value;
+    }
   }
 
   getOpponent() {
@@ -127,6 +165,8 @@ export class Game {
         raw.playerTurn,
         raw.player1Score,
         raw.player2Score,
+        raw.player1TileScores,
+        raw.player2TileScores,
         raw.boardState,
         raw.player1AvailableMoves,
         raw.player2AvailableMoves,

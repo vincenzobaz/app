@@ -115,6 +115,7 @@ export module AnswerService {
     };
   }
 
+  // TODO: Refactor this mess
   export function post(gameId: string | Mongo.ObjectID, tileId: Mongo.ObjectID, answers, game?: Game) {
 
     if (!game) {
@@ -148,11 +149,12 @@ export module AnswerService {
     const result = AnswerVerificationService.verifyTile(tile, typedAnswers);
     const questions = tile.questions;
 
-
     const scores = questions.map((q: Question, i: number) => {
-      return {questionId: q._id, score: result[i]};
+      return {
+        questionId: <string>q._id.valueOf(),
+        score: result[i]
+      };
     });
-
 
     const index = findIndex(tiles, (t: Tile) => t._id.toString() == tileId.toString());
     const row = Math.floor(index / 3);
@@ -166,8 +168,8 @@ export module AnswerService {
     game.incrementCurrentPlayerScore(newScore);
 
     if (newScore > otherScore || otherScore == 0) {
-      const scoreKey = `player${currentPlayer}Scores`;
-      game[scoreKey][tileId.toString()] = scores;
+      game.setCurrentPlayerTileScores(tileId, scores);
+
       boardState[row][col].player = currentPlayer;
       boardState[row][col].score = newScore;
     }

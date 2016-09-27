@@ -20,13 +20,20 @@ export const GameService = {
     };
   },
 
-  createGame(player1Id, player2Id, isBotGame: boolean = false) {
-    const boardState: RawTileState[][] = _.range(0, 3).map((i: number) => {
-      return _.range(0, 3).map((j: number) => {
-        return {player: 0, score: 0, player1Score: -1, player2Score: -1};
+  createBoardState(): RawTileState[][] {
+    return _.range(0, 3).map(i => {
+      return _.range(0, 3).map(j => {
+        return {
+          player: 0,
+          score: 0,
+          player1Score: -1,
+          player2Score: -1
+        };
       });
     });
+  },
 
+  createGame(player1Id, player2Id, isBotGame: boolean = false) {
     return Game.fromRaw({
         _id: new Mongo.ObjectID(),
         player1: player1Id,
@@ -37,7 +44,9 @@ export const GameService = {
         playerTurn: 1,
         player1Score: 0,
         player2Score: 0,
-        boardState: boardState,
+        player1TileScores: {},
+        player2TileScores: {},
+        boardState: this.createBoardState(),
         player1AvailableMoves: GameService.createAvailableMoves(),
         player2AvailableMoves: GameService.createAvailableMoves(),
         wonBy: null,

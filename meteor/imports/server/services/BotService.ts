@@ -257,6 +257,8 @@ export const BotService = {
         playerTurn: game.playerTurn,
         player1Score: game.player1Score,
         player2Score: game.player2Score,
+        player1TileScores: game.player1TileScores,
+        player2TileScores: game.player2TileScores,
         boardState: cloneArray(game.boardState) as RawTileState[][],
         player1AvailableMoves: game.player1AvailableMoves,
         player2AvailableMoves: game.player2AvailableMoves,
