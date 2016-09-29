@@ -36,6 +36,7 @@
 /// <reference path="globals/react-motion/index.d.ts" />
 /// <reference path="globals/react-router/history/index.d.ts" />
 /// <reference path="globals/react-router/index.d.ts" />
+/// <reference path="globals/react-sortable-hoc/index.d.ts" />
 /// <reference path="globals/react/index.d.ts" />
 /// <reference path="globals/timer-machine/index.d.ts" />
 /// <reference path="globals/timer/index.d.ts" />
