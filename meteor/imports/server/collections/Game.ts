@@ -62,8 +62,8 @@ export class Game {
         this.player1TileScores = {};
       }
 
-      if (typeof this.player1TileScores !== 'object') {
-        this.player1TileScores = {};
+      if (typeof this.player2TileScores !== 'object') {
+        this.player2TileScores = {};
       }
   }
 
