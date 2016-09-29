@@ -48,11 +48,6 @@ dbdata:
   restart: on-failure:5
   
 mongo-seed:
-  build: ./mongo-seed
+  build: ../reverse-geoloc
   links:
     - mongo
-  
-
-
-
-
