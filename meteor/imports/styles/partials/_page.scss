@@ -725,7 +725,14 @@ ul.join-requests, ul.games {
   }
 
   .game-toolbar {
-    padding-top: 5px;
+    padding-top: 7px;
+  }
+
+  .game-toolbar-btns {
+    margin-right: 10px;
+    button {
+      margin-right: 10px;
+    }
   }
 }
 
@@ -938,11 +945,6 @@ $grey-border: #b8b8b8;
 
 .no-left-padding {
   padding-left: 0;
-}
-
-.settings-button {
-  align-content: right;
-  height: 40px;
 }
 
 .copy {

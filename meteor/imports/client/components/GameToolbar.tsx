@@ -98,8 +98,10 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
       <div>
         <Row>
           <div className="game-toolbar">
-            {this.renderRequestButton()}
-            {this.renderSettingsButton()}
+            <div className="game-toolbar-btns">
+              {this.renderRequestButton()}
+              {this.renderSettingsButton()}
+            </div>
             {this.renderModal()}
             {this.renderPleaseClickOnDoneModal()}
           </div>
@@ -119,7 +121,7 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
   renderSettingsButton() {
     return (
       <Button className="settings-button" onClick={this.onClickSettingsButton.bind(this)}>
-        <i className='fa fa-cog fa-2x'></i>
+        Account
       </Button>
     );
   }
