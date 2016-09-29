@@ -96,7 +96,6 @@ export const BotService = {
     const game = GameService.createGame(userFbId, bot._id, true);
 
     Games.insert(game);
-    BotService.observeGame(game._id);
     GameService.fetchBoards(game);
 
     return {
@@ -111,8 +110,13 @@ export const BotService = {
     const query = GameService.findBotGames();
 
     query.observe({
-      removed(game) {
-        console.log(`Game ${game._id} that bot #1 was playing has been removed.`);
+      added(game: Game) {
+        console.log(`Starting to watch bot game ${game._id}.`);
+        BotService.observeGame(game._id);
+      },
+
+      removed(game: Game) {
+        console.log(`Game ${game._id} that bot was playing has been removed.`);
         BotService.proposeGameToPlayerIfNecessary(game.player1);
       }
     });
@@ -124,6 +128,12 @@ export const BotService = {
     const TIMEOUT = 3 * 1000;
     const query   = Games.find(gameId);
     const game    = Games.findOne(gameId);
+
+    if (!game) {
+      console.error(`BotService.observeGame: Cannot find game with id ${gameId}.`);
+      return;
+    }
+
     const bot     = BotService.bot();
     const botId   = bot._id.valueOf();
     const botTurn = (game.player1 == botId) ? 1 : 2;
