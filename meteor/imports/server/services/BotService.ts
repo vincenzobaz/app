@@ -139,7 +139,7 @@ export const BotService = {
     const botTurn = (game.player1 == botId) ? 1 : 2;
 
     const handle = query.observe({
-      changed(newGame, oldGame) {
+      changed(newGame: Game, oldGame: Game) {
         if (BotService.isBot(newGame.getCurrentPlayer())) {
           //FIXME: find a better way
           setTimeout(Meteor['bindEnvironment'](function () {
