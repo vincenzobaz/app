@@ -32,8 +32,9 @@ export class ProgressImage extends React.Component<ProgressImageProps, {}> {
     };
 
     if (this.props.winningTile) {
+      const className = `trigger-ring trigger-full-${conqueror}-conquered`;
       return (
-        <svg className={`trigger-full-${conqueror}-conquered`} viewBox="0 0 130 130" style={svgStyles}>
+        <svg className={className} viewBox="0 0 130 130" style={svgStyles}>
           <ellipse cx="65" cy="65" rx="45.5" ry="44.442"/>
         </svg>
       );
