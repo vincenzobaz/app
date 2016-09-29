@@ -61,11 +61,11 @@ export class _FacebookService {
     return this.post(url, this.getAppParams(options));
   }
 
-  public get(url, params = {}) {
+  public get(url, params) {
     try {
       const fullUrl = this.buildUrl(url);
 
-      const res = HTTP.get(fullUrl, { params });
+      const res = HTTP.get(fullUrl, params && { params } || {});
 
       if (res.statusCode !== 200) {
         // TODO: Handle errors.
@@ -79,13 +79,13 @@ export class _FacebookService {
     }
   }
 
-  public post(url, params = {}) {
+  public post(url, params) {
     try {
       const fullUrl = this.buildUrl(url);
 
       debug(`[FacebookService] POST ${fullUrl}`, params);
 
-      const res = HTTP.post(fullUrl, { params });
+      const res = HTTP.post(fullUrl, params && { params } || {});
 
       if (res.statusCode !== 200) {
         // TODO: Handle errors.
