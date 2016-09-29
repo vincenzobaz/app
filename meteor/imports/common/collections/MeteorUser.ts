@@ -1,6 +1,11 @@
 
 export interface MeteorUser extends Meteor.User {
   services?: Services;
+  profile?: Profile;
+}
+
+export interface Profile {
+  name?: string;
 }
 
 export interface Services {

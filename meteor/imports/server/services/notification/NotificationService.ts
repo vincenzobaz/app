@@ -2,12 +2,26 @@
 import { MeteorUser }             from '../../../common/collections/MeteorUser';
 import { Events, EventTypes }     from '../../events';
 import { EventBus }               from '../../events/EventBus';
+import { BOT_USERNAME }           from '../BotService';
 
 export abstract class NotificationService {
 
-  public abstract mentionUser(user: MeteorUser): string
-
   public abstract sendTo(userId: string | Mongo.ObjectID, message: string): void
+
+  public mentionUser(user: MeteorUser): string {
+    if (user == null) {
+      return;
+    }
+
+    if (user.services != null && user.services.facebook != null && user.services.facebook.id != null) {
+      return `@[${user.services.facebook.id}]`;
+    }
+    else if (user.profile != null && user.profile.name != null) {
+      return user.profile.name;
+    }
+
+    return BOT_USERNAME;
+  }
 
   public subscribeTo(eventBus: EventBus): void {
     eventBus.on(EventTypes.JoinRequestAccepted, this.onJoinRequestAccepted.bind(this));
