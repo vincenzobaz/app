@@ -4,35 +4,70 @@
 
 ## Installation
 
-Install Node.js, NPM, TypeScript, Typings.
+1. Install Node.js and NPM.
 
-First, start the [game creator](https://github.com/reminisceme/game-creator).
+  See the [official documentation](https://nodejs.org/).
 
-Then clone the repository somewhere:
+2. Install [Meteor 1.4](https://www.meteor.com/install)
 
-    $ git clone git@github.com:reminisceme/app.git
-    $ cd app
-    $ npm install
-    $ typings install
+  ```bash
+  $ curl https://install.meteor.com/ | sh
+  ```
 
-Define the following environment variables in `env/dev.sh`:
+3. Install TypeScript 1.8 and Typings 1.4
 
-```
-export MONGO_URL=mongodb://localhost/reminisceme
-export ROOT_URL=http://local.reminisce.me
-export PORT=3000
-export GAME_CREATOR_URL=http://localhost:9900
-export TIMEOUT_BETWEEN_FETCHES=1000
-export FACEBOOK_APPID=...
-export FACEBOOK_SECRET=..
-export GMAPS_KEY=...
-```
+  ```bash
+  $ npm install -g typescript@1.8.10.0
+  $ npm install -g typings@1.4.0
+  ```
 
-    $ source env/dev.sh
-    $ npm start
+4. Install and start the [game creator](https://github.com/reminisceme/game-creator).
 
-    open http://local.reminisce.me
+5. Then clone this repository somewhere:
 
+  ```bash
+  $ git clone git@github.com:reminisceme/app.git
+  $ cd app/meteor
+  $ npm install
+  $ typings install
+  ```
+
+6. Install [Caddy](https://caddyserver.com/download)
+
+7. Define the following environment variables in `env/dev.sh`:
+
+  ```
+  export MONGO_URL=mongodb://localhost/reminisceme
+  export ROOT_URL=http://local.reminisce.me
+  export PORT=3000
+  export GAME_CREATOR_URL=http://localhost:9900
+  export TIMEOUT_BETWEEN_FETCHES=1000
+  export FACEBOOK_APPID=...
+  export FACEBOOK_SECRET=..
+  export GMAPS_KEY=...
+  ```
+
+8. Add the following line to your `/etc/hosts`:
+
+  ```
+  local.reminisce.me 127.0.0.1
+  ```
+
+9. In a new tab, start Caddy:
+
+  ```bash
+  $ cd ../
+  $ sudo caddy
+  ```
+
+10. In another tab, run the Meteor application:
+
+  ```bash
+  $ source ../env/dev.sh
+  $ meteor
+  ```
+
+11. Then navigate to [http://local.reminisce.me]().
 
 ## License
 
