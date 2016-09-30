@@ -17,7 +17,7 @@
 3. Install TypeScript 1.8 and Typings 1.4
 
   ```bash
-  $ npm install -g typescript@1.8.10.0
+  $ npm install -g typescript@1.8.10
   $ npm install -g typings@1.4.0
   ```
 
@@ -67,7 +67,7 @@
   $ meteor
   ```
 
-11. Then navigate to [http://local.reminisce.me]().
+11. Then navigate to [](http://local.reminisce.me).
 
 ## License
 
