@@ -80,10 +80,9 @@ export const BotService = {
     if (force || !BotService.botCreated()) {
       console.log("Creating bot...");
 
-      Accounts.createUser({
+      Meteor.users.insert({
         username: BOT_USERNAME,
-        email: "bot@reminisceme.com",
-        password: "123456",
+        emails: [{address: "bot@reminisceme.com", verified: true}],
         profile: {
           name: "Anne Droid"
         }
