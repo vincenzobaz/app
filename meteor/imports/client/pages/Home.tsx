@@ -109,7 +109,7 @@ export class Home extends React.Component<{}, HomeState> {
               <div className='copy'>
                 <p>
                   <i style={{float: 'left', marginRight: '10px'}} className='icon-lock icon-4x'></i>
-                  We develop reminisce.me to make you have a lot of fun. As such, we don&#8217;t
+                  We develop reminisce.me to make you have a lot of fun. As such, we don't
                   store permanently any of your personal data. We are so transparent about it that we
                   decided to release the whole game platform (client and server) as <a href="https://github.com/reminisceme/">open-source</a>!
                 </p>
@@ -124,7 +124,7 @@ export class Home extends React.Component<{}, HomeState> {
             <Row>
               <h2>OK, time to play!</h2>
               <div className='connect-facebook'>
-                  <p>You&#8217;ll be asked to connect your Facebook profile first.</p>
+                  <p>You'll be asked to connect your Facebook profile first.</p>
               </div>
               </Row>
               <Row>
@@ -141,7 +141,7 @@ export class Home extends React.Component<{}, HomeState> {
                 All the permissions are exlusively used to generate personalized questions for you,
                 extracted from your activity on facebook.
                 No other player will ever see any of your posts or other items,
-                you are be the only one to see the generated questions.
+                you will be the only one to see the generated questions.
               </small>
               </Row>
             </section>
