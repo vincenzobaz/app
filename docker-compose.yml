@@ -2,9 +2,14 @@ version: "2"
 services:
   app:
     image: reminisceme/app:latest
-    ports:
-      - "80:3000"
     env_file: ./env/prod.sh
+    restart: on-failure:5
+
+  nginx:
+    build: nginx/
+    ports:
+      - 80:80
+      - 443:443
     restart: on-failure:5
 
   game-creator:
