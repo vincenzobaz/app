@@ -16,5 +16,5 @@ RUN npm install
 # Install typings definitions
 RUN ./node_modules/.bin/typings install
 
-EXPOSE 80
+EXPOSE 3000
 ENTRYPOINT ["meteor", "--production"]
