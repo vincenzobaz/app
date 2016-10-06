@@ -14,6 +14,7 @@ import {GeoNameEntityCollection} from './collections/GeoNameEntityCollection';
 import {Admin1CodeCollection} from './collections/Admin1CodeCollection';
 import {Feedback} from "../common/models/Feedback";
 import {FeedBackCollection} from "../common/collections/FeedbackCollection";
+import {JoinRequestRepository} from "./repositories/JoinRequestRepository";
 var Future = Npm.require('fibers/future');
 
 export function setupMeteorMethods() {
@@ -32,6 +33,13 @@ export function setupMeteorMethods() {
         'Account.deleteAllData'() {
             const userId = Meteor.userId();
 
+            if (!userId) {
+                return {
+                    status: 'error',
+                    msg: 'Empty userId.'
+                };
+            }
+
             console.log(`Deleting data for user: ${userId}`);
 
             const user = Meteor.users.findOne(userId);
@@ -41,6 +49,9 @@ export function setupMeteorMethods() {
 
             if (result.statusCode == 200) {
                 Meteor.users.remove(userId);
+                JoinRequestRepository.removeRequestsOf(fbUserId);
+                NotificationRepository.removeNotificationsOf(userId);
+                GameService.removeUnfinished(fbUserId);
             }
 
             console.log('Data deleted with following result:', result.data.message);

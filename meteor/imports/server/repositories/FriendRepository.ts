@@ -68,6 +68,10 @@ export const FriendRepository = {
         friend = new Friend(new Mongo.ObjectID(), bot._id, bot._id, bot.name, userId, true);
 
         FriendRepository.save(friend);
+    },
+
+    removeFriendsOf(userId) {
+        return Friends.remove({friendOf: userId})
     }
 
 };

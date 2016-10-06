@@ -18,6 +18,10 @@ class _NotificationRepository extends GenericRepository<Notification> {
     );
   }
 
+  public removeNotificationsOf(userId: Mongo.ObjectID | string): void {
+      Notifications.remove({userId: userId});
+  }
+
 }
 
 export const NotificationRepository = new _NotificationRepository();

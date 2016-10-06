@@ -10,6 +10,10 @@ export const JoinRequestRepository = {
     }
 
     return joinRequest._id;
+  },
+
+  removeRequestsOf(fbUserId) {
+    return JoinRequests.remove({$or: [{from: fbUserId}, {to: fbUserId}]})
   }
 
 };

@@ -86,7 +86,11 @@ export const GameService = {
         }
       ]
     });
-  }
+  },
+
+    removeUnfinished(fbUserId) {
+        Games.remove({$and: [{$or: [{player1: fbUserId}, {player2: fbUserId}]}, {wonBy: null}]});
+    }
 
 };
 
