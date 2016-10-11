@@ -66,7 +66,12 @@ export class GoogleMap extends React.Component<GoogleMapProps, GoogleMapState> {
 
   componentWillReceiveProps(props: GoogleMapProps) {
     this.props = props;
-    var center = new google.maps.LatLng(this.props.latitude, this.props.longitude);
+
+    if (window['google'] == null) {
+      return;
+    }
+
+    const center = new google.maps.LatLng(this.props.latitude, this.props.longitude);
 
     this.state.map.setCenter(center);
     this.state.map.setZoom(props.zoom);

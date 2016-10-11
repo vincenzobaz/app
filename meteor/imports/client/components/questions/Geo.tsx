@@ -4,21 +4,18 @@ import {getQuestionTitleByType} from "../../helpers/getQuestionTitleByType";
 import * as Model from "../../../common/models/questions/geolocation/Marker";
 import {Button} from "react-bootstrap";
 import {QuestionProps} from "./QuestionProps";
-import Autosuggest from 'react-autosuggest';
 import * as _ from "lodash";
 import {Location} from "../../../common/models/questions/geolocation/Location";
 import {GeoAnswer} from "../../../common/models/questions/answers/GeoAnswer";
-import Loader from 'react-loader';
 import {Col} from 'react-bootstrap';
 import {GeoNameEntity} from "../../../common/models/GeoNameEntity";
 
 import {GeoMarker} from "./GeoMarker";
 import {Marker} from "../../../common/models/questions/geolocation/Marker";
-// import {Map} from 'google.maps'
 import {GoogleMap} from "../GoogleMap";
 
-const theme = require('./GeoSuggestionBox.css');
-
+const Loader = require('react-loader');
+const Autosuggest = require('react-autosuggest');
 
 interface Configuration {
   zoom: number;
@@ -186,7 +183,6 @@ export class Geo extends React.Component<GeoProps, GeoState> {
                          renderSuggestion={this.renderSuggestion.bind(this)}
                          onSuggestionSelected={this.onSuggestionSelected.bind(this)}
                          inputProps={inputProps}
-                         theme={theme}
             />
             <Loader loaded={!this.state.isLoading} scale={0.5} left="93%"/>
           </Col>
