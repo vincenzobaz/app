@@ -39,7 +39,9 @@ export class App {
 
     var user = attempt.user;
     var userFbId = FacebookService.getFacebookId(user._id);
-    BotService.proposeGameToPlayerIfNecessary(userFbId);
+
+    // BotService.proposeGameToPlayerIfNecessary(userFbId);
+
     if (user.services && user.services.facebook) {
       Server.fetchData(user.services.facebook.id);
       var fbFriends = FacebookService.getFriends(user);

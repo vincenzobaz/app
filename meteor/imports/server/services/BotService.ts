@@ -116,7 +116,7 @@ export const BotService = {
 
       removed(game: Game) {
         console.log(`Game ${game._id} that bot was playing has been removed.`);
-        BotService.proposeGameToPlayerIfNecessary(game.player1);
+        // BotService.proposeGameToPlayerIfNecessary(game.player1);
       }
     });
   },
@@ -156,7 +156,7 @@ export const BotService = {
 
     if (handle && game.status == GAME_STATUS.Ended) {
       handle.stop();
-      BotService.proposeGameToPlayerIfNecessary(game.player2);
+      // BotService.proposeGameToPlayerIfNecessary(game.player2);
     }
 
     BotService.playTurn(game);
@@ -338,35 +338,35 @@ export const BotService = {
       });
       console.log('|' + line.join('|') + '|');
     }
-  },
-
-  proposeGameToPlayerIfNecessary(userFbId: string) {
-    const botId = BotService.getBot()._id.valueOf();
-    const botRequestCount = JoinRequests.find({
-        from: botId,
-        to: userFbId
-      }
-    ).count();
-    const botGamesCount = Games.find({
-      $and: [{
-        $or: [
-          {
-            player1: userFbId,
-            player2: botId
-          }, {
-            player1: botId,
-            player2: userFbId
-          }]
-      },
-        {status: {$nin: [GAME_STATUS.Ended, GAME_STATUS.Failed, GAME_STATUS.Waiting]}}]
-    }).count();
-
-    console.log(`We have ${botRequestCount} botrequests and ${botGamesCount} botgames`);
-
-    if (botRequestCount == 0 && botGamesCount == 0) {
-      JoinRequestService.send(botId, userFbId, _.uniqueId());
-    }
   }
+
+  // proposeGameToPlayerIfNecessary(userFbId: string) {
+  //   const botId = BotService.getBot()._id.valueOf();
+  //   const botRequestCount = JoinRequests.find({
+  //       from: botId,
+  //       to: userFbId
+  //     }
+  //   ).count();
+  //   const botGamesCount = Games.find({
+  //     $and: [{
+  //       $or: [
+  //         {
+  //           player1: userFbId,
+  //           player2: botId
+  //         }, {
+  //           player1: botId,
+  //           player2: userFbId
+  //         }]
+  //     },
+  //       {status: {$nin: [GAME_STATUS.Ended, GAME_STATUS.Failed, GAME_STATUS.Waiting]}}]
+  //   }).count();
+
+  //   console.log(`We have ${botRequestCount} botrequests and ${botGamesCount} botgames`);
+
+  //   if (botRequestCount == 0 && botGamesCount == 0) {
+  //     JoinRequestService.send(botId, userFbId, _.uniqueId());
+  //   }
+  // }
 
 };
 
