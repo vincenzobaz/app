@@ -103,13 +103,13 @@ export class Game {
     }
   }
 
-  getOpponent() {
-    var myId = Meteor.userId();
-
-    if (this.player1 === myId) {
+  getOtherPlayer() {
+    if (this.playerTurn === 1) {
       return this.player2;
     }
-    return this.player1;
+    else if (this.playerTurn === 2) {
+      return this.player1;
+    }
   }
 
   getOpponentForUser(userId) {

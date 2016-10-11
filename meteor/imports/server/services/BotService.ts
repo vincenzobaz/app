@@ -59,8 +59,8 @@ export const BotService = {
     return Meteor.users.findOne({username: BOT_USERNAME});
   },
 
-  isBot(userId: string) {
-    return BotService.getBot()._id.valueOf() == userId;
+  isBot(userId: string | Mongo.ObjectID) {
+    return BotService.getBot()._id.valueOf() === userId.valueOf();
   },
 
   botAsFriend() {

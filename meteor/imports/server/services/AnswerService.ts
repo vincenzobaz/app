@@ -1,4 +1,3 @@
-///<reference path="../../common/models/questions/answers/Answer.ts"/>
 
 import {findIndex} from "lodash";
 import Question from "../../common/models/Question";
@@ -7,6 +6,7 @@ import {Game} from "../collections/Game";
 import {Games} from "../collections/Games";
 import {Tile} from "../../common/models/Tile";
 import {GameBoardRepository} from "../repositories/GameBoardRepository";
+import {UserRepository} from "../repositories/UserRepository";
 import {BoardStateService} from "./BoardStateService";
 import {GAME_STATUS} from "../../common/models/GameStatus";
 import {GameBoard} from "../../common/models/GameBoard";
@@ -26,6 +26,7 @@ import {Notification} from "../../common/models/Notification";
 import {FacebookService} from "./FacebookService";
 import {NotificationRepository} from "../repositories/NotificationRepository";
 import {BotService} from "./BotService";
+import {GlobalEventBus, Events} from '../events';
 
 
 interface QuestionAnswer {
@@ -139,10 +140,8 @@ export module AnswerService {
     });
 
     const boardState = game.boardState;
-    const currentPlayer: number = game.playerTurn;
-    const currentPlayerFbId = currentPlayer == 1? game.player1: game.player2;
-    const opponentFbId = currentPlayer == 1? game.player2: game.player1;
-    const boardService = new BoardStateService(boardState, currentPlayer);
+    const currentPlayerNum = game.playerTurn;
+    const boardService = new BoardStateService(boardState, currentPlayerNum);
 
     const typedAnswers = this.typeAnswers(tile, answers);
 
@@ -162,7 +161,7 @@ export module AnswerService {
 
     const correctAnswersNum = scores.reduce((acc, s) => acc + s.score, 0);
     const wrongAnswersNum = questions.length - correctAnswersNum;
-    const otherScore = boardState[row][col].player != currentPlayer ? boardState[row][col].score : 0;
+    const otherScore = boardState[row][col].player != currentPlayerNum ? boardState[row][col].score : 0;
 
     const newScore = correctAnswersNum;
     game.incrementCurrentPlayerScore(newScore);
@@ -170,11 +169,11 @@ export module AnswerService {
     if (newScore > otherScore || otherScore == 0) {
       game.setCurrentPlayerTileScores(tileId, scores);
 
-      boardState[row][col].player = currentPlayer;
+      boardState[row][col].player = currentPlayerNum;
       boardState[row][col].score = newScore;
     }
 
-    if (currentPlayer == 1) {
+    if (currentPlayerNum == 1) {
       boardState[row][col].player1Score = newScore;
     } else {
       boardState[row][col].player2Score = newScore;
@@ -185,9 +184,13 @@ export module AnswerService {
 
     const filterMoves = m => m.row !== row || m.column !== col;
 
-    this.updateMoves(game, newScore, currentPlayer, filterMoves);
+    this.updateMoves(game, newScore, currentPlayerNum, filterMoves);
 
-    const {win, draw} = resolveGameEnded(currentPlayer, boardService, game);
+    const { win, draw } = resolveGameEnded(currentPlayerNum, boardService, game);
+
+    const opponentId = game.getOtherPlayer();
+    const currentPlayerId = game.getCurrentPlayer();
+
     game.nextTurn();
     Games.update(game._id, game);
     GameBoardRepository.save(board);
@@ -201,15 +204,18 @@ export module AnswerService {
       tile: tile
     };
 
-    console.log(`Result of player ${currentPlayer} row: ${row}, column: ${col}`, _.omit(returnValue, 'tile'));
+    console.log(`Result of player ${currentPlayerNum} row: ${row}, column: ${col}`, _.omit(returnValue, 'tile'));
 
-    const opponent = FacebookService.getUserFromFacebookId(opponentFbId);
-    const opponentId = opponent? opponent._id: BotService.bot()._id;
-    const currentUser= FacebookService.getUserFromFacebookId(currentPlayerFbId);
-    const currentUserName = currentUser? currentUser.services.facebook.name: "Bot";
-    const notification = new Notification(new Mongo.ObjectID(), opponentId, `${currentUserName} just played their turn`);
+    console.log({opponentId, currentPlayerId});
 
-    NotificationRepository.save(notification);
+    const opponent      = UserRepository.byAnyId(opponentId);
+    const currentPlayer = UserRepository.byAnyId(currentPlayerId);
+
+    const data = {
+      opponent, game, currentPlayer
+    };
+
+    GlobalEventBus.emit(new Events.OpponentPlayed(data));
 
     return returnValue;
   }

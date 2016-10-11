@@ -10,6 +10,7 @@ export const GlobalEventBus = new EventBus(isDebug);
 
 interface OpponentPlayedData {
   opponent: Meteor.User;
+  currentPlayer: Meteor.User;
   game: Game;
 }
 
