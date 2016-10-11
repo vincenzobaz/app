@@ -40,6 +40,7 @@
     "react-motion": "file:./typings/custom/react-motion.d.ts",
     "react-router": "registry:dt/react-router#2.0.0+20160501155536",
     "react-router/history": "registry:dt/react-router/history#2.0.0+20160316155526",
+    "react-sortable-hoc": "registry:dt/react-sortable-hoc#0.0.7+20160830143233",
     "timer": "file:./typings/custom/timer.d.ts",
     "timer-machine": "file:./typings/custom/timer-machine.d.ts"
   },

@@ -1,17 +1,15 @@
-import {getQuestionTitleByType} from '../../helpers/getQuestionTitleByType'
-import {Post} from '../facebook/Post';
-import {SortableList} from '../SortableList';
-import {debug} from "util";
-import {Item} from "../../../common/models/questions/common/Item";
-import {SubjectType} from "../../../common/models/questions/common/SubjectType";
-import {Button} from "react-bootstrap";
-import {QuestionProps} from "./QuestionProps";
-import {OrderAnswer} from "../../../common/models/questions/answers/OrderAnswer";
-import {OrderItem} from "../../../common/models/questions/answers/OrderItem";
-import {OrderChoice} from "../../../common/models/questions/order/OrderChoice";
-import * as _ from 'lodash';
 
+import { debug }                                         from 'util';
+import { find, uniqueId }                                from 'lodash';
+import { Button }                                        from 'react-bootstrap';
+import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc';
 
+import { QuestionProps }                                 from './QuestionProps';
+import { Post }                                          from '../facebook/Post';
+import { getQuestionTitleByType }                        from '../../helpers/getQuestionTitleByType';
+import { Item }                                          from '../../../common/models/questions/common/Item';
+import { SubjectType }                                   from '../../../common/models/questions/common/SubjectType';
+import { OrderAnswer }                                   from '../../../common/models/questions/answers/OrderAnswer';
 
 interface ReorderProps extends QuestionProps {
   items: Item[];
@@ -24,12 +22,40 @@ interface ReorderState {
   items: Item[];
 }
 
-export class Reorder extends React.Component<ReorderProps, ReorderState> {
+interface SortableItemProps {
+  index: number;
+  value: any;
+}
 
-  private userAnswer: Item[];
+const SortableItem = SortableElement((props: SortableItemProps) => {
+  return (
+    <div className="demo8-item">
+      {props.value}
+    </div>
+  );
+});
+
+interface SortableListProps {
+  items: any[];
+}
+
+const SortableList = SortableContainer((props: SortableListProps) => {
+    const { items } = props;
+
+    return (
+      <div>
+        {items.map((value, index) =>
+          <SortableItem key={`item-${index}`} index={index} value={value} />
+        )}
+      </div>
+    );
+});
+
+export class Reorder extends React.Component<ReorderProps, ReorderState> {
 
   constructor(props: ReorderProps) {
     super(props);
+
     this.prepareState(props)
   }
 
@@ -42,7 +68,7 @@ export class Reorder extends React.Component<ReorderProps, ReorderState> {
     let items = props.items;
     if (props.answer != null && props.userAnswer) {
       items = props.answer.map((i: number) =>
-        _.find(items, (item: Item) => item.id == i)
+        find(items, (item: Item) => item.id == i)
       );
     }
     this.state = {
@@ -52,59 +78,70 @@ export class Reorder extends React.Component<ReorderProps, ReorderState> {
 
   render() {
     if (this.props.userAnswer == null) {
+      const items = this.state.items.map(this.renderItem.bind(this));
+
       return (
           <div className="question question-reorder">
             <h4>{getQuestionTitleByType(this.props.type.toString())}</h4>
             <p>Click and drag the items in the correct order.</p>
-            <SortableList items={this.state.items} onSort={this.onSort.bind(this)}
-                          renderItem={this.renderItem.bind(this)}/>
+
+            <SortableList
+                items={items}
+                axis='y'
+                lockAxis='y'
+                hideSortableGhost={true}
+                helperClass='demo-item-helper'
+                onSortEnd={this.onSortEnd.bind(this)}
+              />
+
             <Button onClick={this.onDone.bind(this)}>Done</Button>
           </div>
       );
-    } else {
-      return (<div className="question question-reorder">
+    }
+
+    return (
+      <div className="question question-reorder">
         <h4>{getQuestionTitleByType(this.props.type.toString())}</h4>
         <p>Click and drag the items in the correct order.</p>
-        {this.state.items.map((item: Item) => {
-          return (
-           <div key={_.uniqueId()} className="demo8-item-static">
+        {this.state.items.map(item =>
+           <div key={uniqueId()} className="demo8-item-static">
              {this.renderItem(item)}
           </div>
-        )})}
-      </div>);
-    }
-
+        )}
+      </div>
+    );
   }
 
-  renderItem(item: Item, onLoad?: Function) {
-
+  renderItem(item: Item) {
     if (this.props.userAnswer != null && this.props.answer != null) {
       const index: number = this.state.items.indexOf(item);
-      const userItem = this.props.userAnswer.data.items[index];
-      const className = userItem.id == this.state.items[index].id? "correct-order": "wrong-order";
-      if (item.subject) {
-        return (<div className={`${className}` }>
-        <Post post={item.subject} onLoad={onLoad} interactive={false}/>
-        </div>)
-      }
-    } else {
+      const userItem      = this.props.userAnswer.data.items[index];
+      const className     = userItem.id == this.state.items[index].id ? 'correct-order': 'wrong-order';
 
       if (item.subject) {
-        return <Post post={item.subject} onLoad={onLoad} interactive={false} />;
+        return (
+          <div className={`${className}` }>
+            <Post post={item.subject} interactive={false}/>
+          </div>
+        );
+      }
+    } else {
+      if (item.subject) {
+        return <Post post={item.subject} interactive={false} />;
       }
     }
 
-    return <div>item.text</div>;
-
+    return <div>{item.text}</div>;
   }
 
-  onSort(items) {
-    this.userAnswer = items;
+  onSortEnd({oldIndex, newIndex}) {
+    const items = arrayMove(this.state.items, oldIndex, newIndex);
+    this.setState({ items });
   }
 
   onDone() {
     this.props.onDone({
-      items: this.userAnswer
+      items: this.state.items
     });
   }
 
