@@ -17,10 +17,16 @@ export const ROLE = {
     Tester: "testers" as Role
 };
 
-interface RolesData {
+interface RawRolesData {
     app_id: string;
     user: string;
     role: string;
+}
+
+interface RolesData {
+    administrators: string[];
+    developers: string[];
+    testers: string[];
 }
 
 interface Paging {
@@ -123,6 +129,7 @@ export class _FacebookService {
 
   public getFacebookId(userId: string | Mongo.ObjectID) {
     const meteorUser: MeteorUser = Meteor.users.findOne(userId) as MeteorUser;
+
     if (meteorUser && meteorUser.services && meteorUser.services.facebook) {
       return meteorUser.services.facebook.id;
     } else {
@@ -241,33 +248,40 @@ export class _FacebookService {
     return params;
   }
 
-  public getRoles(): RolesData[] {
+  public getRoles(): RolesData {
       const appConfig = this.getAppConfig();
 
       const params = {
-          access_token: this.fetchAppAccessToken()
+        access_token: this.fetchAppAccessToken()
       };
 
-      const result: { data: RolesData[] } = this.get(`/${appConfig.appId}/roles`, params);
+      const result: { data: RawRolesData[] } = this.get(`/${appConfig.appId}/roles`, params);
 
       if (result.data == null) {
         throw new Meteor.Error('500', 'Cannot get FB app roles');
       }
 
-      return result.data;
+      const data = result.data;
+
+      function filterRole(role: string): string[] {
+        return data.filter(x => x.role === role).map(x => x.user);
+      }
+
+      return {
+        administrators: filterRole('administrators'),
+        developers: filterRole('developers'),
+        testers: filterRole('testers')
+      };
+  }
+
+  public isDeveloperFb(fbUserId: string): boolean {
+    const roles = this.getRoles();
+    return roles.administrators.indexOf(fbUserId) > -1 || roles.developers.indexOf(fbUserId) > -1;
   }
 
   public isDeveloper(user: MeteorUser): boolean {
-      if (user == null) {
-          throw new Meteor.Error('500', 'You must specify the current user');
-      }
-
-      const fbId: string = user.services.facebook.id;
-      const rolesData = this.getRoles();
-
-      const userRole = _.find(rolesData, role => role.user == fbId);
-
-      return userRole.role == ROLE.Admin || userRole.role == ROLE.Developer;
+      const fbId = user.services.facebook.id;
+      return this.isDeveloperFb(fbId);
   }
 
   public deleteRequests(requestIds: string[], userFbId) {
