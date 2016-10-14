@@ -127,12 +127,6 @@ export function setupMeteorMethods() {
             }
         },
 
-        'Facebook.getUserInfo'(userId) {
-            this.unblock();
-            var user = Meteor.users.findOne(this.userId);
-            return FacebookService.getUserInfo(user, userId);
-        },
-
         'Facebook.getAvatar'(facebookId, type) {
             this.unblock();
             var user = Meteor.users.findOne(this.userId);

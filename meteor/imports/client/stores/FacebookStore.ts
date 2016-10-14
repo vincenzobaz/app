@@ -35,10 +35,6 @@ export module FacebookStore {
     }, cb);
   }
 
-  export function getUserInfo(fbUserId): Promise<any> {
-    return MeteorPromise.call('Facebook.getUserInfo', fbUserId);
-  }
-
   export function getFriends(): Promise<any> {
     return MeteorPromise.call('Facebook.getFriends');
   }

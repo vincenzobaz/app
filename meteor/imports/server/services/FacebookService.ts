@@ -141,19 +141,6 @@ export class _FacebookService {
     return this.userGet(user, '/me/friends').data;
   }
 
-  public getUserInfo(user: MeteorUser, fbUserId: string) {
-    const key = `${user._id}/${fbUserId}`;
-
-    if (this.usersInfo.hasOwnProperty(key)) {
-      return this.usersInfo[key];
-    }
-
-    const userInfo = this.get(user, '/' + fbUserId);
-    this.usersInfo[key] = userInfo;
-
-    return userInfo;
-  }
-
   public getAvatar(user: MeteorUser, fbUserId: string, type = 'small') {
     const key = `${user._id}/${fbUserId}`;
 
