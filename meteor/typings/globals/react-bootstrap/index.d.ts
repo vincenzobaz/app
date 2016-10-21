@@ -526,7 +526,7 @@ declare module "react-bootstrap" {
     // <Row />
     // ----------------------------------------
     interface RowProps extends React.HTMLAttributes {
-        componentClass?: React.ReactType;
+        componentClass?: React.ReactType; 
     }
     type Row = React.ClassicComponent<RowProps, {}>;
     var Row: React.ClassicComponentClass<RowProps>;
@@ -724,7 +724,7 @@ declare module "react-bootstrap" {
         validationState?: "success" | "warning" | "error";
     }
     class FormGroup extends React.Component<FormGroupProps, {}> {}
-
+    
     // <ControlLabel />
     // ----------------------------------------
     interface ControlLabelProps extends React.HTMLAttributes {
@@ -733,14 +733,14 @@ declare module "react-bootstrap" {
         srOnly?: boolean;
     }
     class ControlLabel extends React.Component<ControlLabelProps, {}> {}
-
+    
     // <FormControl.Feedback />
     // ----------------------------------------
     interface FormControlFeedbackProps extends React.HTMLAttributes {
     }
     class FormControlFeedback extends React.Component<FormControlFeedbackProps, {}> {
     }
-
+    
     // <FormControl />
     // ----------------------------------------
     interface FormControlProps extends React.HTMLAttributes {
@@ -754,14 +754,14 @@ declare module "react-bootstrap" {
     }
     type FormControl = React.Component<FormControlProps, {}>;
     var FormControl: FormControlClass;
-
+    
     // <HelpBlock />
     // ----------------------------------------
     interface HelpBlockProps extends React.HTMLAttributes {
         bsClass?: string;
     }
     class HelpBlock extends React.Component<HelpBlockProps, {}> {}
-
+    
     // <Checkbox />
     // ----------------------------------------
     interface CheckboxProps extends React.HTMLAttributes {
@@ -771,7 +771,7 @@ declare module "react-bootstrap" {
         validationState?: "success" | "warning" | "error";
     }
     class Checkbox extends React.Component<CheckboxProps, {}> {}
-
+    
     // <Radio />
     // ----------------------------------------
     interface RadioProps extends React.HTMLAttributes {

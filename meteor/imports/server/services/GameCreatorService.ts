@@ -4,8 +4,6 @@ import {encode}                  from 'querystring';
 import {HTTPHelper}              from '../helpers/http';
 import {GameBoard, RawGameBoard} from '../../common/models/GameBoard';
 
-const DEBUG = false;
-
 interface Parameter {
   user_id: string;
   access_token: string;
@@ -36,7 +34,7 @@ class GameCreator {
 
     const url = this.url('fetchData', params);
 
-    DEBUG && console.log('Fetching data from ' + url);
+    logger.debug('Fetching data', {url: url});
 
     return HTTPHelper.get(url, callback);
   }
@@ -49,7 +47,7 @@ class GameCreator {
 
     const url = this.url('gameboard', params);
 
-    DEBUG && console.log('Fetching gameboard from ' + url);
+    logger.debug('Fetching gameboard', {url: url});
 
     return HTTPHelper.get(url, callback);
   }

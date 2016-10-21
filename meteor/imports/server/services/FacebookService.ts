@@ -38,8 +38,6 @@ interface Cursor {
     after: string;
 }
 
-const DEBUG = process.env.NODE_ENV === 'development';
-const debug = DEBUG ? (...args) => console.log.apply(console, args) : () => {};
 
 export class _FacebookService {
 
@@ -80,7 +78,7 @@ export class _FacebookService {
       return res.data;
     }
     catch (e) {
-      debug("GET to FB received the error:", e);
+      logger.debug("GET to FB received the error:", e);
       return { error: e };
     }
   }
@@ -89,7 +87,7 @@ export class _FacebookService {
     try {
       const fullUrl = this.buildUrl(url);
 
-      debug(`[FacebookService] POST ${fullUrl}`, params);
+      logger.debug(`[FacebookService] POST ${fullUrl}`, params);
 
       const res = HTTP.post(fullUrl, params && { params } || {});
 
@@ -100,7 +98,7 @@ export class _FacebookService {
       return res.data;
     }
     catch (e) {
-      debug("POST to FB received the error:", e);
+      logger.debug("POST to FB received the error:", e);
       return { error: e };
     }
   }
@@ -109,20 +107,18 @@ export class _FacebookService {
     try {
       const fullUrl = this.buildUrl(url);
 
-      debug(`[FacebookService] DEL ${fullUrl}`, params);
+      logger.debug(`[FacebookService] DEL ${fullUrl}`, params);
 
       const res = HTTP.del(fullUrl, { params });
 
-      debug(res);
-
       if (res.statusCode !== 200) {
         // TODO: Handle errors.
-        debug("Status code wasn't 200", res);
+        logger.debug("Status code wasn't 200", res);
       }
       return res.data;
     }
     catch (e) {
-      debug("DELETE to FB received the error:", e);
+      logger.debug("DELETE to FB received the error:", e);
       return { error: e };
     }
   }

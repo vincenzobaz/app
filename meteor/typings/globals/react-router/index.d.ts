@@ -13,7 +13,7 @@ declare namespace ReactRouter {
     type EnterHook = (nextState: RouterState, replace: RedirectFunction, callback?: Function) => void
 
     type LeaveHook = () => void
-
+    
     type ChangeHook = (prevState: RouterState, nextState: RouterState, replace: RedirectFunction, callback: Function) => void;
 
     type Params = { [param: string]: string }

@@ -41,21 +41,21 @@ export module AnswerService {
 
     let game: Game = Games.findOne(gameId);
     if (!game) {
-      console.log("Could not find game with id", gameId);
+      logger.error("Could not find game", {gameId: gameId});
       return new None<{game: Game, board: GameBoard}>();
     }
     const board = game.getCurrentBoard();
     const tiles = board.tiles;
 
     if (!board) {
-      console.log("Could not find board for game", game._id);
+      logger.error("Could not find board", {gameId: game._id});
       return new None<{game: Game, board: GameBoard}>();
     }
 
     const tile: Tile = board.getTileById(tileId);
 
     if (!tile) {
-      console.log(`Could not find tile: ${tileId} for board ${board._id}`);
+      logger.error(`Could not find tile: ${tileId} for board ${board._id}`, {gameId: gameId});
       return new None<{game: Game, board: GameBoard}>();
     }
 
@@ -204,12 +204,11 @@ export module AnswerService {
       tile: tile
     };
 
-    console.log(`Result of player ${currentPlayerNum} row: ${row}, column: ${col}`, _.omit(returnValue, 'tile'));
-
-    console.log({opponentId, currentPlayerId});
-
     const opponent      = UserRepository.byAnyId(opponentId);
     const currentPlayer = UserRepository.byAnyId(currentPlayerId);
+
+    logger.debug(`Result of player ${currentPlayer} row: ${row}, column: ${col}`, _.omit(returnValue, 'tile'));
+    logger.debug(`Players`, {opponentId: opponentId, currentPlayerId: currentPlayerId});
 
     const data = {
       opponent, game, currentPlayer

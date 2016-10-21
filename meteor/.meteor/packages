@@ -32,3 +32,4 @@ static-html
 webpack:react
 webpack:typescript
 webpack:webpack
+votercircle:winston

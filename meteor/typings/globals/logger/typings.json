@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "/home/vinz/Desktop/reminisce/app/meteor/typings/custom/logger.d.ts",
+    "raw": "file:./typings/custom/logger.d.ts",
+    "typings": "/home/vinz/Desktop/reminisce/app/meteor/typings/custom/logger.d.ts"
+  }
+}

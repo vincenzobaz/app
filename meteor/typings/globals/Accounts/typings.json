@@ -1,8 +1,8 @@
 {
   "resolution": "main",
   "tree": {
-    "src": "/Users/romac/Code/reminisce.me/app/meteor/typings/custom/Accounts.d.ts",
+    "src": "/home/vinz/Desktop/reminisce/app/meteor/typings/custom/Accounts.d.ts",
     "raw": "file:./typings/custom/Accounts.d.ts",
-    "typings": "/Users/romac/Code/reminisce.me/app/meteor/typings/custom/Accounts.d.ts"
+    "typings": "/home/vinz/Desktop/reminisce/app/meteor/typings/custom/Accounts.d.ts"
   }
 }

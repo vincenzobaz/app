@@ -1,8 +1,8 @@
 {
   "resolution": "main",
   "tree": {
-    "src": "/Users/romac/Code/reminisce.me/app/meteor/typings/custom/MeteorCollectionHooks.d.ts",
+    "src": "/home/vinz/Desktop/reminisce/app/meteor/typings/custom/MeteorCollectionHooks.d.ts",
     "raw": "file:./typings/custom/MeteorCollectionHooks.d.ts",
-    "typings": "/Users/romac/Code/reminisce.me/app/meteor/typings/custom/MeteorCollectionHooks.d.ts"
+    "typings": "/home/vinz/Desktop/reminisce/app/meteor/typings/custom/MeteorCollectionHooks.d.ts"
   }
 }

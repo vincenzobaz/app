@@ -51,7 +51,7 @@ export class EventBus {
 
   public emit<A>(event: Event<A>): boolean {
     if (this.debug) {
-      console.log(`[EventBus] emit: ${event.getType().getName()}`, event.getData());
+      logger.debug(`[EventBus] emit: ${event.getType().getName()}`, event.getData());
     }
 
     return this.bus.emit(event.getType().getName(), event);
