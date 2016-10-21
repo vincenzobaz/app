@@ -21,7 +21,7 @@ export class GeoVerificationService {
     const correctLocation: Location = question.answer;
     const lat = correctLocation.latitude;
     const long = correctLocation.longitude;
-    console.log("Geverification received the following answer", answer);
+    logger.debug("Geverification received the following answer", {answer: answer});
     const entity: GeoNameEntity = GeoNameEntityCollection.findOne({
       loc: {
         $near: {

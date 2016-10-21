@@ -15,7 +15,7 @@ import {MeteorUser}              from '../common/collections/MeteorUser';
 export const Server = {
 
   fetchGameBoard(fbId: string, gameId: string | Mongo.ObjectID, playerNum: number, createFetch: boolean = true) {
-    console.log(`Fetching game board for user ${fbId}... and game ${gameId}`);
+    logger.info(`Fetching game board for user ${fbId}... and game ${gameId}`, {fbId: fbId});
     const game: Game = Games.findOne(gameId);
     const bot = BotService.bot();
 
@@ -26,7 +26,7 @@ export const Server = {
     }
     try {
       if (BotService.isBot(fbId)) {
-        console.log(`User ${fbId} is a bot. Creating bot board...`);
+        logger.info(`User ${fbId} is a bot. Creating bot board...`);
         const botBoard: RawGameBoard = JSON.parse(Assets.getText('json/gameboards/gameboard1.json'));
         botBoard.userId = fbId;
         gameBoard = GameBoard.fromRaw(botBoard);
@@ -61,11 +61,10 @@ export const Server = {
       return gameBoard;
     }
     catch (e) {
-      console.error(`ERROR: Can't create game board from game creator result.`);
-      console.error(`ERROR: ${e.stack}`);
+      logger.error(`Can't create game board from game creator result.`, {trace: e.stack});
 
       if (createFetch && !BotService.isBot(fbId)) {
-        console.log(`Creating new fetch request as it failed for user ${fbId} in game: ${game._id}`);
+        logger.debug(`Creating new fetch request as it failed for user ${fbId} in game: ${game._id}`, {fbId: fbId});
         const fetch = new GameFetch(
             new Mongo.ObjectID(),
             game._id,
@@ -80,16 +79,16 @@ export const Server = {
   },
 
   fetchData(fbId: string) {
-    console.log(`Fetching data for user ${fbId}...`);
+    console.info(`Fetching data for user ${fbId}...`, {fbId: fbId});
     const user = FacebookService.getUserFromFacebookId(fbId);
     const accessToken = user.services.facebook.accessToken;
 
     try {
       const result = GameCreatorService.fetchData(fbId, accessToken);
-      console.log(`Game creator replied: ${result.data.message}`);
+      logger.info(`Game creator replied: ${result.data.message}`, {fbId: fbId});
     }
     catch (e) {
-      console.error(`Non 200 reply from game creator to 'fetchData' request ${e}`);
+      logger.error(`Non 200 reply from game creator to 'fetchData' request ${e}`, {fbId: fbId});
     }
   },
 
@@ -97,18 +96,20 @@ export const Server = {
     const fetches = GameFetches.find().fetch();
     fetches.forEach((fetch: GameFetch) => {
       Meteor.setTimeout(() => {
-        console.log(`Trygin again to fetch data for ${fetch.playerId} in game: ${fetch.gameId} for the: ${fetch.tries} time`);
+        logger.debug(`Trying again to fetch data for ${fetch.playerId} in game: ${fetch.gameId} for the: ${fetch.tries} time`);
         this.processFetch(fetch);
       }, 0);
     });
   },
 
   processFetch(fetch: GameFetch) {
-    console.log(`Processing fetch ${fetch._id}...`);
-    console.log(` - Game: ${fetch.gameId}`);
-    console.log(` - Player Id: ${fetch.playerId}`);
-    console.log(` - Player Num: ${fetch.player}`);
-    console.log(` - Tries: ${fetch.tries}`);
+    logger.debug('Processing fetch', {
+      id_ : fetch._id,
+      gameId: fetch.gameId,
+      playerId: fetch.playerId,
+      player: fetch.player,
+      tries: fetch.tries}
+      );
 
     const board = this.fetchGameBoard(fetch.playerId, fetch.gameId, fetch.player, false);
 
@@ -128,7 +129,7 @@ export const Server = {
       if (failedGame) {
         failedGame.status = GAME_STATUS.Failed;
         Games.update(failedGame._id, failedGame);
-        console.log(`Server: Maximum number of tries for game ${failedGame._id} reached`);
+        logger.error(`Server: Maximum number of tries for game ${failedGame._id} reached`);
       }
       GameFetches.remove(fetch._id);
 

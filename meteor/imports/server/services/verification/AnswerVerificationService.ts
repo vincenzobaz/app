@@ -39,7 +39,7 @@ export class AnswerVerificationService {
       const kind = question.kind;
       const verifier = AnswerVerificationService.getVerifier(kind);
       if (verifier == null) {
-        console.error(`AnswerVerificationService: Got invalid question kind: ${kind}`);
+        logger.error(`AnswerVerificationService: Got invalid question kind: ${kind}`);
         return 0;
       }
 

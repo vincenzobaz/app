@@ -18,7 +18,7 @@ export class DesktopNotificationService extends NotificationService {
 
   public send(notif: Notification): void {
     if (this.debug) {
-      console.log(`[NotificationService] send: to=${notif.userId} message="${notif.message}"`);
+      logger.debug(`[NotificationService] notification sent`, {to: notif.userId, message: notif.message});
     }
 
     NotificationRepository.save(notif);

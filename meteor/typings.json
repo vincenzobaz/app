@@ -41,9 +41,11 @@
     "react-router": "registry:dt/react-router#2.0.0+20160501155536",
     "react-router/history": "registry:dt/react-router/history#2.0.0+20160316155526",
     "timer": "file:./typings/custom/timer.d.ts",
-    "timer-machine": "file:./typings/custom/timer-machine.d.ts"
+    "timer-machine": "file:./typings/custom/timer-machine.d.ts",
+    "winston": "registry:dt/winston"
   },
   "dependencies": {
+    "logger": "file:./typings/custom/logger.d.ts",
     "lodash": "registry:npm/lodash#4.0.0+20160416211519"
   }
 }
