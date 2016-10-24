@@ -26,7 +26,7 @@ export function publishCollections() {
     });
 
     Meteor.publish('joinRequests', function() {
-        logger.log(`Publishing join requests for user...`, {userId: this.userId});
+        logger.debug(`Publishing join requests for user...`, {userId: this.userId});
 
         return JoinRequests.find({ to: FacebookService.getFacebookId(this.userId)});
     });

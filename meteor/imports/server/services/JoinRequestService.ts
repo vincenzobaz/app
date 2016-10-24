@@ -46,10 +46,12 @@ export const JoinRequestService = {
     const request = JoinRequests.findOne(requestId);
 
     if (request == null) {
-      logger.error('No message with found by id', {requestId: requestId});
+      const msg = `No request with id ${requestId} found.`;
+      logger.error(msg, { requestId: requestId });
+
       return {
         status: 'error',
-        msg: msg
+        msg
       };
     }
 

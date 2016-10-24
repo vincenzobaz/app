@@ -1,8 +1,14 @@
 {
   "resolution": "main",
   "tree": {
+<<<<<<< HEAD
     "src": "/home/vinz/Desktop/reminisce/app/meteor/typings/custom/logger.d.ts",
     "raw": "file:./typings/custom/logger.d.ts",
     "typings": "/home/vinz/Desktop/reminisce/app/meteor/typings/custom/logger.d.ts"
+=======
+    "src": "/Users/romac/Code/reminisce.me/app/meteor/typings/custom/logger.d.ts",
+    "raw": "file:./typings/custom/logger.d.ts",
+    "typings": "/Users/romac/Code/reminisce.me/app/meteor/typings/custom/logger.d.ts"
+>>>>>>> cdc1a01... Fix winston typings.
   }
 }

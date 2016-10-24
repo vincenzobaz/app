@@ -13,6 +13,7 @@
     "google.maps": "file:./typings/custom/google.maps.d.ts",
     "jquery": "registry:dt/jquery#1.10.0+20160417213236",
     "lodash": "file:./typings/custom/lodash.d.ts",
+    "logger": "file:./typings/custom/logger.d.ts",
     "meteor": "registry:dt/meteor#1.3.0+20160514174853",
     "meteor-react": "file:./typings/custom/meteor-react.d.ts",
     "moment": "file:./typings/custom/moment.d.ts",
@@ -42,11 +43,9 @@
     "react-router/history": "registry:dt/react-router/history#2.0.0+20160316155526",
     "react-sortable-hoc": "registry:dt/react-sortable-hoc#0.0.7+20160830143233",
     "timer": "file:./typings/custom/timer.d.ts",
-    "timer-machine": "file:./typings/custom/timer-machine.d.ts",
-    "winston": "registry:dt/winston"
+    "timer-machine": "file:./typings/custom/timer-machine.d.ts"
   },
   "dependencies": {
-    "logger": "file:./typings/custom/logger.d.ts",
     "lodash": "registry:npm/lodash#4.0.0+20160416211519"
   }
 }

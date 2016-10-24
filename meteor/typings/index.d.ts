@@ -10,6 +10,7 @@
 /// <reference path="globals/google.maps/index.d.ts" />
 /// <reference path="globals/jquery/index.d.ts" />
 /// <reference path="globals/lodash/index.d.ts" />
+/// <reference path="globals/logger/index.d.ts" />
 /// <reference path="globals/meteor-react/index.d.ts" />
 /// <reference path="globals/meteor/index.d.ts" />
 /// <reference path="globals/moment/index.d.ts" />
