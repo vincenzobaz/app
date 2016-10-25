@@ -45,6 +45,7 @@
   export FACEBOOK_APPID=...
   export FACEBOOK_SECRET=..
   export GMAPS_KEY=...
+  export APP_LOG_LOCATION=pathToLogFile
   ```
 
 8. Add the following line to your `/etc/hosts`:
