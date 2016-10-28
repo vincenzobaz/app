@@ -1,8 +1,0 @@
-{
-  "resolution": "main",
-  "tree": {
-    "src": "/home/vinz/Desktop/reminisce/app/meteor/typings/custom/timer.d.ts",
-    "raw": "file:./typings/custom/timer.d.ts",
-    "typings": "/home/vinz/Desktop/reminisce/app/meteor/typings/custom/timer.d.ts"
-  }
-}

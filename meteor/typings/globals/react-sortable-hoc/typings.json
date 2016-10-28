@@ -1,8 +1,0 @@
-{
-  "resolution": "main",
-  "tree": {
-    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/80cea0f9fab00642a12a2a9caf6496b509d1accd/react-sortable-hoc/react-sortable-hoc.d.ts",
-    "raw": "registry:dt/react-sortable-hoc#0.0.7+20160830143233",
-    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/80cea0f9fab00642a12a2a9caf6496b509d1accd/react-sortable-hoc/react-sortable-hoc.d.ts"
-  }
-}

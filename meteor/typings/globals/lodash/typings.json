@@ -1,8 +1,0 @@
-{
-  "resolution": "main",
-  "tree": {
-    "src": "/home/vinz/Desktop/reminisce/app/meteor/typings/custom/lodash.d.ts",
-    "raw": "file:./typings/custom/lodash.d.ts",
-    "typings": "/home/vinz/Desktop/reminisce/app/meteor/typings/custom/lodash.d.ts"
-  }
-}
