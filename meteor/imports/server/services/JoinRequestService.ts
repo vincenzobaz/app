@@ -47,10 +47,11 @@ export const JoinRequestService = {
 
     if (request == null) {
       const msg = `No request with id ${requestId} found.`;
-      console.error(msg);
+      logger.error(msg, { requestId: requestId });
+
       return {
         status: 'error',
-        msg: msg
+        msg
       };
     }
 
@@ -82,7 +83,7 @@ export const JoinRequestService = {
       throw new Meteor.Error('JoinRequestService.noAssociatedFacebook', msg);
     }
 
-    console.log(`Checking if user ${currentUserId} is friend with ${friend.userId}`);
+    logger.debug(`Checking if current user is friend with another user`, {currentUser: currentUserId, user: friend.userId});
 
 
     return Meteor.users.findOne(friend.userId);
@@ -112,7 +113,7 @@ export const JoinRequestService = {
       };
     }
     catch (e) {
-      console.error(`JoinRequestService - Error: ${e}`);
+      logger.error(`JoinRequestService - Error: ${e}`);
       return {
         status: 'error',
         request: null,

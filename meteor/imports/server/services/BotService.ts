@@ -78,7 +78,7 @@ export const BotService = {
 
   createBot(force = false) {
     if (force || !BotService.botCreated()) {
-      console.log("Creating bot...");
+      logger.debug("Creating bot...");
 
       Meteor.users.insert({
         username: BOT_USERNAME,
@@ -110,26 +110,26 @@ export const BotService = {
 
     query.observe({
       added(game: Game) {
-        console.log(`Starting to watch bot game ${game._id}.`);
+        logger.debug(`Starting to watch bot game.`, {game_id: game._id});
         BotService.observeGame(game._id);
       },
 
       removed(game: Game) {
-        console.log(`Game ${game._id} that bot was playing has been removed.`);
         // BotService.proposeGameToPlayerIfNecessary(game.player1);
+        logger.debug(`Game that bot was playing has been removed.`, {game_id: game._id});
       }
     });
   },
 
   observeGame(gameId: string | Mongo.ObjectID) {
-    console.log(`Observing game ${gameId}`);
+    logger.debug(`Observing game`, {gameId: gameId});
 
     const TIMEOUT = 3 * 1000;
     const query   = Games.find(gameId);
     const game    = Games.findOne(gameId);
 
     if (!game) {
-      console.error(`BotService.observeGame: Cannot find game with id ${gameId}.`);
+      logger.error(`BotService.observeGame: Cannot find game`, {gameId: gameId});
       return;
     }
 
@@ -163,7 +163,7 @@ export const BotService = {
   },
 
   playTurn(game: Game) {
-    console.log("Bot is playing");
+    logger.debug("Bot is playing", {game_id: game._id});
     if (game.status != GAME_STATUS.Playing) {
       return;
     }
@@ -179,7 +179,7 @@ export const BotService = {
     if (!tile) {
       throw new Meteor.Error('500', "Bot could't find a tile to play on.");
     }
-    console.log("Bot answered: ", tile.type);
+    logger.debug("Bot answered: ", tile.type, {gameId: game._id});
     const answers = _.map(tile.questions, (q: Question) => {
       switch (q.kind) {
         case KIND.Timeline:
@@ -336,9 +336,9 @@ export const BotService = {
           return " "
         }
       });
-      console.log('|' + line.join('|') + '|');
+      logger.debug('|' + line.join('|') + '|');
     }
-  }
+  },
 
   // proposeGameToPlayerIfNecessary(userFbId: string) {
   //   const botId = BotService.getBot()._id.valueOf();
@@ -361,7 +361,7 @@ export const BotService = {
   //       {status: {$nin: [GAME_STATUS.Ended, GAME_STATUS.Failed, GAME_STATUS.Waiting]}}]
   //   }).count();
 
-  //   console.log(`We have ${botRequestCount} botrequests and ${botGamesCount} botgames`);
+  //   logger.debug(`We have ${botRequestCount} botrequests and ${botGamesCount} botgames`);
 
   //   if (botRequestCount == 0 && botGamesCount == 0) {
   //     JoinRequestService.send(botId, userFbId, _.uniqueId());

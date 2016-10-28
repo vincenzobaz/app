@@ -40,7 +40,7 @@ export function setupMeteorMethods() {
                 };
             }
 
-            console.log(`Deleting data for user: ${userId}`);
+            logger.info(`Deleting data for user: ${userId}`, {userId: userId});
 
             const user = Meteor.users.findOne(userId);
             const fbUserId = user.services.facebook.id;
@@ -54,7 +54,7 @@ export function setupMeteorMethods() {
                 GameService.removeUnfinished(fbUserId);
             }
 
-            console.log('Data deleted with following result:', result.data.message);
+            logger.info('Data deleted with following result:', result.data.message);
 
             return {
                 status: result.statusCode == 200 ? 'success' : 'error',
@@ -88,7 +88,7 @@ export function setupMeteorMethods() {
         },
 
         'Game.quit'(gameId) {
-            console.error('Method Game.quit is not implemented yet.');
+            logger.error('Method Game.quit is not implemented yet.', {gameId: gameId});
 
             return {
                 status: 'success'
@@ -119,7 +119,7 @@ export function setupMeteorMethods() {
                     data: data
                 };
             } catch (e) {
-                console.error(`ERROR: Couldn't get build informations: ${e}`);
+                logger.error(`Couldn't get build informations: ${e}`);
                 return {
                     status: 'error',
                     error: e

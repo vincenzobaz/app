@@ -22,7 +22,7 @@ export class DesktopNotificationService extends NotificationService {
 
   public saveNotif(notif: Notification): void {
     if (this.debug) {
-      console.log(`[DesktopNotificationService] send: to=${notif.userId} message="${notif.message}"`);
+      logger.debug(`[NotificationService] notification sent`, {to: notif.userId, message: notif.message});
     }
 
     NotificationRepository.save(notif);
