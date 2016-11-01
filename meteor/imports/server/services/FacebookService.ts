@@ -263,8 +263,12 @@ export class _FacebookService {
   }
 
   public isDeveloper(user: MeteorUser): boolean {
-      const fbId = user.services.facebook.id;
-      return this.isDeveloperFb(fbId);
+    if (user.services == null || user.services.facebook == null) {
+      return false;
+    }
+
+    const fbId = user.services.facebook.id;
+    return this.isDeveloperFb(fbId);
   }
 
   public deleteRequests(requestIds: string[], userFbId) {

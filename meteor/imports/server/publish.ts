@@ -54,8 +54,9 @@ export function publishCollections() {
     });
 
     Meteor.publish('feedback', function() {
-        let user = Meteor.users.findOne(this.userId);
+        let user        = Meteor.users.findOne(this.userId);
         let isDeveloper = FacebookService.isDeveloper(user)
+
         if(!isDeveloper) {
             throw new Meteor.Error("User must be a developer or admin to access this collection");
         }
