@@ -83,7 +83,7 @@ export class Reorder extends React.Component<ReorderProps, ReorderState> {
       return (
           <div className="question question-reorder">
             <h4>{getQuestionTitleByType(this.props.type.toString())}</h4>
-            <p>Click and drag the items in the correct order.</p>
+            <h5>Click and drag the items in the correct order.</h5>
 
             <SortableList
                 items={items}
