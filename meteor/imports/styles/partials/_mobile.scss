@@ -148,14 +148,24 @@ $mobile-screen-max: 768px;
     width: 80%;
   }
 
-  .modal.fullscreen,
-  .modal.fullscreen.fade.in,
-  .modal.fullscreen .modal-dialog {
-    @include fullscreen(1%);
+  .modal.fullscreen {
+    &.fade.in, .modal-dialog, .modal-content {
+      position: absolute;
+      @include fullscreen(0);
+    }
+    .modal-footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
   }
 
-  .modal.end-game, .modal.error {
-    @include modal-fullscreen(1%);
+  .modal.end-game,
+  .modal.error {
+    &.fade.in, .modal-dialog, .modal-content {
+      @include modal-fullscreen(1%);
+    }
   }
 
   ul.answers li, ul.avatar-answers li {
