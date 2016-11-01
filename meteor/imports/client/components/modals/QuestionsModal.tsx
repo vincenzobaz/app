@@ -293,12 +293,11 @@ export class QuestionsModal extends React.Component<Props, State> {
     } else {
       return (
         <div className='grid-container'>
-          <div className='grid-25'>
+          <div className='grid-50'>
             {this.renderTimeLeft(this.isDone())}
           </div>
 
-
-          <div className='grid-25' style={{textAlign: 'right'}}>
+          <div className='grid-50' style={{textAlign: 'right'}}>
             <img src={progressImage(this.state.step + 1, 'red')} alt='' width='22' height='22'/>
           </div>
         </div>

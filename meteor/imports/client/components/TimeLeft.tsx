@@ -1,33 +1,20 @@
 
-'use strict';
-
-import {TimeoutMixin} from './mixins/TimeoutMixin';
-import {timerStyle} from '../helpers/timerStyle';
-import * as ReactMixin from 'react-mixin';
-
+import { WithTimeout } from './hoc/WithTimeout';
+import { timerStyle }  from '../helpers/timerStyle';
 
 interface TimeLeftProps {
   maxTime: number;
-  onTimeUp: Function;
-}
-
-interface TimeLeftState {
   timeLeft: number;
 }
 
-@ReactMixin.decorate(TimeoutMixin)
-export class TimeLeft extends React.Component<TimeLeftProps, TimeLeftState> {
+class InnerTimeLeft extends React.Component<TimeLeftProps, void> {
 
   constructor(props: TimeLeftProps) {
     super(props);
-
-    this.state = {
-      timeLeft: this.props.maxTime
-    }
   }
 
   render() {
-    const timeLeftRatio = this.state.timeLeft / this.props.maxTime;
+    const timeLeftRatio = this.props.timeLeft / this.props.maxTime;
 
     return (
       <div className='timer'>
@@ -38,4 +25,6 @@ export class TimeLeft extends React.Component<TimeLeftProps, TimeLeftState> {
   }
 
 }
+
+export const TimeLeft = WithTimeout(InnerTimeLeft);
 

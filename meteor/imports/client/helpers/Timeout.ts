@@ -1,46 +1,44 @@
 
-'use strict';
-import {ENVIRONMENT, RunConfig} from "./RunConfig";
+const nop = () => {};
 
-var nop = function() {};
+export class Timeout {
 
-// maxTime in milliseconds
-export function Timeout(maxTime, onTimeUp, interval, onTick, lastTick) {
-  this.timeLeft = maxTime;
-  this.onTimeUp = onTimeUp || nop;
-  this.interval = interval || 1000;
-  this.onTick = onTick || nop;
-  this.lastTick = (lastTick == null) ? false : !!lastTick;
-}
+  private id: any;
+  private timeLeft: number;
 
-Timeout.prototype = {
-
-  id: null,
-
-  start() {
-    this.id = setInterval(this.tick.bind(this), this.interval);
-  },
-
-  stop() {
-    clearInterval(this.id);
-  },
-
-  tick() {
-    if (RunConfig.env == ENVIRONMENT.Production) {
-      this.timeLeft -= this.interval;
-      if (this.timeLeft <= 0) {
-        if (this.lastTick) {
-          this.onTick(0);
-        }
-        this.onTimeUp();
-        this.stop();
-      }
-      else {
-        this.onTick(this.timeLeft);
-      }
-    }
-
+  constructor(
+    private maxTime: number,          // milliseconds
+    private onTimeUp: Function = nop,
+    private interval: number = 1000,  // milliseconds
+    private onTick: (timeLeft: number) => void = nop,
+    private lastTick: boolean = false
+  ) {
+    this.timeLeft = maxTime;
   }
 
-};
+  start(): void {
+    this.id = setInterval(() => this.tick(), this.interval);
+  }
+
+  stop(): void {
+    clearInterval(this.id);
+  }
+
+  tick(): void {
+    this.timeLeft -= this.interval;
+
+    if (this.timeLeft <= 0) {
+      if (this.lastTick) {
+        this.onTick(0);
+      }
+
+      this.onTimeUp();
+      this.stop();
+    }
+    else {
+      this.onTick(this.timeLeft);
+    }
+  }
+
+}
 
