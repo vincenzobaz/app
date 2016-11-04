@@ -1,4 +1,5 @@
 import {getQuestionTitleByType} from '../../helpers/getQuestionTitleByType'
+import {QUESTION_TYPE} from '../../../common/models/questions/common/QuestionType'
 import {Post} from '../facebook/Post';
 import {Prop} from '../Prop';
 import {Choice} from "../../../common/models/questions/multiplechoice/Choice";
@@ -6,6 +7,7 @@ import {Button} from 'react-bootstrap';
 import {QuestionProps} from "./QuestionProps";
 import * as _ from 'lodash';
 import {MultipleChoiceAnswer} from "../../../server/services/verification/services/MultipleChoiceVerificationService";
+import {SubjectType} from "../../../common/models/questions/common/SubjectType";
 
 interface MultipleChoiceProps extends QuestionProps {
   choices: Choice[];
@@ -30,9 +32,11 @@ export class MultipleChoice extends React.Component<MultipleChoiceProps, Multipl
   }
 
   render() {
-    const title = getQuestionTitleByType(this.props.type);
+    const type: SubjectType = this.props.type;
+    const title: string = getQuestionTitleByType(type);
+    let reactPicture = this.getIcon(type);
 
-    return (
+    if (reactPicture == null) return (
         <div className="question question-multiplechoice">
           <h4>{title}</h4>
           <div className="question-subject">
@@ -45,6 +49,46 @@ export class MultipleChoice extends React.Component<MultipleChoiceProps, Multipl
           </div>
         </div>
     );
+    else return (
+        <div className="question question-multiplechoice">
+          <h4>{title}</h4>
+          <img src={reactPicture} alt="reaction"/>
+          <div className="question-subject">
+            <Post post={this.props.subject}/>
+          </div>
+          <div className="question-input">
+            <ul className='answers avatar-answers'>
+              {this.props.choices.map(this.renderChoice.bind(this))}
+            </ul>
+          </div>
+        </div>
+    );
+  }
+
+  getIcon(type: SubjectType): string {
+    const picsRoot = 'images/facebook/';
+    switch (type) {
+      case QUESTION_TYPE.MCWhoReactedToYourPostWithLIKE:
+        return picsRoot + 'thumbup_120.png';
+        break;
+      case QUESTION_TYPE.MCWhoReactedToYourPostWithWOW:
+        return picsRoot + 'oh_120.png';
+        break;
+      case QUESTION_TYPE.MCWhoReactedToYourPostWithHAHA:
+        return picsRoot + 'lol_120.png';
+        break;
+      case QUESTION_TYPE.MCWhoReactedToYourPostWithLOVE:
+        return picsRoot + 'love_120.png';
+        break;
+      case QUESTION_TYPE.MCWhoReactedToYourPostWithSAD:
+        return picsRoot + 'cry_120.png';
+        break;
+      case QUESTION_TYPE.MCWhoReactedToYourPostWithANGRY:
+        return picsRoot + 'grrr_120.png';
+        break;
+      default:
+        return null;
+    }
   }
 
 
