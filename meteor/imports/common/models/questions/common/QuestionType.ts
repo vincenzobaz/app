@@ -7,7 +7,6 @@ export type QuestionType = "MCWhoMadeThisCommentOnYourPost" |
     "MCWhoReactedToYourPostWithLOVE" |
     "MCWhoReactedToYourPostWithSAD" |
     "MCWhoReactedToYourPostWithANGRY" |
-    "MCWhoReactedToYourPostWithTHANKFUL" |
     "TLWhenDidYouShareThisPost" |
     "TLWhenDidYouLikeThisPage" |
     "GeoWhatCoordinatesWereYouAt" |
@@ -29,7 +28,6 @@ export const QUESTION_TYPE = {
   MCWhoReactedToYourPostWithLOVE: 'MCWhoReactedToYourPostWithLOVE' as QuestionType,
   MCWhoReactedToYourPostWithSAD: 'MCWhoReactedToYourPostWithSAD' as QuestionType,
   MCWhoReactedToYourPostWithANGRY: 'MCWhoReactedToYourPostWithANGRY' as QuestionType,
-  MCWhoReactedToYourPostWithTHANKFUL: 'MCWhoReactedToYourPostWithTHANKFUL' as QuestionType,
   TLWhenDidYouShareThisPost: 'TLWhenDidYouShareThisPost' as QuestionType,
   TLWhenDidYouLikeThisPage: 'TLWhenDidYouLikeThisPage' as QuestionType,
   GeoWhatCoordinatesWereYouAt: 'GeoWhatCoordinatesWereYouAt' as QuestionType,
