@@ -29,7 +29,7 @@ interface SortableItemProps {
 
 const SortableItem = SortableElement((props: SortableItemProps) => {
   return (
-    <div className="demo8-item">
+    <div className="reorder-item">
       {props.value}
     </div>
   );
@@ -104,7 +104,7 @@ export class Reorder extends React.Component<ReorderProps, ReorderState> {
         <h4>{getQuestionTitleByType(this.props.type.toString())}</h4>
         <p>Click and drag the items in the correct order.</p>
         {this.state.items.map(item =>
-           <div key={uniqueId()} className="demo8-item-static">
+           <div key={uniqueId()} className="reorder-item-static">
              {this.renderItem(item)}
           </div>
         )}

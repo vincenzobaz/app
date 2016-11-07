@@ -260,7 +260,7 @@
 
 }
 
-.demo8-item {
+.reorder-item {
 
   blockquote {
     @include zero;
@@ -947,7 +947,7 @@ $grey-border: #b8b8b8;
   }
 }
 
-.demo8-item, .demo8-item-static {
+.reorder-item, .reorder-item-static {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
