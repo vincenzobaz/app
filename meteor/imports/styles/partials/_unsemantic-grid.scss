@@ -2,6 +2,8 @@
 /* This file has a mobile-to-desktop breakpoint */
 /* ============================================ */
 
+$screen-desktop: 992px;
+
 @media screen and (max-width: 400px) {
   @-ms-viewport {
     width: 320px;
@@ -553,7 +555,7 @@
   }
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: $screen-desktop) {
   .grid-100:before,
   .grid-100:after {
     content: ".";
