@@ -58,9 +58,11 @@ export function publishCollections() {
         let isDeveloper = FacebookService.isDeveloper(user)
 
         if(!isDeveloper) {
-            throw new Meteor.Error("User must be a developer or admin to access this collection");
+          return;
         }
+
         logger.debug(`Publishing feedback for user...`, {userId: this.userId});
+
         return FeedBackCollection.find({});
     });
 }
