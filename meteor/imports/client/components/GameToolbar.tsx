@@ -1,7 +1,13 @@
-import {Row, Col, Button, Modal} from 'react-bootstrap';
-import {browserHistory}          from 'react-router';
+import {
+  Row, Col,
+  Button, Modal,
+  Glyphicon
+} from 'react-bootstrap';
+
+import {browserHistory, Link} from 'react-router';
 
 import {Game}             from '../models/Game';
+import {User}             from '../models/User';
 import {Routes}           from '../../common/Routes';
 import {Friend}           from '../../common/models/Friend';
 import {Friends}          from '../../common/collections/Friends';
@@ -11,6 +17,7 @@ import {QuitGameModal}    from './modals/QuitGameModal';
 import {AccountSettings}  from './AccountSettings';
 
 interface GameToolbarProps {
+  user: User;
   game?: Game;
 }
 
@@ -42,7 +49,7 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
     });
   }
 
-  onClickSettingsButton() {
+  onClickAccountButton() {
     this.setState({
       showQuitGameModal: this.state.showQuitGameModal,
       showAccountSettings: true
@@ -100,7 +107,8 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
           <div className="game-toolbar">
             <div className="game-toolbar-btns">
               {this.renderRequestButton()}
-              {this.renderSettingsButton()}
+              {this.renderAccountButton()}
+              {this.renderAdminButton()}
             </div>
             {this.renderModal()}
             {this.renderPleaseClickOnDoneModal()}
@@ -112,17 +120,39 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
 
   renderRequestButton() {
     return (
-      <Button className="request-button" onClick={this.onClickRequestButton.bind(this)}>
+      <Button
+        bsStyle="primary"
+        className="request-button"
+        onClick={this.onClickRequestButton.bind(this)}>
+        <Glyphicon glyph="play-circle" />
         Play with a friend
       </Button>
     );
   }
 
-  renderSettingsButton() {
+  renderAccountButton() {
     return (
-      <Button className="settings-button" onClick={this.onClickSettingsButton.bind(this)}>
+      <Button
+        className="settings-button"
+        onClick={this.onClickAccountButton.bind(this)}>
+        <Glyphicon glyph="user" />
         Account
       </Button>
+    );
+  }
+
+  renderAdminButton() {
+    if (!this.props.user.profile.isDev) {
+      return null;
+    }
+
+    return (
+      <Link to={Routes.Page.admin()} className='admin-link'>
+          <Button bsStyle='danger'>
+            <Glyphicon glyph='dashboard' />
+            Admin
+          </Button>
+      </Link>
     );
   }
 

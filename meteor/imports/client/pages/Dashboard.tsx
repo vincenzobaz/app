@@ -104,7 +104,8 @@ export class Dashboard extends React.Component<DashboardProps, {}> {
             </div>
           </div>
         </div>
-        <Footer currentGame={game.unwrapOr(null)}
+        <Footer user={user}
+                currentGame={game.unwrapOr(null)}
                 location={this.props.location} />
       </div>
     );

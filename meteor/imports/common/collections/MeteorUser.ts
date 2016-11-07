@@ -7,6 +7,7 @@ export interface MeteorUser extends Meteor.User {
 
 export interface Profile {
   name?: string;
+  isDev?: boolean;
 }
 
 export interface Services {

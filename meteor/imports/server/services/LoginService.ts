@@ -19,7 +19,7 @@ export const LoginService = {
     const isDev = FacebookService.isDeveloperFb(userFbId);
 
     Meteor.users.update(user._id, {
-      $set: { isDev }
+      $set: { 'profile.isDev': isDev }
     });
 
     const fbFriends = FacebookService.getFriends(user);

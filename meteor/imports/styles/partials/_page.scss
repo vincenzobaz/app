@@ -1279,6 +1279,12 @@ $grey-border: #b8b8b8;
   color: lightgray;
 }
 
+.btn > .glyphicon {
+  margin-right: 5px;
+  top: 2px;
+  left: -2px;
+}
+
 
 /* react-autosuggest styles, used in Geo.tsx */
 

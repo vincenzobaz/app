@@ -4,7 +4,8 @@ import {TrainingStatus}            from "./TrainingStatus";
 import {Routes}                    from "../../common/Routes";
 
 interface Profile {
-  name: string
+  name: string;
+  isDev: boolean;
 }
 
 interface RawUser {
@@ -71,7 +72,6 @@ export class User {
 
     return Routes.Assets.at('images/avatar-default.png');
   }
-
 
 }
 

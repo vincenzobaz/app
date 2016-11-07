@@ -19,7 +19,13 @@ export module UserStore {
     }
 
     const user = Meteor.user();
-    return new User(user._id, user.username, user.services, user.profile);
+
+    return new User(
+      user._id,
+      user.username,
+      user.services,
+      user.profile
+    );
   }
 
   export function byId(id): Meteor.User {

@@ -37,6 +37,10 @@ export module Routes {
       return '/requests';
     }
 
+    export function admin() {
+      return '/admin';
+    }
+
   }
 
   export module Assets {
