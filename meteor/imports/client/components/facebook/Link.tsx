@@ -1,6 +1,8 @@
 
 import { TwoColumns } from './layout/TwoColumns';
 
+const ellipsize = require('ellipsize');
+
 interface LinkProps {
   text: string;
   url: string;
@@ -32,13 +34,10 @@ export class Link extends React.Component<LinkProps, {}> {
   }
 
   renderLink() {
-    if (!this.props.answered) {
-      return null;
-    }
-
+    const link = ellipsize(this.props.url, 60);
     return (
       <div>
-        <a href={this.props.url} target="_blank">Link</a>
+        <a href={this.props.url} target="_blank">{link}</a>
       </div>
     );
   }

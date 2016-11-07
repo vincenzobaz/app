@@ -30,6 +30,7 @@
     "compass-mixins": "^0.12.7",
     "core-js": "^2.3.0",
     "debug": "2.2.0",
+    "ellipsize": "0.0.2",
     "events": "1.1.0",
     "externalify": "0.1.0",
     "fuzzy": "0.1.1",
