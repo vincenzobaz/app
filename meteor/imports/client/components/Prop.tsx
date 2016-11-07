@@ -23,7 +23,7 @@ export class FacebookPicture extends React.Component<FacebookPictureProps, Faceb
 constructor(props: FacebookPictureProps) {
   super(props);
   this.state = {
-    imageUrl: Routes.Facebook.avatar(this.props.value, { type: 'square' })
+    imageUrl: Routes.Facebook.avatar(this.props.value)
   };
 }
 

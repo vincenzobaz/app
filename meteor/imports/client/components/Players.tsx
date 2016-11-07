@@ -24,7 +24,7 @@ export class Players extends React.Component<PlayersProps, void> {
     const opponent    = game.opponent;
     const user        = this.props.user;
     const myName      = user.profile.name;
-    const myAvatarUrl = Routes.Assets.avatars.facebook(user.services.facebook.id);
+    const myAvatarUrl = Routes.Facebook.avatar(user.services.facebook.id, 128);
 
     if (opponent == null) {
       return <AbsentPlayer />;

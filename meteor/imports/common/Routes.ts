@@ -76,8 +76,8 @@ export module Routes {
   }
 
   export module Facebook {
-    export function avatar(facebookId: string | number, query?: any) {
-      return Routes.Assets.avatars.facebook(facebookId, query);
+    export function avatar(facebookId: string | number, width: number = 128) {
+      return Routes.Assets.avatars.facebook(facebookId, `?type=square&width=${width}`);
     }
   }
 
