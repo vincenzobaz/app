@@ -51,8 +51,8 @@ export class MultipleChoice extends React.Component<MultipleChoiceProps, Multipl
     );
     else return (
         <div className="question question-multiplechoice">
-          <h4>{title}</h4>
-          <img src={reactPicture} alt="reaction"/>
+          <h4><img src={reactPicture} alt="reaction" align="middle" width=60 height=60/> {title}</h4>
+
           <div className="question-subject">
             <Post post={this.props.subject}/>
           </div>
@@ -66,7 +66,7 @@ export class MultipleChoice extends React.Component<MultipleChoiceProps, Multipl
   }
 
   getIcon(type: SubjectType): string {
-    const picsRoot = 'images/facebook/';
+    const picsRoot = '/images/facebook/';
     switch (type) {
       case QUESTION_TYPE.MCWhoReactedToYourPostWithLIKE:
         return picsRoot + 'thumbup_120.png';
