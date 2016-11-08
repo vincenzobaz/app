@@ -70,22 +70,16 @@ export class MultipleChoice extends React.Component<MultipleChoiceProps, Multipl
     switch (type) {
       case QUESTION_TYPE.MCWhoReactedToYourPostWithLIKE:
         return picsRoot + 'thumbup_120.png';
-        break;
       case QUESTION_TYPE.MCWhoReactedToYourPostWithWOW:
         return picsRoot + 'oh_120.png';
-        break;
       case QUESTION_TYPE.MCWhoReactedToYourPostWithHAHA:
         return picsRoot + 'lol_120.png';
-        break;
       case QUESTION_TYPE.MCWhoReactedToYourPostWithLOVE:
         return picsRoot + 'love_120.png';
-        break;
       case QUESTION_TYPE.MCWhoReactedToYourPostWithSAD:
         return picsRoot + 'cry_120.png';
-        break;
       case QUESTION_TYPE.MCWhoReactedToYourPostWithANGRY:
         return picsRoot + 'grrr_120.png';
-        break;
       default:
         return null;
     }
