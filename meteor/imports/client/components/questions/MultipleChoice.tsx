@@ -36,33 +36,36 @@ export class MultipleChoice extends React.Component<MultipleChoiceProps, Multipl
     const title: string = getQuestionTitleByType(type);
     let reactPicture = this.getIcon(type);
 
-    if (reactPicture == null) return (
-        <div className="question question-multiplechoice">
-          <h4>{title}</h4>
-          <div className="question-subject">
-            <Post post={this.props.subject}/>
-          </div>
-          <div className="question-input">
-            <ul className='answers avatar-answers'>
-              {this.props.choices.map(this.renderChoice.bind(this))}
-            </ul>
-          </div>
-        </div>
-    );
-    else return (
-        <div className="question question-multiplechoice">
-          <h4><img src={reactPicture} alt="reaction" align="middle" width=60 height=60/> {title}</h4>
+    if (reactPicture == null) {
+        return (
+            <div className="question question-multiplechoice">
+                <h4>{title}</h4>
+                <div className="question-subject">
+                    <Post post={this.props.subject}/>
+                </div>
+                <div className="question-input">
+                    <ul className='answers avatar-answers'>
+                        {this.props.choices.map(this.renderChoice.bind(this))}
+                    </ul>
+                </div>
+            </div>
+        );
+    } else {
+        return (
+            <div className="question question-multiplechoice">
+                <h4><img src={reactPicture} alt="reaction" align="middle" width="60" height="60"/> {title}</h4>
 
-          <div className="question-subject">
-            <Post post={this.props.subject}/>
-          </div>
-          <div className="question-input">
-            <ul className='answers avatar-answers'>
-              {this.props.choices.map(this.renderChoice.bind(this))}
-            </ul>
-          </div>
-        </div>
-    );
+                <div className="question-subject">
+                    <Post post={this.props.subject}/>
+                </div>
+                <div className="question-input">
+                    <ul className='answers avatar-answers'>
+                        {this.props.choices.map(this.renderChoice.bind(this))}
+                    </ul>
+                </div>
+            </div>
+        );
+    }
   }
 
   getIcon(type: SubjectType): string {
