@@ -1,6 +1,7 @@
 import {GlobalEventBus}      from './events';
 import {DesktopNotificationService}  from './services/notification/DesktopNotificationService';
 import {FacebookNotificationService} from './services/notification/FacebookNotificationService';
+import {StatsFeeder} from "./services/StatsFeeder";
 
 function checkEnvironment() {
     let abort = false;
@@ -95,12 +96,18 @@ function setupNotifications() {
     services.forEach(service => service.subscribeTo(GlobalEventBus));
 }
 
+function setupStatsFeeder() {
+    let feeder: StatsFeeder = new StatsFeeder();
+    feeder.subscribeTo(GlobalEventBus);
+    logger.info("StatsFeeder has been started");
+}
+
 export function setupServices() {
     setupLogger();
     checkEnvironment();
-
     setupFacebook();
     setupGoogleMaps();
     setupNotifications();
+    setupStatsFeeder();
 }
 
