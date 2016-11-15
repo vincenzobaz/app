@@ -7,6 +7,9 @@ const getAsync = HTTP.get;
 const delSync  = Meteor.wrapAsync(HTTP.del);
 const delAsync = HTTP.del;
 
+const postSync = Meteor.wrapAsync(HTTP.post);
+const postAsync = HTTP.post;
+
 export const HTTPHelper = {
 
   getSync: getSync,
@@ -14,6 +17,9 @@ export const HTTPHelper = {
 
   delSync: delSync,
   delAsync: delAsync,
+
+  postSync: postSync,
+  postAsync: postAsync,
 
   get(url, callback) {
     if (typeof callback !== 'function') {
@@ -29,7 +35,16 @@ export const HTTPHelper = {
     }
 
     return HTTPHelper.delAsync(url, callback);
+  },
+
+  post(url, req: HTTP.HTTPRequest, callback) {
+      if (typeof callback !== 'function') {
+          return HTTPHelper.postSync(url, req, callback);
+      }
+
+      return HTTPHelper.postAsync(url, callback);
   }
+
 
 };
 
