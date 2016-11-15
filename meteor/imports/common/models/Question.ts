@@ -18,8 +18,9 @@ export default class Question {
     public subject: Subject,
     public type: QuestionType,
     public kind: Kind,
-    public answer?: any,
-    public userAnswer?: any
+    public answer?: any, // CORRECT
+    public userAnswer?: any, // CORRECT
+    public correct?: boolean
   ) {}
 
   static fromRaw(data: RawQuestion): Question {
