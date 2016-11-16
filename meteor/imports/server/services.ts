@@ -97,7 +97,11 @@ function setupNotifications() {
 }
 
 function setupStatsFeeder() {
-    let feeder: StatsFeeder = new StatsFeeder();
+    let stats_url: string = 'http://stats';
+    if (process.env.STATS_URL != null) {
+        stats_url = process.env.STATS_URL
+    }
+    let feeder: StatsFeeder = new StatsFeeder(stats_url);
     feeder.subscribeTo(GlobalEventBus);
     logger.info("StatsFeeder has been started");
 }
