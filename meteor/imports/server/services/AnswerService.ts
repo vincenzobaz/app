@@ -37,7 +37,8 @@ interface QuestionAnswer {
 export module AnswerService {
 
 
-  function _setCurrentPlayerScore(gameId: string, tileId: string, score: number): Option<{game: Game, board: GameBoard}> {
+  import GameEnded = Events.GameEnded;
+    function _setCurrentPlayerScore(gameId: string, tileId: string, score: number): Option<{game: Game, board: GameBoard}> {
 
     let game: Game = Games.findOne(gameId);
     if (!game) {
@@ -101,10 +102,12 @@ export module AnswerService {
     if (!_.isEmpty(winningTiles)) {
       game.wonBy = currentPlayer;
       game.status = GAME_STATUS.Ended;
+      GlobalEventBus.emit(new GameEnded(game));
     }
     else if (draw) {
       game.wonBy = 0;
       game.status = GAME_STATUS.Ended;
+      GlobalEventBus.emit(new GameEnded(game));
     }
 
     game.nextTurn();
@@ -233,9 +236,11 @@ export module AnswerService {
     if (!_.isEmpty(winningTiles)) {
       game.wonBy = currentPlayer;
       game.status = GAME_STATUS.Ended;
+      GlobalEventBus.emit(new GameEnded(game));
     } else if (draw) {
       game.wonBy = 0;
       game.status = GAME_STATUS.Ended;
+      GlobalEventBus.emit(new GameEnded(game));
     }
 
     return {win: !_.isEmpty(winningTiles), draw: draw};
