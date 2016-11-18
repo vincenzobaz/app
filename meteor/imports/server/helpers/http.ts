@@ -21,7 +21,7 @@ export const HTTPHelper = {
   postSync: postSync,
   postAsync: postAsync,
 
-  get(url, callback) {
+  get(url, callback?: Function) {
     if (typeof callback !== 'function') {
       return HTTPHelper.getSync(url);
     }
@@ -29,7 +29,7 @@ export const HTTPHelper = {
     return HTTPHelper.getAsync(url, callback);
   },
 
-  del(url, callback) {
+  del(url, callback?: Function) {
     if (typeof callback !== 'function') {
       return HTTPHelper.delSync(url);
     }
@@ -37,12 +37,12 @@ export const HTTPHelper = {
     return HTTPHelper.delAsync(url, callback);
   },
 
-  post(url, req: HTTP.HTTPRequest, callback) {
+  post(url, req, callback?: Function) {
       if (typeof callback !== 'function') {
           return HTTPHelper.postSync(url, req, callback);
       }
 
-      return HTTPHelper.postAsync(url, callback);
+      return HTTPHelper.postAsync(url, req, callback);
   }
 
 
