@@ -1,7 +1,10 @@
 import {GlobalEventBus}      from './events';
 import {DesktopNotificationService}  from './services/notification/DesktopNotificationService';
 import {FacebookNotificationService} from './services/notification/FacebookNotificationService';
-import {StatsFeeder} from "./services/StatsFeeder";
+import {StatsFeederService} from "./services/StatsFeederService";
+import {Game, RawGame} from "../server/collections/Game";
+import {HTTPHelper} from "./helpers/http";
+import {Events} from "./events";
 
 function checkEnvironment() {
     let abort = false;
@@ -10,7 +13,8 @@ function checkEnvironment() {
         'FACEBOOK_SECRET',
         'GMAPS_KEY',
         'TIMEOUT_BETWEEN_FETCHES',
-        'GAME_CREATOR_URL'
+        'GAME_CREATOR_URL',
+        'STATS_URL'
     ].forEach(key => {
         if (process.env[key] == null) {
             logger.error('Missing environment variable %s', key);
@@ -67,7 +71,7 @@ function setupGoogleMaps() {
 function setupLogger() {
     let logLocation = "app.log";
     if (process.env.APP_LOG_LOCATION != null) {
-	    logLocation = process.env.APP_LOG_LOCATION;
+        logLocation = process.env.APP_LOG_LOCATION;
     }
     let fileOptions = {
         level: 'debug',
@@ -81,7 +85,7 @@ function setupLogger() {
 
     logger.addTransport('file', fileOptions);
     logger.info("APPLICATION STARTED");
-    console.log("LOGGING FRAMWEWORK READY")
+    console.log("Logging has started")
 }
 
 function setupNotifications() {
@@ -97,12 +101,11 @@ function setupNotifications() {
 }
 
 function setupStatsFeeder() {
-    let stats_url: string = 'http://stats';
-    if (process.env.STATS_URL != null) {
-        stats_url = process.env.STATS_URL
-    }
-    let feeder: StatsFeeder = new StatsFeeder(stats_url);
+    let stats_url = process.env.STATS_URL;
+
+    let feeder: StatsFeederService = new StatsFeederService(stats_url);
     feeder.subscribeTo(GlobalEventBus);
+
     logger.info("StatsFeeder has been started");
 }
 
