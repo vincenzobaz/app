@@ -45,7 +45,6 @@ export class AnswerVerificationService {
 
       let correct: number = verifier.verifyAnswer(question, answer);
       question.correct = correct == 1;
-      logger.debug("verifyTile has set correct field in question");
 
       return correct;
 
