@@ -57,8 +57,19 @@ export class StatsFeederService {
             headers: headers,
             data: statsGame
         };
-        console.log(statsGame.toString());
         HTTPHelper.post(this.stats_url, req, x => logger.debug("Game sent to stats server", {gameId: statsGame._id}));
+    }
+}
+
+/**
+ * Utiliy function to convert an id (stored as a union type of string and ObjectID)
+ * to a plain string.
+ */
+function idToString(id: Mongo.ObjectID | string): string {
+    if (typeof id === "string") {
+        return <string>id;
+    } else {
+        return (<string> (<any>id)._str);
     }
 }
 
@@ -68,7 +79,7 @@ server.
  */
 
 class StatsGame {
-    constructor(public _id,
+    constructor(public _id: string,
                 public player1: string,
                 public player2: string,
                 public player1Board: StatsBoard,
@@ -81,7 +92,7 @@ class StatsGame {
 
     static fromGame(game: Game): StatsGame {
         return new StatsGame(
-            game._id,
+            idToString(game._id),
             game.player1,
             game.player2,
             StatsBoard.fromGameBoard(game.player1Board),
@@ -95,22 +106,22 @@ class StatsGame {
 }
 
 class StatsBoard {
-    constructor(public userId,
+    constructor(public userId: string,
                 public tiles: StatsTile[],
-                public _id) {}
+                public _id: string) {}
 
     static fromGameBoard(b: GameBoard): StatsBoard {
         return new StatsBoard(
-            b.userId,
-            b.tiles.map(t => StatsTile.fromTile(t)),
-            b._id
+            idToString(b.userId),
+            b.tiles.map(tile => StatsTile.fromTile(tile)),
+            idToString(b._id)
         )
     }
 }
 
 class StatsTile {
     constructor(public type: string,
-                public _id,
+                public _id: string,
                 public question1: StatsQuestion,
                 public question2: StatsQuestion,
                 public question3: StatsQuestion,
@@ -122,7 +133,7 @@ class StatsTile {
     static fromTile(t: Tile): StatsTile {
         return new StatsTile(
             t.type,
-            t._id,
+            idToString(t._id),
             StatsQuestion.fromQuestion(t.question1),
             StatsQuestion.fromQuestion(t.question2),
             StatsQuestion.fromQuestion(t.question3),
