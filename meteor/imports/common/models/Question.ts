@@ -18,8 +18,8 @@ export default class Question {
     public subject: Subject,
     public type: QuestionType,
     public kind: Kind,
-    public answer?: any, // CORRECT
-    public userAnswer?: any, // CORRECT
+    public answer?: any,
+    public userAnswer?: any,
     public correct?: boolean
   ) {}
 
