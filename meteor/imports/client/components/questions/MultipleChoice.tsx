@@ -34,57 +34,53 @@ export class MultipleChoice extends React.Component<MultipleChoiceProps, Multipl
   render() {
     const type: SubjectType = this.props.type;
     const title: string = getQuestionTitleByType(type);
-    let reactPicture = this.getIcon(type);
 
-    if (reactPicture == null) {
-        return (
-            <div className="question question-multiplechoice">
-                <h4>{title}</h4>
-                <div className="question-subject">
-                    <Post post={this.props.subject}/>
-                </div>
-                <div className="question-input">
-                    <ul className='answers avatar-answers'>
-                        {this.props.choices.map(this.renderChoice.bind(this))}
-                    </ul>
-                </div>
+    return (
+        <div className="question question-multiplechoice">
+            <h4>{this.getIcon(type)} {title}</h4>
+            <div className="question-subject">
+                <Post post={this.props.subject}/>
             </div>
-        );
-    } else {
-        return (
-            <div className="question question-multiplechoice">
-                <h4><img src={reactPicture} alt="reaction" align="middle" width="60" height="60"/> {title}</h4>
-
-                <div className="question-subject">
-                    <Post post={this.props.subject}/>
-                </div>
-                <div className="question-input">
-                    <ul className='answers avatar-answers'>
-                        {this.props.choices.map(this.renderChoice.bind(this))}
-                    </ul>
-                </div>
+            <div className="question-input">
+                <ul className='answers avatar-answers'>
+                    {this.props.choices.map(this.renderChoice.bind(this))}
+                </ul>
             </div>
-        );
-    }
+        </div>
+    );
   }
 
-  getIcon(type: SubjectType): string {
+  getIcon(type: SubjectType) {
     const picsRoot = '/images/facebook/';
+    let icon;
     switch (type) {
       case QUESTION_TYPE.MCWhoReactedToYourPostWithLIKE:
-        return picsRoot + 'thumbup_120.png';
+        icon = picsRoot + 'thumbup_120.png';
+        break;
       case QUESTION_TYPE.MCWhoReactedToYourPostWithWOW:
-        return picsRoot + 'oh_120.png';
+        icon = picsRoot + 'oh_120.png';
+        break;
       case QUESTION_TYPE.MCWhoReactedToYourPostWithHAHA:
-        return picsRoot + 'lol_120.png';
+        icon = picsRoot + 'lol_120.png';
+        break;
       case QUESTION_TYPE.MCWhoReactedToYourPostWithLOVE:
-        return picsRoot + 'love_120.png';
+        icon = picsRoot + 'love_120.png';
+        break;
       case QUESTION_TYPE.MCWhoReactedToYourPostWithSAD:
-        return picsRoot + 'cry_120.png';
+        icon = picsRoot + 'cry_120.png';
+        break;
       case QUESTION_TYPE.MCWhoReactedToYourPostWithANGRY:
-        return picsRoot + 'grrr_120.png';
+        icon = picsRoot + 'grrr_120.png';
+        break;
       default:
-        return null;
+        icon = null;
+        break;
+    }
+
+    if (icon != null) {
+      return <img src={icon} alt="reaction" align="middle" width="60" height="60"/> ;
+    } else {
+      return null;
     }
   }
 
