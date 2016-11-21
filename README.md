@@ -23,6 +23,8 @@
 
 4. Install and start the [game creator](https://github.com/reminisceme/game-creator).
 
+5. Install and start the [stats module](https://github.com/reminisceme/stats).
+
 5. Then clone this repository somewhere:
 
   ```bash
@@ -46,6 +48,7 @@
   export FACEBOOK_SECRET=..
   export GMAPS_KEY=...
   export APP_LOG_LOCATION=pathToLogFile
+  export STATS_URL=http://localhost:7777/insertEntity
   ```
 
 8. Add the following line to your `/etc/hosts`:
