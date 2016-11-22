@@ -23,7 +23,7 @@ export class StatsFeederService {
      * @param stats_url the url of the insertion service of the stats module
      */
     public constructor(stats_url: string) {
-        this.stats_url = stats_url;
+        this.stats_url = stats_url + '/insertEntity';
     }
 
     /**
