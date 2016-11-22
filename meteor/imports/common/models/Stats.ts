@@ -11,7 +11,7 @@ export interface RawStats {
     win: number;
     loss: number;
     tie: number;
-    rivals: string[];
+    rivals: RawRivalCounter[];
     questionsByType: {[key: string]: RawCounter};
 }
 
@@ -25,7 +25,7 @@ export class Stats {
                 public win: number,
                 public loss: number,
                 public tie: number,
-                public rivals: string[],
+                public rivals: RivalCounter[],
                 public counters: {[key: string]: Counter}) {
     }
 
@@ -40,7 +40,7 @@ export class Stats {
     }
 
     /**
-     * Static factory method creating a Stats froma a RawStats
+     * Static factory method creating a Stats from a RawStats
      */
     static fromRaw(data: RawStats): Stats {
         if (!data) {
@@ -59,7 +59,7 @@ export class Stats {
             data.win,
             data.loss,
             data.tie,
-            data.rivals,
+            data.rivals.map(ob => RivalCounter.fromRaw(ob)),
             counters
         );
     }
@@ -70,9 +70,8 @@ export class Stats {
  */
 export interface RawCounter {
     amount: number,
-    win: number,
-    loss: number,
-    tie: number,
+    correct: number,
+    wrong: number,
     avoid: number
 }
 
@@ -82,9 +81,8 @@ export interface RawCounter {
  */
 export class Counter {
     constructor(public amount: number,
-                public win: number,
-                public loss: number,
-                public tie: number,
+                public correct: number,
+                public wrong: number,
                 public avoid: number) {
     }
 
@@ -94,11 +92,22 @@ export class Counter {
     static fromRaw(rawCounter: RawCounter): Counter {
         return new Counter(
             rawCounter.amount,
-            rawCounter.win,
-            rawCounter.loss,
-            rawCounter.tie,
+            rawCounter.correct,
+            rawCounter.wrong,
             rawCounter.avoid
         );
+    }
+}
+
+export interface RawRivalCounter {
+    rivalId: string;
+    number: number;
+}
+
+export class RivalCounter {
+    constructor(public rivalId: string, public number: number) {}
+    static fromRaw(raw: RawRivalCounter) {
+        return new RivalCounter(raw.rivalId, raw.number);
     }
 }
 
@@ -113,7 +122,7 @@ export function fetchStatsCallback(error, result) {
     }
     result.data.forEach(rawStat => {
         Statistics.insert(Stats.fromRaw(rawStat),
-            logger.debug("Stat retrieved and cached",
+            () => logger.debug("Stat retrieved and cached",
             {userId : rawStat.userId, date: rawStat.date}))
         }
     );
