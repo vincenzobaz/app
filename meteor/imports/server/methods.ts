@@ -15,6 +15,7 @@ import {Admin1CodeCollection} from './collections/Admin1CodeCollection';
 import {Feedback} from "../common/models/Feedback";
 import {FeedBackCollection} from "../common/collections/FeedbackCollection";
 import {JoinRequestRepository} from "./repositories/JoinRequestRepository";
+import {fetchStatsCallback} from "../common/models/Stats";
 var Future = Npm.require('fibers/future');
 
 export function setupMeteorMethods() {
@@ -28,6 +29,19 @@ export function setupMeteorMethods() {
             return {
                 status: 'success'
             };
+        },
+
+        /**
+         * Fill the database with user statistics retrieved in the stats module
+         * @param userId userId of the player
+         * @param from start date, optional
+         * @param to end date, optional
+         */
+        'fetchStats'(userId: string, from?: Date, to?: Date) {
+            const user = Meteor.users.findOne(userId);
+            const fbUserId = user.services.facebook.id;
+
+            return Server.fetchStats(fbUserId, from, to, fetchStatsCallback);
         },
 
         'Account.deleteAllData'() {
