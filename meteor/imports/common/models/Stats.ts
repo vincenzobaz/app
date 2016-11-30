@@ -120,10 +120,12 @@ export function fetchStatsCallback(error, result) {
     if (error) {
         logger.error("Could not fetch stats", {error: error});
     }
+    // TODO: Restore commented log event
     result.data.forEach(rawStat => {
         Statistics.insert(Stats.fromRaw(rawStat),
             () => logger.debug("Stat retrieved and cached",
-            {userId : rawStat.userId, date: rawStat.date}))
+            //{userId : rawStat.userId, date: rawStat.date}))
+                {data: Stats.fromRaw(rawStat)}))
         }
     );
 }
