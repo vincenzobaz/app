@@ -40,7 +40,7 @@ export function setupMeteorMethods() {
         'fetchStats'(from?: Date, to?: Date) {
             const userId = Meteor.userId();
             if (!userId) {
-                logger.error("Could not retrieve userid for stat generation");
+                logger.error("Could not retrieve userId for stats generation");
                 return;
             }
             const user = Meteor.users.findOne(userId);
