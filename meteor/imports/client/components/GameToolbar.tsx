@@ -15,6 +15,8 @@ import {GameStore}        from '../stores/GameStore';
 import {FacebookStore}    from '../stores/FacebookStore';
 import {QuitGameModal}    from './modals/QuitGameModal';
 import {AccountSettings}  from './AccountSettings';
+import {Statistics} from "../../server/collections/Statistics";
+import {getStatistics} from '../stores/StatisticsStore'
 
 interface GameToolbarProps {
   user: User;
@@ -47,6 +49,11 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
         });
       }
     });
+  }
+
+  onClickStatsButton() {
+      getStatistics();
+      logger.info("Received statistics for n days ", {n : Statistics.find().count()});
   }
 
   onClickAccountButton() {
@@ -108,6 +115,7 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
             <div className="game-toolbar-btns">
               {this.renderRequestButton()}
               {this.renderAccountButton()}
+              {this.renderStatsButton()}
               {this.renderAdminButton()}
             </div>
             {this.renderModal()}
@@ -128,6 +136,18 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
         Play with a friend
       </Button>
     );
+  }
+
+  renderStatsButton() {
+      return(
+          <Button
+              bsStyle="primary"
+              className="settings-button"
+              onClick={this.onClickStatsButton.bind(this)}>
+              <Glyphicon glyph="user" />
+              Statistics
+          </Button>
+      );
   }
 
   renderAccountButton() {
