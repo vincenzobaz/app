@@ -37,7 +37,12 @@ export function setupMeteorMethods() {
          * @param from start date, optional
          * @param to end date, optional
          */
-        'fetchStats'(userId: string, from?: Date, to?: Date) {
+        'fetchStats'(from?: Date, to?: Date) {
+            const userId = Meteor.userId();
+            if (!userId) {
+                logger.error("Could not retrieve userid for stat generation");
+                return;
+            }
             const user = Meteor.users.findOne(userId);
             const fbUserId = user.services.facebook.id;
 
