@@ -26,16 +26,11 @@ export function publishCollections() {
         return GameBoards.find({ userId: FacebookService.getFacebookId(this.userId) });
     });
 
-    /**
-     * Publish Statistics to client, newest on top
-     */
-    Meteor.publish('stats', function() {
+    Meteor.publish('statistics', () => {
+        let fbId = FacebookService.getFacebookId(this.userdId);
         logger.debug('Publishing statistics for user....', {userId: this.userId});
 
-        return Statistics.find(
-            {userId: FacebookService.getFacebookId(this.userId)},
-            {sort: {date: -1}}
-        );
+        return Statistics.find( {userId: fbId} );
     });
 
     Meteor.publish('joinRequests', function() {
