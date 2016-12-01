@@ -69,10 +69,17 @@ function setupGoogleMaps() {
 }
 
 function setupLogger() {
-    let logLocation = "app.log";
+    const path = require('path');
+    let logLocation = 'app.log';
+
     if (process.env.APP_LOG_LOCATION != null) {
         logLocation = process.env.APP_LOG_LOCATION;
     }
+
+    if (!path.isAbsolute(logLocation)) {
+      logLocation = path.resolve(__dirname, logLocation);
+    }
+
     let fileOptions = {
         level: 'debug',
         colorize: false,
