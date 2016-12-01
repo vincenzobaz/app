@@ -7,6 +7,11 @@ import {HTTPHelper} from "./helpers/http";
 import {Events} from "./events";
 
 function checkEnvironment() {
+    if (process.env.APP_LOG_LOCATION == null) {
+        console.error("Missing APP_LOG_LOCATION environment variable");
+        process.exit(1);
+    }
+
     let abort = false;
 
     ['FACEBOOK_APPID',
