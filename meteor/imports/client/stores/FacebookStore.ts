@@ -11,29 +11,29 @@ interface FBGameRequestResponse {
   to: string[];
 }
 
-function callFBUI(...args: any[]): Promise<any> {
-  return Promise.promisify(FB.ui, FB).apply(FB, args);
-}
+const FBPromise = {
 
-declare var facebookConnectPlugin: { login: Function };
+  ui(...args: any[]): any {
+    return Promise.promisify(FB.ui, FB).apply(FB, args);
+  }
+
+};
+
+const FBConnectPromise = {
+
+  showDialog(...args: any[]): any {
+    return Promise.promisify(facebookConnectPlugin.showDialog, facebookConnectPlugin)
+                  .apply(facebookConnectPlugin, args);
+  }
+
+};
+
+declare var facebookConnectPlugin: {
+  login: Function;
+  showDialog: Function;
+};
 
 export module FacebookStore {
-
-  export function login(cb = () => {}): void {
-    const conf = getConfig('facebook');
-
-    if (conf == null) {
-      console.error("Facebook config is", conf);
-      return;
-    }
-
-    if (Meteor.isCordova) {
-      facebookConnectPlugin.login(conf.scope, cb);
-    }
-    Meteor.loginWithFacebook({
-      requestPermissions: conf.scope
-    }, cb);
-  }
 
   export function getFriends(): Promise<any> {
     return MeteorPromise.call('Facebook.getFriends');
@@ -47,8 +47,30 @@ export module FacebookStore {
     return MeteorPromise.call('Facebook.getPermissions');
   }
 
+  export function login(): void {
+    const conf = getConfig('facebook');
+
+    if (conf == null) {
+      console.error("Facebook config is", conf);
+      return;
+    }
+
+    if (Meteor.isCordova) {
+      facebookConnectPlugin.login(conf.scope);
+    }
+
+    Meteor.loginWithFacebook({
+      requestPermissions: conf.scope
+    });
+  }
+
   export function showInviteDialog(): Promise<any> {
     const conf = getConfig('facebook');
+
+    if (conf == null) {
+      console.error("Facebook config is", conf);
+      return;
+    }
 
     const params: RequestsDialogParams = {
       app_id: conf.appId,
@@ -59,19 +81,24 @@ export module FacebookStore {
       max_recipients: 10
     };
 
-    return callFBUI(params).then((res: FBGameRequestResponse) => {
-        if (res) {
-          const user     = Meteor.user() as MeteorUser;
-          const fbUserId = user.services.facebook.id;
+    const callback = (res: FBGameRequestResponse) => {
+      if (res) {
+        const user     = Meteor.user() as MeteorUser;
+        const fbUserId = user.services.facebook.id;
 
-          res.to.forEach(toFbId => {
-            JoinRequestStore.send(res.request, fbUserId, toFbId);
-          });
-        }
-
-        return res;
+        res.to.forEach(toFbId => {
+          JoinRequestStore.send(res.request, fbUserId, toFbId);
+        });
       }
-    );
+
+      return res;
+    };
+
+    if (Meteor.isCordova) {
+      return FBConnectPromise.showDialog(params).then(callback);
+    }
+
+    return FBPromise.ui(params).then(callback);
   }
 
 }
