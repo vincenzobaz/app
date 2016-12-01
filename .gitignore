@@ -13,3 +13,4 @@ webpack/assets/*
 .vscode
 mongo-seed/data/*
 nginx/server_keys/*
+logs
