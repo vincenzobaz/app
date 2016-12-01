@@ -15,7 +15,7 @@ import {GameStore}        from '../stores/GameStore';
 import {FacebookStore}    from '../stores/FacebookStore';
 import {QuitGameModal}    from './modals/QuitGameModal';
 import {AccountSettings}  from './AccountSettings';
-import {Statistics} from "../../server/collections/Statistics";
+import {Statistics} from "../collections/Statistics";
 import {getStatistics} from '../stores/StatisticsStore'
 
 interface GameToolbarProps {
@@ -53,7 +53,8 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
 
   onClickStatsButton() {
       getStatistics();
-      logger.info("Received statistics for n days ", {n : Statistics.find().count()});
+      let n: number = Statistics.find().count();
+      console.log("COUNTING RETRIEVED STATS " + n);
   }
 
   onClickAccountButton() {
