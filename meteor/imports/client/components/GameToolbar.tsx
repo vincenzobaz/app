@@ -156,14 +156,24 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
     );
   }
 
+  hideGameRequestInfoModal() {
+    this.setState({
+      showGameRequestInfoModal: false
+    });
+  }
+
   renderPleaseClickOnDoneModal() {
-    const hideModal = () => {this.setState({showGameRequestInfoModal: false})};
     return (
       <div>
-        <Modal show={this.state.showGameRequestInfoModal} backdrop={true} onHide={hideModal.bind(this)}>
-
-          <Modal.Body className="centered" >
-            Please click on <Button className="facebook-done-button" onClick={hideModal.bind(this)}>Done</Button> once you selected the friends to invite
+        <Modal show={this.state.showGameRequestInfoModal} backdrop={true} onHide={this.hideGameRequestInfoModal.bind(this)}>
+          <Modal.Body className="centered">
+            <div style={{padding: '30x 20px'}}>
+              Please click on
+              <br /><br />
+              <Button className="facebook-done-button" onClick={this.hideGameRequestInfoModal.bind(this)}>Done</Button>
+              <br /><br />
+              once you selected the friends to invite
+            </div>
           </Modal.Body>
         </Modal>
       </div>
