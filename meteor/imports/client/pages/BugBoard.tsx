@@ -1,19 +1,12 @@
-
-import {
-  Modal, Button, Table,
-  Well, Panel, Row, Col,
-  ButtonGroup, DropdownButton,
-  MenuItem, Pager, PageItem
-} from 'react-bootstrap';
-
-import {decorate} from 'react-mixin';
+import {Modal, Button, Table, Panel, Row, Col, ButtonGroup, DropdownButton, MenuItem} from "react-bootstrap";
+import {decorate} from "react-mixin";
 import {Feedback, FeedbackStatus, FEEDBACK_STATUS} from "../../common/models/Feedback";
-import {FeedBackCollection}                        from "../../common/collections/FeedbackCollection";
-import {Routes}                                    from "../../common/Routes";
-import {Tile}                                      from "../../common/models/Tile";
-import Question                                    from "../../common/models/Question";
-import {Game}                                      from "../models/Game";
-import {Link}                                      from "../components/facebook/Link";
+import {FeedBackCollection} from "../../common/collections/FeedbackCollection";
+import {Routes} from "../../common/Routes";
+import {Tile} from "../../common/models/Tile";
+import Question from "../../common/models/Question";
+import {Game} from "../models/Game";
+import {User} from "../models/User";
 
 const moment = require('moment');
 const format = "MMMM Do YYYY, k:mm:ss";
@@ -28,6 +21,7 @@ export const SORTING_OPTIONS = {
 
 interface Data {
     feedbacks: Feedback[];
+    user: User;
     count: number;
 }
 
@@ -72,11 +66,18 @@ export class BugBoard extends React.Component<BugBoardProps, BugBoardState> {
                 skip: this.state.skip,
                 limit: this.state.limit
             }).fetch(),
-            count: FeedBackCollection.find(query).count()
+            count: FeedBackCollection.find(query).count(),
+            user: Meteor.user()
         }
     }
 
     render() {
+        if (!this.data.user.profile.isDev) {
+            return (
+                <p><i>You have wandered in a strange place...</i></p>
+            );
+        }
+
         return (
             <div>
                 <Panel>
@@ -87,7 +88,7 @@ export class BugBoard extends React.Component<BugBoardProps, BugBoardState> {
     }
 
     renderBugs() {
-        const sortBy = this.state.sorting == -1? "Sort By Most Recent First" : "Sort By Most Recent Last";
+        const sortBy = this.state.sorting == -1 ? "Sort By Most Recent First" : "Sort By Most Recent Last";
         const filterStatus = this.state.status;
         const nextDisabled = this.state.skip + this.state.limit > this.data.count;
         return (
@@ -96,11 +97,14 @@ export class BugBoard extends React.Component<BugBoardProps, BugBoardState> {
                     <Col md={12} mdOffset={4}>
                         <ButtonGroup className="feedback-menu-buttons">
                             <Button onClick={this.onPrevious.bind(this)} disabled={this.state.skip == 0}>Prev</Button>
-                            <DropdownButton title={sortBy} id="bg-nested-dropdown" onSelect={this.onChangeSorting.bind(this)}>
+                            <DropdownButton title={sortBy} id="bg-nested-dropdown"
+                                            onSelect={this.onChangeSorting.bind(this)}>
                                 <MenuItem eventKey={SORTING_OPTIONS.DateMostRecentFirst}> Most Recent First </MenuItem>
                                 <MenuItem eventKey={SORTING_OPTIONS.DateMostRecentLast}> Most Recent Last </MenuItem>
                             </DropdownButton>
-                            <DropdownButton id="select-filter-status" className={this.getDropDownClassName(this.state.status)} title={filterStatus} onSelect={this.onFilterSelected.bind(this)}>
+                            <DropdownButton id="select-filter-status"
+                                            className={this.getDropDownClassName(this.state.status)}
+                                            title={filterStatus} onSelect={this.onFilterSelected.bind(this)}>
                                 <MenuItem eventKey={"All"}> All </MenuItem>
                                 <MenuItem eventKey={FEEDBACK_STATUS.New}>{FEEDBACK_STATUS.New} </MenuItem>
                                 <MenuItem eventKey={FEEDBACK_STATUS.Confirmed}>{FEEDBACK_STATUS.Confirmed} </MenuItem>
@@ -159,7 +163,9 @@ export class BugBoard extends React.Component<BugBoardProps, BugBoardState> {
                      onClick={this.showScreenshot.bind(this, feedback.img)}/></td>
             <td>{moment(feedback.creationDate).format(format)}</td>
             <td>
-                <DropdownButton className={this.getDropDownClassName(feedback.status)} id={"feedback-item-" + feedback._id} title={feedback.status} onSelect={this.onChangeItemStatus.bind(this, feedback)}>
+                <DropdownButton className={this.getDropDownClassName(feedback.status)}
+                                id={"feedback-item-" + feedback._id} title={feedback.status}
+                                onSelect={this.onChangeItemStatus.bind(this, feedback)}>
                     <MenuItem eventKey={FEEDBACK_STATUS.New}>{FEEDBACK_STATUS.New} </MenuItem>
                     <MenuItem eventKey={FEEDBACK_STATUS.Confirmed}>{FEEDBACK_STATUS.Confirmed} </MenuItem>
                     <MenuItem eventKey={FEEDBACK_STATUS.InProgress}>{FEEDBACK_STATUS.InProgress} </MenuItem>
@@ -208,7 +214,7 @@ export class BugBoard extends React.Component<BugBoardProps, BugBoardState> {
     }
 
     onChangeSorting(eventKey: SortingOptions, event: React.MouseEvent) {
-        let sorting = eventKey == SORTING_OPTIONS.DateMostRecentFirst? -1 : 1;
+        let sorting = eventKey == SORTING_OPTIONS.DateMostRecentFirst ? -1 : 1;
         this.setState({
             sorting: sorting
         })
@@ -229,13 +235,13 @@ export class BugBoard extends React.Component<BugBoardProps, BugBoardState> {
 
     onNext() {
         this.setState({
-           "skip": this.state.skip + this.state.limit
+            "skip": this.state.skip + this.state.limit
         })
     }
 
     onPrevious() {
         this.setState({
-            "skip": this.state.skip - this.state.limit < 0? 0 : this.state.skip - this.state.limit
+            "skip": this.state.skip - this.state.limit < 0 ? 0 : this.state.skip - this.state.limit
         })
     }
 

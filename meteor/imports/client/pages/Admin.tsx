@@ -1,6 +1,8 @@
 import {User} from "../models/User";
 import {MeteorPromise} from "../helpers/meteor";
-import {Button} from "react-bootstrap";
+import {Button, Glyphicon} from "react-bootstrap";
+import {Link} from "react-router";
+import {Routes} from "../../common/Routes";
 
 interface AdminPageProps {
     user: User;
@@ -10,6 +12,7 @@ export class AdminPage extends React.Component<AdminPageProps, {}> {
 
     constructor(props: AdminPageProps) {
         super(props);
+        console.log(props);
     }
 
     onClickLogsButton() {
@@ -35,16 +38,29 @@ export class AdminPage extends React.Component<AdminPageProps, {}> {
     render() {
         if (!this.props.user.profile.isDev) {
             return (
-                <p>You have wandered in a strange place...</p>
+                <p><i>You have wandered in a strange place...</i></p>
             );
         }
         return (
-            <Button
-                bsStyle="primary"
-                className="logs-button"
-                onClick={this.onClickLogsButton.bind(this)}>
-                Open Kibana to see logs
-            </Button>
+            <div className="container-fluid">
+                <div className="row">
+                    <div className="col-sm-4">
+                        <Button
+                            bsStyle="primary"
+                            onClick={this.onClickLogsButton.bind(this)}>
+                            Open Kibana to see logs
+                        </Button>
+                    </div>
+                    <div className="col-sm-4">
+                        <Link to={Routes.Page.viewFeedback()} className='feedback-link'>
+                            <Button bsStyle='primary'>
+                                <Glyphicon glyph='dashboard'/>
+                                View Feedback
+                            </Button>
+                        </Link>
+                    </div>
+                </div>
+            </div>
         );
     }
 }
