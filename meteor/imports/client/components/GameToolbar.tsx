@@ -17,6 +17,7 @@ import {QuitGameModal}    from './modals/QuitGameModal';
 import {AccountSettings}  from './AccountSettings';
 import {Statistics} from "../collections/Statistics";
 import {getStatistics} from '../stores/StatisticsStore'
+import {getAppState} from "../appState";
 
 interface GameToolbarProps {
   user: User;
@@ -53,8 +54,6 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
 
   onClickStatsButton() {
       getStatistics();
-      let n: number = Statistics.find().count();
-      console.log("COUNTING RETRIEVED STATS " + n);
   }
 
   onClickAccountButton() {
@@ -141,13 +140,15 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
 
   renderStatsButton() {
       return(
-          <Button
-              bsStyle="primary"
-              className="settings-button"
-              onClick={this.onClickStatsButton.bind(this)}>
-              <Glyphicon glyph="user" />
-              Statistics
-          </Button>
+          <Link to={Routes.Page.stats()} className='stats-link'>
+              <Button
+                  bsStyle="primary"
+                  className="settings-button"
+                  onClick={this.onClickStatsButton.bind(this)}>
+                  <Glyphicon glyph="user" />
+                  Statistics
+              </Button>
+          </Link>
       );
   }
 
