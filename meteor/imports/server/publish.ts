@@ -26,9 +26,10 @@ export function publishCollections() {
         return GameBoards.find({ userId: FacebookService.getFacebookId(this.userId) });
     });
 
-    Meteor.publish('statistics', () => {
-        let fbId = FacebookService.getFacebookId(this.userdId);
-        logger.debug('Publishing statistics for user....', {userId: this.userId});
+    Meteor.publish('statistics', function() {
+        let fbId = FacebookService.getFacebookId(this.userId);
+
+        logger.debug('Publishing statistics for user....', {fbId: fbId});
 
         return Statistics.find( {userId: fbId} );
     });
