@@ -15,7 +15,7 @@ import {Admin1CodeCollection} from './collections/Admin1CodeCollection';
 import {Feedback} from "../common/models/Feedback";
 import {FeedBackCollection} from "../common/collections/FeedbackCollection";
 import {JoinRequestRepository} from "./repositories/JoinRequestRepository";
-import {fetchStatsCallback} from "../common/models/Stats";
+import {Statistics} from "./collections/Statistics";
 var Future = Npm.require('fibers/future');
 
 export function setupMeteorMethods() {
@@ -266,3 +266,24 @@ function pad(value:string, size:number):string {
 }
 
 
+/**
+ * Callback to be executed when the list of of RawStats object is received
+ * from the stats server.
+ * Data are transformed and stored into a mongo collection.
+ */
+function fetchStatsCallback(error, result) {
+    if (error) {
+        logger.error("Could not fetch stats", {error: error});
+    }
+    result.data.stats.forEach(rawStat => {
+            rawStat.date = new Date(rawStat.date);
+            let beginDay: Date = new Date(rawStat.date.getFullYear(), rawStat.date.getMonth(), rawStat.date.getDate(), 0, 0, 0, 0);
+            let endOfDay: Date = new Date(rawStat.date.getFullYear(), rawStat.date.getMonth(), rawStat.date.getDate(), 23, 59, 59, 999);
+            Statistics.upsert(
+                {userId: rawStat.userId, date: {'$gte': beginDay, '$lte': endOfDay}},
+                rawStat,
+                () => logger.debug('Stat retrieved and cached', {userId: rawStat.userId, date: rawStat.date})
+            );
+        }
+    );
+}
