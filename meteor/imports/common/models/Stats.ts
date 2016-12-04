@@ -1,5 +1,4 @@
 import {Kind} from "./questions/common/Kind";
-import {Statistics} from "../../server/collections/Statistics";
 
 /**
  * Interface describing the Javascript object before transforming it
@@ -105,26 +104,11 @@ export interface RawRivalCounter {
 }
 
 export class RivalCounter {
-    constructor(public rivalId: string, public number: number) {}
+    constructor(public rivalId: string, public number: number) {
+    }
+
     static fromRaw(raw: RawRivalCounter) {
         return new RivalCounter(raw.rivalId, raw.number);
     }
 }
 
-/**
- * Callback to be executed when the list of of RawStats object is received
- * from the stats server.
- * Data are transformed and stored into a mongo collection.
- */
-export function fetchStatsCallback(error, result) {
-    if (error) {
-        logger.error("Could not fetch stats", {error: error});
-    }
-    // TODO: Restore commented log event
-    result.data.stats.forEach(rawStat => {
-            Statistics.insert(Stats.fromRaw(rawStat),
-                () => logger.debug("Stat retrieved and cached",
-                    {userId: rawStat.userId, date: rawStat.date}))
-        }
-    );
-}
