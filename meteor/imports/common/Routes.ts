@@ -41,6 +41,10 @@ export module Routes {
       return '/admin';
     }
 
+    export function stats() {
+        return '/stats';
+    }
+
   }
 
   export module Assets {
