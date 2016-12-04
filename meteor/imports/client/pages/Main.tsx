@@ -15,6 +15,7 @@ import { Games }      from './Games';
 import { Requests }   from './Requests';
 import { Dashboard }  from './Dashboard';
 import { BugBoard }   from './BugBoard';
+import {StatsPage}      from './StatsPage';
 
 const router = (
   <Router history={browserHistory}>
@@ -26,6 +27,7 @@ const router = (
           <Route path="games"        component={Games} />
           <Route path="requests"     component={Requests} />
           <Route path="play/:gameId" component={PlayGame} />
+          <Route path="stats"        component={StatsPage} />
       </Route>
       <Route path="bugboard" component={BugBoard}/>
   </Router>
