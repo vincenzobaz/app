@@ -147,9 +147,14 @@ class StatsTile {
 class StatsQuestion {
     constructor(public kind: Kind,
                 public type: QuestionType,
-                public correct: boolean) {}
+                public correct: boolean,
+                public timeSpent?: Number) {}
 
     static fromQuestion(q: Question): StatsQuestion {
-        return new StatsQuestion(q.kind, q.type, q.correct);
+        if (q.userAnswer && q.userAnswer.timeSpent) {
+            return new StatsQuestion(q.kind, q.type, q.correct, q.userAnswer.timeSpent);
+        } else {
+            return new StatsQuestion(q.kind, q.type, q.correct);
+        }
     }
 }
