@@ -54,6 +54,7 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
 
   onClickStatsButton() {
       getStatistics();
+      browserHistory.push(Routes.Page.stats())
   }
 
   onClickAccountButton() {
@@ -140,15 +141,13 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
 
   renderStatsButton() {
       return(
-          <Link to={Routes.Page.stats()} className='stats-link'>
-              <Button
-                  bsStyle="primary"
-                  className="settings-button"
-                  onClick={this.onClickStatsButton.bind(this)}>
-                  <Glyphicon glyph="user" />
-                  Statistics
-              </Button>
-          </Link>
+          <Button
+              bsStyle="primary"
+              className="settings-button"
+              onClick={this.onClickStatsButton.bind(this)}>
+              <Glyphicon glyph="user" />
+              Statistics
+          </Button>
       );
   }
 
