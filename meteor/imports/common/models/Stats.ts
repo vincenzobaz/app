@@ -96,6 +96,18 @@ export class Counter {
             rawCounter.avoid
         );
     }
+
+    /**
+     * Add the counters to the other object to the current object.
+     * ATTENTION: in place, modifies state.
+     * @param other
+     */
+    add(other: Counter): void {
+        this.amount += other.amount;
+        this.correct += other.correct;
+        this.wrong += other.wrong;
+        this.avoid += other.avoid
+    }
 }
 
 export interface RawRivalCounter {
