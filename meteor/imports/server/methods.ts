@@ -272,15 +272,14 @@ function pad(value:string, size:number):string {
  * Data are transformed and stored into a mongo collection.
  */
 function fetchStatsCallback(error, result) {
-    if (error) {
+    if (error || result == null) {
         logger.error("Could not fetch stats", {error: error});
     }
     result.data.stats.forEach(rawStat => {
             rawStat.date = new Date(rawStat.date);
             let beginDay: Date = new Date(rawStat.date.getFullYear(), rawStat.date.getMonth(), rawStat.date.getDate(), 0, 0, 0, 0);
-            let endOfDay: Date = new Date(rawStat.date.getFullYear(), rawStat.date.getMonth(), rawStat.date.getDate(), 23, 59, 59, 999);
             Statistics.upsert(
-                {userId: rawStat.userId, date: {'$gte': beginDay, '$lte': endOfDay}},
+                {userId: rawStat.userId, date: {'$gte': beginDay, '$lte': rawStat.date}},
                 rawStat,
                 () => logger.debug('Stat retrieved and cached', {userId: rawStat.userId, date: rawStat.date})
             );
