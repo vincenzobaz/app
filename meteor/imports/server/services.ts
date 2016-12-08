@@ -19,7 +19,7 @@ interface Env {
 const variables = [
   'FACEBOOK_APPID',
   'FACEBOOK_SECRET',
-  'FB_NOTIF_INTERVAL',
+  'FACEBOOK_NOTIF_INTERVAL',
   'GAME_CREATOR_URL',
   'GMAPS_KEY',
   'STATS_URL',
@@ -155,7 +155,7 @@ export function setupServices(): Env {
 
     setupFacebook(env.FACEBOOK_APPID, env.FACEBOOK_SECRET);
     setupGoogleMaps(env.GMAPS_KEY);
-    setupNotifications(env.FB_NOTIF_INTERVAL);
+    setupNotifications(env.FACEBOOK_NOTIF_INTERVAL);
     setupStatsFeeder(env.STATS_URL);
 
     return env;
