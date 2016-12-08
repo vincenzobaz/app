@@ -292,7 +292,7 @@ function pad(value:string, size:number):string {
  * Data are transformed and stored into a mongo collection.
  */
 function fetchStatsCallback(error, result) {
-    if (error || result == null) {
+    if (error || result == null || result.data == null) {
         logger.error("Could not fetch stats", {error: error});
     }
     result.data.stats.forEach(rawStat => {
