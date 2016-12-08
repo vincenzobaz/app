@@ -7,6 +7,7 @@ import {Tile} from "../../common/models/Tile";
 import Question from "../../common/models/Question";
 import {Game} from "../models/Game";
 import {User} from "../models/User";
+import {BackDashboardButton} from "../components/BackToDashBoardButton";
 
 const moment = require('moment');
 const format = "MMMM Do YYYY, k:mm:ss";
@@ -83,6 +84,7 @@ export class BugBoard extends React.Component<BugBoardProps, BugBoardState> {
                 <Panel>
                     {this.renderBugs()}
                 </Panel>
+                <BackDashboardButton/>
             </div>
         )
     }
