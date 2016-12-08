@@ -3,6 +3,7 @@ import {TypeBarChart} from "../components/stats/TypeBarChart";
 import {decorate} from 'react-mixin';
 import {Statistics} from "../collections/Statistics";
 import {BackDashboardButton} from "../components/BackToDashBoardButton";
+import {PlayTimeLineChart} from "../components/stats/PlayedTimeLine";
 
 interface StatsProps {
     data: Stats[];
@@ -22,7 +23,10 @@ export class StatsPage extends React.Component<StatsProps, {}> {
         return (
             <div className="stats">
                 <div className="charts">
-                    <TypeBarChart stats={this.data.statsList} width={500} height={100}/>
+                    <h2>What question types are you good at?</h2>
+                    <TypeBarChart stats={this.data.statsList}/>
+                    <h2>Are you improving over time?</h2>
+                    <PlayTimeLineChart data={this.data.statsList}/>
                 </div>
                 <BackDashboardButton/>
            </div >
