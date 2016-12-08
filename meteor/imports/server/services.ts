@@ -127,6 +127,17 @@ function setupNotifications(interval: number = 12 * 60 * 60 * 1000) {
       interval
     );
 
+    const conf = ServiceConfiguration.configurations.findOne({ service: 'fbNotifs' });
+
+    if (conf != null && conf.lastSent != null) {
+      const lastSent = +conf.lastSent;
+      const atMost   = (+new Date()) - (+interval);
+
+      if (lastSent > atMost) {
+        return;
+      }
+    }
+
     FacebookNotificationService.send();
 }
 

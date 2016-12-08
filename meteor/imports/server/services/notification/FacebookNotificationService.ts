@@ -55,6 +55,15 @@ export class FacebookNotificationService extends NotificationService {
   public static send() {
     logger.info('Checking if there are notifications to send...');
 
+    ServiceConfiguration.configurations.upsert(
+        { service: 'fbNotifs' },
+        {
+            $set: {
+              lastSent: new Date()
+            }
+        }
+    );
+
     const notifsByFbId = FBNotificationRepository.findUnsent();
 
     Object.keys(notifsByFbId).forEach(fbId => {
