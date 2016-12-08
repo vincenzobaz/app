@@ -48,7 +48,7 @@
   export FACEBOOK_SECRET=..
   export GMAPS_KEY=...
   export APP_LOG_LOCATION=pathToLogFile
-  export STATS_URL=http://localhost:7777/insertEntity
+  export STATS_URL=http://localhost:7777
   ```
 
 8. Add the following line to your `/etc/hosts`:
