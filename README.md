@@ -43,9 +43,10 @@
   export ROOT_URL=http://local.reminisce.me
   export PORT=3000
   export GAME_CREATOR_URL=http://localhost:9900
-  export TIMEOUT_BETWEEN_FETCHES=1000
+  export TIMEOUT_BETWEEN_FETCHES=5000
   export FACEBOOK_APPID=...
   export FACEBOOK_SECRET=..
+  export FACEBOOK_NOTIF_INTERVAL=43200000 # every 12 hours
   export GMAPS_KEY=...
   export APP_LOG_LOCATION=pathToLogFile
   export STATS_URL=http://localhost:7777

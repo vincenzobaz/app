@@ -263,7 +263,7 @@ export class _FacebookService {
   }
 
   public isDeveloper(user: MeteorUser): boolean {
-    if (user.services == null || user.services.facebook == null) {
+    if (user == null || user.services == null || user.services.facebook == null) {
       return false;
     }
 
@@ -280,7 +280,6 @@ export class _FacebookService {
   }
 
 }
-
 
 export const FacebookService = new _FacebookService();
 

@@ -14,7 +14,7 @@ import {Games} from "./collections/Games";
 export class App {
 
   run() {
-    setupServices();
+    const env = setupServices();
 
     publishCollections();
     setupMeteorMethods();
@@ -22,13 +22,9 @@ export class App {
     BotService.createBot();
     BotService.observeGames();
 
-    if (process.env.TIMEOUT_BETWEEN_FETCHES == null) {
-      throw new Error("Missing environment variable: TIMEOUT_BETWEEN_FETCHES");
-    }
+    const fetchInterval = env.TIMEOUT_BETWEEN_FETCHES || 5000;
 
-    const interval = process.env.TIMEOUT_BETWEEN_FETCHES || 5000;
-
-    Meteor.setInterval(Server.fetchAllBoards.bind(Server), interval);
+    Meteor.setInterval(Server.fetchAllBoards.bind(Server), fetchInterval);
   }
 
   onLogin(attempt) {

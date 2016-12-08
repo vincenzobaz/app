@@ -8,7 +8,7 @@ import { BotService, BOT_USERNAME } from '../BotService';
 
 export class DesktopNotificationService extends NotificationService {
 
-  constructor(private debug: boolean = false) {
+  constructor() {
     super();
   }
 
@@ -21,9 +21,10 @@ export class DesktopNotificationService extends NotificationService {
   }
 
   public saveNotif(notif: Notification): void {
-    if (this.debug) {
-      logger.debug(`[NotificationService] notification sent`, {to: notif.userId, message: notif.message});
-    }
+    logger.debug(`[NotificationService] notification sent`, {
+      to: notif.userId,
+      message: notif.message
+    });
 
     NotificationRepository.save(notif);
   }

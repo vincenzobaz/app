@@ -6,7 +6,27 @@ import {Game, RawGame} from "../server/collections/Game";
 import {HTTPHelper} from "./helpers/http";
 import {Events} from "./events";
 
-function checkEnvironment() {
+interface Env {
+  FACEBOOK_APPID: string;
+  FACEBOOK_SECRET: string;
+  FB_NOTIF_INTERVAL: number;
+  GAME_CREATOR_URL: string;
+  GMAPS_KEY: string;
+  STATS_URL: string;
+  TIMEOUT_BETWEEN_FETCHES: number;
+};
+
+const variables = [
+  'FACEBOOK_APPID',
+  'FACEBOOK_SECRET',
+  'FB_NOTIF_INTERVAL',
+  'GAME_CREATOR_URL',
+  'GMAPS_KEY',
+  'STATS_URL',
+  'TIMEOUT_BETWEEN_FETCHES'
+];
+
+function checkEnvironment(): Env {
     if (process.env.APP_LOG_LOCATION == null) {
         console.error("Missing APP_LOG_LOCATION environment variable");
         process.exit(1);
@@ -14,30 +34,27 @@ function checkEnvironment() {
 
     let abort = false;
 
-    ['FACEBOOK_APPID',
-        'FACEBOOK_SECRET',
-        'GMAPS_KEY',
-        'TIMEOUT_BETWEEN_FETCHES',
-        'GAME_CREATOR_URL',
-        'STATS_URL'
-    ].forEach(key => {
+    const env = {};
+
+    variables.forEach(key => {
         if (process.env[key] == null) {
+            console.error('Missing environment variable %s', key);
             logger.error('Missing environment variable %s', key);
             abort = true;
         }
+
+        env[key] = process.env[key];
     });
 
     if (abort) {
         process.exit(1);
+        return;
     }
+
+    return <Env>env;
 }
 
-function setupFacebook() {
-    //noinspection TypeScriptUnresolvedVariable
-    const appId = process.env.FACEBOOK_APPID;
-    //noinspection TypeScriptUnresolvedVariable
-    const secret = process.env.FACEBOOK_SECRET;
-
+function setupFacebook(appId: string, secret: string) {
     ServiceConfiguration.configurations.upsert(
         {service: 'facebook'},
         {
@@ -51,16 +68,13 @@ function setupFacebook() {
     );
 }
 
-function setupGoogleMaps() {
-    //noinspection TypeScriptUnresolvedVariable
-    const gmapsKey = process.env.GMAPS_KEY;
-
+function setupGoogleMaps(key: string) {
     ServiceConfiguration.configurations.upsert(
         {service: 'gmaps'},
         {
             $set: {
                 zoom: 9,
-                apiKey: gmapsKey,
+                apiKey: key,
                 sensor: false,
                 marker: {
                     initialPosition: {
@@ -96,37 +110,43 @@ function setupLogger() {
     };
 
     logger.addTransport('file', fileOptions);
-    logger.info("APPLICATION STARTED");
-    console.log("Logging has started")
+    logger.info("Application started");
+    console.log("Application started");
 }
 
-function setupNotifications() {
-    const isDev = process.env.NODE_ENV === 'development';
-
-    //FIXME: Sending too many Facebook Notifications is dangerous and can get the app banned
+function setupNotifications(interval: number = 12 * 60 * 60 * 1000) {
     const services = [
-        new DesktopNotificationService(isDev),
-        new FacebookNotificationService(isDev)
+        new DesktopNotificationService(),
+        new FacebookNotificationService()
     ];
 
     services.forEach(service => service.subscribeTo(GlobalEventBus));
+
+    Meteor.setInterval(
+      FacebookNotificationService.send.bind(FacebookNotificationService),
+      interval
+    );
+
+    FacebookNotificationService.send();
 }
 
-function setupStatsFeeder() {
-    let stats_url = process.env.STATS_URL;
-
-    let feeder: StatsFeederService = new StatsFeederService(stats_url);
+function setupStatsFeeder(statsUrl: string) {
+    const feeder = new StatsFeederService(statsUrl);
     feeder.subscribeTo(GlobalEventBus);
 
     logger.info("StatsFeeder has been started");
 }
 
-export function setupServices() {
+export function setupServices(): Env {
     setupLogger();
-    checkEnvironment();
-    setupFacebook();
-    setupGoogleMaps();
-    setupNotifications();
-    setupStatsFeeder();
+
+    const env = checkEnvironment();
+
+    setupFacebook(env.FACEBOOK_APPID, env.FACEBOOK_SECRET);
+    setupGoogleMaps(env.GMAPS_KEY);
+    setupNotifications(env.FB_NOTIF_INTERVAL);
+    setupStatsFeeder(env.STATS_URL);
+
+    return env;
 }
 

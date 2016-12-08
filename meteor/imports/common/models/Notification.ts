@@ -26,3 +26,31 @@ export class Notification {
 
 }
 
+interface RawFBNotification {
+    _id?: Mongo.ObjectID;
+    userId: string;
+    fbId: string;
+    message: string;
+    dateCreated: Date;
+    sent: boolean;
+}
+
+export class FBNotification {
+
+    constructor(
+      public _id: Mongo.ObjectID | string,
+      public userId: Mongo.ObjectID | string,
+      public fbId: string,
+      public message: string,
+      public dateCreated: Date = new Date(),
+      public sent: boolean = false
+    ) {}
+
+  static fromRaw(data: RawFBNotification) {
+    return new FBNotification(
+      data._id, data.userId, data.fbId,
+      data.message, data.dateCreated, data.sent
+    );
+  }
+
+}
