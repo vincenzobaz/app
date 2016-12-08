@@ -9,7 +9,7 @@ import {Events} from "./events";
 interface Env {
   FACEBOOK_APPID: string;
   FACEBOOK_SECRET: string;
-  FB_NOTIF_INTERVAL: number;
+  FACEBOOK_NOTIF_INTERVAL: number;
   GAME_CREATOR_URL: string;
   GMAPS_KEY: string;
   STATS_URL: string;
