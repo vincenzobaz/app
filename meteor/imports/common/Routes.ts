@@ -45,6 +45,10 @@ export module Routes {
         return '/stats';
     }
 
+    export function viewFeedback() {
+        return '/view_feedback';
+    }
+
   }
 
   export module Assets {

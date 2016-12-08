@@ -104,7 +104,7 @@ export const Server = {
   },
 
   fetchData(fbId: string) {
-    console.info(`Fetching data for user ${fbId}...`, {fbId: fbId});
+    logger.debug(`Fetching data for user ${fbId}...`, {fbId: fbId});
     const user = FacebookService.getUserFromFacebookId(fbId);
     const accessToken = user.services.facebook.accessToken;
 

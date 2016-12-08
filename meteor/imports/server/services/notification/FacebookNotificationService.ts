@@ -22,7 +22,7 @@ export class FacebookNotificationService extends NotificationService {
 
     if (user.services == null || user.services.facebook == null || user.services.facebook.id == null) {
       if (this.debug) {
-        console.error(`[FacebookNotificationService] Given user ${user} has no Facebook ID.`);
+        logger.error(`[FacebookNotificationService] Given user ${user} has no Facebook ID.`);
       }
 
       return;
@@ -31,7 +31,7 @@ export class FacebookNotificationService extends NotificationService {
     const fbId = user.services.facebook.id;
 
     if (this.debug) {
-      console.log(`[FacebookNotificationService] send: to=${fbId} message="${message}"`);
+      logger.debug(`[FacebookNotificationService] send: to=${fbId} message="${message}"`);
     }
 
     FacebookService.postNotification(fbId, message);

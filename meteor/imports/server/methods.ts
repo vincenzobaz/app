@@ -16,6 +16,8 @@ import {Feedback} from "../common/models/Feedback";
 import {FeedBackCollection} from "../common/collections/FeedbackCollection";
 import {JoinRequestRepository} from "./repositories/JoinRequestRepository";
 import {Statistics} from "./collections/Statistics";
+import LogsToken from "./collections/LogsToken";
+import {LogsTokens} from "./collections/LogsTokens";
 var Future = Npm.require('fibers/future');
 
 export function setupMeteorMethods() {
@@ -112,6 +114,24 @@ export function setupMeteorMethods() {
             return {
                 status: 'success'
             };
+        },
+
+        'Logs.createToken'() {
+            const userId = Meteor.userId();
+            const user = Meteor.users.findOne(userId);
+            if (typeof user != 'undefined' && user.profile.isDev) {
+                var now = new Date();
+                var expiration = new Date(now.getTime() + 60 * 60 * 1000);
+                var token = new LogsToken(userId, expiration.getTime() / 1000);
+                LogsTokens.upsert({_id: userId}, token);
+                return {
+                    status: 'success'
+                };
+            } else {
+                return {
+                    status: 'failure'
+                }
+            }
         },
 
         'Answer.timeOut'(gameId, tileId): {status: string, message: string}  {

@@ -70,12 +70,12 @@
 
 				$('body').append(tpl);
 
-				moduleStyle = {
+				const moduleStyle = {
 					'position':	'absolute',
 					'left': 	'0px',
 					'top':		'0px'
 				};
-				canvasAttr = {
+				const canvasAttr = {
 					'width': w,
 					'height': h
 				};
@@ -135,10 +135,10 @@
 				ctx.fillStyle = 'rgba(102,102,102,0.5)';
 				ctx.fillRect(0, 0, $('#feedback-canvas').width(), $('#feedback-canvas').height());
 
-				rect 		= {};
-				drag 		= false;
-				highlight 	= 1,
-				post		= {};
+				var rect 		= {};
+				var drag 		= false;
+				var highlight 	= 1;
+				var post		= {};
 
 				if (settings.postBrowserInfo) {
 					post.browser 				= {};
@@ -188,7 +188,7 @@
 						var dtop	= rect.startY,
 							dleft	= rect.startX,
 							dwidth	= rect.w,
-							dheight	= rect.h;
+							dheight	= rect.h,
 							dtype	= 'highlight';
 
 						if (dwidth == 0 || dheight == 0) return;
@@ -279,6 +279,7 @@
 							if ($toHighlight && !drag) {
 								$('#feedback-canvas').css('cursor', 'pointer');
 
+								var dtype	= 'highlight';
 								var _x = $toHighlight.offset().left - 2,
 									_y = $toHighlight.offset().top - 2,
 									_w = $toHighlight.width() + parseInt($toHighlight.css('padding-left'), 10) + parseInt($toHighlight.css('padding-right'), 10) + 6,
@@ -374,7 +375,7 @@
 							ctx.fillStyle = 'rgba(0,0,0,0.75)';
 							ctx.fillRect(parseInt($(this).css('left'), 10), parseInt($(this).css('top'), 10), $(this).width(), $(this).height());
 
-							ignore = $(this).attr('data-time');
+							var ignore = $(this).attr('data-time');
 
 							/* redraw black */
 							$('.feedback-helper').each(function() {
@@ -457,8 +458,8 @@
 							if (!settings.screenshotStroke) {
 								redraw(ctx);
 							}
-							_canvas = $('<canvas id="feedback-canvas-tmp" width="'+ w +'" height="'+ dh +'"/>').hide().appendTo('body');
-							_ctx = _canvas.get(0).getContext('2d');
+							var _canvas = $('<canvas id="feedback-canvas-tmp" width="'+ w +'" height="'+ dh +'"/>').hide().appendTo('body');
+							var _ctx = _canvas.get(0).getContext('2d');
 							_ctx.drawImage(canvas, 0, sy, w, dh, 0, 0, w, dh);
 							img = _canvas.get(0).toDataURL();
 							$(document).scrollTop(sy);
@@ -531,7 +532,7 @@
 		}
 
 		function close() {
-			canDraw = false;
+			var canDraw = false;
 			$(document).off('mouseenter mouseleave', '.feedback-helper');
 			$(document).off('mouseup keyup');
 			$(document).off('mousedown', '.feedback-setblackout');
