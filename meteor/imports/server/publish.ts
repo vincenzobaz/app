@@ -6,6 +6,7 @@ import { Friends }       from "../common/collections/Friends";
 import { Notifications } from "../common/collections/Notifications";
 import {FeedBackCollection} from "../common/collections/FeedbackCollection";
 import {FacebookService} from "./services/FacebookService";
+import {Statistics} from "./collections/Statistics";
 
 export function publishCollections() {
     Meteor.publish('games', function() {
@@ -23,6 +24,14 @@ export function publishCollections() {
         logger.debug(`Publishing game boards for user...`, {userId: this.userId});
 
         return GameBoards.find({ userId: FacebookService.getFacebookId(this.userId) });
+    });
+
+    Meteor.publish('statistics', function() {
+        let fbId = FacebookService.getFacebookId(this.userId);
+
+        logger.debug('Publishing statistics for user....', {fbId: fbId});
+
+        return Statistics.find( {userId: fbId} );
     });
 
     Meteor.publish('joinRequests', function() {

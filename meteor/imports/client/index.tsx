@@ -50,6 +50,7 @@ export class App {
       Meteor.subscribe('friends');
       Meteor.subscribe('notifications');
       Meteor.subscribe('feedback');
+      Meteor.subscribe('statistics');
   }
 
   enableNotifications():void {

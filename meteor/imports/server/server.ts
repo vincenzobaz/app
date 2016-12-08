@@ -11,6 +11,7 @@ import {GameFetch}               from './collections/GameFetch';
 import {GameCreatorService}      from './services/GameCreatorService';
 import {FacebookService}         from './services/FacebookService';
 import {MeteorUser}              from '../common/collections/MeteorUser';
+import {HTTPHelper} from "./helpers/http";
 
 export const Server = {
 
@@ -78,6 +79,30 @@ export const Server = {
     }
   },
 
+    /**
+     * Prepares and sends get request for statistics to stats module
+     * @param fbUserId Facebook User id of the player
+     * @param from start date, optional
+     * @param to end date, optional
+     * @param callback, function to execute upon reception of response, optional
+     */
+  fetchStats(fbUserId: string, from?: Date, to?: Date, callback?: Function) {
+      let url: string = process.env.STATS_URL + '/stats?userId=' + fbUserId;
+      if (from || to) {
+          url += '?';
+      }
+      if (from) {
+          url += 'from=' + ddMMyyyy(from);
+          if (to) {
+              url += '&to=' + ddMMyyyy(to);
+          }
+      }
+      if (to) {
+          url += 'to=' + ddMMyyyy(to);
+      }
+      return HTTPHelper.get(url, callback);
+  },
+
   fetchData(fbId: string) {
     logger.debug(`Fetching data for user ${fbId}...`, {fbId: fbId});
     const user = FacebookService.getUserFromFacebookId(fbId);
@@ -141,4 +166,11 @@ export const Server = {
 
 };
 
-
+/**
+ * Convers a date object into a string compatible with the stats module API
+ * @param date the date to convert
+ * @returns {string} the in format ddMMyyyy
+ */
+function ddMMyyyy(date: Date): string {
+    return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+}

@@ -10,6 +10,7 @@
 
 export type Kind = "MultipleChoice" | "Timeline" | "Geolocation" | "Order";
 
+export const Kinds: string[] = ["MultipleChoice", "Timeline", "Geolocation", "Order"];
 
 export const KIND = {
   MultipleChoice: "MultipleChoice" as Kind,

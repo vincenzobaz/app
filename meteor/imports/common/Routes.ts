@@ -41,6 +41,10 @@ export module Routes {
       return '/admin';
     }
 
+    export function stats() {
+        return '/stats';
+    }
+
     export function viewFeedback() {
         return '/view_feedback';
     }
