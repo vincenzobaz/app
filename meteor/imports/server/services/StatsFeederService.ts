@@ -57,7 +57,7 @@ export class StatsFeederService {
             headers: headers,
             data: statsGame
         };
-        HTTPHelper.post(this.stats_url, req, x => logger.debug("Game sent to stats server", {gameId: statsGame._id}));
+        HTTPHelper.post(this.stats_url, req, x => logger.debug("Game sent to stats server", {game: statsGame}));
     }
 }
 

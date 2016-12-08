@@ -14,6 +14,7 @@ export interface RawOrderQuestion extends RawQuestion{
     answer: number[];
     type: QuestionType;
     kind: Kind;
+    correct?: boolean;
 }
 
 
@@ -26,7 +27,8 @@ export class OrderQuestion extends Question {
               kind: Kind,
               answer: number[],
               userAnswer: number[],
-              items: Item[]
+              items: Item[],
+              public correct: boolean
   ) {
     super(_id, null, type, kind, answer, userAnswer);
     this.items = items;
@@ -78,7 +80,8 @@ export class OrderQuestion extends Question {
         raw.kind,
         raw.answer,
         raw.userAnswer,
-        items
+        items,
+        raw.correct
         );
   }
 

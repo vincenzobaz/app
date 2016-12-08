@@ -10,6 +10,7 @@ import * as _ from "lodash";
 export interface RawMultipleChoiceQuestion extends RawQuestion{
   choices: RawChoice[];
   answer: number;
+  correct?: boolean;
   userAnswer?: number;
 }
 
@@ -22,7 +23,8 @@ export class MultipleChoiceQuestion extends Question {
       kind: Kind,
       answer: number,
       userAnswer: number,
-      public choices: Choice[]
+      public choices: Choice[],
+      public correct: boolean
   )
   {
     super(_id, subject, type, kind,  answer, userAnswer);
@@ -50,7 +52,8 @@ export class MultipleChoiceQuestion extends Question {
         raw.kind,
         raw.answer,
         raw.userAnswer,
-        choices
+        choices,
+        raw.correct
     );
   }
 }

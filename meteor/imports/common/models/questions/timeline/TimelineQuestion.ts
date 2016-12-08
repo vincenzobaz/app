@@ -18,6 +18,7 @@ export interface RawTimelineQuestion extends RawQuestion {
   step: number;
   threshold: number;
   answer: string;
+  correct?: boolean;
   userAnswer?: TimelineAnswer;
   dates?: Date[],
   before?: number,
@@ -42,6 +43,7 @@ export class TimelineQuestion extends Question {
               public userAnswer: TimelineAnswer,
               type: QuestionType,
               kind: Kind,
+              public correct: boolean,
               dates?: Date[],
               before?: number,
               after?: number) {
@@ -102,6 +104,7 @@ export class TimelineQuestion extends Question {
         raw.userAnswer,
         raw.type,
         raw.kind,
+        raw.correct,
         raw.dates,
         raw.before,
         raw.after
