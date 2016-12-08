@@ -57,6 +57,7 @@ export module FacebookStore {
 
     if (Meteor.isCordova) {
       facebookConnectPlugin.login(conf.scope);
+      return;
     }
 
     Meteor.loginWithFacebook({
