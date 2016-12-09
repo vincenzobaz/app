@@ -58,7 +58,6 @@ export function WithTimeout<P>(InnerComponent: ComponentClass<P & InnerProps>): 
     }
 
     tick(timeLeft: number): void {
-      console.log(timeLeft);
 
       this.setState({
         timeLeft: timeLeft / 1000,
