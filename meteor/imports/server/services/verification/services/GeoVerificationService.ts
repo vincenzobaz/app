@@ -50,14 +50,15 @@ export class GeoVerificationService {
       feature_class: "P"
     });
 
-
     if (correctEntity && entity) {
+      let timeSpent = question.userAnswer? question.userAnswer.timeSpent : 0;
       correctEntity.latitude = lat;
       correctEntity.longitude = long;
       question.answer = GeoVerificationService.createAnswerFromEntity(correctEntity);
       entity.latitude = answer.data.longitude;
       entity.latitude = answer.data.latitude;
       question.userAnswer = GeoVerificationService.createAnswerFromEntity(entity);
+      question.userAnswer.timeSpent = timeSpent;
       if (correctEntity.admin1Code && correctEntity.admin1Code.length > 0) {
         if (correctEntity.admin2Code && correctEntity.admin2Code.length > 0) {
           if (entity.admin1Code == correctEntity.admin1Code && entity.admin2Code == correctEntity.admin2Code) {
