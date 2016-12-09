@@ -99,7 +99,8 @@ export module FacebookStore {
       return FBConnectPromise.showDialog(params).then(callback);
     }
 
-    return FBPromise.ui(params).then(callback);
+    //FIXME: THIS IS NOT SUPPOSED TO BE HOW THINGS HAPPEN
+    return FBPromise.ui(params).then(callback).catch(callback);
   }
 
 }
