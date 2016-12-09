@@ -50,34 +50,40 @@ export class GeoVerificationService {
       feature_class: "P"
     });
 
-    if (correctEntity && entity) {
-      let timeSpent = question.userAnswer? question.userAnswer.timeSpent : 0;
-      correctEntity.latitude = lat;
-      correctEntity.longitude = long;
-      question.answer = GeoVerificationService.createAnswerFromEntity(correctEntity);
-      entity.latitude = answer.data.longitude;
-      entity.latitude = answer.data.latitude;
-      question.userAnswer = GeoVerificationService.createAnswerFromEntity(entity);
-      question.userAnswer.timeSpent = timeSpent;
-      if (correctEntity.admin1Code && correctEntity.admin1Code.length > 0) {
-        if (correctEntity.admin2Code && correctEntity.admin2Code.length > 0) {
-          if (entity.admin1Code == correctEntity.admin1Code && entity.admin2Code == correctEntity.admin2Code) {
-            question.correct = true;
-            return 1;
-          } else {
-            question.correct = false;
-            return 0;
-          }
+    if (correctEntity) {
+        if (entity) {
+            let timeSpent = question.userAnswer ? question.userAnswer.timeSpent : 0;
+            correctEntity.latitude = lat;
+            correctEntity.longitude = long;
+            question.answer = GeoVerificationService.createAnswerFromEntity(correctEntity);
+            entity.latitude = answer.data.longitude;
+            entity.latitude = answer.data.latitude;
+            question.userAnswer = GeoVerificationService.createAnswerFromEntity(entity);
+            question.userAnswer.timeSpent = timeSpent;
+            if (correctEntity.admin1Code && correctEntity.admin1Code.length > 0) {
+                if (correctEntity.admin2Code && correctEntity.admin2Code.length > 0) {
+                    if (entity.admin1Code == correctEntity.admin1Code && entity.admin2Code == correctEntity.admin2Code) {
+                        question.correct = true;
+                        return 1;
+                    } else {
+                        question.correct = false;
+                        return 0;
+                    }
+                } else {
+                    if (entity.admin1Code == correctEntity.admin1Code) {
+                        question.correct = true;
+                        return 1;
+                    } else {
+                        question.correct = false;
+                        return 0;
+                    }
+                }
+            }
         } else {
-          if (entity.admin1Code == correctEntity.admin1Code) {
-            question.correct = true;
-            return 1;
-          } else {
+            //If the player's answer could not be found but the actual answer could
             question.correct = false;
             return 0;
-          }
         }
-      }
     }
 
     //If our geolocation data isn't sufficient we give the player the point
