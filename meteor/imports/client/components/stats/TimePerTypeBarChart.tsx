@@ -15,14 +15,14 @@ export function TimePerTypeBarChart(props) {
        }
    }
 
-   let times: number[] = Kinds.map(kind => timePerType[kind] / stats.length);
+   let averages: number[] = Kinds.map(kind => timePerType[kind] / stats.length);
 
    let data = {
        labels: Kinds,
        datasets: [{
-           label: 'Average time per question',
-           data: times,
-           backgroundColor: 'rgba(255, 165, 0, 0.6)'
+           label: 'Average time',
+           data: averages,
+           backgroundColor: 'rgba(255, 165, 0, 0.8)'
        }]
    };
    let options = {
