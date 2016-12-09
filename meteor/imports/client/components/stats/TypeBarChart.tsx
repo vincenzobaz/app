@@ -13,7 +13,7 @@ export function TypeBarChart(props) {
 
     // Initizalize empty map of Kind -> Counter
     let totalCounters: {[key: string]: Counter} = {};
-    Kinds.forEach(kind => totalCounters[kind] = new Counter(0, 0, 0, 0));
+    Kinds.forEach(kind => totalCounters[kind] = new Counter(0, 0, 0, 0, 0));
 
     // Sum the counters object per question type
     for (let stat of stats) {
