@@ -68,10 +68,11 @@ export class Stats {
  * Interface describing the Javascript object before transformation
  */
 export interface RawCounter {
-    amount: number,
-    correct: number,
-    wrong: number,
-    avoid: number
+    amount: number;
+    correct: number;
+    wrong: number;
+    avoid: number;
+    timeSpent: number;
 }
 
 /**
@@ -82,7 +83,8 @@ export class Counter {
     constructor(public amount: number,
                 public correct: number,
                 public wrong: number,
-                public avoid: number) {
+                public avoid: number,
+                public timeSpent: number) {
     }
 
     /**
@@ -93,7 +95,8 @@ export class Counter {
             rawCounter.amount,
             rawCounter.correct,
             rawCounter.wrong,
-            rawCounter.avoid
+            rawCounter.avoid,
+            rawCounter.timeSpent
         );
     }
 
@@ -106,7 +109,8 @@ export class Counter {
         this.amount += other.amount;
         this.correct += other.correct;
         this.wrong += other.wrong;
-        this.avoid += other.avoid
+        this.avoid += other.avoid;
+        this.timeSpent += other.timeSpent;
     }
 }
 

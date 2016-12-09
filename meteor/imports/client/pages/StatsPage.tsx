@@ -4,6 +4,7 @@ import {decorate} from 'react-mixin';
 import {Statistics} from "../collections/Statistics";
 import {BackDashboardButton} from "../components/BackToDashBoardButton";
 import {PlayTimeLineChart} from "../components/stats/PlayedTimeLine";
+import {TimePerTypeBarChart} from "../components/stats/TimePerTypeBarChart";
 
 interface StatsProps {
     data: Stats[];
@@ -25,6 +26,7 @@ export class StatsPage extends React.Component<StatsProps, {}> {
                 <div className="charts">
                     <h2>What question types are you good at?</h2>
                     <TypeBarChart stats={this.data.statsList}/>
+                    <TimePerTypeBarChart stats={this.data.statsList}/>
                     <h2>Are you improving over time?</h2>
                     <PlayTimeLineChart data={this.data.statsList}/>
                 </div>
