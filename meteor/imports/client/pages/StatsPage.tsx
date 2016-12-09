@@ -5,6 +5,7 @@ import {Statistics} from "../collections/Statistics";
 import {BackDashboardButton} from "../components/BackToDashBoardButton";
 import {PlayTimeLineChart} from "../components/stats/PlayedTimeLine";
 import {TimePerTypeBarChart} from "../components/stats/TimePerTypeBarChart";
+import {Counters} from "../components/stats/Counters";
 
 interface StatsProps {
     data: Stats[];
@@ -24,6 +25,8 @@ export class StatsPage extends React.Component<StatsProps, {}> {
         return (
             <div className="stats">
                 <div className="charts">
+                    <h1>Statistics</h1>
+                    <Counters stats={this.data.statsList}/>
                     <h2>What question types are you good at?</h2>
                     <TypeBarChart stats={this.data.statsList}/>
                     <TimePerTypeBarChart stats={this.data.statsList}/>
