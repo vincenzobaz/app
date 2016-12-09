@@ -19,7 +19,7 @@ export function PlayTimeLineChart(props) {
         datasets: [{
             data: won,
             label: 'Games won by date',
-            backgroundColor: 'rgba(0, 200, 0, 0.5)'
+            backgroundColor: 'rgba(0, 200, 0, 0.8)'
         }, {
             data: played,
             label: 'Games played by date'

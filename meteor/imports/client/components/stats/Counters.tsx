@@ -1,4 +1,3 @@
-
 import {Stats} from "../../../common/models/Stats";
 export function Counters(props) {
     let stats: Stats[] = props.stats;
@@ -11,5 +10,16 @@ export function Counters(props) {
         loss += stat.loss;
     });
 
-    return(<h2> Win - Loss : {win} - {loss}</h2>);
+    return (
+        <h2>
+        Win - Loss:&nbsp;
+            <span style={{color: 'rgba(0, 200, 0, 0.8)'}}>
+                {win}
+            </span>
+            -
+            <span style={{color: 'rgba(200, 0, 0, 0.8)'}}>
+                {loss}
+            </span>
+        </h2>
+    );
 }
