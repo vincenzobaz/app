@@ -20,7 +20,7 @@ export function TimePerTypeBarChart(props) {
    let data = {
        labels: Kinds,
        datasets: [{
-           label: 'Average time',
+           label: 'Average time (milliseconds)',
            data: averages,
            backgroundColor: 'rgba(255, 165, 0, 0.8)'
        }]
