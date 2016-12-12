@@ -25,7 +25,7 @@ export class StatsPage extends React.Component<StatsProps, {}> {
         return (
             <div className="stats">
                 <div className="charts">
-                    <h1>Statistics</h1><BackDashboardButton/>
+                    <h1>Statistics</h1>
                     <Counters stats={this.data.statsList}/>
                     <h2>What question types are you good at?</h2>
                     <TypeBarChart stats={this.data.statsList}/>
