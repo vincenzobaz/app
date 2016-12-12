@@ -72,7 +72,7 @@
   $ meteor
   ```
 
-11. Then navigate to [](http://local.reminisce.me).
+11. Then navigate to [http://local.reminisce.me](http://local.reminisce.me).
 
 ## License
 
