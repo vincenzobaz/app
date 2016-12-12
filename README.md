@@ -55,7 +55,7 @@
 8. Add the following line to your `/etc/hosts`:
 
   ```
-  local.reminisce.me 127.0.0.1
+  127.0.0.1    local.reminisce.me
   ```
 
 9. In a new tab, start Caddy:
