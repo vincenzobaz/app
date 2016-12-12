@@ -4,6 +4,7 @@ import {Board}          from '../components/Board';
 import {GameResult}     from '../components/GameResult';
 import {Game}           from '../models/Game';
 import {Well} from 'react-bootstrap';
+import {BackDashboardButton} from "../components/BackToDashBoardButton";
 
 interface PlayGameProps {
   game: Option<Game>;
@@ -33,6 +34,7 @@ export class PlayGame extends React.Component<PlayGameProps, {}> {
           <div className="play-game play-game-ended">
             <GameResult game={game}/>
             <Board game={game}/>
+            <BackDashboardButton/>
           </div>
         );
       }
