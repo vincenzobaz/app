@@ -7,7 +7,8 @@ export function BackDashboardButton(props) {
         <Link to={Routes.Page.home()}
               className="dashboard-link">
             <Button bsStyle="primary"
-                    className="to-dashboard-button">
+                    className="to-dashboard-button"
+                    onClick={props.onClick}>
                 Back to Dashboard
             </Button>
         </Link >);
