@@ -17,7 +17,7 @@ export class StatsPage extends React.Component<StatsProps, {}> {
 
     getMeteorData() {
         return {
-            statsList: Statistics.find().fetch()
+            statsList: Statistics.find({}, {sort: {date: -1}}).fetch()
         };
     }
 
