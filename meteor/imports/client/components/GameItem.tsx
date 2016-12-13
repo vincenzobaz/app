@@ -1,12 +1,10 @@
 
-import {Link}        from 'react-router';
-
-import {Game}        from '../models/Game';
-import {GameStore}   from '../stores/GameStore';
-import {Routes}      from '../../common/Routes';
-import {GAME_STATUS} from '../../common/models/GameStatus';
-import {Friend}      from '../../common/models/Friend';
-import {Score}       from '../../common/models/Score';
+import {Link} from "react-router";
+import {Game} from "../models/Game";
+import {Routes} from "../../common/Routes";
+import {GAME_STATUS} from "../../common/models/GameStatus";
+import {Friend} from "../../common/models/Friend";
+import {Score} from "../../common/models/Score";
 
 interface GameItemProps {
   game: Game;
@@ -70,12 +68,22 @@ export class GameItem extends React.Component<GameItemProps, {}> {
 
       case GAME_STATUS.Ended:
         let text = '';
+        let cls = '';
 
-        if (game.isWon)       text = 'Won';
-        else if (game.isDraw) text = 'Draw';
-        else                  text = 'Lost';
+        if (game.isWon) {
+          text = 'Won';
+          cls = 'won';
+        }
+        else if (game.isDraw) {
+          text = 'Draw';
+          cls = 'draw';
+        }
+        else {
+          text = 'Lost';
+          cls = 'lost'
+        }
 
-        return <b className={game.isWon && 'player'}>{text}</b>;
+        return <b className={cls}>{text}</b>;
 
       case GAME_STATUS.Playing:
         if (game.isMyTurnToPlay) {

@@ -622,6 +622,18 @@ ul.join-requests, ul.games {
     color: $secondarycolor;
   }
 
+  b.won {
+    color: $primarycolor;
+  }
+
+  b.lost {
+    color: $secondarycolor;
+  }
+
+  b.draw {
+    color: $drawColor;
+  }
+
   b.player {
     color: $primarycolor;
   }
