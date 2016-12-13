@@ -45,7 +45,13 @@ export function TypeBarChart(props) {
         ]
     };
     let options = {
-        title: 'Questions by type'
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
     };
 
     return (

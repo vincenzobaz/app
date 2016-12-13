@@ -26,5 +26,15 @@ export function PlayTimeLineChart(props) {
         }]
     };
 
-    return (<LineChart data={data}/>);
+    let options = {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    };
+
+    return (<LineChart data={data} options={options}/>);
 }

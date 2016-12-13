@@ -33,7 +33,13 @@ export function TimePerTypeBarChart(props) {
         }]
     };
     let options = {
-        title: 'Average time spent per question type'
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
     };
 
     return (
