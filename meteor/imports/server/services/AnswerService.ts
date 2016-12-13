@@ -207,14 +207,15 @@ export module AnswerService {
       tile: tile
     };
 
-    const opponent      = UserRepository.byAnyId(opponentId);
-    const currentPlayer = UserRepository.byAnyId(currentPlayerId);
+    // These are wrt to the notif sent to the other user.
+    const opponent      = UserRepository.byAnyId(currentPlayerId);
+    const currentPlayer = UserRepository.byAnyId(opponentId);
 
-    logger.debug(`Result of player ${currentPlayer} row: ${row}, column: ${col}`, _.omit(returnValue, 'tile'));
+    logger.debug(`Result of player ${opponent} row: ${row}, column: ${col}`, _.omit(returnValue, 'tile'));
     logger.debug(`Players`, {opponentId: opponentId, currentPlayerId: currentPlayerId});
 
     const data = {
-      opponent, game, currentPlayer
+      opponent, currentPlayer, game
     };
 
     GlobalEventBus.emit(new Events.OpponentPlayed(data));
