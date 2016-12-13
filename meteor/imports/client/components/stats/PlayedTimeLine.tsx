@@ -45,6 +45,35 @@ export function PlayTimeLineChart(props) {
                     beginAtZero: true
                 }
             }]
+        },
+        tooltips: {
+            callbacks: {
+                label: function (tooltipItem, data) {
+                    let label = data.labels[tooltipItem.index];
+                    let value = 0;
+                    let base = 0;
+                    switch (tooltipItem.datasetIndex) {
+                        case 0:
+                            // won
+                            value = data.datasets[0].data[tooltipItem.index];
+                            break;
+                        case 1:
+                            //lost
+                        case 2:
+                            //tie
+                            value = +(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]);
+                            base = +(data.datasets[tooltipItem.datasetIndex - 1].data[tooltipItem.index]);
+                            break;
+                        default:
+                            value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            break;
+                    }
+                    let displayedValue = value - base;
+                    let roundedValue = Math.round(displayedValue * 100) / 100;
+                    let valueLabel = String(roundedValue);
+                    return label + ': ' + valueLabel + '%';
+                }
+            }
         }
     };
 
