@@ -1,4 +1,4 @@
-import { Subject, RawSubject }         from "./Subject";
+import { Subject, RawSubject, CommentSubject }         from "./Subject";
 import { SUBJECT_TYPE }                from "./SubjectType";
 import { RawPageSubject, PageSubject } from "./PageSubject";
 
@@ -13,6 +13,8 @@ export module SubjectFactory {
         break;
 
       case SUBJECT_TYPE.Comment:
+        subject = new CommentSubject(data);
+        break;
       case SUBJECT_TYPE.ImagePost:
       case SUBJECT_TYPE.LinkPost:
       case SUBJECT_TYPE.VideoPost:

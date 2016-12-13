@@ -27,6 +27,7 @@ export interface RawSubject {
   comment?: string;
   text?: string;
   url?: string;
+  post?:RawSubject;
 }
 
 export class Subject implements RawSubject {
@@ -56,5 +57,16 @@ export class Subject implements RawSubject {
     }
   }
 
+}
+
+export class CommentSubject extends Subject {
+    public post: Subject;
+
+    constructor(data: RawSubject) {
+        super(data);
+        if (data.post != null) {
+            this.post = new Subject(data.post);
+        }
+    }
 }
 
