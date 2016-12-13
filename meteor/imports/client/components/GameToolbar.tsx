@@ -29,7 +29,6 @@ interface GameToolbarState {
     showQuitGameModal?: boolean;
     showAccountSettings?: boolean;
     showGameRequestInfoModal?: boolean;
-    onStats?: boolean;
 }
 
 export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarState> {
@@ -40,8 +39,7 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
         this.state = {
             showQuitGameModal: false,
             showAccountSettings: false,
-            showGameRequestInfoModal: false,
-            onStats: false
+            showGameRequestInfoModal: false
         };
     }
 
@@ -58,7 +56,6 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
     onClickStatsButton() {
         getStatistics();
         browserHistory.push(Routes.Page.stats());
-        this.setState({onStats: true});
     }
 
     onClickAccountButton() {
@@ -144,9 +141,8 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
     }
 
     statsOrDashboard() {
-        if (this.state.onStats == true) {
-            let changeState: Function = () => this.setState({onStats: false});
-            return <BackDashboardButton onClick={changeState.bind(this)}/>;
+        if (location.pathname == "/stats") {
+            return <BackDashboardButton />;
         } else {
             return this.renderStatsButton();
         }
