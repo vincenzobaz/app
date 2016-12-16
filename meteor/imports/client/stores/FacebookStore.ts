@@ -13,17 +13,26 @@ interface FBGameRequestResponse {
 
 const FBPromise = {
 
-  ui(...args: any[]): any {
-    return Promise.promisify(FB.ui, FB).apply(FB, args);
+  ui(params: any): Promise<any> {
+    return new Promise(function(resolve, reject) {
+      FB.ui(params, function(response: any) {
+        if (response && !response.error_message) {
+          resolve(response);
+        }
+        else {
+          reject(response);
+        }
+      });
+    });
   }
 
 };
 
 const FBConnectPromise = {
 
-  showDialog(...args: any[]): any {
-    return Promise.promisify(facebookConnectPlugin.showDialog, facebookConnectPlugin)
-                  .apply(facebookConnectPlugin, args);
+  showDialog(params: any): Promise<any> {
+    const fn = Promise.promisify(facebookConnectPlugin.showDialog, facebookConnectPlugin);
+    return fn(params);
   }
 
 };
@@ -99,8 +108,7 @@ export module FacebookStore {
       return FBConnectPromise.showDialog(params).then(callback);
     }
 
-    //FIXME: THIS IS NOT SUPPOSED TO BE HOW THINGS HAPPEN
-    return FBPromise.ui(params).then(callback).catch(callback);
+    return FBPromise.ui(params).then(callback);
   }
 
 }
