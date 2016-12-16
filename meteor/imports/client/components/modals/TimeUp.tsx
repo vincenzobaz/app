@@ -34,7 +34,6 @@ export class TimeUp extends React.Component<TimeUpProps, {}> {
     AnswerStore
       .timeOut(this.props.game, this.props.tile)
       .then((res: {status: string, message: string}) => {
-        console.log("we have the timeup res", res);
         if (!res || res.status !== "success") {
           this.setState({
             sent: true,
