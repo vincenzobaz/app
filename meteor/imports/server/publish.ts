@@ -7,6 +7,7 @@ import { Notifications } from "../common/collections/Notifications";
 import {FeedBackCollection} from "../common/collections/FeedbackCollection";
 import {FacebookService} from "./services/FacebookService";
 import {Statistics} from "./collections/Statistics";
+import {Reactioners} from "./collections/Reactioners";
 
 export function publishCollections() {
     Meteor.publish('games', function() {
@@ -32,6 +33,13 @@ export function publishCollections() {
         logger.debug('Publishing statistics for user....', {fbId: fbId});
 
         return Statistics.find( {userId: fbId} );
+    });
+
+    Meteor.publish('reactioners', function() {
+        let fbId = FacebookService.getFacebookId(this.userId);
+        logger.debug('Publishing reactioners list for user', {userId: this.userId});
+
+        return Reactioners.find({thisId: fbId});
     });
 
     Meteor.publish('joinRequests', function() {

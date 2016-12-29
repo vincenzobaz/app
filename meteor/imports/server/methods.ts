@@ -18,6 +18,8 @@ import {JoinRequestRepository} from "./repositories/JoinRequestRepository";
 import {Statistics} from "./collections/Statistics";
 import LogsToken from "./collections/LogsToken";
 import {LogsTokens} from "./collections/LogsTokens";
+import {Reactioners} from "./collections/Reactioners";
+import {Reactioner} from "../common/models/Reactioner";
 var Future = Npm.require('fibers/future');
 
 export function setupMeteorMethods() {
@@ -39,7 +41,7 @@ export function setupMeteorMethods() {
          * @param from start date, optional
          * @param to end date, optional
          */
-        'fetchStats'(from?: Date, to?: Date) {
+            'fetchStats'(from?: Date, to?: Date) {
             const userId = Meteor.userId();
             if (!userId) {
                 logger.error("Could not retrieve userId for stats generation");
@@ -49,6 +51,44 @@ export function setupMeteorMethods() {
             const fbUserId = user.services.facebook.id;
 
             return Server.fetchStats(fbUserId, from, to, fetchStatsCallback);
+        },
+
+        /**
+         * Fill the database with user reactioner list and blacklist retrieved from game creator.
+         */
+            'fetchReactioners'() {
+            const userId = Meteor.userId();
+            if (!userId) {
+                logger.error("Could not retrieve userId for reactioner retrieval");
+                return;
+            }
+            const user = Meteor.users.findOne(userId);
+            const fbUserId = user.services.facebook.id;
+
+
+            // Retrieve blacklist
+            Server.fetchBlacklist(fbUserId,
+                (error, result) => fetchReactionersCallback(error, result, fbUserId, true));
+
+            // Retrieve reactioner list
+            return Server.fetchReactioners(fbUserId,
+                (error, result) => fetchReactionersCallback(error, result, fbUserId));
+        },
+
+        /**
+         * Communicate to game creator that the received reactioners have to be blacklisted
+         * @param evilPeople the list of reactioners to avoid
+         */
+         'addToBlacklist'(evilPeople: Reactioner[]) {
+            const userId = Meteor.userId();
+            if (!userId) {
+                logger.error("Could not retrieve userId for reactioner retrieval");
+                return;
+            }
+            const user = Meteor.users.findOne(userId);
+            const fbUserId = user.services.facebook.id;
+
+            Server.pushBlacklist(fbUserId, evilPeople);
         },
 
         'Account.deleteAllData'() {
@@ -92,11 +132,11 @@ export function setupMeteorMethods() {
         },
 
         'JoinRequest.send'(fbRequest: string, fromFbId: string, toFbId: string) {
-          return JoinRequestService.send(fromFbId, toFbId, fbRequest);
+            return JoinRequestService.send(fromFbId, toFbId, fbRequest);
         },
 
         'FBJoinRequests.delete'(fbRequestIds: string[]) {
-          return FacebookService.deleteRequests(fbRequestIds, FacebookService.getFacebookId(Meteor.userId()));
+            return FacebookService.deleteRequests(fbRequestIds, FacebookService.getFacebookId(Meteor.userId()));
         },
 
         'Game.start'(gameId) {
@@ -104,8 +144,8 @@ export function setupMeteorMethods() {
         },
 
         'Game.createBotGame'() {
-          const fbId = FacebookService.getFacebookId(this.userId);
-          return BotService.createBotGame(fbId);
+            const fbId = FacebookService.getFacebookId(this.userId);
+            return BotService.createBotGame(fbId);
         },
 
         'Game.quit'(gameId) {
@@ -148,7 +188,7 @@ export function setupMeteorMethods() {
             return AnswerService.post(gameId, tileId, answers);
         },
 
-        'Build.info'(): { status:string, data?:any, error?:string } {
+        'Build.info'(): {status: string, data?: any, error?: string} {
             try {
                 const result = GameCreatorService.fetchBuildInfo();
                 const data = (result.data != null) ? result.data : JSON.parse(result.content);
@@ -185,13 +225,13 @@ export function setupMeteorMethods() {
             return FacebookService.getPermissions(user);
         },
 
-        'Notifications.markAsShown'(ids:string[]) {
+        'Notifications.markAsShown'(ids: string[]) {
             this.unblock();
             NotificationRepository.markAsShown(Meteor.userId(), ids);
         },
 
-        'Geolocation.getLocationName'(position:Marker) {
-            let entity:GeoNameEntity;
+        'Geolocation.getLocationName'(position: Marker) {
+            let entity: GeoNameEntity;
             entity = GeoNameEntityCollection.findOne({
                 loc: {
                     $near: {
@@ -219,7 +259,7 @@ export function setupMeteorMethods() {
             return `${entity.name}, ${admind1Entity.name}`;
         },
 
-        'Geolocation.getSuggestions'(place:string, countryCode:string) {
+        'Geolocation.getSuggestions'(place: string, countryCode: string) {
             if (!place || place.length == 0) {
                 return;
             }
@@ -250,7 +290,7 @@ export function setupMeteorMethods() {
             return future.wait();
         },
 
-        'SendFeedback'(feedback:Feedback) {
+        'SendFeedback'(feedback: Feedback) {
             FeedBackCollection.insert(feedback);
         }
 
@@ -274,7 +314,7 @@ export function setupMeteorMethods() {
 //   return promise;
 // }
 
-function pad(value:string, size:number):string {
+function pad(value: string, size: number): string {
     if (isNaN(value as any)) {
         return value;
     }
@@ -305,4 +345,27 @@ function fetchStatsCallback(error, result) {
             );
         }
     );
+}
+
+/**
+ * Callback to be executed upon reception of the reactioner list from the
+ * game creator.
+ * Data are prepared and stored into a mongo collection.
+ */
+function fetchReactionersCallback(error, result, fbId: string, defaultBool = false) {
+    if (error || result == null || result.data == null) {
+        logger.error("Could not fetch reactioner list", {error: error});
+    }
+    result.data.forEach(reactioner => {
+        let entry: Reactioner = {
+            userId: reactioner.userId,
+            userName: reactioner.userName,
+            blacklisted: defaultBool,
+            thisId: fbId
+        };
+        Reactioners.upsert(
+            {thisId: fbId, userId: reactioner.userId},
+            entry,
+            () => logger.debug('Reactioner received and cached', {userId: entry.userId, name: entry.userName}));
+    });
 }
