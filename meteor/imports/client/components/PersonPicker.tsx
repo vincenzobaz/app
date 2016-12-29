@@ -1,5 +1,5 @@
 import {Reactioner} from "../../common/models/Reactioner";
-import {Button} from 'react-bootstrap';
+import {Button, Row, Col} from 'react-bootstrap';
 import {MeteorPromise} from "../helpers/meteor";
 const Select = require('react-select');
 
@@ -17,7 +17,8 @@ export class PersonPicker extends React.Component<{data: Reactioner[], onHide: F
     render() {
         return (
             <div className="picker">
-               <Select
+                <p>Search the person you want to blacklist and click on its name</p>
+                <Select
                     name="add-to-bl"
                     labelKey="userName"
                     options={this.state.pickable}
@@ -26,12 +27,12 @@ export class PersonPicker extends React.Component<{data: Reactioner[], onHide: F
                 <p>You have marked for blacklisting :</p>
 
                 <ul>
-                    {this.state.picked.map(el => <li>{el.userName} </li>)}
+                    {this.state.picked.map(el => <li key={el.userId}> {el.userName} </li>)}
                 </ul>
                 <Button className="confirm-blacklist" onClick={this.sendBlacklist.bind(this)}>
                     Confirm Blacklist
                 </Button>
-             </div>
+            </div>
         );
     }
 
