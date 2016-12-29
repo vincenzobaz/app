@@ -51,6 +51,7 @@ export class App {
       Meteor.subscribe('notifications');
       Meteor.subscribe('feedback');
       Meteor.subscribe('statistics');
+      Meteor.subscribe('reactioners');
   }
 
   enableNotifications():void {
