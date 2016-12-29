@@ -5,10 +5,15 @@ import {
     Row, Col, Well
 } from 'react-bootstrap';
 import {getConfig} from "../helpers/getConfig";
+import {MeteorPromise} from "../helpers/meteor";
+import {BlacklistModal} from "./modals/BlacklistModal";
+import {Reactioners} from "../collections/Reactioners";
+import {Reactioner} from "../../common/models/Reactioner";
 
 interface AccountSettingsState {
     logoutConfirmed: boolean;
     deleteAllDataConfirmed: boolean;
+    showBlacklistModal: boolean;
 }
 
 export class AccountSettings extends React.Component<{}, AccountSettingsState> {
@@ -18,7 +23,8 @@ export class AccountSettings extends React.Component<{}, AccountSettingsState> {
 
         this.state = {
             logoutConfirmed: false,
-            deleteAllDataConfirmed: false
+            deleteAllDataConfirmed: false,
+            showBlacklistModal: false
         }
     }
 
@@ -85,18 +91,27 @@ export class AccountSettings extends React.Component<{}, AccountSettingsState> {
                     </Row>
                     <Row>
                         <Col md={6} mdOffset={3}>
-                            <Button className="blacklist_button" onClick={this.onBlacklistFill.bind(this)}>
-                                    Blacklist
+                            <Button className="blacklist_button" onClick={this.onBlacklistClick.bind(this)}>
+                                Blacklist
                             </Button>
                         </Col>
                     </Row >
                 </Well >
+                {this.state.showBlacklistModal && <BlacklistModal show={this.state.showBlacklistModal} onHide={this.onHideBlacklistModal.bind(this)}/>}
             </div>
         )
     }
 
-    onBlacklistFill(e: React.MouseEvent) {
-        console.log("Puzzi");
+    onBlacklistClick(e: React.MouseEvent) {
+        e.stopPropagation();
+
+        MeteorPromise.call('fetchReactioners');
+
+        this.setState({
+            logoutConfirmed: this.state.logoutConfirmed,
+            deleteAllDataConfirmed: this.state.deleteAllDataConfirmed,
+            showBlacklistModal: true
+        });
     }
 
 
@@ -109,8 +124,9 @@ export class AccountSettings extends React.Component<{}, AccountSettingsState> {
 
         this.setState({
             logoutConfirmed: true,
-            deleteAllDataConfirmed: false
-        })
+            deleteAllDataConfirmed: false,
+            showBlacklistModal: this.state.showBlacklistModal
+        });
     }
 
     onDeleteAllData(e: React.MouseEvent) {
@@ -122,14 +138,24 @@ export class AccountSettings extends React.Component<{}, AccountSettingsState> {
 
         this.setState({
             logoutConfirmed: false,
-            deleteAllDataConfirmed: true
+            deleteAllDataConfirmed: true,
+            showBlacklistModal: this.state.showBlacklistModal
         })
     }
 
     onBackgroundClick() {
         this.setState({
             logoutConfirmed: false,
-            deleteAllDataConfirmed: false
+            deleteAllDataConfirmed: false,
+            showBlacklistModal: this.state.showBlacklistModal
+        });
+    }
+
+    onHideBlacklistModal() {
+        this.setState({
+            logoutConfirmed: this.state.logoutConfirmed,
+            deleteAllDataConfirmed: this.state.deleteAllDataConfirmed,
+            showBlacklistModal: false
         });
     }
 
