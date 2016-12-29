@@ -12,6 +12,8 @@ import {GameCreatorService}      from './services/GameCreatorService';
 import {FacebookService}         from './services/FacebookService';
 import {MeteorUser}              from '../common/collections/MeteorUser';
 import {HTTPHelper} from "./helpers/http";
+import {Reactioner} from "../common/models/Reactioner";
+import {Reactioners} from "./collections/Reactioners";
 
 export const Server = {
 
@@ -103,6 +105,26 @@ export const Server = {
       return HTTPHelper.get(url, callback);
   },
 
+   /**
+    * Requests reactioner list from gamecreator.
+    * @param fbUserId Facebook User id of the player
+    * @param callback function to execute upon reception of response.
+    */
+  fetchReactioners(fbUserId: string, callback?: Function) {
+      let url: string = process.env.GAME_CREATOR_URL + '/reactions?user_id=' + fbUserId;
+      return HTTPHelper.get(url, callback);
+  },
+
+   /**
+    * Requests blacklist from gamecreator.
+    * @param fbUserId Facebook User id of the player
+    * @param callback function to execute upon reception of response.
+    */
+  fetchBlacklist(fbUserId: string, callback?: Function) {
+      let url: string = process.env.GAME_CREATOR_URL + '/blacklist?user_id=' + fbUserId;
+      return HTTPHelper.get(url, callback)
+  },
+
   fetchData(fbId: string) {
     logger.debug(`Fetching data for user ${fbId}...`, {fbId: fbId});
     const user = FacebookService.getUserFromFacebookId(fbId);
@@ -162,12 +184,39 @@ export const Server = {
     else {
       GameFetchRepository.save(fetch);
     }
-  }
+  },
 
+    /**
+     * Communicates to game creator the new blacklist for the user
+     * @param fbUserId the user whose blacklist is updated
+     * @param list the list of newly blacklisted players
+     */
+  pushBlacklist(fbUserId: string, list: Reactioner[]) {
+      // List preparation
+      const blacklist: Reactioner[] = Reactioners
+          .find({thisId: fbUserId, blacklisted: true})
+          .fetch();
+      list.forEach(newEvil => blacklist.push(newEvil)); // new blacklisted are added to list
+      for (let el of blacklist) { // game-creator does not these properties
+          delete el.thisId;
+          delete el.blacklisted;
+      }
+
+      let url: string = process.env.GAME_CREATOR_URL + '/blacklist?user_id=' + fbUserId;
+      let headers: {[id: string] : string} = {
+          'Content-Type' : 'application/json'
+      };
+      let req = {
+          headers: headers,
+          data: blacklist
+      };
+
+      return HTTPHelper.post(url, req, () => logger.debug("Updated blacklist sent to game creator", {userId: fbUserId}));
+  }
 };
 
 /**
- * Convers a date object into a string compatible with the stats module API
+ * Converts a date object into a string compatible with the stats module API
  * @param date the date to convert
  * @returns {string} the in format ddMMyyyy
  */
