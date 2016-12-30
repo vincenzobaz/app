@@ -34,7 +34,7 @@ export class BlacklistModal extends React.Component<{onHide: Function, show: boo
                         <p>Your current blacklist: </p>
                         <ul>
                             {this.state.blackListed.map((person, index) =>
-                                    <li key={person.userId}> {person.userName }
+                                    <li key={person.userId}> {person.userName + " "}
                                         <Button
                                             bsSize="xsmall"
                                             onClick={this.onItemListClick.bind(this, index)}
