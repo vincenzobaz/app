@@ -13,7 +13,7 @@ import {FacebookService}         from './services/FacebookService';
 import {MeteorUser}              from '../common/collections/MeteorUser';
 import {HTTPHelper} from "./helpers/http";
 import {Reactioner} from "../common/models/Reactioner";
-import {Reactioners} from "./collections/Reactioners";
+import {Reactioners, Blacklist} from "./collections/Reactioners";
 
 export const Server = {
 
@@ -210,6 +210,16 @@ export const Server = {
       };
 
       return HTTPHelper.post(url, req, () => logger.debug("Updated blacklist sent to game creator", {userId: fbUserId}));
+  },
+
+    /**
+     * Communicates to game creator that some users should be removed from blacklist
+     * @param fbUserId the user whose blacklist is updated
+     * @param list the list of forgiven players
+     */
+  removeFromBlacklist(fbUserId: string, list: Reactioner[]) {
+      list.forEach(el => Blacklist.remove({thisId: fbUserId, userId: el.userId}));
+      return this.pushBlacklist(fbUserId, []);
   }
 };
 

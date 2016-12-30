@@ -91,6 +91,24 @@ export function setupMeteorMethods() {
             return Server.pushBlacklist(fbUserId, evilPeople);
         },
 
+        /**
+         * Communicates to gamecreator that the received reactioners have been forgiven and
+         * should no longer be in the blacklist
+         * @param forgivenPeople
+         */
+            'removeFromBlacklist'(forgivenPeople: Reactioner[]) {
+            const userId = Meteor.userId();
+            if (!userId) {
+                logger.error("Could not retrieve userId");
+                return;
+            }
+            const user = Meteor.users.findOne(userId);
+            const fbUserId = user.services.facebook.id;
+
+            return Server.removeFromBlacklist(fbUserId, forgivenPeople);
+
+        },
+
         'Account.deleteAllData'() {
             const userId = Meteor.userId();
 
@@ -365,6 +383,9 @@ function fetchReactionersCallback(error, result, fbId: string, collection: Colle
         collection.upsert(
             {thisId: fbId, userId: reactioner.userId},
             entry,
-            () => logger.debug('Reactioner/Blacklisted received and cached', {userId: entry.userId, name: entry.userName}));
+            () => logger.debug('Reactioner/Blacklisted received and cached', {
+                userId: entry.userId,
+                name: entry.userName
+            }));
     });
 }
