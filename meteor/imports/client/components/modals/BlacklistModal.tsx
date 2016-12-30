@@ -43,13 +43,12 @@ export class BlacklistModal extends React.Component<{onHide: Function, show: boo
                                         </Button>
                                 </li>)}
                         </ul>
-                        {this.state.unlisted.some(el => el) &&
-                            <Button
-                            bsSize="large"
-                            onClick={this.onConfirm.bind(this)}
-                            bsStyle="success">
-                            Confirm
-                        </Button>}
+                        {this.state.unlisted.some(el => el) && <Button
+                                                                    bsSize="large"
+                                                                    onClick={this.onConfirm.bind(this)}
+                                                                    bsStyle="success">
+                                                                    Confirm
+                                                                </Button>}
                     </Well>
                     <Well>
                         <PersonPicker data={this.state.all} onHide={this.props.onHide}/>

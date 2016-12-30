@@ -24,8 +24,18 @@ export class PersonPicker extends React.Component<{data: Reactioner[], onHide: F
                     options={this.state.pickable}
                     onChange={this.onPick.bind(this)}
                 />
-                <p>You have marked for blacklisting :</p>
+                {this.renderPicked()}
+            </div>
+        );
+    }
 
+    renderPicked() {
+        if (this.state.picked.length == 0) {
+            return;
+        }
+        return (
+            <div className="selected-list">
+                <p>You have marked for blacklisting :</p>
                 <ul>
                     {this.state.picked.map(el => <li key={el.userId}> {el.userName} </li>)}
                 </ul>
