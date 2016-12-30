@@ -45,7 +45,7 @@ export class BlacklistModal extends React.Component<{onHide: Function, show: boo
                         </ul>
                         {this.state.unlisted.some(el => el) && <Button
                                                                     bsSize="large"
-                                                                    onClick={this.onConfirm.bind(this)}
+                                                                    onClick={this.onConfirmRemove.bind(this)}
                                                                     bsStyle="success">
                                                                     Confirm
                                                                 </Button>}
@@ -58,8 +58,7 @@ export class BlacklistModal extends React.Component<{onHide: Function, show: boo
         );
     }
 
-
-    onConfirm() {
+    onConfirmRemove() {
         this.props.onHide();
         return MeteorPromise.call('removeFromBlacklist',
             this.state.unlisted
