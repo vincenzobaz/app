@@ -1,11 +1,11 @@
 import {decorate} from 'react-mixin';
 import {Reactioner} from "../../../common/models/Reactioner";
 import {Modal, Well} from "react-bootstrap";
-import {Reactioners} from "../../collections/Reactioners";
+import {Reactioners, Blacklist} from "../../collections/Reactioners";
 import {PersonPicker} from "../PersonPicker";
 
 interface BlacklistState {
-    whiteListed: Reactioner[];
+    all: Reactioner[];
     blackListed: Reactioner[];
 }
 
@@ -15,9 +15,11 @@ export class BlacklistModal extends React.Component<{onHide: Function, show: boo
 
     getMeteorData() {
         let all: Reactioner[] = Reactioners.find().fetch();
+        let blacklist = Blacklist.find().fetch();
+        console.log("getMeteorData triggered");
         return {
-            whiteListed: all.filter(x => !x.blacklisted),
-            blackListed: all.filter(x => x.blacklisted)
+            all: all,
+            blackListed: blacklist
         };
     }
 
@@ -29,16 +31,23 @@ export class BlacklistModal extends React.Component<{onHide: Function, show: boo
                 </Modal.Header>
                 <Modal.Body>
                     <Well>
-                        <p>This are the people that you have already blacklisted:</p>
-                        <ul>
-                            {this.data.blackListed.map(person => <li>{person.userName}</li>)}
-                        </ul>
+                        <p>Your current blacklist: </p>
+                        <OldBlacklistModal list={this.data.blackListed}/>
                     </Well>
                     <Well>
-                        <PersonPicker data={this.data.whiteListed} onHide={this.props.onHide}/>
+                        <PersonPicker data={this.data.all} onHide={this.props.onHide}/>
                     </Well>
                 </Modal.Body>
             </Modal>
         );
     }
+}
+
+function OldBlacklistModal(props) {
+    const list: Reactioner[] = props.list;
+    return (
+        <ul>
+            {list.map(person => <li key={person.userId}> {person.userName} </li>)}
+        </ul>
+    );
 }

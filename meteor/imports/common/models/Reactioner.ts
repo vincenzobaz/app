@@ -1,7 +1,6 @@
 
-export type Reactioner = {
+export interface Reactioner {
     userId: string;
     userName: string;
-    blacklisted: boolean;
     thisId: string;
 }

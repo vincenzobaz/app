@@ -52,6 +52,7 @@ export class App {
       Meteor.subscribe('feedback');
       Meteor.subscribe('statistics');
       Meteor.subscribe('reactioners');
+      Meteor.subscribe('blacklist');
   }
 
   enableNotifications():void {

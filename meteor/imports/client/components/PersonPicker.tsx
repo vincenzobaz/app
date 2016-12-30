@@ -37,7 +37,6 @@ export class PersonPicker extends React.Component<{data: Reactioner[], onHide: F
     }
 
     onPick(chosen: Reactioner) {
-        console.log("You picked " + chosen.userId);
         const state: PickerState = this.state;
         state.picked.push(chosen);
         this.setState(state)

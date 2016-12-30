@@ -196,11 +196,9 @@ export const Server = {
       const blacklist: Reactioner[] = Reactioners
           .find({thisId: fbUserId, blacklisted: true})
           .fetch();
+
       list.forEach(newEvil => blacklist.push(newEvil)); // new blacklisted are added to list
-      for (let el of blacklist) { // game-creator does not these properties
-          delete el.thisId;
-          delete el.blacklisted;
-      }
+      blacklist.forEach(element => delete element.thisId); // game-creator does not this property
 
       let url: string = process.env.GAME_CREATOR_URL + '/blacklist?user_id=' + fbUserId;
       let headers: {[id: string] : string} = {
