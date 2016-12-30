@@ -17,7 +17,7 @@ export class PersonPicker extends React.Component<{data: Reactioner[], onHide: F
     render() {
         return (
             <div className="picker">
-                <p>Search the person you want to blacklist and click on its name</p>
+                <p>Search the person you want to blacklist and click on his/her name</p>
                 <Select
                     name="add-to-bl"
                     labelKey="userName"
@@ -29,7 +29,10 @@ export class PersonPicker extends React.Component<{data: Reactioner[], onHide: F
                 <ul>
                     {this.state.picked.map(el => <li key={el.userId}> {el.userName} </li>)}
                 </ul>
-                <Button className="confirm-blacklist" onClick={this.sendBlacklist.bind(this)}>
+                <Button
+                    className="confirm-blacklist"
+                    onClick={this.sendBlacklist.bind(this)}
+                    bsStyle="success">
                     Confirm Blacklist
                 </Button>
             </div>
