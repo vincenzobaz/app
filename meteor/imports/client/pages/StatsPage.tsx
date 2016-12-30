@@ -2,17 +2,12 @@ import {Stats} from "../../common/models/Stats";
 import {TypeBarChart} from "../components/stats/TypeBarChart";
 import {decorate} from 'react-mixin';
 import {Statistics} from "../collections/Statistics";
-import {BackDashboardButton} from "../components/BackToDashBoardButton";
 import {PlayTimeLineChart} from "../components/stats/PlayedTimeLine";
 import {TimePerTypeBarChart} from "../components/stats/TimePerTypeBarChart";
 import {Counters} from "../components/stats/Counters";
 
-interface StatsProps {
-    data: Stats[];
-}
-
 @decorate(ReactMeteorData)
-export class StatsPage extends React.Component<StatsProps, {}> {
+export class StatsPage extends React.Component<{}, {}> {
     private data;
 
     getMeteorData() {
