@@ -1,13 +1,14 @@
 import {Reactioner} from "../../../common/models/Reactioner";
 import {Modal, Well, Button} from "react-bootstrap";
 import {Reactioners, Blacklist} from "../../collections/Reactioners";
-import {PersonPicker} from "../PersonPicker";
 import {MeteorPromise} from "../../helpers/meteor";
+const Select = require('react-select');
 
 interface BlacklistState {
     all: Reactioner[];
     blackListed: Reactioner[];
     unlisted: boolean[];
+    modified: boolean;
 }
 
 export class BlacklistModal extends React.Component<{onHide: Function, show: boolean}, BlacklistState> {
@@ -18,12 +19,15 @@ export class BlacklistModal extends React.Component<{onHide: Function, show: boo
         this.state = {
             all: all,
             blackListed: blacklist,
-            unlisted: blacklist.map(() => false)
+            unlisted: blacklist.map(() => false),
+            modified: false
         };
     }
 
     render() {
         const deleted: Function = index => !this.state.unlisted[index];
+        const removedFromList: boolean = this.state.unlisted.some(el => el);
+        const showConfirmation: boolean = removedFromList || this.state.modified;
         return (
             <Modal bsSize="large" onHide={this.props.onHide} show={this.props.show}>
                 <Modal.Header closeButton>
@@ -34,40 +38,56 @@ export class BlacklistModal extends React.Component<{onHide: Function, show: boo
                         <p>Your current blacklist: </p>
                         <ul>
                             {this.state.blackListed.map((person, index) =>
-                                    <li key={person.userId}> {person.userName + " "}
-                                        <Button
-                                            bsSize="xsmall"
-                                            onClick={this.onItemListClick.bind(this, index)}
-                                            bsStyle={deleted(index) ? "danger" : null}>
-                                            {deleted(index) ? "remove" : "cancel"}
-                                        </Button>
+                                <li key={person.userId}> {person.userName + " "}
+                                    <Button
+                                        bsSize="xsmall"
+                                        onClick={this.onItemListClick.bind(this, index)}
+                                        bsStyle={deleted(index) ? "danger" : "warning"}>
+                                        {deleted(index) ? "remove" : "marked for removal"}
+                                    </Button>
                                 </li>)}
                         </ul>
-                        {this.state.unlisted.some(el => el) && <Button
-                                                                    bsSize="large"
-                                                                    onClick={this.onConfirmRemove.bind(this)}
-                                                                    bsStyle="success">
-                                                                    Confirm
-                                                                </Button>}
                     </Well>
                     <Well>
-                        <PersonPicker data={this.state.all} onHide={this.props.onHide}/>
+                        <div className="picker">
+                            <p>Search the person you want to blacklist and click on his/her name</p>
+                            <Select
+                                name="add-to-bl"
+                                labelKey="userName"
+                                options={this.state.all}
+                                onChange={this.addToBlacklist.bind(this)}
+                            />
+                        </div>
                     </Well>
+                    <p>Click on Confirm to save your changes</p>
+                    {showConfirmation && <Button
+                        bsSize="large"
+                        onClick={this.onConfirm.bind(this)}
+                        bsStyle="success">
+                        Confirm
+                    </Button>}
                 </Modal.Body>
             </Modal>
         );
     }
 
-    onConfirmRemove() {
+    addToBlacklist(el: Reactioner) {
+        let state: BlacklistState = this.state;
+        state.blackListed.push(el);
+        state.modified = true;
+        this.setState(state);
+    }
+
+    onConfirm() {
         this.props.onHide();
-        return MeteorPromise.call('removeFromBlacklist',
+        MeteorPromise.call('removeFromBlacklist',
             this.state.unlisted
                 .map(function (el, i) {
                     return {_1: el, _2: i}
                 })
                 .filter(tuple => tuple._1)
-                .map(tuple => this.state.blackListed[tuple._2])
-        );
+                .map(tuple => this.state.blackListed[tuple._2]));
+        MeteorPromise.call('addToBlacklist', this.state.blackListed);
     }
 
     onItemListClick(index: number) {

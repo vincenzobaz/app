@@ -192,13 +192,7 @@ export const Server = {
      * @param list the list of newly blacklisted players
      */
   pushBlacklist(fbUserId: string, list: Reactioner[]) {
-      // List preparation
-      const blacklist: Reactioner[] = Reactioners
-          .find({thisId: fbUserId, blacklisted: true})
-          .fetch();
-
-      list.forEach(newEvil => blacklist.push(newEvil)); // new blacklisted are added to list
-      blacklist.forEach(element => delete element.thisId); // game-creator does not this property
+      list.forEach(element => delete element.thisId); // game-creator does not this property
 
       let url: string = process.env.GAME_CREATOR_URL + '/blacklist?user_id=' + fbUserId;
       let headers: {[id: string] : string} = {
@@ -206,7 +200,7 @@ export const Server = {
       };
       let req = {
           headers: headers,
-          data: blacklist
+          data: list
       };
 
       return HTTPHelper.post(url, req, () => logger.debug("Updated blacklist sent to game creator", {userId: fbUserId}));
@@ -219,7 +213,7 @@ export const Server = {
      */
   removeFromBlacklist(fbUserId: string, list: Reactioner[]) {
       list.forEach(el => Blacklist.remove({thisId: fbUserId, userId: el.userId}));
-      return this.pushBlacklist(fbUserId, []);
+      return this.pushBlacklist(fbUserId, Blacklist.find({thisId: fbUserId}).fetch());
   }
 };
 
