@@ -8,7 +8,8 @@ interface BlacklistState {
     all: Reactioner[];
     blackListed: Reactioner[];
     unlisted: boolean[];
-    modified: boolean;
+    additions: boolean;
+    removals: boolean;
 }
 
 export class BlacklistModal extends React.Component<{onHide: Function, show: boolean}, BlacklistState> {
@@ -20,14 +21,14 @@ export class BlacklistModal extends React.Component<{onHide: Function, show: boo
             all: all,
             blackListed: blacklist,
             unlisted: blacklist.map(() => false),
-            modified: false
+            additions: false,
+            removals: false
         };
     }
 
     render() {
-        const deleted: Function = index => !this.state.unlisted[index];
-        const removedFromList: boolean = this.state.unlisted.some(el => el);
-        const showConfirmation: boolean = removedFromList || this.state.modified;
+        const wasItemDeleted: Function = index => !this.state.unlisted[index];
+        const showConfirmation: boolean = this.state.removals || this.state.additions;
         return (
             <Modal bsSize="large" onHide={this.props.onHide} show={this.props.show}>
                 <Modal.Header closeButton>
@@ -42,8 +43,8 @@ export class BlacklistModal extends React.Component<{onHide: Function, show: boo
                                     <Button
                                         bsSize="xsmall"
                                         onClick={this.onItemListClick.bind(this, index)}
-                                        bsStyle={deleted(index) ? "danger" : "warning"}>
-                                        {deleted(index) ? "remove" : "marked for removal"}
+                                        bsStyle={wasItemDeleted(index) ? "danger" : "warning"}>
+                                        {wasItemDeleted(index) ? "remove" : "marked for removal"}
                                     </Button>
                                 </li>)}
                         </ul>
@@ -59,7 +60,7 @@ export class BlacklistModal extends React.Component<{onHide: Function, show: boo
                             />
                         </div>
                     </Well>
-                    <p>Click on Confirm to save your changes</p>
+                    {showConfirmation && <p>Click on Confirm to save your changes</p>}
                     {showConfirmation && <Button
                         bsSize="large"
                         onClick={this.onConfirm.bind(this)}
@@ -74,24 +75,29 @@ export class BlacklistModal extends React.Component<{onHide: Function, show: boo
     addToBlacklist(el: Reactioner) {
         let state: BlacklistState = this.state;
         state.blackListed.push(el);
-        state.modified = true;
+        state.additions = true;
         this.setState(state);
     }
 
     onConfirm() {
         this.props.onHide();
-        MeteorPromise.call('removeFromBlacklist',
-            this.state.unlisted
-                .map(function (el, i) {
-                    return {_1: el, _2: i}
-                })
-                .filter(tuple => tuple._1)
-                .map(tuple => this.state.blackListed[tuple._2]));
-        MeteorPromise.call('addToBlacklist', this.state.blackListed);
+        if (this.state.removals) {
+            MeteorPromise.call('removeFromBlacklist',
+                this.state.unlisted
+                    .map(function (el, i) {
+                        return {_1: el, _2: i}
+                    })
+                    .filter(tuple => tuple._1)
+                    .map(tuple => this.state.blackListed[tuple._2]));
+        }
+        if (this.state.additions) {
+            MeteorPromise.call('addToBlacklist', this.state.blackListed);
+        }
     }
 
     onItemListClick(index: number) {
         this.state.unlisted[index] = !this.state.unlisted[index];
+        this.state.removals = this.state.unlisted.some(el => el);
         this.setState(this.state);
     }
 }
