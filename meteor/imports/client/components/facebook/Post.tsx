@@ -8,6 +8,7 @@ import {Text}       from "./Text";
 import {Comment}    from "./Comment";
 import {TaggedPost} from "./TaggedPost";
 import * as _ from 'lodash';
+import {SUBJECT_TYPE} from "../../../common/models/questions/common/SubjectType";
 
 
 export class None extends React.Component<{}, {}>{
@@ -51,6 +52,10 @@ export class Post extends React.Component<PostProps, {}>{
 
     if (!post) {
       return <None />;
+    }
+
+    if(this.props.post.type === SUBJECT_TYPE.Empty) {
+        return <None />;
     }
 
     if (!types[post.type.toString()]) {
