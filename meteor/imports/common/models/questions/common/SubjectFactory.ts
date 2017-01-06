@@ -21,7 +21,15 @@ export module SubjectFactory {
       case SUBJECT_TYPE.TextPost:
         subject = new Subject(data);
         break;
-
+      case SUBJECT_TYPE.Empty:
+        subject = new Subject({
+            name: '',
+            type: data.type,
+            photoUrl: '',
+            from: null,
+            thumbnailUrl: null
+        });
+        break;
       default:
         console.error("SubjectFactor: Unknown subject type: ", data.type);
     }
