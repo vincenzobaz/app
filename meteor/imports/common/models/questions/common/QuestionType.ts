@@ -7,10 +7,12 @@ export type QuestionType = "MCWhoMadeThisCommentOnYourPost" |
     "MCWhoReactedToYourPostWithLOVE" |
     "MCWhoReactedToYourPostWithSAD" |
     "MCWhoReactedToYourPostWithANGRY" |
+    "MCWhoIsYourFriend" |
     "TLWhenDidYouShareThisPost" |
     "TLWhenDidYouLikeThisPage" |
     "GeoWhatCoordinatesWereYouAt" |
     "ORDPostLikesNumber" |
+    "ORDPostReactionsNumber" |
     "ORDPageLike" |
     "ORDPageLikes" |
     "ORDPageLikeTime" |
@@ -28,9 +30,11 @@ export const QUESTION_TYPE = {
   MCWhoReactedToYourPostWithLOVE: 'MCWhoReactedToYourPostWithLOVE' as QuestionType,
   MCWhoReactedToYourPostWithSAD: 'MCWhoReactedToYourPostWithSAD' as QuestionType,
   MCWhoReactedToYourPostWithANGRY: 'MCWhoReactedToYourPostWithANGRY' as QuestionType,
+  MCWhoIsYourFriend : 'MCWhoIsYourFriend' as QuestionType,
   TLWhenDidYouShareThisPost: 'TLWhenDidYouShareThisPost' as QuestionType,
   TLWhenDidYouLikeThisPage: 'TLWhenDidYouLikeThisPage' as QuestionType,
   GeoWhatCoordinatesWereYouAt: 'GeoWhatCoordinatesWereYouAt' as QuestionType,
+  ORDPostReactionsNumber: 'ORDPostReactionsNumber' as QuestionType,
   ORDPostLikesNumber: 'ORDPostLikesNumber' as QuestionType,
   ORDPageLike: 'ORDPageLike' as QuestionType,
   ORDPageLikes: 'ORDPageLikes' as QuestionType,

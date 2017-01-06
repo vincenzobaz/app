@@ -10,6 +10,7 @@ const en = {
   ORDPostCommentsNumber: 'Order these posts according to the number of comments they got: least comments first',
   ORDPostLikesNumber: 'Order these posts according to the number of likes: fewest likes on top',
   ORDPostTime: 'Order theses posts after the time you posted them: oldest on top',
+  ORDPostReactionsNumber: "Order these posts according to the number of reactions: fewest reactions on top",
   MCWhoReactedToYourPost: 'Who reacted (Comment, Like, Wow, Haha, Love, Sad, Angry, Thankful) to this post you made?',
   MCWhoReactedToYourPostWithLIKE: 'Who liked this post you made?',
   MCWhoReactedToYourPostWithWOW: 'Who was impressed by this post you made?',
@@ -19,6 +20,7 @@ const en = {
   MCWhoReactedToYourPostWithANGRY: 'Who was angry at this post you made?',
   MCWhoCommentedOnYourPost: 'Who commented on this post you made?',
   MCWhoMadeThisCommentOnYourPost: 'Who made this comment on your post?',
+  MCWhoIsYourFriend : "Who is your friend?",
   GeoWhatCoordinatesWereYouAt: 'Where were you when you posted this?',
   MCWhichPageDidYouLike: 'Which page did you like?'
 };
