@@ -6,6 +6,6 @@ export const SUBJECT_TYPE = {
   VideoPost: "VideoPost" as SubjectType,
   LinkPost: "LinkPost" as SubjectType,
   Comment: "Comment" as SubjectType,
-  Page: "Page" as SubjectType
+  Page: "Page" as SubjectType,
+  Empty: "Empty" as SubjectType
 };
-
