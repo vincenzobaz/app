@@ -77,6 +77,13 @@ export class Reorder extends React.Component<ReorderProps, ReorderState> {
   }
 
   render() {
+    let subjectDiv = (<div/>);
+    if (this.props.subject) {
+        subjectDiv = (
+            <div className="question-subject">
+                <Post post={this.props.subject}/>
+            </div>);
+    }
     if (this.props.userAnswer == null) {
       const items = this.state.items.map(this.renderItem.bind(this));
 
@@ -84,6 +91,7 @@ export class Reorder extends React.Component<ReorderProps, ReorderState> {
           <div className="question question-reorder">
             <h4>{getQuestionTitleByType(this.props.type.toString())}</h4>
             <h5>Click and drag the items in the correct order.</h5>
+            {subjectDiv}
 
             <SortableList
                 items={items}
@@ -102,6 +110,7 @@ export class Reorder extends React.Component<ReorderProps, ReorderState> {
     return (
       <div className="question question-reorder">
         <h4>{getQuestionTitleByType(this.props.type.toString())}</h4>
+        {subjectDiv}
         <p>Click and drag the items in the correct order.</p>
         {this.state.items.map(item =>
            <div key={uniqueId()} className="reorder-item-static">

@@ -5,6 +5,8 @@ import {Item} from "../common/Item";
 import {SUBJECT_TYPE} from "../common/SubjectType";
 import Question, {RawQuestion} from "../../Question";
 import * as _ from 'lodash';
+import {SubjectFactory} from "../common/SubjectFactory";
+import {Subject} from "../common/Subject";
 
 
 export interface RawOrderQuestion extends RawQuestion{
@@ -28,9 +30,10 @@ export class OrderQuestion extends Question {
               answer: number[],
               userAnswer: number[],
               items: Item[],
-              public correct: boolean
+              public correct: boolean,
+              subject?: Subject
   ) {
-    super(_id, null, type, kind, answer, userAnswer);
+    super(_id, subject, type, kind, answer, userAnswer);
     this.items = items;
     }
 
@@ -50,6 +53,9 @@ export class OrderQuestion extends Question {
                     return {id: c.uId, text: c.subject.text, subject:c.subject};
                 case SUBJECT_TYPE.Comment:
                     return {id: c.uId, text: c.subject.comment, subject:c.subject};
+                case SUBJECT_TYPE.Reactions:
+                    let subject = SubjectFactory.fromRaw(c.subject);
+                    return {id: c.uId, text: subject.text, subject: subject};
                 default:
                     console.error("Ordering subject type not defined: " + c.type);
                     throw new Meteor.Error('500', "Ordering subject type not defined: " + c.type);
@@ -74,6 +80,10 @@ export class OrderQuestion extends Question {
 
   static orderQustionFromRaw(raw: RawOrderQuestion) {
     let items = raw.items || OrderQuestion.convertChoices(raw.choices);
+    let subject: Subject = null;
+    if (raw.subject) {
+        subject = SubjectFactory.fromRaw(raw.subject);
+    }
     return new OrderQuestion(
         raw._id? raw._id: new Mongo.ObjectID(),
         raw.type,
@@ -81,7 +91,8 @@ export class OrderQuestion extends Question {
         raw.answer,
         raw.userAnswer,
         items,
-        raw.correct
+        raw.correct,
+        subject
         );
   }
 

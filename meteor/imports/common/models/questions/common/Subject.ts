@@ -1,5 +1,6 @@
 
 import { SubjectType } from "./SubjectType";
+import {ReactionType} from "./ReactionType";
 
 export interface RawPostedBy {
   userId?: string;
@@ -28,6 +29,7 @@ export interface RawSubject {
   text?: string;
   url?: string;
   post?:RawSubject;
+  reactionType?: ReactionType;
 }
 
 export class Subject implements RawSubject {

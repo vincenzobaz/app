@@ -1,6 +1,7 @@
 import { Subject, RawSubject, CommentSubject }         from "./Subject";
 import { SUBJECT_TYPE }                from "./SubjectType";
 import { RawPageSubject, PageSubject } from "./PageSubject";
+import {getIconPath, getReactionText} from "../../../../client/helpers/reactions";
 
 export module SubjectFactory {
 
@@ -21,20 +22,23 @@ export module SubjectFactory {
       case SUBJECT_TYPE.TextPost:
         subject = new Subject(data);
         break;
-      case SUBJECT_TYPE.Empty:
+      case SUBJECT_TYPE.Reactions:
         subject = new Subject({
             name: '',
             type: data.type,
-            photoUrl: '',
+            text: getReactionText(data.reactionType),
+            photoUrl: getIconPath(data.reactionType),
             from: null,
             thumbnailUrl: null
         });
-        break;
+        console.log(data.reactionType);
+      break;
       default:
         console.error("SubjectFactor: Unknown subject type: ", data.type);
     }
 
     return subject;
   }
+
 }
 
