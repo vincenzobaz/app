@@ -31,7 +31,6 @@ export module SubjectFactory {
             from: null,
             thumbnailUrl: null
         });
-        console.log(data.reactionType);
       break;
       default:
         console.error("SubjectFactor: Unknown subject type: ", data.type);
