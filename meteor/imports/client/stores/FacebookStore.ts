@@ -37,10 +37,6 @@ const FBConnectPromise = {
 
 };
 
-declare var facebookConnectPlugin: {
-  login: Function;
-  showDialog: Function;
-};
 
 export module FacebookStore {
 
@@ -56,7 +52,7 @@ export module FacebookStore {
     return MeteorPromise.call('Facebook.getPermissions');
   }
 
-  export function login(): void {
+  export function login(cb = () => {}): void {
     const conf = getConfig('facebook');
 
     if (conf == null) {
@@ -64,14 +60,9 @@ export module FacebookStore {
       return;
     }
 
-    if (Meteor.isCordova) {
-      facebookConnectPlugin.login(conf.scope);
-      return;
-    }
-
     Meteor.loginWithFacebook({
       requestPermissions: conf.scope
-    });
+    }, cb);
   }
 
   export function showInviteDialog(): Promise<any> {

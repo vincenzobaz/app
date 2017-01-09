@@ -9,7 +9,6 @@ import {MeteorPromise} from "../helpers/meteor";
 import {BlacklistModal} from "./modals/BlacklistModal";
 import {Reactioners} from "../collections/Reactioners";
 import {Reactioner} from "../../common/models/Reactioner";
-import { browserHistory } from 'react-router';
 
 interface AccountSettingsState {
     logoutConfirmed: boolean;
@@ -122,8 +121,6 @@ export class AccountSettings extends React.Component<{}, AccountSettingsState> {
 
         if (this.state.logoutConfirmed) {
             Meteor.logout();
-            browserHistory.push("/");
-            window.location.reload()
         }
 
         this.setState({
@@ -138,8 +135,7 @@ export class AccountSettings extends React.Component<{}, AccountSettingsState> {
 
         if (this.state.deleteAllDataConfirmed) {
             Meteor.call("Account.deleteAllData");
-            browserHistory.push("/");
-            window.location.reload()
+            Meteor.logout();
         }
 
         this.setState({

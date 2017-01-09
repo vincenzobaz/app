@@ -6,6 +6,9 @@ const Notify     = require('notifyjs');
 const Alertify   = require('alertify.js');
 const Visibility = require('visibility')();
 
+// necessary for the TypeScript compiler
+declare var cordova: any;
+
 export const NotificationStore = {
 
   desktopSupported: false,
@@ -51,12 +54,27 @@ export const NotificationStore = {
   },
 
   showNotif(note: Notification): void {
-    if (!this.desktopSupported || Visibility.visible()) {
+    if (Meteor.isCordova) {
+      this.showMobileNotification(note);
+    }
+    else if (!this.desktopSupported || Visibility.visible()) {
       this.showInPageNotif(note);
     }
     else {
       this.showDesktopNotif(note);
     }
+  },
+
+  showMobileNotification(note: Notification): void {
+    Meteor.startup( function () {
+      cordova.plugins.notification.local.schedule({
+        id: 1,
+        text: note.message,
+        icon: 'res://notifIcon',
+        smallIcon: 'res://notifIcon',
+        badge: 1
+      });
+    });
   },
 
   showInPageNotif(note: Notification): void {

@@ -1,0 +1,15 @@
+{
+  "facebook": {
+    "appId": "<YOUR_APP_ID>",
+    "secret": "<YOUR_API_SECRET>"
+  },
+  "public": {
+    "facebook": {
+      "permissions": [
+        "public_profile", 
+        "email", 
+        "user_friends"
+      ]
+    }
+  }
+}
