@@ -158,13 +158,17 @@ export class Welcome extends React.Component<WelcomeProps, WelcomeState> {
   }
 
   onClickRequestButton() {
-    FacebookStore.showInviteDialog().then(res => {
-      if (!res) {
-        this.setState({
-          showGameRequestInfoModal: true
-        });
-      }
-    });
+    if (Meteor.isCordova) {
+      FacebookStore.showNativeInviteDialog();
+    } else {
+      FacebookStore.showInviteDialog().then(res => {
+        if (!res) {
+          this.setState({
+            showGameRequestInfoModal: true
+          });
+        }
+      });
+    }
   }
 
   hideGameRequestInfoModal() {

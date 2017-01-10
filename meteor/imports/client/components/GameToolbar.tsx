@@ -44,13 +44,17 @@ export class GameToolbar extends React.Component<GameToolbarProps, GameToolbarSt
     }
 
     onClickRequestButton() {
-        FacebookStore.showInviteDialog().then(res => {
-            if (!res) {
-                this.setState({
-                    showGameRequestInfoModal: true
-                });
-            }
-        });
+        if (Meteor.isCordova) {
+            FacebookStore.showNativeInviteDialog();
+        } else {
+            FacebookStore.showInviteDialog().then(res => {
+                if (!res) {
+                    this.setState({
+                        showGameRequestInfoModal: true
+                    });
+                }
+            });
+        }
     }
 
     onClickStatsButton() {

@@ -28,16 +28,6 @@ const FBPromise = {
 
 };
 
-const FBConnectPromise = {
-
-  showDialog(params: any): Promise<any> {
-    const fn = Promise.promisify(facebookConnectPlugin.showDialog, facebookConnectPlugin);
-    return fn(params);
-  }
-
-};
-
-
 export module FacebookStore {
 
   export function getFriends(): Promise<any> {
@@ -86,7 +76,6 @@ export module FacebookStore {
       if (res) {
         const user     = Meteor.user() as MeteorUser;
         const fbUserId = user.services.facebook.id;
-
         res.to.forEach(toFbId => {
           JoinRequestStore.send(res.request, fbUserId, toFbId);
         });
@@ -95,11 +84,37 @@ export module FacebookStore {
       return res;
     };
 
-    if (Meteor.isCordova) {
-      return FBConnectPromise.showDialog(params).then(callback);
+    return FBPromise.ui(params).then(callback);
+  }
+
+  export function showNativeInviteDialog(): void {
+
+    const conf = getConfig('facebook');
+
+    if (conf == null) {
+      console.error("Facebook config is", conf);
+      return;
     }
 
-    return FBPromise.ui(params).then(callback);
+    const params: RequestsDialogParams = {
+      app_id: conf.appId,
+      filters: null,
+      method: 'apprequests',
+      message: 'Do you want to reminisce with me?',
+      title: 'Select friends you would like to play with',
+      max_recipients: 10
+    };
+
+    const callback = (res) => {
+      if (res) {
+        const user     = Meteor.user() as MeteorUser;
+        const fbUserId = user.services.facebook.id;
+        res.recipientsIds.forEach(toFbId => {
+          JoinRequestStore.send(res.requestId, fbUserId, toFbId);
+        });
+      }
+    }
+    facebookConnectPlugin.showDialog(params, callback);
   }
 
 }
