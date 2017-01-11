@@ -55,6 +55,7 @@ export class BlacklistModal extends React.Component<{onHide: Function, show: boo
                             <Select
                                 name="add-to-bl"
                                 labelKey="userName"
+                                optionClassName="blacklist-option"
                                 options={this.state.all}
                                 onChange={this.addToBlacklist.bind(this)}
                             />

@@ -83,15 +83,15 @@ export class AccountSettings extends React.Component<{}, AccountSettingsState> {
                 </Well>
                 <Well>
                     <Row>
-                        <Col>
-                            <div className="blacklist-info">
-                                Blacklist people here
+                        <Col md={12}>
+                            <div className="settings-info">
+                                <p>Blacklist people here</p>
                             </div>
                         </Col>
                     </Row>
                     <Row>
                         <Col md={6} mdOffset={3}>
-                            <Button className="blacklist_button" onClick={this.onBlacklistClick.bind(this)}>
+                            <Button className="button-logout" onClick={this.onBlacklistClick.bind(this)}>
                                 Blacklist settings
                             </Button>
                         </Col>
