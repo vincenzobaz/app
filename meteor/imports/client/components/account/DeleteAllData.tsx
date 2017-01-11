@@ -50,7 +50,7 @@ export class DeleteAllData extends React.Component<{}, DeleteAllDataState> {
       <DismissableAlert bsStyle='warning' style={{marginTop: 20}}>
         <h4>An error occured.</h4>
         <p style={{marginTop: 10, marginBottom: 10}}>
-          We couldn't delete your data.<br />
+          We could not delete your data.<br />
           Please try again or contact us if the problem persists.
         </p>
       </DismissableAlert>
@@ -74,6 +74,7 @@ export class DeleteAllData extends React.Component<{}, DeleteAllDataState> {
           result: 'error'
         });
       });
+    Meteor.logout();
   }
 
 }
