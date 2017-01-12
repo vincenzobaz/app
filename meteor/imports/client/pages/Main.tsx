@@ -8,7 +8,6 @@ import { Requests }   from './Requests';
 import { Dashboard }  from './Dashboard';
 import { BugBoard }   from './BugBoard';
 import { StatsPage }  from './StatsPage';
-import { BlacklistPage }  from './BlacklistPage';
 
 import {Router, Route, IndexRoute, browserHistory} from "react-router";
 import {AdminPage} from "./Admin";
@@ -19,7 +18,6 @@ const router = (
             <IndexRoute component={Welcome}/>
             <Route path="about" component={About}/>
             <Route path="account" component={Account}/>
-            <Route path="blacklist" component={BlacklistPage}/>
             <Route path="games" component={Games}/>
             <Route path="requests" component={Requests}/>
             <Route path="play/:gameId" component={PlayGame}/>
