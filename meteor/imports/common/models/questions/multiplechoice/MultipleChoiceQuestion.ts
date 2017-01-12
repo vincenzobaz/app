@@ -44,7 +44,7 @@ export class MultipleChoiceQuestion extends Question {
         Choice.fromRaw(c)
     );
 
-    let subject: Subject = SubjectFactory.fromRaw(raw.subject);
+    let subject: Subject = raw.subject ? SubjectFactory.fromRaw(raw.subject) : null;
     return new MultipleChoiceQuestion(
         raw._id? raw._id: new Mongo.ObjectID(),
         subject,

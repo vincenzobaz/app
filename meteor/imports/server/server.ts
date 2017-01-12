@@ -64,7 +64,7 @@ export const Server = {
       return gameBoard;
     }
     catch (e) {
-      logger.error(`Can't create game board from game creator result.`, {trace: e.stack});
+      logger.error(`Can't create game board from game creator result for user ${fbId}.`, {trace: e.stack});
 
       if (createFetch && !BotService.isBot(fbId)) {
         logger.debug(`Creating new fetch request as it failed for user ${fbId} in game: ${game._id}`, {fbId: fbId});
