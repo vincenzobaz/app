@@ -1,31 +1,47 @@
 
 import {Button, Panel} from "react-bootstrap";
-import { Routes }      from '../../../common/Routes';
-import {browserHistory} from 'react-router';
-import {MeteorPromise} from "../../helpers/meteor";
+import { MeteorPromise } from "../../helpers/meteor";
+import { BlacklistModal } from "../modals/BlacklistModal";
 
-interface BlacklistState {}
+interface BlacklistState {
+  showBlacklistModal: boolean;
+}
 
 export class BlacklistSelection extends React.Component<{}, BlacklistState> {
 
   constructor(props: any) {
     super(props);
-    this.state = {};
+    this.state = {
+      showBlacklistModal: false
+    };
   }
 
   render() {
     return (
-      <Panel header={<h3>Manage your blacklist</h3>} bsStyle='danger'>
-        <p>You can access your blacklist, add and remove facebook contact from it</p>
-        <Button bsStyle='danger' onClick={this.onSelectBlacklist}>Manage blacklist</Button>
-      </Panel>
+      <div>
+        <Panel header={<h3>Manage your blacklist</h3>} bsStyle='danger'>
+          <p>You can access your blacklist, add and remove facebook contact from it</p>
+          <Button bsStyle='danger' onClick={this.onBlacklistClick.bind(this)}>Manage blacklist</Button>
+        </Panel>
+        {this.state.showBlacklistModal && <BlacklistModal show={this.state.showBlacklistModal} onHide={this.onHideBlacklistModal.bind(this)} />}
+      </div>
     );
   }
 
-  onSelectBlacklist(e) {
-    e.preventDefault();
+  onBlacklistClick(e: React.MouseEvent) {
+    e.stopPropagation();
+
     MeteorPromise.call('fetchReactioners');
-    browserHistory.push('/blacklist');
+
+    this.setState({
+      showBlacklistModal: true
+    });
+  }
+
+  onHideBlacklistModal() {
+    this.setState({
+      showBlacklistModal: false
+    });
   }
 
 }
