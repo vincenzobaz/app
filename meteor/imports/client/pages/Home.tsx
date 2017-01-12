@@ -28,7 +28,6 @@ export class Home extends React.Component<{}, HomeState> {
     const sections = [
       "Intro",
       "How to play",
-      "Screen shot",
       "Privacy",
       "Play"
     ];
@@ -96,11 +95,7 @@ export class Home extends React.Component<{}, HomeState> {
                   random opponent, or your own friends!
                 </p>
               </div>
-            </section>
-          </CarouselItem>
-          <CarouselItem>
-            <section title="Screen shot">
-              <img src={Routes.Assets.at('images/home-1.jpg')} alt='' width='650' height='590' />
+              <img src={Routes.Assets.at('images/home-1.png')} style={{marginTop: '20px', maxWidth: '80%'}} alt='' width='348' height='348' />
             </section>
           </CarouselItem>
           <CarouselItem>
