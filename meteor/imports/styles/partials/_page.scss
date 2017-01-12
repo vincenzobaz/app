@@ -703,6 +703,10 @@ ul.join-requests, ul.games {
   height: 100%;
 }
 
+#app {
+  overflow-y: auto;
+}
+
 #home {
   height: 100%;
 

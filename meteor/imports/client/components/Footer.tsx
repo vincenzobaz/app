@@ -84,6 +84,11 @@ export class MobileFooter extends React.Component<FooterProps, void> {
       title: 'Join Requests'
     },
     {
+      url: Routes.Page.stats(),
+      glyph: 'stats',
+      title: 'Statistics'
+    },
+    {
       url: Routes.Page.account(),
       glyph: 'user',
       title: 'Account'
