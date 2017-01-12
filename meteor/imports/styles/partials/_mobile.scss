@@ -150,11 +150,9 @@ $mobile-screen-max: 768px;
 
   .modal.fullscreen {
     &.fade.in, .modal-dialog, .modal-content {
-      position: absolute;
       @include fullscreen(0);
     }
     .modal-footer {
-      position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
@@ -173,6 +171,7 @@ $mobile-screen-max: 768px;
     width: 100%;
     margin-right: 0;
     clear: all;
+    margin: 0 0 0.3em 0;
 
     &:nth-child(even) {
       margin-left: 0;

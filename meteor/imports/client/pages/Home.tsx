@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Carousel, CarouselItem, Navbar, NavItem, Nav, Row, Col} from "react-bootstrap";
+import {Carousel, CarouselItem, Navbar, NavItem, Nav, Row, Col, Button} from "react-bootstrap";
 import {Routes} from '../../common/Routes';
 import {FacebookStore} from "../stores/FacebookStore";
 
@@ -108,7 +108,7 @@ export class Home extends React.Component<{}, HomeState> {
               <h2>About Your Profile Data</h2>
               <div className='copy'>
                 <p>
-                  <i style={{float: 'left', marginRight: '10px'}} className='icon-lock icon-4x'></i>
+                  <i style={{marginRight: '10px', display: 'block'}} className='icon-lock icon-4x'></i>
                   We develop reminisce.me to make you have a lot of fun. As such, we don't
                   store permanently any of your personal data. We are so transparent about it that we
                   decided to release the whole game platform (client and server) as <a href="https://github.com/reminisceme/">open-source</a>!
@@ -123,26 +123,28 @@ export class Home extends React.Component<{}, HomeState> {
             <section title="Play">
             <Row>
               <h2>OK, time to play!</h2>
-              <div className='connect-facebook'>
+              <div className='connect-facebook copy'>
                   <p>You'll be asked to connect your Facebook profile first.</p>
               </div>
               </Row>
               <Row>
               <Col xs={6} xsOffset={3}>
-                <a className="btn btn-block btn-social btn-lg btn-facebook facebook-login" onClick={this.login.bind(this)}>
-                  <span className="fa fa-facebook"></span>
+                <Button
+                  bsSize="large"
+                  onClick={this.login.bind(this)}
+                  bsStyle="primary">
                   Sign in with Facebook
-                </a>
+                </Button>
               </Col>
               </Row>
               <Row>
               <br/>
-              <small className="disclaimer">
+              <p className="disclaimer copy">
                 All the permissions are exlusively used to generate personalized questions for you,
                 extracted from your activity on facebook.
                 No other player will ever see any of your posts or other items,
                 you will be the only one to see the generated questions.
-              </small>
+              </p>
               </Row>
             </section>
           </CarouselItem>

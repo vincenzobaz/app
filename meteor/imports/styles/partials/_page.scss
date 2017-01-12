@@ -882,6 +882,7 @@ $grey-border: #b8b8b8;
 
 .disclaimer {
   margin-top: 20px;
+  font-size: 0.9em;
 }
 
 .facebook-login {
@@ -970,6 +971,8 @@ $grey-border: #b8b8b8;
 }
 
 .copy {
+  max-width: 80%;
+  margin-left: 10%;
 
   .privacy {
     margin-bottom: 0px;
@@ -980,6 +983,7 @@ $grey-border: #b8b8b8;
 
 .connect-facebook {
   text-align: center;
+  margin-bottom: 20px;
 
   i {
     color: $secondarycolor;
@@ -1009,13 +1013,12 @@ $grey-border: #b8b8b8;
 }
 
 .modal {
-  position: absolute;
   top: 10%;
 }
 
 @media all and (min-height: 600px) {
   .modal {
-    position: fixed;
+    position: fixed !important;
   }
   .modal-body {
     max-height: 600px;
