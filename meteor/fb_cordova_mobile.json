@@ -8,7 +8,12 @@
       "permissions": [
         "public_profile", 
         "email", 
-        "user_friends"
+        "user_friends",
+        "user_likes",
+        "user_photos",
+        "user_posts",
+        "user_status",
+        "user_tagged_places"
       ]
     }
   }
