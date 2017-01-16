@@ -3,7 +3,7 @@ App.info({
     id: 'me.reminisce',
     name: 'reminisceme',
     description: 'Reminisce Me',
-    author: 'Roger Küng',
+    author: 'Reminisce.me',
     email: 'contact@example.com',
     website: 'http://www.reminisce.me',
     version: '0.1'
