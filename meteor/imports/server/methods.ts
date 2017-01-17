@@ -180,7 +180,7 @@ export function setupMeteorMethods() {
             if (typeof user != 'undefined' && user.profile.isDev) {
                 let now = new Date();
                 let expiration = new Date(now.getTime() + 60 * 60 * 1000);
-                let randomId = Random.id(80);
+                let randomId = Random.secret(80);
                 let token = new LogsToken(randomId, expiration.getTime() / 1000);
                 LogsTokens.upsert({_id: randomId}, token);
                 return {
