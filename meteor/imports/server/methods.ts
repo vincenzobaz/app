@@ -178,16 +178,19 @@ export function setupMeteorMethods() {
             const userId = Meteor.userId();
             const user = Meteor.users.findOne(userId);
             if (typeof user != 'undefined' && user.profile.isDev) {
-                var now = new Date();
-                var expiration = new Date(now.getTime() + 60 * 60 * 1000);
-                var token = new LogsToken(userId, expiration.getTime() / 1000);
-                LogsTokens.upsert({_id: userId}, token);
+                let now = new Date();
+                let expiration = new Date(now.getTime() + 60 * 60 * 1000);
+                let randomId = Random.id(80);
+                let token = new LogsToken(randomId, expiration.getTime() / 1000);
+                LogsTokens.upsert({_id: randomId}, token);
                 return {
-                    status: 'success'
+                    status: 'success',
+                    id: randomId
                 };
             } else {
                 return {
-                    status: 'failure'
+                    status: 'failure',
+                    id: ""
                 }
             }
         },

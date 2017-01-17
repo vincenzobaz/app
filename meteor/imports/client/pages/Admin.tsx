@@ -17,19 +17,19 @@ export class AdminPage extends React.Component<AdminPageProps, {}> {
 
     onClickLogsButton() {
         if (this.props.user.profile.isDev) {
-            var now = new Date();
-            var expiration = new Date(now.getTime() + 60 * 60 * 1000);
-            var secure = location.protocol == "https:" ? "; secure" : "";
-            document.cookie = "Reminisceme_LogsToken="
-                + this.props.user._id
-                + "; path=/; max-age=3600; expires="
-                + expiration.toUTCString()
-                + secure;
             MeteorPromise.call("Logs.createToken").then(res => {
-                if (res.status == 'success') {
+                if (res.status == 'success' && res.id !== "") {
+                    let now = new Date();
+                    let expiration = new Date(now.getTime() + 60 * 60 * 1000);
+                    let secure = location.protocol == "https:" ? "; secure" : "";
+                    document.cookie = "Reminisceme_LogsToken="
+                        + res.id
+                        + "; path=/; max-age=3600; expires="
+                        + expiration.toUTCString()
+                        + secure;
                     window.open(location.protocol + "//" + window.location.hostname + ":8080")
                 } else {
-                    alert("Something went wrong...")
+                    alert("Something went wrong...\n" + JSON.stringify(res))
                 }
             });
         }
